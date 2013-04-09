@@ -1,0 +1,108 @@
+/*
+---
+description: GitHub inspired theme.
+
+license: MIT-style
+
+authors:
+- Jose Prado
+
+...
+*/
+.gitLighter {
+	border-bottom: 1px solid #eee;
+	border-top: 1px solid #eee; color: #939393;
+	font-family: Courier, monospace;
+	line-height: 1.6em;
+	font-size: 12px;
+	overflow: auto;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -o-pre-wrap;
+	white-space: -pre-wrap;
+	word-wrap: break-word;
+}
+.gitLighter span {
+	font-size: 12px;
+	color: #000;
+}
+.gitLighter .gitnum {
+	background-color: #f2f2f2;
+	color: #aaa;
+	font-size: 10px;
+	text-align: center;
+	width: 30px;
+}
+.gitLighter .gitline {
+	background-color: #fff;
+	border-left: 1px solid #939393;
+	padding-left: 15px;
+	padding-right: 5px;
+}
+.gitLighter .gitfirst { padding-top: 10px; }
+.gitLighter .gitlast { padding-bottom: 10px; }
+.gitLighter .alt { background-color: #ffffcc; }
+
+/** Code specific styles */
+code.gitLighter { background-color: #fff; }
+
+/** Pre specific styles */
+pre.gitLighter {
+	background-color: #fff;
+	padding-left: 15px;
+	padding-right: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+/** OL specific styles */
+ol.gitLighter {
+	color: #aaa;
+	font-size: 10px;
+	background-color: #f2f2f2;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+	padding-left: 0;
+}
+ol.gitLighter li { margin-left: 40px; }
+
+/** Div specific styles */
+div.gitLighter .gitnum {
+	display: block;
+	float: left;
+}
+div.gitLighter .gitline {
+	display: block;
+	margin-left: 30px;
+	min-height: 12px;
+}
+div.gitLighter div {
+	clear: left;
+	overflow: auto;
+	background-color: #f2f2f2;
+}
+
+/** Table specific styles */
+table.gitLighter .gitnum {}
+table.gitLighter .gitline {}
+
+/** Symbol styles */
+.gitLighter .de1 { color: #CF6A4C; }
+.gitLighter .de2 { color: #CF6A4C; }
+.gitLighter .kw1 { color: #000; font-weight: bold; }
+.gitLighter .kw2 { color: #0086b3; }
+.gitLighter .kw3 { color: #445588; font-weight: bold; }
+.gitLighter .kw4 { color: #990073; }
+.gitLighter .co1 { color: #999988; font-style: italic; }
+.gitLighter .co2 { color: #999988; font-style: italic; }
+.gitLighter .st0 { color: #dd1144; }
+.gitLighter .st1 { color: #dd1144; }
+.gitLighter .st2 { color: #dd1144; }
+.gitLighter .nu0 { color: #009999; }
+.gitLighter .me0 { color: #0086b3; }
+.gitLighter .me1 { color: #0086b3; }
+.gitLighter .br0 { color: #777; }
+.gitLighter .sy0 { color: #777; }
+.gitLighter .es0 { color: #777; }
+.gitLighter .re0 { color: #009926; }

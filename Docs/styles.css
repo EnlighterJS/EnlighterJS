@@ -1,0 +1,133 @@
+body {
+	background-color: #F4F5F5;
+	color: #313334;
+	font-family: Helvetica;
+	font-size: 75%;
+	line-height: 1.5;
+	margin: 0;
+	padding: 0;
+}
+
+a:link, a:visited {
+	color: #6b7b95;
+}
+ 
+a:hover, a:active {
+	color: #e79d35;
+}
+ 
+a.selected:link, a.selected:visited {
+	color: #222;
+}
+
+em {
+	font-style: normal;
+	color: #686c70;
+}
+
+#container {
+	background-color: #F4F5F5;
+	margin: 0px auto;
+	padding-top: 36px;
+	width: 950px;
+}
+
+/* Documentation Navigation */
+#nav {
+	float: left;
+	width: 150px;
+	margin-right: 10px;
+	font-size: 1.1em;
+}
+
+#nav a, #menu a {
+	display: block;
+}
+
+#nav p {
+	text-align: right;
+}
+
+#nav h4 {
+	border-bottom: 1px solid #ddd;
+	font-weight: bold;
+	font-size: 1.2em;
+	margin: 10px 0;
+	padding-bottom: 2px;
+}
+
+/* Documentation Section */
+#docs {
+	float: left;
+	width: 590px;
+	padding: 0 24px 0 25px;
+	margin: 0 10px 0 14px;
+	border-left: 1px solid rgb(221, 221, 221);
+	border-right: 1px solid rgb(221, 221, 221);
+margin-left: 14px;
+margin-right: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #313334;
+	font-weight: bold;
+}
+
+#docs p {
+	font-size: 1.2em;
+}
+
+#docs h1 {
+	margin: 0 0 15px 0;
+	padding: 0 0 9px 0;
+	font-size: 2.5em;
+	color: #c17878;
+	text-decoration: none;
+}
+
+#docs h2 {
+	color: #78ba91;
+	text-decoration: none;
+	font-size: 2em;
+	margin-bottom: 0.75em;
+}
+
+#docs h1, #docs h2 {
+	border-bottom: 1px solid #ddd;
+}
+
+h1 a:link, h1 a:visited {
+	color: #c17878;
+	text-decoration: none;
+}
+ 
+h2 a:link, h2 a:visited {
+	color: #78ba91;
+	text-decoration: none;
+}
+
+/* Class Navigation */
+#menu {
+	float: left;
+	width: 70px;
+}
+
+#menu p {
+	padding: 0;
+	margin: 0;
+}
+
+#menu h4 {
+	padding: 10px 0;
+	margin: 0;
+	font-weight: bold;
+	font-size: 1.2em;
+	height: 1.25em;
+	line-height: 1.25;
+	color: rgb(49, 51, 52);
+}
+
+/* Footer */
+#footer {
+	clear: both;
+}

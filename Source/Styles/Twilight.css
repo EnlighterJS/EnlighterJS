@@ -1,0 +1,108 @@
+/*
+---
+description: TextMate twilight inspired theme.
+
+license: MIT-style
+
+authors:
+- Jose Prado
+
+...
+*/
+.twilightLighter {
+	border: 1px solid #222;
+	color: #f8f8f8;
+	font-family: Monaco, Courier, monospace;
+	font-size: 12px;
+	line-height: 19px;
+	overflow: auto;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -o-pre-wrap;
+	white-space: -pre-wrap;
+	word-wrap: break-word;
+}
+.twilightLighter span {
+	font-size: 12px;
+	color: #f8f8f8;
+}
+.twilightLighter .twilightline {
+	background-color: #141414;
+	border-left: 1px solid #939393;
+	padding-left: 15px;
+	padding-right: 5px;
+}
+.twilightLighter .twilightnum {
+	background-color: #f2f2f2;
+	color: #000;
+	font-size: 10px;
+	text-align: center;
+	width: 30px;
+}
+.twilightLighter .twilightfirst { padding-top: 10px; }
+.twilightLighter .twilightlast { padding-bottom: 10px; }
+.twilightLighter .alt { background-color: #202021; }
+
+/** Code specific styles */
+code.twilightLighter { background-color: #141414; }
+
+/** Pre specific styles */
+pre.twilightLighter {
+	background-color: #141414;
+	padding-left: 15px;
+	padding-right: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+/** OL specific styles */
+ol.twilightLighter {
+	color: #000;
+	font-size: 10px;
+	background-color: #f2f2f2;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+	padding-left: 0;
+}
+ol.twilightLighter li { margin-left: 40px; }
+
+/** Div specific styles */
+div.twilightLighter .twilightnum {
+	display: block;
+	float: left;
+}
+div.twilightLighter .twilightline {
+	display: block;
+	margin-left: 30px;
+	min-height: 19px;
+}
+div.twilightLighter div {
+	clear: left;
+	overflow: auto;
+	background-color: #f2f2f2;
+}
+
+/** Table specific styles */
+table.twilightLighter .twilightnum  {}
+table.twilightLighter .twilightline {}
+
+/** Symbol styles */
+.twilightLighter .de1 { color: #fff; }
+.twilightLighter .de2 { color: #fff; }
+.twilightLighter .kw1 { color: #CDA869; }
+.twilightLighter .kw2 { color: #F9EE98; }
+.twilightLighter .kw3 { color: #6F87A8; }
+.twilightLighter .kw4 { color: #E96546; }
+.twilightLighter .co1 { color: #5F5A60; }
+.twilightLighter .co2 { color: #5F5A60; }
+.twilightLighter .st0 { color: #8F9657; }
+.twilightLighter .st1 { color: #8F9657; }
+.twilightLighter .st2 { color: #8F9657; }
+.twilightLighter .nu0 { color: #CF6745; }
+.twilightLighter .me0 { color: #fff; }
+.twilightLighter .me1 { color: #fff; }
+.twilightLighter .br0 { color: #fff; }
+.twilightLighter .sy0 { color: #fff; }
+.twilightLighter .es0 { color: #fff; }
+.twilightLighter .re0 { color: #E57A27; }

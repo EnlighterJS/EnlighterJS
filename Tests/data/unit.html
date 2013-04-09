@@ -1,0 +1,21 @@
+	<p>No Code. Should render empty.</p>
+	<pre class="js"></pre>
+	
+	<p>White space two lines. Should render nothing as they are chopped</p>
+	<pre class="js"> 
+ 		   	</pre>
+	
+	<p>White space only. Should render whitespace minus line breaks minus chopped lines.</p>
+	<pre class="js">   		
+			
+			</pre>
+	
+	<p>Multiple classes. Should still render as Javascript</p>
+	<pre class="js:panic moo tools">
+var myMootools = new Class({});
+	</pre>
+	
+	<p>No class should render with standard fuel/flame</p>
+	<pre>
+var myMootools = new Class({});
+	</pre>

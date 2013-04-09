@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	YUICompressor Subtask
+	Simply concat+compress multiple files
+	
+	@requires	Java 1.5
+	@requires	Yahoo YUI-Compressor
+	@author		Andi Dittrich <andi.dittrich@a3non.org>
+	@version	1.0
+	@license	MIT Style X11 License
+	
+!-->
+<project name="concat-compress" default="compress">
+
+	<!-- Generate Build -->
+	<target name="compress">
+
+		<!-- Concatenating Files ! -->
+		<echo message="Concatenating ${compress.description} Files.." />
+		<concat destfile="${build.dir}/${uncompress.output}">
+			<filelist files="${compress.input}" />
+		</concat>
+
+		<!-- Compressing Files -->
+		<echo message="Compressing ${compress.description} Files.." />
+		<java jar="${yui.jar}" fork="true">
+			<arg line="${build.dir}${uncompress.output}" />
+			<arg line="-o ${build.dir}${compress.output}" />
+			<arg line="--line-break 400" />
+			<arg line="--type ${compress.type}" />
+		</java>
+
+		<!-- add linebreaks -->
+		<ant antfile="util/human-readable-filter.xml">
+			<property name="filter.file" value="${build.dir}${compress.output}" />
+		</ant>
+
+	</target>
+</project>

@@ -1,0 +1,113 @@
+/*
+---
+description: Panic Coda inspired theme.
+
+license: MIT-style
+
+authors:
+- Jose Prado
+
+...
+*/
+.panicLighter {
+	font-family: Monaco, Courier, Monospace;
+	font-size: 12px;
+	overflow: auto;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -o-pre-wrap;
+	white-space: -pre-wrap;
+	word-wrap: break-word;
+}
+.panicLighter span {
+	color: black;
+	font-size: 12px;
+}
+.panicLighter .panicnum {
+	background-color: #f2f2f2;
+	color: #939393;
+	font-size: 10px;
+	text-align: center;
+	width: 30px;
+}
+.panicLighter .panicline {
+	background-color: #fff;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	border-left: 1px solid #939393;
+	padding: 0 3px 0 10px;
+	padding-left: 15px;
+	padding-right: 5px;
+}
+.panicLighter .panicfirst { padding-top: 5px; }
+.panicLighter .paniclast { padding-bottom: 5px; }
+.panicLighter .alt {
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	background-color: #F4F8FC;
+}
+
+/** Pre specific styles */
+pre.panicLighter {
+	background-color: #fff;
+	padding-left: 15px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+/** OL specific styles */
+ol.panicLighter {
+	color: #939393;
+	font-size: 10px;
+	list-style: decimal-leading-zero;
+	background-color: #f2f2f2;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+	padding-left: 0;
+}
+ol.panicLighter li {
+	background-color: #fff;
+	margin-left: 40px;
+}
+
+/** Div specific styles */
+div.panicLighter .panicnum {
+	display: block;
+	float: left;
+}
+div.panicLighter .panicline {
+	display: block;
+	margin-left: 30px;
+	min-height: 12px;
+}
+div.panicLighter div {
+	clear: left;
+	overflow: auto;
+	background-color: #f2f2f2;
+}
+
+/** Table specific styles */
+table.panicLighter .panicnum {}
+table.panicLighter .panicline {}
+
+/** Symbol styles */
+.panicLighter .de1 { color: #A00083; }
+.panicLighter .de2 { color: #A00083; }
+.panicLighter .kw1 { color: #9F0050; }
+.panicLighter .kw2 { color: #9F0050; }
+.panicLighter .kw3 { color: #9a6c00; }
+.panicLighter .kw4 { color: #9F0050; }
+.panicLighter .co1 { color: #00721F; font-style: italic; }
+.panicLighter .co2 { color: #00721F; font-style: italic; }
+.panicLighter .st0 { color: #EF7300; }
+.panicLighter .st1 { color: #8A000F; }
+.panicLighter .st2 { color: #8A000F; }
+.panicLighter .nu0 { color: #1600FF; }
+.panicLighter .me0 { color: #00417f; }
+.panicLighter .me1 { color: #00417f; }
+.panicLighter .br0 { color: #000; }
+.panicLighter .sy0 { color: #000; }
+.panicLighter .es0 { color: #000; }
+.panicLighter .re0 { color: #8A000F; }

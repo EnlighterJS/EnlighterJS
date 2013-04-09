@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>EnlighterJS - html</title>
+	
+	<!-- Include EnlighterJS Styles -->
+	<link rel="stylesheet" type="text/css" href="../Build/EnlighterJS.yui.css" />
+	
+	<!-- Include MooTools Framework -->
+	<script type="text/javascript" src="mootools-core-1.4.5-full-nocompat.js"></script>
+
+	<!-- Include EnlighterJS -->
+	<script type="text/javascript" src="../Build/EnlighterJS.js" ></script>
+		
+	<!-- Initialize EnlighterJS -->	
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			// highlight all pre tags
+			$$('pre').light({
+				altLines : 'hover',
+				indent : 2
+			});
+		});
+	</script>
+</head>
+<body>
+
+	<!-- TESTCASE START -->
+	<pre class="html:git">
+&lt;head&gt;
+...
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/mootools.core.js&quot;&gt;&lt;/script&gt; 
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/Lighter.js&quot;&gt;&lt;/script&gt; 
+...
+&lt;/head&gt;
+
+&lt;!-- Syntax highlight using Fuel.js.js and default theme --&gt; 
+&lt;pre id=&quot;jsCode&quot; class=&quot;js&quot;&gt;var myClass = new Class({})&lt;/pre&gt; 
+ 
+&lt;!-- Syntax highlight using Fuel.php.js and theme from Flame.twilight.js --&gt; 
+&lt;pre id=&quot;phpCode&quot; class=&quot;php:twilight&quot;&gt;&lt;?php php_info() ?&gt;&lt;/pre&gt;
+
+</pre>
+	<!-- TESTCASE STOP -->
+</body>
+</html>

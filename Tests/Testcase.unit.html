@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>EnlighterJS - unit</title>
+	
+	<!-- Include EnlighterJS Styles -->
+	<link rel="stylesheet" type="text/css" href="../Build/EnlighterJS.yui.css" />
+	
+	<!-- Include MooTools Framework -->
+	<script type="text/javascript" src="mootools-core-1.4.5-full-nocompat.js"></script>
+
+	<!-- Include EnlighterJS -->
+	<script type="text/javascript" src="../Build/EnlighterJS.js" ></script>
+		
+	<!-- Initialize EnlighterJS -->	
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			// highlight all pre tags
+			$$('pre').light({
+				altLines : 'hover',
+				indent : 2
+			});
+		});
+	</script>
+</head>
+<body>
+
+	<!-- TESTCASE START -->
+		<p>No Code. Should render empty.</p>
+	<pre class="js"></pre>
+	
+	<p>White space two lines. Should render nothing as they are chopped</p>
+	<pre class="js"> 
+ 		   	</pre>
+	
+	<p>White space only. Should render whitespace minus line breaks minus chopped lines.</p>
+	<pre class="js">   		
+			
+			</pre>
+	
+	<p>Multiple classes. Should still render as Javascript</p>
+	<pre class="js:panic moo tools">
+var myMootools = new Class({});
+	</pre>
+	
+	<p>No class should render with standard fuel/flame</p>
+	<pre>
+var myMootools = new Class({});
+	</pre>
+	<!-- TESTCASE STOP -->
+</body>
+</html>

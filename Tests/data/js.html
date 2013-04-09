@@ -1,0 +1,264 @@
+<pre class="js:git">
+// Comments
+/* This
+ is a
+ block
+ * comment
+ */
+
+/** Numbers */
+345;    // an "integer", although there is only one numeric type in JavaScript
+34.5;   // a floating-point number
+3.45e2; // another floating-point, equivalent to 345
+0377;   // an octal integer equal to 255
+0xFF;   // a hexadecimal integer equal to 255, the letters A-F may be upper- or lowercase
+
+/** Strings */
+var greeting = "Hello, world!";
+var another_greeting = 'Greetings, people of Earth.';
+var escaped_strings = "Hello from an \" escaped string" + 'this should \' work';
+
+/** Regex */
+var regex = new RegExp("pattern" [, "flags"]);
+var literal = /pattern/gimy;
+
+/** Snippet */
+var Fuel = new Class({
+	
+	Implements: [Options],
+	options: {
+		matchType: "standard",
+		strict: false
+	},
+	language: '',
+	defaultFlame: 'standard',
+	
+	patterns: new Hash(),
+	keywords: new Hash(),
+	rules:    new Hash(),
+	delimiters: new Hash({
+		start: null,
+		end: null
+	}),
+
+	/************************
+	 * Common Regex Rules
+	 ***********************/
+	common: {	
+		slashComments: /(?:^|[^\\])\/\/.*$/gm, // Matches a C style single-line comment.
+		poundComments: /#.*$/gm,                 // Matches a Perl style single-line comment.
+		multiComments: /\/\*[\s\S]*?\*\//gm,     // Matches a C style multi-line comment.
+		aposStrings:   /'[^'\\]*(?:\\.[^'\\]*)*'/gm, // Matches a string enclosed by single quotes.
+		quotedStrings: /"[^"\\]*(?:\\.[^"\\]*)*"/gm, // Matches a string enclosed by double quotes.
+		strings:       /'[^'\\]*(?:\\.[^'\\]*)*'|"[^"\\]*(?:\\.[^"\\]*)*"/gm, // Matches both.
+		properties:    /\.([\w]+)\s*/gi,   // Matches a property: .property style.
+		methodCalls:   /\.([\w]+)\s*\(/gm, // Matches a method call: .methodName() style.
+		functionCalls: /\b([\w]+)\s*\(/gm,   // Matches a function call: functionName() style.
+		brackets:      /\{|\}|\(|\)|\[|\]/g, // Matches any of the common brackets.
+		numbers:       /\b((?:(\d+)?\.)?[0-9]+|0x[0-9A-F]+)\b/gi // Matches integers, decimals, hexadecimals.
+	},
+	
+	/************************
+	 * Fuel Constructor
+	 ***********************/
+	initialize: function(lighter, flame, options, wicks) {
+		this.setOptions(options);
+		this.wicks = wicks || [];
+		options = this.options;
+		
+		// Set Lighter/Fuel/Flame relationship.
+		this.lighter = lighter;
+		this.flame = new Flame[flame || this.defaultFlame](lighter, this);
+		
+		// Add delimiter rules if not in strict mode
+		if (!options.strict) {
+			if (this.delimiters.start) this.addFuel('delimBeg', this.delimiters.start, 'de1');
+			if (this.delimiters.end)   this.addFuel('delimEnd', this.delimiters.end,   'de2');
+		}
+		
+		// Set Keyword Rules from this.keywords object.
+		this.keywords.each(function(keywordSet, ruleName) {
+			if (keywordSet.csv != '') {
+				this.addFuel(ruleName, this.csvToRegExp(keywordSet.csv, "g"), keywordSet.alias);
+			}
+		}, this);
+		
+		// Set Rules from this.patterns object.
+		this.patterns.each(function(regex, ruleName) {
+			this.addFuel(ruleName, regex.pattern, regex.alias);
+		}, this);
+		
+		// Set builder object for matchType.
+		this.builder = new Hash({
+			'standard': this.findMatches,
+			'lazy':     this.findMatchesLazy
+		});
+		
+		/** Process source code based on match type. */
+		var codeBeg = 0,
+		    codeEnd = lighter.code.length,
+		    codeSeg = '',
+		    delim   = this.delimiters,
+		    matches = [],
+		    match   = null,
+		    endMatch = null;
+		
+		if (!options.strict) {
+			// Find matches through the complete source code.
+			matches.extend(this.builder[options.matchType].pass(lighter.code, this)());
+		} else if (delim.start && delim.end) {
+			// Find areas between language delimiters and find matches there.
+			while ((match = delim.start.exec(lighter.code)) != null ) {
+				delim.end.lastIndex = delim.start.lastIndex;
+				if ((endMatch = delim.end.exec(lighter.code)) != null ) {
+					matches.push(new Wick(match[0], 'de1', match.index));
+					codeBeg = delim.start.lastIndex;
+					codeEnd = endMatch.index-1;
+					codeSeg = lighter.code.substring(codeBeg, codeEnd);
+					matches.extend(this.builder[options.matchType].pass([codeSeg, codeBeg], this)());
+					matches.push(new Wick(endMatch[0], 'de2', endMatch.index));
+				}
+			}
+		}
+		this.wicks = matches;
+	},
+	
+	/************************
+	 * Regex Helper methods.
+	 ***********************/
+	addFuel: function(fuelName, RegEx, className) {
+		this.rules[fuelName] = RegEx;
+		this.flame.addAlias(fuelName, className);
+	},
+	csvToRegExp: function(csv, mod) {return new RegExp('\\b(' + csv.replace(/,\s*/g, '|') + ')\\b', mod);},
+	delimToRegExp: function(beg, esc, end, mod, suffix) {
+		beg = beg.escapeRegExp();
+		if (esc) esc = esc.escapeRegExp();
+		end = (end) ? end.escapeRegExp() : beg;
+		pat = (esc) ? beg+"[^"+end+esc+'\\n]*(?:'+esc+'.[^'+end+esc+'\\n]*)*'+end : beg+"[^"+end+'\\n]*'+end;
+		return new RegExp(pat+(suffix || ''), mod || '');
+	},
+	strictRegExp: function() {
+		var regex = '(';
+		for (var i = 0; i &lt; arguments.length; i++) {
+			regex += arguments[i].escapeRegExp();
+			regex += (i &lt; arguments.length - 1) ? '|' : '';
+		}
+		regex += ')';
+		return new RegExp(regex, &quot;gim&quot;);
+	},
+	
+	/************************
+	 * Match finding Methods
+	 ***********************/
+	findMatches: function(code, offset) {
+		var wicks       = [],
+		    startIndex  = 0,
+		    matchIndex  = code.length
+		    insertIndex = 0,
+		    match      = null,
+		    type       = null,
+		    newWick    = null,
+		    rule       = null,
+		    rules      = {},
+		    currentMatch = null,
+		    futureMatch  = null;
+		
+		offset = (offset) ? offset : 0;
+		this.rules.each(function(regex, rule) {
+			rules[rule] = {pattern: regex, enabled: true, lastIndex: 0};
+		}, this);
+		    
+		while(startIndex &lt; code.length) {
+			matchIndex = code.length;
+			match = null;
+			for (rule in rules) {
+				rules[rule].pattern.lastIndex = startIndex;
+				currentMatch = rules[rule].pattern.exec(code);
+				if (currentMatch === null) {
+					delete rules[rule];
+				} else {
+					if (currentMatch.index &lt; matchIndex) {
+			      match      = currentMatch;
+			      type       = rule;
+			      matchIndex = currentMatch.index;
+			    } else if (currentMatch.index == matchIndex &amp;& match[0].length &lt; currentMatch[0].length) {
+						match      = currentMatch;
+						type       = rule;
+						matchIndex = currentMatch.index;
+					}
+			    rules[rule].nextIndex = rules[rule].pattern.lastIndex - currentMatch[0].length;
+			  }
+			}
+			if (match != null) {
+				index = (match[1] &amp;& match[0].contains(match[1])) ? match.index + match[0].indexOf(match[1]) : match.index;
+				newWick = new Wick(match[1] || match[0], type, index+offset);
+				wicks.push(newWick);
+				
+				futureMatch = rules[type].pattern.exec(code);
+	      if (!futureMatch) {
+	      	rules[type].nextIndex = code.length;
+	      } else {
+	      	rules[type].nextIndex = rules[type].pattern.lastIndex - futureMatch[0].length;
+	      }
+				
+				var min = code.length;
+				for (rule in rules) {
+					if (rules[rule].nextIndex &lt; min) {
+						min = rules[rule].nextIndex;
+					}
+				}
+				startIndex = Math.max(min, newWick.end - offset);
+			} else {
+				break;
+			}
+		}
+		return wicks;
+	},
+	findMatchesLazy: function(code, offset) {
+		var wicks = this.wicks,
+		    match = null
+		    index = 0;
+		
+		offset = (offset) ? offset : 0;
+		
+		this.rules.each(function(regex, rule) {
+			while ((match = regex.exec(code)) != null) {
+				index = (match[1] &amp;& match[0].contains(match[1])) ? match.index + match[0].indexOf(match[1]) : match.index;
+				wicks.push(new Wick(match[1] || match[0], rule, index + offset));
+			}
+		}, this);
+		return this.purgeWicks(wicks);
+	},
+	purgeWicks: function(wicks) {
+		wicks = wicks.sort(this.compareWicks);
+		for (var i = 0, j = 0; i &lt; wicks.length; i++) {
+			if (wicks[i] == null) continue;
+			for (j = i+1; j &lt; wicks.length &amp;& wicks[i] != null; j++) {
+				if      (wicks[j] == null)            {continue;}
+				else if (wicks[j].isBeyond(wicks[i])) {break;}
+				else if (wicks[j].overlaps(wicks[i])) {wicks[i] = null;}
+				else if (wicks[i].contains(wicks[j])) {wicks[j] = null;}
+			}
+		}
+		return wicks.clean();
+	},
+	compareWicks: function(wick1, wick2) {return wick1.index - wick2.index;}
+});
+
+var Wick = new Class({
+
+	initialize: function(match, type, index) {
+		this.text   = match;
+		this.type   = type;
+		this.index  = index;
+		this.length = this.text.length;
+		this.end    = this.index + this.length;
+	},
+	contains: function(wick) {return (wick.index &gt;= this.index &amp;& wick.index &lt; this.end);},
+	isBeyond: function(wick) {return (this.index &gt;= wick.end);},
+	overlaps: function(wick) {return (this.index == wick.index &amp;& this.length &gt; wick.length);},
+	toString: function() {return this.index+' - '+this.text+' - '+this.end;}
+});
+
+</pre>

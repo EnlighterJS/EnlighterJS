@@ -1,0 +1,107 @@
+/*
+---
+description: MacRabbit Espresso inspired theme.
+
+license: MIT-style
+
+authors:
+- Jose Prado
+
+...
+*/
+.tuttiLighter {
+	font-family: Monaco, Courier, Monospace;
+	font-size: 12px;
+	overflow: auto;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -o-pre-wrap;
+	white-space: -pre-wrap;
+	word-wrap: break-word;
+}
+.tuttiLighter span {
+	color: black;
+	font-size: 12px;
+}
+.tuttiLighter .tuttinum {
+	background-color: #f2f2f2;
+	color: #939393;
+	font-size: 10px;
+	text-align: center;
+	width: 30px;
+}
+.tuttiLighter .tuttiline {
+	background-color: #fff;
+	border-left: 1px solid #f9f9f9;
+	padding: 0 3px 0 10px;
+	padding-left: 15px;
+	padding-right: 5px;
+}
+.tuttiLighter .tuttifirst { padding-top: 5px; }
+.tuttiLighter .tuttilast  { padding-bottom: 5px; }
+.tuttiLighter .alt { background-color: #F4F8FC; color: #000; }
+
+/** Pre specific styles */
+pre.tuttiLighter {
+	padding-left: 15px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+/** OL specific styles */
+ol.tuttiLighter {
+	background-color: #fbfbfb;
+	color: #aaa;
+	font-size: 10px;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+	padding-left: 0;
+}
+ol.tuttiLighter li {
+	background-color: #fff;
+	margin-left: 40px;
+}
+
+/** Div specific styles */
+div.tuttiLighter .tuttinum {
+	background-color: #fbfbfb;
+	display: block;
+	float: left;
+	min-height: 16px;
+}
+div.tuttiLighter .tuttiline {
+	display: block;
+	margin-left: 30px;
+	min-height: 16px;
+}
+div.tuttiLighter div {
+	background-color: #fff;
+	clear: left;
+	overflow: auto;
+}
+
+/** Table specific styles */
+table.tuttiLighter .tuttinum {}
+table.tuttiLighter .tuttiline {}
+	
+/** Symbol styles */
+.tuttiLighter .de1 { color: #6eb13f; }
+.tuttiLighter .de2 { color: #6eb13f; }
+.tuttiLighter .kw1 { color: #8600c9; }
+.tuttiLighter .kw2 { color: #3a1d72; font-weight: bold; }
+.tuttiLighter .kw3 { color: #4F9FCF; }
+.tuttiLighter .kw4 { color: #4F9FCF; }
+.tuttiLighter .co1 { color: #bbb; }
+.tuttiLighter .co2 { color: #bbb; }
+.tuttiLighter .st0 { color: #bc670f; background-color: rgba(251,233,173,0.1);}
+.tuttiLighter .st1 { color: #bc670f; background-color: rgba(251,233,173,0.1);}
+.tuttiLighter .st2 { color: #bc670f; background-color: rgba(251,233,173,0.1);}
+.tuttiLighter .nu0 { color: #6700b9; }
+.tuttiLighter .me0 { color: #000; }
+.tuttiLighter .me1 { color: #6eb13f; font-weight: bold; }
+.tuttiLighter .br0 { color: #4f4f4f; }
+.tuttiLighter .sy0 { color: #626fc9; }
+.tuttiLighter .es0 { color: #4f4f4f; }
+.tuttiLighter .re0 { color: #d44950; }

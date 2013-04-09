@@ -1,0 +1,105 @@
+/*
+---
+description: TextMate mocha inspired theme.
+
+license: MIT-style
+
+authors:
+- Jose Prado
+
+...
+*/
+.mochaLighter {
+	color: #f8f8f8;
+	font-family: Monaco, Courier, monospace;
+	font-size: 12px;
+	overflow: auto;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -o-pre-wrap;
+	white-space: -pre-wrap;
+	word-wrap: break-word;
+}
+.mochaLighter span {
+	font-size: 12px;
+	color: #f8f8f8;
+}
+.mochaLighter .mochanum {
+	background-color: #BBCCD5;
+	color: #000;
+	font-size: 10px;
+	text-align: center;
+	width: 30px;
+}
+.mochaLighter .mochaline {
+	border-left: 2px solid #939393;
+	background-color: #2D2522;
+	padding-left: 15px;
+	padding-right: 5px;
+}
+.mochaLighter .mochafirst { padding-top: 10px; }
+.mochaLighter .mochalast { padding-bottom: 10px; }
+.mochaLighter .alt { background-color: #423F43; }
+
+/** Inline specific styles */
+code.mochaLighter { background-color: #2D2522; }
+
+/** Pre specific styles */
+pre.mochaLighter {
+	background-color: #2D2522;
+	padding-left: 15px;
+	padding-right: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+/** OL specific styles */
+ol.mochaLighter {
+	background-color: #BBCCD5;
+	color: #000;
+	font-size: 10px;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+	padding-left: 0;
+}
+ol.mochaLighter li { margin-left: 40px; }
+
+/** Div specific styles */
+div.mochaLighter .mochanum {
+	display: block;
+	float: left;
+}
+div.mochaLighter .mochaline {
+	display: block;
+	margin-left: 30px;
+	min-height: 16px;
+}
+div.mochaLighter div {
+	clear: left;
+	overflow: auto;
+	background-color: #BBCCD5;
+}
+
+/** Table specific styles */
+table.mochaLighter .mochanum  {}
+table.mochaLighter .mochaline {}
+
+/** Symbol Styles */
+.mochaLighter .de1 { color: #CF6A4C; }
+.mochaLighter .de2 { color: #CF6A4C; }
+.mochaLighter .kw1 { color: #CDA869; }
+.mochaLighter .kw2 { color: #CACD69; }
+.mochaLighter .kw3 { color: #afc4db; }
+.mochaLighter .kw4 { color: #CF6A4C; }
+.mochaLighter .co1 { color: #5F5A60; font-style: italic; }
+.mochaLighter .co2 { color: #5F5A60; font-style: italic; }
+.mochaLighter .st0 { color: #8F9D6A; }
+.mochaLighter .st1 { color: #8F9D6A; }
+.mochaLighter .st2 { color: #DDF2A4; }
+.mochaLighter .nu0 { color: #5B97B5; }
+.mochaLighter .me0 { color: #C5AF75; }
+.mochaLighter .me1 { color: #C5AF75; }
+.mochaLighter .br0 { color: #777; }
+.mochaLighter .sy0 { color: #777; }
+.mochaLighter .es0 { color: #777; }
+.mochaLighter .re0 { color: #B55B8B; }
