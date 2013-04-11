@@ -9,17 +9,17 @@ authors:
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
 
-provides: [Fuel.js]
+provides: [Language.js]
 ...
 */
-Fuel.js = new Class({
+Language.js = new Class({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'js',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.keywords = {
             commonKeywords: {
@@ -76,6 +76,6 @@ Fuel.js = new Class({
             end:   this.strictRegExp('</script>')
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
 });

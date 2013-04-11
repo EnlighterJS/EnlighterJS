@@ -11,15 +11,15 @@ requires:
   - Core/1.3
   - Fuel
 
-provides: [Fuel.css]
+provides: [Language.css]
 ...
 */
-Fuel.css = new Class({
+Language.css = new Class({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'css',
         
-    initialize: function(options) {
+    initialize: function(code, options) {
         
         this.keywords = {
             css1: {
@@ -55,6 +55,6 @@ Fuel.css = new Class({
             end:   this.strictRegExp('</style>')
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
 });

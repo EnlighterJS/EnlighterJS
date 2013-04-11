@@ -9,17 +9,17 @@ authors:
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
 
-provides: [Fuel.md]
+provides: [Language.md]
 ...
 */
-Fuel.md = new Class ({
+Language.md = new Class ({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'md',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.patterns = {
             'header1': { pattern: /^(.+)\n=+\n/gim,   alias: 'st1' },
@@ -32,7 +32,7 @@ Fuel.md = new Class ({
             'url':     { pattern: /\[[^\]]*\]\([^\)]*\)/g, alias: 'kw4' }
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
     
 });

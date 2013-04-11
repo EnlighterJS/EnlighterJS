@@ -9,17 +9,17 @@ authors:
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
 
-provides: [Fuel.shell]
+provides: [Language.shell]
 ...
 */
-Fuel.shell = new Class ({
+Language.shell = new Class ({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'shell',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.keywords = {
             keywords: {
@@ -43,6 +43,6 @@ Fuel.shell = new Class ({
             }
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
 });

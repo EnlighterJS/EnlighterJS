@@ -9,17 +9,17 @@ authors:
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
 
-provides: [Fuel.ruby]
+provides: [Language.ruby]
 ...
 */
-Fuel.ruby = new Class ({
+Language.ruby = new Class ({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'ruby',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.keywords = {
             reserved: {
@@ -60,6 +60,6 @@ Fuel.ruby = new Class ({
             'literalRegex': { pattern: this.delimToRegExp("/", "\\", "/", "g", "[iomx]*"),           alias: 're0' }
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
 });

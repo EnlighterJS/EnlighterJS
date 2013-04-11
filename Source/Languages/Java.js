@@ -6,29 +6,38 @@ license: MIT-style
 
 authors:
   - Italo Maia
+  - Andi Dittrich
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
   
-provides: [Fuel.java]
+provides: [Language.java]
 ...
 */
-Fuel.java = new Class ({
+Language.java = new Class ({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'java',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.keywords = {
             reserved: {
-                csv:   "abstract, continue, for, new, switch, assert, default, goto, package, synchronized, do, if, private, this, break, implements, protected, throw, else, import, public, throws, case, instanceof, return, transient, catch, extends, try, final, interface, static, void, class, finally, strictfp, volatile, const, native, super, while",
+                csv:   "continue, for, new, switch, assert, default, goto, synchronized, do, if, this, break, throw, else, throws, case, instanceof, return, transient, catch, try, final, finally, strictfp, volatile, const, native, super, while",
                 alias: 'kw1'
             },
+            keywords: {
+            	csv:   "abstract, package, private, implements, protected, public, import, extends, interface, static, void, class",
+            	alias: 'kw3'
+            },
             primitives: {
-                csv:   "byte, short, int, long, float, double, boolean, char",
+                csv:   "byte, short, int, long, float, double, boolean, char, String",
                 alias: 'kw2'
+            },
+            internal: {
+            	csv:   "System",
+            	alias: 'kw4'
             }
         },
         
@@ -40,9 +49,10 @@ Fuel.java = new Class ({
             'annotation':    { pattern: /@[\W\w_][\w\d_]+/gm, alias: 'st1' },
             'numbers':       { pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][-+]?[0-9]+)?|0x[A-F0-9]+|0b[0-1_]+)\b/gim, alias: 'nu0' },
             'properties':    { pattern: this.common.properties, alias: 'me0' },
-            'brackets':      { pattern: this.common.brackets, alias: 'br0' }
+            'brackets':      { pattern: this.common.brackets, alias: 'br0' },
+            'functionCalls': { pattern: this.common.functionCalls, alias: 'de1'}
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
 });

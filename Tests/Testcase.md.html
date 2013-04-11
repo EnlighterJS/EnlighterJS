@@ -6,7 +6,7 @@
 	<title>EnlighterJS - md</title>
 	
 	<!-- Include EnlighterJS Styles -->
-	<link rel="stylesheet" type="text/css" href="../Build/EnlighterJS.yui.css" />
+	<link rel="stylesheet" type="text/css" href="../Build/EnlighterJS.css" />
 	
 	<!-- Include MooTools Framework -->
 	<script type="text/javascript" src="mootools-core-1.4.5-full-nocompat.js"></script>
@@ -29,20 +29,20 @@
 
 	<!-- TESTCASE START -->
 	<pre class="md:git">
-Wicks.js Documentation
+Tokens.js Documentation
 
-Class: Wick {#Wick}
+Class: Token {#Token}
 ===================
 
-[Lighter.js]() helper class. Creates a new Wick instance which stores relevant info about matched RegEx bits.
+[Lighter.js]() helper class. Creates a new Token instance which stores relevant info about matched RegEx bits.
 
 
-Wick Method: constructor {#Wick:constructor}
+Token Method: constructor {#Token:constructor}
 --------------------------------------------
 
 ### Syntax:
 
-	var myWick = new Wick(match, type, index);
+	var myToken = new Token(match, type, index);
 
 ### Arguments:
 
@@ -52,64 +52,64 @@ Wick Method: constructor {#Wick:constructor}
 
 ### Returns:
 
-* (*object*) A new Wick instance.
+* (*object*) A new Token instance.
 
 
 
-Wick Method: contains {#Wick:contains}
+Token Method: contains {#Token:contains}
 --------------------------------------
 
-Checks if a Wick is contained within another wick. E.g. The index property is located within the start and end indexes of the other Wick. 
+Checks if a Token is contained within another token. E.g. The index property is located within the start and end indexes of the other Token. 
 
 ### Syntax:
 
-	wick1.contains(wick2);
+	token1.contains(token2);
 
 ### Arguments:
 
-1. wick - (*Wick*) The Wick object to find.
+1. token - (*Token*) The Token object to find.
 
 ### Returns:
 
-* (*boolean*) Whether or not Wick2 begins within Wick1.
+* (*boolean*) Whether or not Token2 begins within Token1.
 
 
 
-Wick Method: isBeyond {#Wick:isBeyond}
+Token Method: isBeyond {#Token:isBeyond}
 --------------------------------------
 
-Checks if a Wick is located past another Wick. E.g. The index property is located past the index+length properties of the other Wick.
+Checks if a Token is located past another Token. E.g. The index property is located past the index+length properties of the other Token.
 
 ### Syntax:
 
-	wick1.isBeyond(wick2);
+	token1.isBeyond(token2);
 
 ### Arguments:
 
-1. wick - (*Wick*) The Wick object to compare with.
+1. token - (*Token*) The Token object to compare with.
 
 ### Returns:
 
-* (*boolean*) Whether or not wick1 is located past wick2.
+* (*boolean*) Whether or not token1 is located past token2.
 
 
 
-Wick Method: overlaps {#Wick:overlaps}
+Token Method: overlaps {#Token:overlaps}
 ---------------------------------------
 
-Checks if a Wick overlaps another Wick if they begin at the same index. E.g. The index properties are the same and the length is longer than the length of the other Wick.
+Checks if a Token overlaps another Token if they begin at the same index. E.g. The index properties are the same and the length is longer than the length of the other Token.
 
 ### Syntax:
 
-	wick1.overlaps(wick2);
+	token1.overlaps(token2);
 
 ### Arguments:
 
-1. wick - (*Wick*) The Wick object to compare with.
+1. token - (*Token*) The Token object to compare with.
 
 ### Returns:
 
-* (*boolean*) Whether or not wick1 overlaps wick2.
+* (*boolean*) Whether or not token1 overlaps token2.
 </pre>
 	<!-- TESTCASE STOP -->
 </body>

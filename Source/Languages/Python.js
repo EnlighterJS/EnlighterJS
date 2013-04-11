@@ -9,17 +9,17 @@ authors:
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
 
-provides: [Fuel.python]
+provides: [Language.python]
 ...
 */
-Fuel.python = new Class({
+Language.python = new Class({
     
-    Extends:Fuel,
+    Extends:Language,
     language:'python',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.keywords = {
             reserved:{
@@ -95,6 +95,6 @@ Fuel.python = new Class({
             }
         };
           
-        this.parent(options);
+        this.parent(code, options);
     }
 });

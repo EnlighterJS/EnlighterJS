@@ -1,16 +1,15 @@
 /*
 ---
-description: Compiles an array of Wicks into an Element.
+description: Compiles an array of Tokens into an Element.
 
 license: MIT-style
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
-  - Core/1.3
-  - Fuel
-  - Wick
+  - Core/1.4.5
 
 provides: [Compiler]
 ...
@@ -38,20 +37,20 @@ var Compiler = this.Compiler = new Class({
     },
     
     /**
-     * Compiles an array of wicks into a highlighted element using a fuel and
-     * a flame.
+     * Compiles an array of tokens into a highlighted element using a language and
+     * a theme.
      * 
-     * @param {Fuel}   fuel  The Fuel used when parsing.
-     * @param {String} flame The Flame to use.
-     * @param {Array}  wicks The array of wicks to compile.
+     * @param {Language}   language  The Language used when parsing.
+     * @param {String} theme The Theme to use.
+     * @param {Array}  tokens The array of tokens to compile.
      * @return {Element} The generated Element.
      */
-    compile: function(fuel, flame, wicks)
+    compile: function(language, theme, tokens)
     {
-        var lighter = this._compile(fuel, flame, wicks);
+        var lighter = this._compile(language, theme, tokens);
         
         // Set class and id attributes.
-        lighter.set('class', flame + 'Lighter');
+        lighter.set('class', theme + 'Lighter');
         lighter.set('id', 'Lighter_' + Date.now());
         
         if (this.options.editable) {
@@ -63,9 +62,9 @@ var Compiler = this.Compiler = new Class({
     
     /**
      * Extending classes must override this method and return a highlighted
-     * Element using the fuel and flame that were passed in.
+     * Element using the language and theme that were passed in.
      */
-    _compile: function(fuel, flame, wicks)
+    _compile: function(language, theme, tokens)
     {
         throw new Error('Extending classes must override the _compile method.');
     }
@@ -80,20 +79,25 @@ license: MIT-style
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
   - Core/1.3
 
-provides: [Fuel]
+provides: [Language]
 ...
 */
 (function() {
     
-var Fuel = this.Fuel = new Class({
+var Language = this.Language = new Class({
     
     Implements: [Options],
     options: {},
+    
     language: '',
+    tokenizerType: 'Lazy',
+    tokenizer: null,
+    code: null,
     
     
     patterns:   {},
@@ -128,12 +132,16 @@ var Fuel = this.Fuel = new Class({
      * @constructs
      * @param {Object} options
      */
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.setOptions(options);
         
         this.aliases = {};
         this.rules   = {};
+        this.code = code;
+        
+        // create new tokenizer
+        this.tokenizer = new Tokenizer[this.tokenizerType](options);
         
         // Add delimiter rules.
         if (this.delimiters.start) {
@@ -146,6 +154,7 @@ var Fuel = this.Fuel = new Class({
         
         // Set Keyword Rules from this.keywords object.
         Object.each(this.keywords, function(keywordSet, ruleName) {
+        	// keyword set contains elements ?
             if (keywordSet.csv != '') {
                 this.addRule(ruleName, this.csvToRegExp(keywordSet.csv, keywordSet.mod || "g"), keywordSet.alias);
             }
@@ -156,6 +165,11 @@ var Fuel = this.Fuel = new Class({
             this.addRule(ruleName, regex.pattern, regex.alias);
         }, this);
     },
+    
+    getTokens: function(){
+    	return this.tokenizer.parse(this, this.code, 0);
+    },
+    
     
     getRules: function()
     {
@@ -205,9 +219,9 @@ var Fuel = this.Fuel = new Class({
     }
 });
 
-Fuel.standard = new Class({
+Language.standard = new Class({
     
-    Extends: Fuel,
+    Extends: Language,
     
     initialize: function(options)
     {
@@ -220,383 +234,255 @@ Fuel.standard = new Class({
 ---
 description: Builds and displays an element containing highlighted code bits.
 
-license: MIT-style
+license: MIT-style X11 License
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
-  - Core/1.3
-  - Compiler
-  - Fuel
-  - Loader
-  - Parser
-  - Wick
+  - Core/1.4.5
 
-provides: [Lighter]
+provides: [EnlighterJS]
 ...
-*/
+ */
 (function() {
 
-var Lighter = this.Lighter = new Class({    
-    
-    Implements: [Options, Events],
-    
-    options: {
-        compiler: null,
-        fuel:     'standard',
-        flame:    'standard',
-        indent:   -1,
-        loader:   null,
-        parser:   null
-    },
-    
-    /**
-     * @constructs
-     * @param {Object} options The options object.
-     * @return {Lighter} The current Lighter instance.
-     */
-    initialize: function(options)
-    {
-        this.setOptions(options);
-        this.setLoader(this.options.loader);
-        this.setParser(this.options.parser);
-        this.setCompiler(this.options.compiler);
-        
-        return this;
-    },
-    
-    /**
-     * Sets the Loader.
-     * 
-     * @param {Loader} loader
-     * @return {Lighter}
-     */
-    setLoader: function(loader)
-    {
-        this.loader = loader || new Loader();
-        return this;
-    },
+	var EnlighterJS = this.EnlighterJS = new Class({
 
-    
-    /**
-     * Sets the Parser.
-     * 
-     * @param {Parser} parser
-     * @return {Lighter}
-     */
-    setParser: function(parser)
-    {
-        this.parser = parser || new Parser.Smart();
-        return this;
-    },
+		Implements : Options,
 
-    
-    /**
-     * Sets the Compiler.
-     * 
-     * @param {Compiler} compiler
-     * @return {Lighter}
-     */
-    setCompiler: function(compiler)
-    {
-        this.compiler = compiler || new Compiler.Inline();
-        return this;
-    },
-    
-    /**
-     * Takes a codeblock and highlights the code inside of it using the stored
-     * parser/compilers. It reads the class name to figure out what fuel and
-     * flame to use for highlighting.
-     * 
-     * @param {String|Element} codeblock   The codeblock to highlight.
-     * @param {String|Element} [container] Optional container to inject the highlighted element into.
-     * @return {Lighter} The current Lighter instance.
-     */
-    light: function (codeblock, container)
-    {
-        var codeblock = document.id(codeblock),
-            container = document.id(container),
-            lighter   = codeblock.retrieve('lighter'),
-            code      = this.getCode(codeblock),
-            ff        = this.parseClass(codeblock.get('class')),
-            fuel      = ff.fuel  || this.options.fuel,
-            flame     = ff.flame || this.options.flame;
-        
-        // Lighting is in progress.
-        if (lighter === true) {
-            return this;
-        }
-        
-        // Lighter exists so just toggle display.
-        if (lighter !== null) {
-            codeblock.setStyle('display', 'none');
-            lighter.setStyle('display', 'inherit');
-            return this;
-        }
+		options : {
+			language : 'standard',
+			theme : 'standard',
+			indent : -1
+		},
 
-        // Load fuel/flame to and build lighter when ready.
-        this.loader.loadFlame(flame);
-        this.loader.loadFuel(fuel, function() {
-            
-            fuel = new Fuel[fuel]();
-            
-            var wicks   = this.parser.parse(fuel, code),
-                lighter = this.compiler.compile(fuel, flame, wicks);
-            
-            lighter.store('codeblock', codeblock);
-            lighter.store('plaintext', code);
-            codeblock.store('lighter', lighter);
-            
-            if (container) {
-                container.empty();
-                lighter.inject(container);
-            } else {
-                codeblock.setStyle('display', 'none');
-                lighter.inject(codeblock, 'after');
-            }
-            
-            return this;
-            
-        }.bind(this), function() {
-            throw new Error('Could not load fuel ' + fuel + 'successfully.');
-        }.bind(this));
-        
-        // Mark codeblock as lighter initialized.
-        codeblock.store('lighter', true);
-        
-        return this;
-    },
-    
-    /**
-     * Unlights a codeblock by hiding the lighter element if present and
-     * re-displaying the original code.
-     * 
-     * @param {String|Element} codeblock The element to unlight.
-     * @return {Lighter} The current Lighter instance.
-     */
-    unlight: function(codeblock)
-    {
-        codeblock = document.id(codeblock);
-        
-        var lighter = codeblock.retrieve('lighter');
-        
-        if (lighter !== null) {
-            codeblock.setStyle('display', 'inherit');
-            lighter.setStyle('display', 'none');
-        }
-        
-        return this;
-    },
-    
-    /**
-     * Extracts the code from a codeblock.
-     * 
-     * @param {Element} codeblock The codeblock that contains the code.
-     * @return {String} The plain-text code.
-     */
-    getCode: function(codeblock)
-    {
-        var code = codeblock.get('html')
-            .replace(/(^\s*\n|\n\s*$)/gi, '')
-            .replace(/&lt;/gim, '<')
-            .replace(/&gt;/gim, '>')
-            .replace(/&amp;/gim, '&');
-    
-        // Re-indent code if user option is set.
-        if (this.options.indent > -1) {
-            code = code.replace(/\t/g, new Array(this.options.indent + 1).join(' '));
-        }
-        
-        return code;
-    },
-    
-    /**
-     * Parses a class name for a fuel/flame combo.
-     * 
-     * @param {String} className The class name to parse.
-     * @return {Object} A hash containing the found fuel/flames.
-     * @todo Find fuel/flame anywhere in the class, not just at the front.
-     */
-    parseClass: function(className)
-    {
-        var classNames = className.split(' ');
-        
-        switch (classNames.length) {
-            case 0: // No language! Simply wrap in Lighter.js standard Fuel/Flame.
-                break;
-                
-            case 1: // Single class, assume this is the fuel/flame
-                ff = classNames[0].split(':');
-                break;
-                
-            default: // More than one class, let's give the first one priority for now.
-                ff = classNames[0].split(':');
-                break;
-        }
-        
-        return {
-            fuel:  ff[0],
-            flame: ff[1]
-        };
-    }
-});
+		compiler : null,
 
-Element.implement({
-    /**
-     * Lights an element.
-     * 
-     * @param {Object} [options] The options object to use.
-     * @returns {Element} The current Element instance.
-     */
-    light: function(options)
-    {
-        var lighter = this.retrieve('highlighter');
-        
-        if (lighter === null) {
-            lighter = new Lighter(options);
-            this.store('highlighter', lighter);
-        }
-        
-        lighter.light(this);
-        
-        return this;
-    },
-    
-    /**
-     * Unlights an element.
-     * 
-     * @returns {Element} The current Element instance.
-     */
-    unlight: function()
-    {
-        var lighter = this.retrieve('highlighter');
-        
-        if (lighter !== null) {
-            lighter.unlight(this);
-        }
-        
-        return this;
-    }
-});
+		/**
+		 * @constructs
+		 * @param {Object}
+		 *            options The options object.
+		 * @return {EnlighterJS} The current EnlighterJS instance.
+		 */
+		initialize : function(options) {
+			this.setOptions(options);
+			
+			// valid language selected ?
+			if (!Language[this.options.language]){
+				this.options.language = 'standard';
+			}
+			
+			// initialize compiler & parser
+			this.compiler = new Compiler.Inline();
+
+			return this;
+		},
+
+		/**
+		 * Takes a codeblock and highlights the code inside of it using the
+		 * stored parser/compilers. It reads the class name to figure out what
+		 * language and theme to use for highlighting.
+		 * 
+		 * @param {String|Element} codeblock The codeblock to highlight.
+		 * @param {String|Element} [container] Optional container to inject the highlighted element into.
+		 * @return {EnlighterJS} The current EnlighterJS instance.
+		 */
+		light : function(codeblock, container){
+			// get elements
+			var codeblock = document.id(codeblock);
+			var container = document.id(container);
+			
+			// extract code to highlight
+			var code = this.getCode(codeblock);
+
+			// extract options from css class
+			var inlineOptions = this.parseClass(codeblock.get('class'));
+
+			// enlighter object available ?
+			var enlighter = codeblock.retrieve('enlighter');
+						
+			// EnlighterJS exists so just toggle display.
+			if (enlighter !== null) {
+				codeblock.setStyle('display', 'none');
+				enlighter.setStyle('display', 'inherit');
+				return this;
+			}			
+
+			// Load language parser
+			language = new Language[inlineOptions.language](code, {});
+
+			// parse/tokenize the code
+			var tokens = language.getTokens();
+			
+			// compile tokens -> generate output
+			var output = this.compiler.compile(language, inlineOptions.theme, tokens);
+
+			//output.store('codeblock', codeblock);
+			//output.store('plaintext', code);
+
+			// grab content into specific container or after original code block ?
+			if (container) {
+				container.empty();
+				container.grab(output);
+			} else {
+				codeblock.setStyle('display', 'none');
+				output.inject(codeblock, 'after');
+			}
+
+			// store generated element into original one
+			codeblock.store('enlighter', this);
+
+			return this;
+		},
+
+		/**
+		 * Unlights a codeblock by hiding the enlighter element if present and
+		 * re-displaying the original code.
+		 * 
+		 * @param {String|Element}
+		 *            codeblock The element to unlight.
+		 * @return {EnlighterJS} The current EnlighterJS instance.
+		 */
+		unlight : function(codeblock) {
+			// get element
+			codeblock = document.id(codeblock);
+
+			var enlighter = codeblock.retrieve('enlighter');
+
+			// hide enlighted element, display original
+			if (enlighter !== null) {
+				codeblock.setStyle('display', 'inherit');
+				enlighter.setStyle('display', 'none');
+			}
+
+			return this;
+		},
+
+		/**
+		 * Extracts the code from a codeblock.
+		 * 
+		 * @param {Element}
+		 *            codeblock The codeblock that contains the code.
+		 * @return {String} The plain-text code.
+		 */
+		getCode : function(codeblock) {
+			var code = codeblock.get('html')
+					.replace(/(^\s*\n|\n\s*$)/gi, '')
+					.replace(/&lt;/gim, '<')
+					.replace(/&gt;/gim, '>')
+					.replace(/&amp;/gim, '&');
+
+			// Re-indent code if user option is set.
+			if (this.options.indent > -1) {
+				code = code.replace(/\t/g, new Array(this.options.indent + 1)
+						.join(' '));
+			}
+
+			return code;
+		},
+
+		/**
+		 * Parses a class name for a language:theme combo.
+		 * 
+		 * @param {String} className The html class-name attribute to parse.
+		 * @return {Object} A object containing the found language and theme.
+		 */
+		parseClass : function(className){
+			// extract classname list
+			var classNames = className.split(' ');
+			
+			// parsed params
+			var language = null;
+			var theme = null;
+			
+			// iterate over classes
+			classNames.each(function(item, index){
+				// language already found ? break
+				if (language != null){
+					return;
+				}
+				
+				// extract attribute patterns
+				var attb = item.split(':');
+				
+				// parsed language available ?
+				if (Language[attb[0]]){
+					language = attb[0];
+				}
+				
+				// language:theme pair found ?
+				if (attb.length == 2){
+					theme = attb[1];					
+				}			
+			});
+
+			// fallback - default options:
+			return {
+				language: language || this.options.language,
+				theme:	  theme || this.options.theme
+			};
+		}
+	});
 
 })();
 /*
 ---
-description: File loading engine for Lighter.
+description: Extends MooTools.Element with light(), unlight() shortcuts
 
-license: MIT-style
+license: MIT-style X11 License
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
-  - Core/1.3
+  - Core/1.4.5
 
-provides: [Loader]
+provides: [EnlighterJS]
 ...
-*/
+ */
 (function() {
-    
-var Loader = this.Loader = new Class({
-    
-    Implements: Options,
-    
-    options: {
-        stylesheets: null,
-        scripts:     null
-    },
-    
-    initialize: function(options)
-    {
-        this.setOptions(options);
-        this.stylesheets = {};
-        this.scripts     = {};
-        
-        // Figure out path based on script location of Lighter.js or option passed in.
-        $$('head script').each(function(el) {
-            var script = el.src.split('?', 1),
-                pattern = /(?:Loader|Lighter)\.js$/gi;
-            if (pattern.test(script[0])) {
-                this.basePath = script[0].replace(pattern, '');
-            }
-        }, this);
-        
-        if (this.options.stylesheets === null) {
-            this.options.stylesheets = this.basePath;
-        }
-        
-        if (this.options.scripts === null) {
-            this.options.scripts = this.basePath;
-        }
-        
-        return this;
-    },
-    
-    loadFlame: function(flame)
-    {
-        var fileName = 'Flame.' + flame + '.css?' + Date.now();
-        this.loadStylesheet(fileName, flame);
-        
-        return this;
-    },
 
-    loadFuel: function(fuel, onLoad, onError)
-    {
-        if (typeof(Fuel[fuel]) == 'function' && typeof(Fuel[fuel].prototype) == 'object') {
-            return onLoad();
-        }
-        
-        var fileName = 'Fuel.' + fuel + '.js?' + Date.now();
-        this.loadScript(fileName, fuel, onLoad, onError);
-        
-        return this;
-    },
-    
-    loadStylesheet: function(fileName, hash)
-    {
-        if (this.stylesheets[hash] === undefined) {
-            this.stylesheets[hash] = new Element('link', {
-                rel:   'stylesheet',
-                type:  'text/css',
-                media: 'screen',
-                href:  this.options.stylesheets + fileName
-            }).inject(document.head);
-        }
-        
-        return this;
-    },
-    
-    loadScript: function(fileName, hash, onLoad, onError)
-    {
-        onLoad  = onLoad  || function(){};
-        onError = onError || function(){};
-        
-        var script = this.scripts[hash] || new Element('script', {
-            src:  this.options.scripts + fileName,
-            type: 'text/javascript'
-        });
-        
-        script.addEvents({
-            load:  onLoad,
-            error: onError,
-            readystatechange: function() {
-                if (['loaded', 'complete'].contains(this.readyState)) {
-                    onLoad();
-                }
-            }
-        });
-        
-        if (this.scripts[hash] == undefined) {
-            this.scripts[hash] = script.inject(document.head);
-        }
-        
-        return this;
-    }
-});
+	Element.implement({
+		/**
+		 * Lights an element.
+		 * 
+		 * @param {Object}
+		 *            [options] The options object to use.
+		 * @returns {Element} The current Element instance.
+		 */
+		light : function(options) {
+			var enlighter = this.retrieve('enlighter');
 
-})();
-/*
+			// create new enlighter instance
+			if (enlighter === null) {
+				enlighter = new EnlighterJS(options);
+			}
+
+			enlighter.light(this);
+
+			return this;
+		},
+
+		/**
+		 * Unlights an element.
+		 * 
+		 * @returns {Element} The current Element instance.
+		 */
+		unlight : function() {
+			var enlighter = this.retrieve('enlighter');
+
+			if (enlighter !== null) {
+				enlighter.unlight(this);
+			}
+
+			return this;
+		}
+	});
+
+})();/*
 ---
 description: Code parsing engine for Lighter.
 
@@ -604,18 +490,17 @@ license: MIT-style
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
-  - Core/1.3
-  - Fuel
-  - Wick
+  - Core/1.4.5
 
-provides: [Parser]
+provides: [Tokenizer]
 ...
 */
 (function(){
 
-var Parser = this.Parser = new Class({
+var Tokenizer = this.Tokenizer = new Class({
     
     Implements: [Options],
     
@@ -632,67 +517,68 @@ var Parser = this.Parser = new Class({
     },
     
     /**
-     * Parses source code using fuel regex rules and returns the array of
+     * Parses source code using language regex rules and returns the array of
      * tokens.
      *
-     * @param {Fuel} fuel       The Fuel to use for parsing.
+     * @param {Language} language       The Language to use for parsing.
      * @param {String} code     The source code to parse.
      * @param {Number} [offset] Optional offset to add to the found index.
      */
-    parse: function(fuel, code, offset)
+    parse: function(language, code, offset)
     {
-        var wicks = [],
+        var tokens = [],
             text  = null,
-            wick  = null;
+            token  = null;
         
-//        if (this.options.strict && fuel.hasDelimiters()) {
+//        if (this.options.strict && language.hasDelimiters()) {
 //            var match    = null,
 //                endMatch = null,
 //                codeBeg  = 0,
 //                codeEnd  = code.length,
 //                codeSeg  = '';
 //            
-//            while ((match = fuel.delimiters.start.exec(code)) != null) {
-//                fuel.delimiters.end.lastIndex = fuel.delimiters.start.lastIndex;
-//                if ((endMatch = fuel.delimiters.end.exec(code)) != null) {
-//                    wicks.push(new Wick(match[0], 'de1', match.index));
-//                    codeBeg = fuel.delimiters.start.lastIndex;
+//            while ((match = language.delimiters.start.exec(code)) != null) {
+//                language.delimiters.end.lastIndex = language.delimiters.start.lastIndex;
+//                if ((endMatch = language.delimiters.end.exec(code)) != null) {
+//                    tokens.push(new Token(match[0], 'de1', match.index));
+//                    codeBeg = language.delimiters.start.lastIndex;
 //                    codeEnd = endMatch.index - 1;
 //                    codeSeg = code.substring(codeBeg, codeEnd);
-//                    wicks.append(this._parse(fuel, codeSeg, codeBeg));
-//                    wicks.push(new Wick(endMatch[0], 'de2', endMatch.index));
+//                    tokens.append(this._parse(language, codeSeg, codeBeg));
+//                    tokens.push(new Token(endMatch[0], 'de2', endMatch.index));
 //                }
 //            }
 //        } else {
-//            wicks.append(this._parse(fuel, code, offset));
+//            tokens.append(this._parse(language, code, offset));
 //        }
         
-        wicks = this._parse(fuel, code, offset);
+        // parse code
+        tokens = this._parse(language, code, offset);
         
-        // Add code between matches as an unknown wick to the wick array.
-        for (var i = 0, pointer = 0; i < wicks.length; i++) {
-            if (pointer < wicks[i].index) {
-                text = code.substring(pointer, wicks[i].index);
-                wick = new Wick(text, 'unknown', pointer);
-                wicks.splice(i, 0, wick);
+        // Add code between matches as an unknown token to the token array.
+        for (var i = 0, pointer = 0; i < tokens.length; i++) {
+            if (pointer < tokens[i].index) {
+                text = code.substring(pointer, tokens[i].index);
+                token = new Token(text, 'unknown', pointer);
+                tokens.splice(i, 0, token);
             }
-            pointer = wicks[i].end;
+            pointer = tokens[i].end;
         }
         
         // Add the final unmatched piece if it exists.
         if (pointer < code.length) {
             text = code.substring(pointer, code.length);
-            wick = new Wick(text, 'unknown', pointer);
-            wicks.push(wick);
+            token = new Token(text, 'unknown', pointer);
+            tokens.push(token);
         }
         
-        return wicks;
+        return tokens;
     },
     
     /**
      * Parsing strategy method which child classes must override.
      */
-    _parse: function(fuel, code, offset)
+    _parse: function(language, code, offset)
     {
         throw new Error('Extending classes must override the _parse method.');
     }
@@ -711,15 +597,15 @@ authors:
 requires:
   - Core/1.3
 
-provides: [Wick]
+provides: [Token]
 ...
 */
 (function() {
     
-var Wick = this.Wick = new Class({
+var Token = this.Token = new Class({
     
     /**
-     * Creates an instance of Wick.
+     * Creates an instance of Token.
      *
      * @constructs
      * @param {String} text  The match text.
@@ -736,36 +622,36 @@ var Wick = this.Wick = new Class({
     },
     
     /**
-     * Tests whether a Wick is contained within this Wick.
+     * Tests whether a Token is contained within this Token.
      * 
-     * @param Wick wick The Wick to test against.
-     * @return Boolean Whether or not the Wick is contained within this one.
+     * @param Token token The Token to test against.
+     * @return Boolean Whether or not the Token is contained within this one.
      */
-    contains: function(wick)
+    contains: function(token)
     {
-        return (wick.index >= this.index && wick.index < this.end);
+        return (token.index >= this.index && token.index < this.end);
     },
     
     /**
-     * Tests whether a this Wick is past another Wick.
+     * Tests whether a this Token is past another Token.
      * 
-     * @param Wick wick The Wick to test against.
-     * @return Boolean Whether or not this Wick is past the test one.
+     * @param Token token The Token to test against.
+     * @return Boolean Whether or not this Token is past the test one.
      */
-    isBeyond: function(wick)
+    isBeyond: function(token)
     {
-        return (this.index >= wick.end);
+        return (this.index >= token.end);
     },
     
     /**
-     * Tests whether a Wick overlaps with this Wick.
+     * Tests whether a Token overlaps with this Token.
      * 
-     * @param Wick wick The Wick to test against.
-     * @return Boolean Whether or not this Wick overlaps the test one.
+     * @param Token token The Token to test against.
+     * @return Boolean Whether or not this Token overlaps the test one.
      */
-    overlaps: function(wick)
+    overlaps: function(token)
     {
-        return (this.index == wick.index && this.length > wick.length);
+        return (this.index == token.index && this.length > token.length);
     },
     
     toString: function()
@@ -1051,14 +937,14 @@ authors:
 
 requires:
   - Core/1.3
-  - Parser
+  - Tokenizer
 
-provides: [Parser.Smart]
+provides: [Tokenizer.Smart]
 ...
 */
-Parser.Smart = new Class({
+Tokenizer.Smart = new Class({
 
-    Extends: Parser,
+    Extends: Tokenizer,
     
     /**
      * @constructs
@@ -1172,14 +1058,14 @@ authors:
 
 requires:
   - Core/1.3
-  - Parser
+  - Tokenizer
 
-provides: [Parser.Lazy]
+provides: [Tokenizer.Lazy]
 ...
 */
-Parser.Lazy = new Class({
+Tokenizer.Lazy = new Class({
     
-    Extends: Parser,
+    Extends: Tokenizer,
     
     /**
      * @constructs
@@ -1192,7 +1078,7 @@ Parser.Lazy = new Class({
     /**
      * Brute force the matches by finding all possible matches from all rules.
      * Then we sort them and cycle through the matches finding and eliminating
-     * inner matches. Faster than LighterParser.Strict, but less robust and
+     * inner matches. Faster than LighterTokenizer.Strict, but less robust and
      * prone to erroneous matches.
      *
      * @param {Fuel} fuel       The fuel to use for parsing.
@@ -1202,7 +1088,7 @@ Parser.Lazy = new Class({
      */
     _parse: function(fuel, code, offset)
     {
-        var wicks = [],
+        var tokens = [],
             match = null,
             text  = null,
             index = null;
@@ -1213,34 +1099,98 @@ Parser.Lazy = new Class({
             while (null !== (match = regex.exec(code))) {
                 index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
                 text  = match[1] || match[0];
-                wicks.push(new Wick(text, rule, index + offset));
+                tokens.push(new Token(text, rule, index + offset));
             }
         }, this);
         
-        wicks = wicks.sort(function(wick1, wick2) {
-            return wick1.index - wick2.index;
+        tokens = tokens.sort(function(token1, token2) {
+            return token1.index - token2.index;
         });
         
-        for (var i = 0, j = 0; i < wicks.length; i++) {
+        for (var i = 0, j = 0; i < tokens.length; i++) {
             
-            if (wicks[i] === null) { continue; }
+            if (tokens[i] === null) { continue; }
             
-            for (j = i + 1; j < wicks.length && wicks[i] !== null; j++) {
-                if (wicks[j] === null) {
+            for (j = i + 1; j < tokens.length && tokens[i] !== null; j++) {
+                if (tokens[j] === null) {
                     continue;
-                } else if (wicks[j].isBeyond(wicks[i])) {
+                } else if (tokens[j].isBeyond(tokens[i])) {
                     break;
-                } else if (wicks[j].overlaps(wicks[i])) {
-                    wicks[i] = null;
-                } else if (wicks[i].contains(wicks[j])) {
-                    wicks[j] = null;
+                } else if (tokens[j].overlaps(tokens[i])) {
+                    tokens[i] = null;
+                } else if (tokens[i].contains(tokens[j])) {
+                    tokens[j] = null;
                 }
             }
         }
         
-        wicks = wicks.clean();
+        tokens = tokens.clean();
         
-        return wicks;
+        return tokens;
+    }
+});
+/*
+---
+description: XML parser engine for EnlighterJS
+
+license: MIT-style
+
+authors:
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+  - Tokenizer
+
+provides: [Tokenizer.Xml]
+...
+*/
+Tokenizer.Xml = new Class({
+    
+    Extends: Tokenizer,
+    
+    /**
+     * @constructs
+     */
+    initialize: function(options)
+    {
+        this.parent(options);
+    },
+    
+    /**
+     * Xml Tokenizer
+     * @author Jose Prado
+     *
+     * @param {Language} lang       The language to use for parsing.
+     * @param {String} code     The code to parse.
+     * @param {Number} [offset] Optional offset to add to the match index.
+     * @return {Array} The array of matches found.
+     */
+    _parse: function(lang, code, offset)
+    {
+    	// Tags + attributes matching and preprocessing.
+        var tagPattern = /((?:\&lt;|<)[A-Z][A-Z0-9]*)(.*?)(\/?(?:\&gt;|>))/gi,
+            attPattern = /\b([\w-]+)([ \t]*)(=)([ \t]*)(['"][^'"]+['"]|[^'" \t]+)/gi,
+            tokens    = [],
+            match      = null,
+            attMatch   = null,
+            index      = 0;
+            
+        // Create array of matches containing opening tags, attributes, values, and separators.
+        while ((match = tagPattern.exec(code)) != null) {
+        	tokens.push(new Token(match[1], 'kw1', match.index));
+            while((attMatch = attPattern.exec(match[2])) != null) {
+                index = match.index + match[1].length + attMatch.index;
+                tokens.push(new Token(attMatch[1], 'kw2', index)); // Attributes
+                index += attMatch[1].length + attMatch[2].length;
+                tokens.push(new Token(attMatch[3], 'kw1', index)); // Separators (=)
+                index += attMatch[3].length + attMatch[4].length;
+                tokens.push(new Token(attMatch[5], 'kw3', index)); // Values
+            }
+            tokens.push(new Token(match[3], 'kw1', match.index + match[1].length + match[2].length));
+        }
+        
+        return tokens;
     }
 });
 /*
@@ -1256,15 +1206,15 @@ requires:
   - Core/1.3
   - Fuel
 
-provides: [Fuel.css]
+provides: [Language.css]
 ...
 */
-Fuel.css = new Class({
+Language.css = new Class({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'css',
         
-    initialize: function(options) {
+    initialize: function(code, options) {
         
         this.keywords = {
             css1: {
@@ -1300,7 +1250,7 @@ Fuel.css = new Class({
             end:   this.strictRegExp('</style>')
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
 });
 /*
@@ -1311,24 +1261,23 @@ license: MIT-style
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
-  - Core/1.3
-  - Fuel
+  - Core/1.4.5
+  - Language
 
-provides: [Fuel.html]
+provides: [Language.html]
 ...
 */
-Fuel.html = new Class ({
+Language.html = new Class ({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'html',
+    tokenizerType: 'Xml',
     
-    initialize: function(options) {
-    	console.log(options);
-        // Ensure Fuel uses lazy match.
-        options.matchType = "lazy";
-        
+    initialize: function(code, options) {
+
         // Common HTML patterns
         this.patterns = {
             'comments':    {pattern: /(?:\&lt;|<)!--[\s\S]*?--(?:\&gt;|>)/gim,          alias: 'co1'},
@@ -1337,29 +1286,7 @@ Fuel.html = new Class ({
             'doctype':     {pattern: /(?:\&lt;|<)!DOCTYPE[\s\S]+?(?:\&gt;|>)/gim,       alias: 'st2'}
         };
         
-        // Tags + attributes matching and preprocessing.
-        var tagPattern = /((?:\&lt;|<)[A-Z][A-Z0-9]*)(.*?)(\/?(?:\&gt;|>))/gi,
-            attPattern = /\b([\w-]+)([ \t]*)(=)([ \t]*)(['"][^'"]+['"]|[^'" \t]+)/gi,
-            matches    = [],
-            match      = null,
-            attMatch   = null,
-            index      = 0;
-            
-        // Create array of matches containing opening tags, attributes, values, and separators.
-        while ((match = tagPattern.exec(code)) != null) {
-            matches.push(new Wick(match[1], 'kw1', match.index));
-            while((attMatch = attPattern.exec(match[2])) != null) {
-                index = match.index + match[1].length + attMatch.index;
-                matches.push(new Wick(attMatch[1], 'kw2', index)); // Attributes
-                index += attMatch[1].length + attMatch[2].length;
-                matches.push(new Wick(attMatch[3], 'kw1', index)); // Separators (=)
-                index += attMatch[3].length + attMatch[4].length;
-                matches.push(new Wick(attMatch[5], 'kw3', index)); // Values
-            }
-            matches.push(new Wick(match[3], 'kw1', match.index + match[1].length + match[2].length));
-        }
-        
-        this.parent(options);
+        this.parent(code, options);
     }
     
 });
@@ -1371,29 +1298,38 @@ license: MIT-style
 
 authors:
   - Italo Maia
+  - Andi Dittrich
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
   
-provides: [Fuel.java]
+provides: [Language.java]
 ...
 */
-Fuel.java = new Class ({
+Language.java = new Class ({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'java',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.keywords = {
             reserved: {
-                csv:   "abstract, continue, for, new, switch, assert, default, goto, package, synchronized, do, if, private, this, break, implements, protected, throw, else, import, public, throws, case, instanceof, return, transient, catch, extends, try, final, interface, static, void, class, finally, strictfp, volatile, const, native, super, while",
+                csv:   "continue, for, new, switch, assert, default, goto, synchronized, do, if, this, break, throw, else, throws, case, instanceof, return, transient, catch, try, final, finally, strictfp, volatile, const, native, super, while",
                 alias: 'kw1'
             },
+            keywords: {
+            	csv:   "abstract, package, private, implements, protected, public, import, extends, interface, static, void, class",
+            	alias: 'kw3'
+            },
             primitives: {
-                csv:   "byte, short, int, long, float, double, boolean, char",
+                csv:   "byte, short, int, long, float, double, boolean, char, String",
                 alias: 'kw2'
+            },
+            internal: {
+            	csv:   "System",
+            	alias: 'kw4'
             }
         },
         
@@ -1405,10 +1341,11 @@ Fuel.java = new Class ({
             'annotation':    { pattern: /@[\W\w_][\w\d_]+/gm, alias: 'st1' },
             'numbers':       { pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][-+]?[0-9]+)?|0x[A-F0-9]+|0b[0-1_]+)\b/gim, alias: 'nu0' },
             'properties':    { pattern: this.common.properties, alias: 'me0' },
-            'brackets':      { pattern: this.common.brackets, alias: 'br0' }
+            'brackets':      { pattern: this.common.brackets, alias: 'br0' },
+            'functionCalls': { pattern: this.common.functionCalls, alias: 'de1'}
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
 });
 /*
@@ -1422,17 +1359,17 @@ authors:
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
 
-provides: [Fuel.js]
+provides: [Language.js]
 ...
 */
-Fuel.js = new Class({
+Language.js = new Class({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'js',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.keywords = {
             commonKeywords: {
@@ -1489,7 +1426,7 @@ Fuel.js = new Class({
             end:   this.strictRegExp('</script>')
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
 });
 /*
@@ -1503,17 +1440,17 @@ authors:
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
 
-provides: [Fuel.md]
+provides: [Language.md]
 ...
 */
-Fuel.md = new Class ({
+Language.md = new Class ({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'md',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.patterns = {
             'header1': { pattern: /^(.+)\n=+\n/gim,   alias: 'st1' },
@@ -1526,7 +1463,7 @@ Fuel.md = new Class ({
             'url':     { pattern: /\[[^\]]*\]\([^\)]*\)/g, alias: 'kw4' }
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
     
 });
@@ -1541,17 +1478,17 @@ authors:
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
 
-provides: [Fuel.php]
+provides: [Language.php]
 ...
 */
-Fuel.php = new Class({
+Language.php = new Class({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'php',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.keywords = {
             keywords: {
@@ -1596,7 +1533,7 @@ Fuel.php = new Class({
             end:   this.strictRegExp('?>', '%>')
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
 });
 /*
@@ -1610,17 +1547,17 @@ authors:
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
 
-provides: [Fuel.python]
+provides: [Language.python]
 ...
 */
-Fuel.python = new Class({
+Language.python = new Class({
     
-    Extends:Fuel,
+    Extends:Language,
     language:'python',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.keywords = {
             reserved:{
@@ -1696,7 +1633,7 @@ Fuel.python = new Class({
             }
         };
           
-        this.parent(options);
+        this.parent(code, options);
     }
 });
 /*
@@ -1710,17 +1647,17 @@ authors:
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
 
-provides: [Fuel.ruby]
+provides: [Language.ruby]
 ...
 */
-Fuel.ruby = new Class ({
+Language.ruby = new Class ({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'ruby',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.keywords = {
             reserved: {
@@ -1761,7 +1698,7 @@ Fuel.ruby = new Class ({
             'literalRegex': { pattern: this.delimToRegExp("/", "\\", "/", "g", "[iomx]*"),           alias: 're0' }
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
 });
 /*
@@ -1775,17 +1712,17 @@ authors:
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
 
-provides: [Fuel.shell]
+provides: [Language.shell]
 ...
 */
-Fuel.shell = new Class ({
+Language.shell = new Class ({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'shell',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.keywords = {
             keywords: {
@@ -1809,7 +1746,7 @@ Fuel.shell = new Class ({
             }
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
 });
 /*
@@ -1820,24 +1757,25 @@ license: MIT-style
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
 
-provides: [Fuel.sql]
+provides: [Language.sql]
 ...
 */
-Fuel.sql = new Class ({
+Language.sql = new Class ({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'sql',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.keywords = {
             keywords: {
-                csv: 'absolute, action, add, after, alter, as, asc, at, authorization, begin, bigint, binary, bit, by, cascade, char, character, check, checkpoint, close, collate, column, commit, committed, connect, connection, constraint, contains, continue, create, cube, current, current_date, current_time, cursor, database, date, deallocate, dec, decimal, declare, default, delete, desc, distinct, double, drop, dynamic, else, end, end-exec, escape, except, exec, execute, false, fetch, first, float, for, force, foreign, forward, free, from, full, function, global, goto, grant, group, grouping, having, hour, ignore, index, inner, insensitive, insert, instead, int, integer, intersect, into, is, isolation, key, last, level, load, local, max, min, minute, modify, move, name, national, nchar, next, no, numeric, of, off, on, only, open, option, order, out, output, partial, password, precision, prepare, primary, prior, privileges, procedure, public, read, real, references, relative, repeatable, restrict, return, returns, revoke, rollback, rollup, rows, rule, schema, scroll, second, section, select, sequence, serializable, set, size, smallint, static, statistics, table, temp, temporary, then, time, timestamp, to, top, transaction, translation, trigger, true, truncate, uncommitted, union, unique, update, values, varchar, varying, view, when, where, with, work',
+                csv: 'savepoint, start, absolute, action, add, after, alter, as, asc, at, authorization, begin, bigint, binary, bit, by, cascade, char, character, check, checkpoint, close, collate, column, commit, committed, connect, connection, constraint, contains, continue, create, cube, current, current_date, current_time, cursor, database, date, deallocate, dec, decimal, declare, default, delete, desc, distinct, double, drop, dynamic, else, end, end-exec, escape, except, exec, execute, false, fetch, first, float, for, force, foreign, forward, free, from, full, function, global, goto, grant, group, grouping, having, hour, ignore, index, inner, insensitive, insert, instead, int, integer, intersect, into, is, isolation, key, last, level, load, local, max, min, minute, modify, move, name, national, nchar, next, no, numeric, of, off, on, only, open, option, order, out, output, partial, password, precision, prepare, primary, prior, privileges, procedure, public, read, real, references, relative, repeatable, restrict, return, returns, revoke, rollback, rollup, rows, rule, schema, scroll, second, section, select, sequence, serializable, set, size, smallint, static, statistics, table, temp, temporary, then, time, timestamp, to, top, transaction, translation, trigger, true, truncate, uncommitted, union, unique, update, values, varchar, varying, view, when, where, with, work',
                 alias: 'kw1',
                 mod: 'gi'
             },
@@ -1847,7 +1785,7 @@ Fuel.sql = new Class ({
                 mod: 'gi'
             },
             operators: {
-                csv: 'all, and, any, between, cross, in, join, like, not, null, or, outer, some',
+                csv: 'all, and, any, between, cross, in, join, like, not, null, or, outer, some, if',
                 alias: 'kw3',
                 mod: 'gi'
             }
@@ -1856,9 +1794,11 @@ Fuel.sql = new Class ({
         this.patterns = {
             'singleLineComments': {pattern: /--(.*)$/gm, alias: 'co0'},
             'multiLineComments':  {pattern: this.common.multiComments, alias: 'co1'},
-            'multiLineStrings':   {pattern: this.common.multiLineStrings, alias: 'st0'}
+            'multiLineStrings':   {pattern: this.common.multiLineStrings, alias: 'st0'},
+            'numbers':			  {pattern: this.common.numbers, alias: 'nu0'},
+            'columns':			  {pattern: /`[^`\\]*(?:\\.[^`\\]*)*`/gm, alias: 'kw4'}
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
 });

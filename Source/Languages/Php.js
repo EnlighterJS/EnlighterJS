@@ -9,17 +9,17 @@ authors:
 
 requires:
   - Core/1.3
-  - Fuel
+  - Language
 
-provides: [Fuel.php]
+provides: [Language.php]
 ...
 */
-Fuel.php = new Class({
+Language.php = new Class({
     
-    Extends: Fuel,
+    Extends: Language,
     language: 'php',
     
-    initialize: function(options)
+    initialize: function(code, options)
     {
         this.keywords = {
             keywords: {
@@ -64,6 +64,6 @@ Fuel.php = new Class({
             end:   this.strictRegExp('?>', '%>')
         };
         
-        this.parent(options);
+        this.parent(code, options);
     }
 });

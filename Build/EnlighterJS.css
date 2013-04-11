@@ -17,9 +17,6 @@ authors:
 	font-size: 12px;
 	overflow: auto;
 	white-space: pre-wrap;
-	white-space: -moz-pre-wrap;
-	white-space: -o-pre-wrap;
-	white-space: -pre-wrap;
 	word-wrap: break-word;
 }
 .gitLighter span {
@@ -123,9 +120,6 @@ authors:
 	font-size: 12px;
 	overflow: auto;
 	white-space: pre-wrap;
-	white-space: -moz-pre-wrap;
-	white-space: -o-pre-wrap;
-	white-space: -pre-wrap;
 	word-wrap: break-word;
 }
 .mochaLighter span {
@@ -227,9 +221,6 @@ authors:
 	font-size: 12px;
 	overflow: auto;
 	white-space: pre-wrap;
-	white-space: -moz-pre-wrap;
-	white-space: -o-pre-wrap;
-	white-space: -pre-wrap;
 	word-wrap: break-word;
 }
 .panicLighter span {
@@ -339,9 +330,6 @@ authors:
 	font-size: 12px;
 	overflow: auto;
 	white-space: pre-wrap;
-	white-space: -moz-pre-wrap;
-	white-space: -o-pre-wrap;
-	white-space: -pre-wrap;
 	word-wrap: break-word;
 }
 .standardLighter span {
@@ -449,9 +437,6 @@ authors:
 	font-size: 12px;
 	overflow: auto;
 	white-space: pre-wrap;
-	white-space: -moz-pre-wrap;
-	white-space: -o-pre-wrap;
-	white-space: -pre-wrap;
 	word-wrap: break-word;
 }
 .tuttiLighter span {
@@ -559,9 +544,6 @@ authors:
 	line-height: 19px;
 	overflow: auto;
 	white-space: pre-wrap;
-	white-space: -moz-pre-wrap;
-	white-space: -o-pre-wrap;
-	white-space: -pre-wrap;
 	word-wrap: break-word;
 }
 .twilightLighter span {
