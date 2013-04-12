@@ -6,11 +6,36 @@ license: MIT-style
 
 authors:
 - Jose Prado
+- Andi Dittrich
 
 ...
 */
-.gitEnlighterJSTabPane{
-	
+.gitEnlighterJSTabPane .controls{
+	margin: 0px 0px 0px 40px;
+	padding: 0px;
+}
+.gitEnlighterJSTabPane .controls li{
+	float: left;
+	display: block;
+	list-style: none;
+	padding: 3px 10px 3px 10px;
+	margin: 0px 5px 0px 5px;
+	background-color: #f2f2f2;
+	border-radius: 5px;
+	font-size: 12px;
+	color: #000000;
+	font-family: Courier, monospace;
+	cursor: pointer;
+}
+.gitEnlighterJSTabPane .controls li:hover{
+	background-color: #e5e5e5;
+}
+.gitEnlighterJSTabPane .controls .selected, .gitEnlighterJSTabPane .controls .selected:hover{
+	background-color: #ccffcc;
+}
+.gitEnlighterJSTabPane .pane{
+	padding: 5px 0px 0px 0px;
+	clear: left;
 }
 .gitLighter {
 	border-bottom: 1px solid #eee;

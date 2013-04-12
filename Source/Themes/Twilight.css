@@ -6,9 +6,37 @@ license: MIT-style
 
 authors:
 - Jose Prado
+- Andi Dittrich
 
 ...
 */
+.twilightEnlighterJSTabPane .controls{
+	margin: 0px 0px 0px 40px;
+	padding: 0px;
+}
+.twilightEnlighterJSTabPane .controls li{
+	float: left;
+	display: block;
+	list-style: none;
+	padding: 3px 10px 3px 10px;
+	margin: 0px 5px 0px 5px;
+	background-color: #303030;
+	border-radius: 5px;
+	font-size: 12px;
+	color: #f2f2f2;
+	font-family: Monaco, Courier, monospace;
+	cursor: pointer;
+}
+.twilightEnlighterJSTabPane .controls li:hover{
+	color: #8F9657;
+}
+.twilightEnlighterJSTabPane .controls .selected, .twilightEnlighterJSTabPane .controls .selected:hover{
+	background-color: #000000;
+}
+.twilightEnlighterJSTabPane .pane{
+	padding: 5px 0px 0px 0px;
+	clear: left;
+}
 .twilightLighter {
 	border: 1px solid #222;
 	color: #f8f8f8;

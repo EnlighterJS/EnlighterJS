@@ -53,7 +53,7 @@
 
 	<!-- Generate Testcases -->
 	<target name="testcases">
-		<for param="filename" list="css,html,js,java,md,php,ruby,sql,unit,xml">
+		<for param="filename" list="css,html,js,java,md,php,ruby,sql,unit,xml,Themes">
 			<sequential>
 				<!-- Remove old file !-->
 				<delete file="Tests/Testcase.@{filename}.html" />

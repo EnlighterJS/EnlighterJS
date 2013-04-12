@@ -1,4 +1,4 @@
-/*!
+/*
 ---
 name: Helper
 description: Helper to initialize multiple enlighter instances on your page as well as code-groups

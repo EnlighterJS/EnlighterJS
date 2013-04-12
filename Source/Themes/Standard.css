@@ -6,9 +6,37 @@ license: MIT-style
 
 authors:
 - Jose Prado
+- Andi Dittrich
 
 ...
 */
+.standardEnlighterJSTabPane .controls{
+	margin: 0px 0px 0px 40px;
+	padding: 0px;
+}
+.standardEnlighterJSTabPane .controls li{
+	float: left;
+	display: block;
+	list-style: none;
+	padding: 3px 10px 3px 10px;
+	margin: 0px 5px 0px 5px;
+	background-color: #f2f2f2;
+	border-radius: 5px;
+	font-size: 12px;
+	color: #000000;
+	font-family: Courier, monospace;
+	cursor: pointer;
+}
+.standardEnlighterJSTabPane .controls li:hover{
+	background-color: #e5e5e5;
+}
+.standardEnlighterJSTabPane .controls .selected, .standardEnlighterJSTabPane .controls .selected:hover{
+	background-color: #ccffcc;
+}
+.standardEnlighterJSTabPane .pane{
+	padding: 5px 0px 0px 0px;
+	clear: left;
+}
 .standardLighter {
 	font-family: Monaco, Courier, Monospace;
 	font-size: 12px;

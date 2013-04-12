@@ -91,9 +91,6 @@ provides: [EnlighterJS]
 
 			// extract code to highlight
 			var code = this.getCode();
-
-			// extract theme+language options from data- attributes
-			//var inlineOptions = this.parseClass(this.codeblock.get('class'));
 			
 			// get language name - use options as fallback  
 			var languageName = this.codeblock.get('data-enlighter-language') || this.options.language;

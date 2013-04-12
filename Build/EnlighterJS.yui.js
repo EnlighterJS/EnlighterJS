@@ -20,8 +20,8 @@ provides: [EnlighterJS]
 if(!Language[this.options.language]){this.options.language="standard"}if(Compiler[this.options.compiler]){this.compiler=new Compiler[this.options.compiler](c)}else{this.compiler=new Compiler.List(c)}this.codeblock=document.id(d);if(b){this.container=document.id(b)}return this},light:function(){this.codeblock.setStyle("display","none");if(this.isRendered){this.container.setStyle("display","inherit");
 return this}var d=this.getCode();var c=this.codeblock.get("data-enlighter-language")||this.options.language;var e=(this.options.forceTheme?null:this.codeblock.get("data-enlighter-theme"))||this.options.theme;language=new Language[c](d,{});var f=language.getTokens();var b=this.compiler.compile(language,e,f);if(this.container){this.container.grab(b)}else{b.inject(this.codeblock,"after");this.container=b
 }this.isRendered=true;return this},unlight:function(){if(this.isRendered){this.codeblock.setStyle("display","inherit");this.container.setStyle("display","none")}return this},getCode:function(){var b=this.codeblock.get("html").replace(/(^\s*\n|\n\s*$)/gi,"").replace(/&lt;/gim,"<").replace(/&gt;/gim,">").replace(/&amp;/gim,"&");if(this.options.indent>-1){b=b.replace(/\t/g,new Array(this.options.indent+1).join(" "))
-}return b},parseClass:function(b){var d=(b!=null?b.split(" "):[]);var e=null;var c=null;d.each(function(h,f){if(e!=null){return}var g=h.split(":");if(Language[g[0]]){e=g[0]}if(g.length==2){c=g[1]}});if(this.options.forceTheme){c=null}return{language:(e||this.options.language),theme:(c||this.options.theme)}}})})();(function(){var a=this.Compiler=new Class({Implements:Options,options:{editable:false},initialize:function(b){this.setOptions(b);
-return this},compile:function(e,d,c){var b=this._compile(e,d,c);b.set("class",d+"Lighter");b.set("id","Lighter_"+Date.now());if(this.options.editable){b.set("contenteditable","true")}return b},_compile:function(d,c,b){throw new Error("Extending classes must override the _compile method.")}})})();(function(){var a=this.Language=new Class({Implements:[Options],options:{},language:"",tokenizerType:"Lazy",tokenizer:null,code:null,patterns:{},keywords:{},delimiters:{},common:{slashComments:/(?:^|[^\\])\/\/.*$/gm,poundComments:/#.*$/gm,multiComments:/\/\*[\s\S]*?\*\//gm,aposStrings:/'[^'\\]*(?:\\.[^'\\]*)*'/gm,quotedStrings:/"[^"\\]*(?:\\.[^"\\]*)*"/gm,multiLineSingleQuotedStrings:/'[^'\\]*(?:\\.[^'\\]*)*'/gm,multiLineDoubleQuotedStrings:/"[^"\\]*(?:\\.[^"\\]*)*"/gm,multiLineStrings:/'[^'\\]*(?:\\.[^'\\]*)*'|"[^"\\]*(?:\\.[^"\\]*)*"/gm,singleQuotedString:/'[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'/gm,doubleQuotedString:/"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*"/gm,strings:/'[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'|"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*"/gm,properties:/\.([\w]+)\s*/gi,methodCalls:/\.([\w]+)\s*\(/gm,functionCalls:/\b([\w]+)\s*\(/gm,brackets:/\{|\}|\(|\)|\[|\]/g,numbers:/\b((?:(\d+)?\.)?[0-9]+|0x[0-9A-F]+)\b/gi},initialize:function(c,b){this.setOptions(b);
+}return b}})})();(function(){var a=this.Compiler=new Class({Implements:Options,options:{editable:false},initialize:function(b){this.setOptions(b);return this},compile:function(e,d,c){var b=this._compile(e,d,c);b.set("class",d+"Lighter");b.set("id","Lighter_"+Date.now());if(this.options.editable){b.set("contenteditable","true")}return b},_compile:function(d,c,b){throw new Error("Extending classes must override the _compile method.")
+}})})();(function(){var a=this.Language=new Class({Implements:[Options],options:{},language:"",tokenizerType:"Lazy",tokenizer:null,code:null,patterns:{},keywords:{},delimiters:{},common:{slashComments:/(?:^|[^\\])\/\/.*$/gm,poundComments:/#.*$/gm,multiComments:/\/\*[\s\S]*?\*\//gm,aposStrings:/'[^'\\]*(?:\\.[^'\\]*)*'/gm,quotedStrings:/"[^"\\]*(?:\\.[^"\\]*)*"/gm,multiLineSingleQuotedStrings:/'[^'\\]*(?:\\.[^'\\]*)*'/gm,multiLineDoubleQuotedStrings:/"[^"\\]*(?:\\.[^"\\]*)*"/gm,multiLineStrings:/'[^'\\]*(?:\\.[^'\\]*)*'|"[^"\\]*(?:\\.[^"\\]*)*"/gm,singleQuotedString:/'[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'/gm,doubleQuotedString:/"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*"/gm,strings:/'[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'|"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*"/gm,properties:/\.([\w]+)\s*/gi,methodCalls:/\.([\w]+)\s*\(/gm,functionCalls:/\b([\w]+)\s*\(/gm,brackets:/\{|\}|\(|\)|\[|\]/g,numbers:/\b((?:(\d+)?\.)?[0-9]+|0x[0-9A-F]+)\b/gi},initialize:function(c,b){this.setOptions(b);
 this.aliases={};this.rules={};this.code=c;this.tokenizer=new Tokenizer[this.tokenizerType](b);if(this.delimiters.start){this.addRule("delimBeg",this.delimiters.start,"de1")}if(this.delimiters.end){this.addRule("delimEnd",this.delimiters.end,"de2")}Object.each(this.keywords,function(e,d){if(e.csv!=""){this.addRule(d,this.csvToRegExp(e.csv,e.mod||"g"),e.alias)}},this);Object.each(this.patterns,function(d,e){this.addRule(e,d.pattern,d.alias)
 },this)},getTokens:function(){return this.tokenizer.parse(this,this.code,0)},getRules:function(){return this.rules},hasDelimiters:function(){return this.delimiters.start&&this.delimiters.end},addRule:function(d,c,b){this.rules[d]=c;this.addAlias(d,b)},addAlias:function(c,b){this.aliases[c]=b||c},csvToRegExp:function(b,c){return new RegExp("\\b("+b.replace(/,\s*/g,"|")+")\\b",c)},delimToRegExp:function(e,c,b,f,g){e=e.escapeRegExp();
 if(c){c=c.escapeRegExp()}b=(b)?b.escapeRegExp():e;var d=(c)?e+"[^"+b+c+"\\n]*(?:"+c+".[^"+b+c+"\\n]*)*"+b:e+"[^"+b+"\\n]*"+b;return new RegExp(d+(g||""),f||"")},strictRegExp:function(){var c="(";for(var b=0;b<arguments.length;b++){c+=arguments[b].escapeRegExp();c+=(b<arguments.length-1)?"|":""}c+=")";return new RegExp(c,"gim")}});a.standard=new Class({Extends:a,initialize:function(b){this.parent(b)
@@ -40,47 +40,9 @@ n=e[1]||e[0];b=new Wick(n,i,index+d);h.push(b);g=m[i].pattern.exec(a);if(!g){m[i
 c=c||0;Object.each(d.getRules(),function(i,j){while(null!==(f=i.exec(a))){g=f[1]&&f[0].contains(f[1])?f.index+f[0].indexOf(f[1]):f.index;k=f[1]||f[0];h.push(new Token(k,j,g+c))}},this);h=h.sort(function(j,i){return j.index-i.index});for(var e=0,b=0;e<h.length;e++){if(h[e]===null){continue}for(b=e+1;b<h.length&&h[e]!==null;b++){if(h[b]===null){continue}else{if(h[b].isBeyond(h[e])){break}else{if(h[b].overlaps(h[e])){h[e]=null
 }else{if(h[e].contains(h[b])){h[b]=null}}}}}}h=h.clean();return h}});Tokenizer.Xml=new Class({Extends:Tokenizer,initialize:function(a){this.parent(a)},_parse:function(b,a,d){var e=/((?:\&lt;|<)[A-Z][A-Z0-9]*)(.*?)(\/?(?:\&gt;|>))/gi,l=/\b([\w-]+)([ \t]*)(=)([ \t]*)(['"][^'"]+['"]|[^'" \t]+)/gi,m=[],h=null,g=null,k=0;while((h=e.exec(a))!=null){m.push(new Token(h[1],"kw1",h.index));while((g=l.exec(h[2]))!=null){k=h.index+h[1].length+g.index;
 m.push(new Token(g[1],"kw2",k));k+=g[1].length+g[2].length;m.push(new Token(g[3],"kw1",k));k+=g[3].length+g[4].length;m.push(new Token(g[5],"kw3",k))}m.push(new Token(h[3],"kw1",h.index+h[1].length+h[2].length))}Object.each(b.getRules(),function(i,j){while(null!==(h=i.exec(a))){k=h[1]&&h[0].contains(h[1])?h.index+h[0].indexOf(h[1]):h.index;text=h[1]||h[0];m.push(new Token(text,j,k+d))}},this);m=m.sort(function(j,i){return j.index-i.index
-});for(var f=0,c=0;f<m.length;f++){if(m[f]===null){continue}for(c=f+1;c<m.length&&m[f]!==null;c++){if(m[c]===null){continue}else{if(m[c].isBeyond(m[f])){break}else{if(m[c].overlaps(m[f])){m[f]=null}else{if(m[f].contains(m[c])){m[c]=null}}}}}}m=m.clean();return m}});
-
-					
-/*!
----
-name: Helper
-description: Helper to initialize multiple enlighter instances on your page as well as code-groups
-
-license: MIT-style X11 License
-
-authors:
-  - Andi Dittrich
-  
-requires:
-  - Core/1.4.5
-
-provides: [EnlighterJS.Helper]
-...
- */
-EnlighterJS.Helper=new Class({Implements:Options,options:{grouping:true,theme:"standard",language:"standard"},initialize:function(b,a){this.setOptions(a);
+});for(var f=0,c=0;f<m.length;f++){if(m[f]===null){continue}for(c=f+1;c<m.length&&m[f]!==null;c++){if(m[c]===null){continue}else{if(m[c].isBeyond(m[f])){break}else{if(m[c].overlaps(m[f])){m[f]=null}else{if(m[f].contains(m[c])){m[c]=null}}}}}}m=m.clean();return m}});EnlighterJS.Helper=new Class({Implements:Options,options:{grouping:true,theme:"standard",language:"standard"},initialize:function(b,a){this.setOptions(a);
 if(this.options.grouping){var c=this.getGroups(b);c.single.each(function(d){d.light(a)});this.options.forceTheme=true;Object.each(c.groups,function(e){var d=new EnlighterJS.TabPane();var f=this.options;f.theme=e[0].get("data-enlighter-theme")||this.options.theme;e.each(function(i,h){var g=d.addTab(i.get("data-enlighter-title")||i.get("data-enlighter-language")||f.language);(new EnlighterJS(i,f,g)).light()
-}.bind(this));d.getContainer().addClass(f.theme+"EnlighterJSTabPane");d.getContainer().inject(e[0],"before");d.selectTab(0)}.bind(this))}else{b.light(a)}},getGroups:function(c){var a={};var b=[];c.each(function(d){var e=d.get("data-enlighter-group");if(e){if(a[e]){a[e].push(d)}else{a[e]=[d]}}else{b.push(d)}});return{groups:a,single:b}}});
-
-					
-/*!
----
-name: TapPane
-description: Displays multiple code-blocks within a group
-
-license: MIT-style X11 License
-
-authors:
-  - Andi Dittrich
-  
-requires:
-  - Core/1.4.5
-
-provides: [EnlighterJS.TabPane]
-...
- */
-EnlighterJS.TabPane=new Class({container:null,controlContainer:null,paneContainer:null,tabs:[],selectedTabIndex:0,initialize:function(a){this.container=new Element("div",{"class":a});
+}.bind(this));d.getContainer().addClass(f.theme+"EnlighterJSTabPane");d.getContainer().inject(e[0],"before");d.selectTab(0)}.bind(this))}else{b.light(a)}},getGroups:function(c){var a={};var b=[];c.each(function(d){var e=d.get("data-enlighter-group");if(e){if(a[e]){a[e].push(d)}else{a[e]=[d]}}else{b.push(d)}});return{groups:a,single:b}}});EnlighterJS.TabPane=new Class({container:null,controlContainer:null,paneContainer:null,tabs:[],selectedTabIndex:0,initialize:function(a){this.container=new Element("div",{"class":a});
 this.controlContainer=new Element("ul",{"class":"controls"});this.paneContainer=new Element("div",{"class":"pane"});this.container.grab(this.controlContainer);this.container.grab(this.paneContainer)},selectTab:function(a){if(a<this.tabs.length){this.tabs[this.selectedTabIndex].pane.setStyle("display","none");this.tabs[this.selectedTabIndex].control.removeClass("selected");this.tabs[a].pane.setStyle("display","block");
 this.tabs[a].control.addClass("selected");this.selectedTabIndex=a}},addTab:function(b){var d=new Element("li",{text:b});this.controlContainer.grab(d);var a=this.tabs.length;d.addEvent("click",function(){this.selectTab(a)}.bind(this));var c=new Element("div",{styles:{display:"none"}});this.paneContainer.grab(c);this.tabs.push({control:d,pane:c});return c},getContainer:function(){return this.container
 }});Language.xml=new Class({Extends:Language,language:"xml",tokenizerType:"Xml",initialize:function(b,a){this.patterns={comments:{pattern:/(?:\&lt;|<)!--[\s\S]*?--(?:\&gt;|>)/gim,alias:"co1"},cdata:{pattern:/(?:\&lt;|<)!\[CDATA\[[\s\S]*?\]\](?:\&gt;|>)/gim,alias:"st1"},closingTags:{pattern:/(?:\&lt;|<)\/[A-Z][A-Z0-9]*?(?:\&gt;|>)/gi,alias:"kw1"},doctype:{pattern:/(?:\&lt;|<)!DOCTYPE[\s\S]+?(?:\&gt;|>)/gim,alias:"st2"},version:{pattern:/(?:\&lt;|<)\?xml[\s\S]+?\?(?:\&gt;|>)/gim,alias:"kw2"}};

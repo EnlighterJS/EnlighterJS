@@ -6,11 +6,36 @@ license: MIT-style
 
 authors:
 - Jose Prado
+- Andi Dittrich
 
 ...
 */
-.gitEnlighterJSTabPane{
-	
+.gitEnlighterJSTabPane .controls{
+	margin: 0px 0px 0px 40px;
+	padding: 0px;
+}
+.gitEnlighterJSTabPane .controls li{
+	float: left;
+	display: block;
+	list-style: none;
+	padding: 3px 10px 3px 10px;
+	margin: 0px 5px 0px 5px;
+	background-color: #f2f2f2;
+	border-radius: 5px;
+	font-size: 12px;
+	color: #000000;
+	font-family: Courier, monospace;
+	cursor: pointer;
+}
+.gitEnlighterJSTabPane .controls li:hover{
+	background-color: #e5e5e5;
+}
+.gitEnlighterJSTabPane .controls .selected, .gitEnlighterJSTabPane .controls .selected:hover{
+	background-color: #ccffcc;
+}
+.gitEnlighterJSTabPane .pane{
+	padding: 5px 0px 0px 0px;
+	clear: left;
 }
 .gitLighter {
 	border-bottom: 1px solid #eee;
@@ -114,9 +139,33 @@ license: MIT-style
 
 authors:
 - Jose Prado
+- Andi Dittrich
 
 ...
 */
+.mochaEnlighterJSTabPane .controls{
+	margin: 0px 0px 0px 40px;
+	padding: 0px;
+}
+.mochaEnlighterJSTabPane .controls li{
+	float: left;
+	display: block;
+	list-style: none;
+	padding: 3px 10px 3px 10px;
+	margin: 0px 5px 0px 5px;
+	background-color: #e5e5e5;
+	font-size: 12px;
+	color: #000000;
+	font-family: Courier, monospace;
+	cursor: pointer;
+}
+.mochaEnlighterJSTabPane .controls .selected, .mochaEnlighterJSTabPane .controls .selected:hover{
+	background-color: #BBCCD5;
+}
+.mochaEnlighterJSTabPane .pane{
+	padding: 5px 0px 0px 0px;
+	clear: left;
+}
 .mochaLighter {
 	color: #f8f8f8;
 	font-family: Monaco, Courier, monospace;
@@ -216,9 +265,37 @@ license: MIT-style
 
 authors:
 - Jose Prado
+- Andi Dittrich
 
 ...
 */
+.panicEnlighterJSTabPane .controls{
+	margin: 0px 0px 0px 40px;
+	padding: 0px;
+}
+.panicEnlighterJSTabPane .controls li{
+	float: left;
+	display: block;
+	list-style: none;
+	padding: 3px 10px 3px 10px;
+	margin: 0px 5px 0px 5px;
+	background-color: #f2f2f2;
+	border-radius: 5px;
+	font-size: 12px;
+	color: #000000;
+	font-family: Courier, monospace;
+	cursor: pointer;
+}
+.panicEnlighterJSTabPane .controls li:hover{
+	background-color: #e5e5e5;
+}
+.panicEnlighterJSTabPane .controls .selected, .panicEnlighterJSTabPane .controls .selected:hover{
+	background-color: #E4F8FC;
+}
+.panicEnlighterJSTabPane .pane{
+	padding: 5px 0px 0px 0px;
+	clear: left;
+}
 .panicLighter {
 	font-family: Monaco, Courier, Monospace;
 	font-size: 12px;
@@ -325,9 +402,37 @@ license: MIT-style
 
 authors:
 - Jose Prado
+- Andi Dittrich
 
 ...
 */
+.standardEnlighterJSTabPane .controls{
+	margin: 0px 0px 0px 40px;
+	padding: 0px;
+}
+.standardEnlighterJSTabPane .controls li{
+	float: left;
+	display: block;
+	list-style: none;
+	padding: 3px 10px 3px 10px;
+	margin: 0px 5px 0px 5px;
+	background-color: #f2f2f2;
+	border-radius: 5px;
+	font-size: 12px;
+	color: #000000;
+	font-family: Courier, monospace;
+	cursor: pointer;
+}
+.standardEnlighterJSTabPane .controls li:hover{
+	background-color: #e5e5e5;
+}
+.standardEnlighterJSTabPane .controls .selected, .standardEnlighterJSTabPane .controls .selected:hover{
+	background-color: #ccffcc;
+}
+.standardEnlighterJSTabPane .pane{
+	padding: 5px 0px 0px 0px;
+	clear: left;
+}
 .standardLighter {
 	font-family: Monaco, Courier, Monospace;
 	font-size: 12px;
@@ -432,9 +537,34 @@ license: MIT-style
 
 authors:
 - Jose Prado
+- Andi Dittrich
 
 ...
 */
+.tuttiEnlighterJSTabPane .controls{
+	margin: 0px 0px 0px 40px;
+	padding: 0px;
+}
+.tuttiEnlighterJSTabPane .controls li{
+	float: left;
+	display: block;
+	list-style: none;
+	padding: 3px 10px 3px 10px;
+	margin: 0px 5px 0px 5px;
+	background-color: #ffffff;
+	border-radius: 5px;
+	font-size: 12px;
+	color: #000000;
+	font-family: Courier, monospace;
+	cursor: pointer;
+}
+.tuttiEnlighterJSTabPane .controls .selected, .tuttiEnlighterJSTabPane .controls .selected:hover{
+	background-color: #F4F8FC;
+}
+.tuttiEnlighterJSTabPane .pane{
+	padding: 5px 0px 0px 0px;
+	clear: left;
+}
 .tuttiLighter {
 	font-family: Monaco, Courier, Monospace;
 	font-size: 12px;
@@ -536,9 +666,37 @@ license: MIT-style
 
 authors:
 - Jose Prado
+- Andi Dittrich
 
 ...
 */
+.twilightEnlighterJSTabPane .controls{
+	margin: 0px 0px 0px 40px;
+	padding: 0px;
+}
+.twilightEnlighterJSTabPane .controls li{
+	float: left;
+	display: block;
+	list-style: none;
+	padding: 3px 10px 3px 10px;
+	margin: 0px 5px 0px 5px;
+	background-color: #303030;
+	border-radius: 5px;
+	font-size: 12px;
+	color: #f2f2f2;
+	font-family: Monaco, Courier, monospace;
+	cursor: pointer;
+}
+.twilightEnlighterJSTabPane .controls li:hover{
+	color: #8F9657;
+}
+.twilightEnlighterJSTabPane .controls .selected, .twilightEnlighterJSTabPane .controls .selected:hover{
+	background-color: #000000;
+}
+.twilightEnlighterJSTabPane .pane{
+	padding: 5px 0px 0px 0px;
+	clear: left;
+}
 .twilightLighter {
 	border: 1px solid #222;
 	color: #f8f8f8;

@@ -11,4 +11,5 @@
 * Removed Loader.js - themes&languages are now bundled with the build
 * Modified the complete software-architecture (tokenizers are now initialized by the chosen language)
 * Modified the usage - one EnlighterJS instance per codeblock is required (strict oop design)
+* Modified the usage - HTML5 data- attributes are used instead of css class attribute language:theme combo
 * Added XML and HTML support (incorrect html support got fixed)

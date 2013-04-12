@@ -1,4 +1,4 @@
-/*!
+/*
 ---
 name: TapPane
 description: Displays multiple code-blocks within a group
