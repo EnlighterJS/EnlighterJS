@@ -6,8 +6,7 @@ description: Syntax Highlighter based on the famous Lighter.js from Jose Prado
 license: MIT-style X11 License
 
 authors:
-  - Andi Dittrich (author of EnlighterJS fork)
-  - Jose Prado (author of Ligther.js)
+  - Andi Dittrich
   
 requires:
   - Core/1.4.5
@@ -26,7 +25,7 @@ provides: [EnlighterJS]
 			theme : 'standard',
 			compiler: 'List',
 			indent : -1,
-			forceSettings: false
+			forceTheme: false
 		},
 
 		// used compiler instance
@@ -93,17 +92,23 @@ provides: [EnlighterJS]
 			// extract code to highlight
 			var code = this.getCode();
 
-			// extract options from css class
-			var inlineOptions = this.parseClass(this.codeblock.get('class'));
+			// extract theme+language options from data- attributes
+			//var inlineOptions = this.parseClass(this.codeblock.get('class'));
 			
+			// get language name - use options as fallback  
+			var languageName = this.codeblock.get('data-enlighter-language') || this.options.language;
+			
+			// get theme name - use options as fallback
+			var themeName = (this.options.forceTheme ? null : this.codeblock.get('data-enlighter-theme')) || this.options.theme;
+				
 			// Load language parser
-			language = new Language[inlineOptions.language](code, {});
+			language = new Language[languageName](code, {});
 
 			// parse/tokenize the code
 			var tokens = language.getTokens();
 			
 			// compile tokens -> generate output
-			var output = this.compiler.compile(language, inlineOptions.theme, tokens);
+			var output = this.compiler.compile(language, themeName, tokens);
 
 			// grab content into specific container or after original code block ?
 			if (this.container) {
@@ -164,14 +169,6 @@ provides: [EnlighterJS]
 		 * @return {Object} A object containing the found language and theme.
 		 */
 		parseClass : function(className){
-			// force options ?
-			if (this.forceSettings){
-				return {
-					language: this.options.language,
-					theme:	  this.options.theme
-				};
-			}
-			
 			// extract class-name list - ignore empty class-names!
 			var classNames = (className != null ? className.split(' ') : []);
 			
@@ -199,6 +196,11 @@ provides: [EnlighterJS]
 					theme = attb[1];					
 				}			
 			});
+			
+			// force theme defined within options ? (required for grouping)
+			if (this.options.forceTheme){
+				theme = null;
+			}
 
 			// fallback - default options:
 			return {
@@ -1244,7 +1246,7 @@ Tokenizer.Xml = new Class({
 /*!
 ---
 name: Helper
-description: Helper to initialize multiple enlighter instances on your page
+description: Helper to initialize multiple enlighter instances on your page as well as code-groups
 
 license: MIT-style X11 License
 
@@ -1263,7 +1265,9 @@ EnlighterJS.Helper = new Class({
 	Implements: Options,
 
 	options: {
-		grouping: true
+		grouping: true,
+		theme: 'standard',
+		language: 'standard'
 	},
 		
 	/**
@@ -1272,11 +1276,7 @@ EnlighterJS.Helper = new Class({
 	 */
 	initialize : function(elements, options) {
 		this.setOptions(options);
-		
-		if (!options){
-			options = {};
-		}
-					
+	
 		// element grouping enabled ?
 		if (this.options.grouping){
 			// get seperated groups and single elements
@@ -1287,29 +1287,38 @@ EnlighterJS.Helper = new Class({
 				el.light(options);
 			});
 			
+			// force theme defined within options (all group members should have the same theme as group-leader)
+			this.options.forceTheme = true;
+			
 			// create & highlight groups
 			Object.each(seperated.groups, function(obj){
-				
 				// create new tab pane
-				var tabpane = new EnlighterJS.TabPane(options);
-
-				// put enlighted objects into the tabpane
-				obj.each(function(el){
-					// create new tab
-					var container = tabpane.addTab(el.get('data-title'));
-					
-					options.forceSettings = true;
-					
-					// run enlighter
-					(new EnlighterJS(el, options, container)).light();
-					
-				});
+				var tabpane = new EnlighterJS.TabPane();
 				
-				// select first tab
+				// copy options
+				var localoptions = this.options;
+				
+				// get group-leader theme
+				localoptions.theme = obj[0].get('data-enlighter-theme') || this.options.theme;
+			
+				// put enlighted objects into the tabpane
+				obj.each(function(el, index){
+					// create new tab - set title with fallbacl
+					var container = tabpane.addTab(el.get('data-enlighter-title') || el.get('data-enlighter-language') || localoptions.language);
+															
+					// run enlighter
+					(new EnlighterJS(el, localoptions, container)).light();
+					
+				}.bind(this));
+				
+				// add css class based on theme which is used by the groupleader
+				tabpane.getContainer().addClass(localoptions.theme + "EnlighterJSTabPane");
+				
+				// select first tab (group-leader)
 				tabpane.getContainer().inject(obj[0], 'before');
 				tabpane.selectTab(0);
 				
-			});
+			}.bind(this));
 			
 		}else{
 			// highlight all elements
@@ -1347,8 +1356,7 @@ EnlighterJS.Helper = new Class({
 			groups: groups,
 			single: ungrouped
 		};
-	},
-	
+	}	
 	
 });
 /*!
@@ -1369,13 +1377,7 @@ provides: [EnlighterJS.TabPane]
  */
 
 EnlighterJS.TabPane = new Class({
-	
-	Implements: Options,
-	
-	options: {
-		theme: 'standard'
-	},
-	
+		
 	// wrapper container which contains the controls + panes
 	container: null,
 	
@@ -1385,6 +1387,7 @@ EnlighterJS.TabPane = new Class({
 	// pane container - contains the tab panes
 	paneContainer: null,
 	
+	// array of tab objects
 	tabs: [],
 	
 	// current active tab
@@ -1392,14 +1395,12 @@ EnlighterJS.TabPane = new Class({
 	
 	/**
 	 * @constructs
-	 * @param {Object} options The options object.
+	 * @param {String} cssClassname The class-name of the outer container
 	 */
-	initialize : function(options) {
-		this.setOptions(options);
-		
+	initialize : function(cssClassname) {
 		// create container
 		this.container = new Element('div', {
-			'class': this.options.theme + 'EnlighterJSTabPane'
+			'class': cssClassname
 		});
 		
 		// create container structure

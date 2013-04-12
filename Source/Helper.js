@@ -20,7 +20,9 @@ EnlighterJS.Helper = new Class({
 	Implements: Options,
 
 	options: {
-		grouping: true
+		grouping: true,
+		theme: 'standard',
+		language: 'standard'
 	},
 		
 	/**
@@ -45,25 +47,27 @@ EnlighterJS.Helper = new Class({
 			
 			// create & highlight groups
 			Object.each(seperated.groups, function(obj){
-				
-				// get theme of group-leader
-				
 				// create new tab pane
 				var tabpane = new EnlighterJS.TabPane();
-
+				
+				// copy options
+				var localoptions = this.options;
+				
+				// get group-leader theme
+				localoptions.theme = obj[0].get('data-enlighter-theme') || this.options.theme;
+			
 				// put enlighted objects into the tabpane
 				obj.each(function(el, index){
-					// create new tab
-					var container = tabpane.addTab(el.get('data-title'));
-					
-					options.forceSettings = true;
-					
+					// create new tab - set title with fallbacl
+					var container = tabpane.addTab(el.get('data-enlighter-title') || el.get('data-enlighter-language') || localoptions.language);
+															
 					// run enlighter
-					(new EnlighterJS(el, options, container)).light();
+					(new EnlighterJS(el, localoptions, container)).light();
 					
 				}.bind(this));
 				
 				// add css class based on theme which is used by the groupleader
+				tabpane.getContainer().addClass(localoptions.theme + "EnlighterJSTabPane");
 				
 				// select first tab (group-leader)
 				tabpane.getContainer().inject(obj[0], 'before');
@@ -107,7 +111,6 @@ EnlighterJS.Helper = new Class({
 			groups: groups,
 			single: ungrouped
 		};
-	},
-	
+	}	
 	
 });
