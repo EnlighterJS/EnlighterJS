@@ -26,17 +26,17 @@
 		<!-- Cleanup Build Dir -->
 		<delete dir="${build.dir}" />
 		
-		<!-- Themes (Flames) to include !-->
+		<!-- Themes to include !-->
 		<property name="include.themes" value="Source/Themes/Git.css Source/Themes/Mocha.css Source/Themes/Panic.css Source/Themes/Standard.css Source/Themes/Tutti.css Source/Themes/Twilight.css" />
 
-		<!-- Languages (Fuels) to include !-->
-		<property name="include.languages" value="Source/Languages/Css.js Source/Languages/Html.js Source/Languages/Java.js Source/Languages/Js.js Source/Languages/Md.js Source/Languages/Php.js Source/Languages/Python.js Source/Languages/Ruby.js Source/Languages/Shell.js Source/Languages/Sql.js" />
+		<!-- Languages to include !-->
+		<property name="include.languages" value="Source/Languages/Xml.js Source/Languages/Css.js Source/Languages/Html.js Source/Languages/Java.js Source/Languages/Js.js Source/Languages/Md.js Source/Languages/Php.js Source/Languages/Python.js Source/Languages/Ruby.js Source/Languages/Shell.js Source/Languages/Sql.js" />
 		
 		<!-- ****************************** JS BUILD LIBRARY **************************** -->
 		<ant antfile="util/concat-compress.xml">
 			<property name="compress.description" value="Enlighter" />
 			<property name="compress.type" value="js" />
-			<property name="compress.input" value="Source/Compiler.js Source/Language.js Source/EnlighterJS.js Source/Element.EnlighterJS.js Source/Tokenizer.js Source/Token.js Source/Compiler/Inline.js Source/Compiler/Lines.js Source/Compiler/List.js Source/Tokenizer/Smart.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js ${include.languages}" />
+			<property name="compress.input" value="Source/EnlighterJS.js Source/Compiler.js Source/Language.js Source/Element.EnlighterJS.js Source/Tokenizer.js Source/Token.js Source/Compiler/Inline.js Source/Compiler/Lines.js Source/Compiler/List.js Source/Tokenizer/Smart.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js Source/Helper.js Source/TabPane.js ${include.languages}" />
 			<property name="compress.output" value="EnlighterJS.yui.js" />
 			<property name="uncompress.output" value="EnlighterJS.js" />
 		</ant>
@@ -53,7 +53,7 @@
 
 	<!-- Generate Testcases -->
 	<target name="testcases">
-		<for param="filename" list="css,html,js,java,md,php,ruby,sql,unit">
+		<for param="filename" list="css,html,js,java,md,php,ruby,sql,unit,xml">
 			<sequential>
 				<!-- Remove old file !-->
 				<delete file="Tests/Testcase.@{filename}.html" />

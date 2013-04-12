@@ -1,13 +1,14 @@
-/*
+/*!
 ---
-description: Builds and displays an element containing highlighted code bits.
+name: EnlighterJS
+description: Syntax Highlighter based on the famous Lighter.js from Jose Prado
 
 license: MIT-style X11 License
 
 authors:
-  - Jose Prado
-  - Andi Dittrich
-
+  - Andi Dittrich (author of EnlighterJS fork)
+  - Jose Prado (author of Ligther.js)
+  
 requires:
   - Core/1.4.5
 
@@ -23,10 +24,22 @@ provides: [EnlighterJS]
 		options : {
 			language : 'standard',
 			theme : 'standard',
-			indent : -1
+			compiler: 'List',
+			indent : -1,
+			forceTheme: false
 		},
 
-		compiler : null,
+		// used compiler instance
+		compiler: null,
+		
+		// used codeblock to highlight
+		codeblock: null,
+		
+		// used container to store highlighted code
+		container: null,
+		
+		// lightning active ?
+		isRendered: false,
 
 		/**
 		 * @constructs
@@ -34,17 +47,29 @@ provides: [EnlighterJS]
 		 *            options The options object.
 		 * @return {EnlighterJS} The current EnlighterJS instance.
 		 */
-		initialize : function(options) {
+		initialize : function(codeblock, options, container) {
 			this.setOptions(options);
-			
+								
 			// valid language selected ?
 			if (!Language[this.options.language]){
 				this.options.language = 'standard';
 			}
 			
-			// initialize compiler & parser
-			this.compiler = new Compiler.Inline();
-
+			// initialize compiler
+			if (Compiler[this.options.compiler]){
+				this.compiler = new Compiler[this.options.compiler](options);
+			}else{
+				this.compiler = new Compiler.List(options);
+			}
+			
+			// store codeblock
+			this.codeblock = document.id(codeblock);
+			
+			// store/create container
+			if (container){
+				this.container = document.id(container);
+			}
+			
 			return this;
 		},
 
@@ -53,31 +78,24 @@ provides: [EnlighterJS]
 		 * stored parser/compilers. It reads the class name to figure out what
 		 * language and theme to use for highlighting.
 		 * 
-		 * @param {String|Element} codeblock The codeblock to highlight.
-		 * @param {String|Element} [container] Optional container to inject the highlighted element into.
 		 * @return {EnlighterJS} The current EnlighterJS instance.
 		 */
-		light : function(codeblock, container){
-			// get elements
-			var codeblock = document.id(codeblock);
-			var container = document.id(container);
+		light : function(){
+			// hide original codeblock
+			this.codeblock.setStyle('display', 'none');
 			
-			// extract code to highlight
-			var code = this.getCode(codeblock);
-
-			// extract options from css class
-			var inlineOptions = this.parseClass(codeblock.get('class'));
-
-			// enlighter object available ?
-			var enlighter = codeblock.retrieve('enlighter');
-						
 			// EnlighterJS exists so just toggle display.
-			if (enlighter !== null) {
-				codeblock.setStyle('display', 'none');
-				enlighter.setStyle('display', 'inherit');
+			if (this.isRendered) {				
+				this.container.setStyle('display', 'inherit');
 				return this;
 			}			
 
+			// extract code to highlight
+			var code = this.getCode();
+
+			// extract options from css class
+			var inlineOptions = this.parseClass(this.codeblock.get('class'));
+			
 			// Load language parser
 			language = new Language[inlineOptions.language](code, {});
 
@@ -87,20 +105,16 @@ provides: [EnlighterJS]
 			// compile tokens -> generate output
 			var output = this.compiler.compile(language, inlineOptions.theme, tokens);
 
-			//output.store('codeblock', codeblock);
-			//output.store('plaintext', code);
-
 			// grab content into specific container or after original code block ?
-			if (container) {
-				container.empty();
-				container.grab(output);
-			} else {
-				codeblock.setStyle('display', 'none');
-				output.inject(codeblock, 'after');
+			if (this.container) {
+				this.container.grab(output);
+			}else{
+				output.inject(this.codeblock, 'after');
+				this.container = output;
 			}
-
-			// store generated element into original one
-			codeblock.store('enlighter', this);
+			
+			// set render flag
+			this.isRendered = true;
 
 			return this;
 		},
@@ -109,20 +123,14 @@ provides: [EnlighterJS]
 		 * Unlights a codeblock by hiding the enlighter element if present and
 		 * re-displaying the original code.
 		 * 
-		 * @param {String|Element}
-		 *            codeblock The element to unlight.
 		 * @return {EnlighterJS} The current EnlighterJS instance.
 		 */
-		unlight : function(codeblock) {
-			// get element
-			codeblock = document.id(codeblock);
-
-			var enlighter = codeblock.retrieve('enlighter');
-
-			// hide enlighted element, display original
-			if (enlighter !== null) {
-				codeblock.setStyle('display', 'inherit');
-				enlighter.setStyle('display', 'none');
+		unlight : function() {
+			
+			// already highlighted ?
+			if (this.isRendered) {
+				this.codeblock.setStyle('display', 'inherit');
+				this.container.setStyle('display', 'none');
 			}
 
 			return this;
@@ -130,13 +138,11 @@ provides: [EnlighterJS]
 
 		/**
 		 * Extracts the code from a codeblock.
-		 * 
-		 * @param {Element}
-		 *            codeblock The codeblock that contains the code.
+		 * @author Jose Prado, Andi Dittrich
 		 * @return {String} The plain-text code.
 		 */
-		getCode : function(codeblock) {
-			var code = codeblock.get('html')
+		getCode : function() {
+			var code = this.codeblock.get('html')
 					.replace(/(^\s*\n|\n\s*$)/gi, '')
 					.replace(/&lt;/gim, '<')
 					.replace(/&gt;/gim, '>')
@@ -158,8 +164,8 @@ provides: [EnlighterJS]
 		 * @return {Object} A object containing the found language and theme.
 		 */
 		parseClass : function(className){
-			// extract classname list
-			var classNames = className.split(' ');
+			// extract class-name list - ignore empty class-names!
+			var classNames = (className != null ? className.split(' ') : []);
 			
 			// parsed params
 			var language = null;
@@ -185,11 +191,16 @@ provides: [EnlighterJS]
 					theme = attb[1];					
 				}			
 			});
+			
+			// force theme defined within options ? (required for grouping)
+			if (this.options.forceTheme){
+				theme = null;
+			}
 
 			// fallback - default options:
 			return {
-				language: language || this.options.language,
-				theme:	  theme || this.options.theme
+				language: (language || this.options.language),
+				theme:	  (theme || this.options.theme)
 			};
 		}
 	});

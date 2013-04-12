@@ -25,14 +25,15 @@ provides: [EnlighterJS]
 		 * @returns {Element} The current Element instance.
 		 */
 		light : function(options) {
-			var enlighter = this.retrieve('enlighter');
+			var enlighter = this.retrieve('EnlighterInstance');
 
 			// create new enlighter instance
 			if (enlighter === null) {
-				enlighter = new EnlighterJS(options);
+				enlighter = new EnlighterJS(this, options, null);
+				this.store('EnlighterInstance', enlighter);
 			}
 
-			enlighter.light(this);
+			enlighter.light();
 
 			return this;
 		},
@@ -43,10 +44,10 @@ provides: [EnlighterJS]
 		 * @returns {Element} The current Element instance.
 		 */
 		unlight : function() {
-			var enlighter = this.retrieve('enlighter');
+			var enlighter = this.retrieve('EnlighterInstance');
 
 			if (enlighter !== null) {
-				enlighter.unlight(this);
+				enlighter.unlight();
 			}
 
 			return this;

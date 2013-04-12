@@ -1,15 +1,32 @@
 <pre class="html:git">
 &lt;head&gt;
-...
-&lt;script type=&quot;text/javascript&quot; src=&quot;js/mootools.core.js&quot;&gt;&lt;/script&gt; 
-&lt;script type=&quot;text/javascript&quot; src=&quot;js/Lighter.js&quot;&gt;&lt;/script&gt; 
-...
+		&lt;!-- Include EnlighterJS Styles --&gt;
+		&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../Build/EnlighterJS.yui.css&quot; /&gt;
+		
+		&lt;!-- Include MooTools Framework --&gt;
+		&lt;script type=&quot;text/javascript&quot; src=&quot;mootools-core-1.4.5-full-nocompat.js&quot;&gt;&lt;/script&gt;
+		
+		&lt;!-- Include EnlighterJS --&gt;
+		&lt;script type=&quot;text/javascript&quot; src=&quot;../Build/EnlighterJS.yui.js&quot; &gt;&lt;/script&gt;
+		
+		&lt;!-- Initialize EnlighterJS --&gt; 
+		&lt;script type=&quot;text/javascript&quot;&gt;
+		window.addEvent('domready', function() {
+			// highlight all pre tags
+			$$('pre').light({
+				altLines : 'hover',
+				indent : 2,
+				editable: false
+			});
+		});
+		&lt;/script&gt;
+
 &lt;/head&gt;
 
-&lt;!-- Syntax highlight using Language.js.js and default theme --&gt; 
-&lt;pre id=&quot;jsCode&quot; class=&quot;js&quot;&gt;var myClass = new Class({})&lt;/pre&gt; 
+&lt;!-- Syntax highlight using Languages/Js.js and default theme --&gt; 
+&lt;pre class=&quot;js&quot;&gt;var myClass = new Class({})&lt;/pre&gt; 
  
-&lt;!-- Syntax highlight using Language.php.js and theme from Theme.twilight.js --&gt; 
-&lt;pre id=&quot;phpCode&quot; class=&quot;php:twilight&quot;&gt;&lt;?php php_info() ?&gt;&lt;/pre&gt;
+&lt;!-- Syntax highlight using Languages/Php.js and theme from Themes/Twilight.css --&gt; 
+&lt;pre class=&quot;php:twilight&quot;&gt;&lt;?php php_info() ?&gt;&lt;/pre&gt;
 
 </pre>

@@ -1,3 +1,214 @@
+/*!
+---
+name: EnlighterJS
+description: Syntax Highlighter based on the famous Lighter.js from Jose Prado
+
+license: MIT-style X11 License
+
+authors:
+  - Andi Dittrich (author of EnlighterJS fork)
+  - Jose Prado (author of Ligther.js)
+  
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS]
+...
+ */
+(function() {
+
+	var EnlighterJS = this.EnlighterJS = new Class({
+
+		Implements : Options,
+
+		options : {
+			language : 'standard',
+			theme : 'standard',
+			compiler: 'List',
+			indent : -1,
+			forceSettings: false
+		},
+
+		// used compiler instance
+		compiler: null,
+		
+		// used codeblock to highlight
+		codeblock: null,
+		
+		// used container to store highlighted code
+		container: null,
+		
+		// lightning active ?
+		isRendered: false,
+
+		/**
+		 * @constructs
+		 * @param {Object}
+		 *            options The options object.
+		 * @return {EnlighterJS} The current EnlighterJS instance.
+		 */
+		initialize : function(codeblock, options, container) {
+			this.setOptions(options);
+								
+			// valid language selected ?
+			if (!Language[this.options.language]){
+				this.options.language = 'standard';
+			}
+			
+			// initialize compiler
+			if (Compiler[this.options.compiler]){
+				this.compiler = new Compiler[this.options.compiler](options);
+			}else{
+				this.compiler = new Compiler.List(options);
+			}
+			
+			// store codeblock
+			this.codeblock = document.id(codeblock);
+			
+			// store/create container
+			if (container){
+				this.container = document.id(container);
+			}
+			
+			return this;
+		},
+
+		/**
+		 * Takes a codeblock and highlights the code inside of it using the
+		 * stored parser/compilers. It reads the class name to figure out what
+		 * language and theme to use for highlighting.
+		 * 
+		 * @return {EnlighterJS} The current EnlighterJS instance.
+		 */
+		light : function(){
+			// hide original codeblock
+			this.codeblock.setStyle('display', 'none');
+			
+			// EnlighterJS exists so just toggle display.
+			if (this.isRendered) {				
+				this.container.setStyle('display', 'inherit');
+				return this;
+			}			
+
+			// extract code to highlight
+			var code = this.getCode();
+
+			// extract options from css class
+			var inlineOptions = this.parseClass(this.codeblock.get('class'));
+			
+			// Load language parser
+			language = new Language[inlineOptions.language](code, {});
+
+			// parse/tokenize the code
+			var tokens = language.getTokens();
+			
+			// compile tokens -> generate output
+			var output = this.compiler.compile(language, inlineOptions.theme, tokens);
+
+			// grab content into specific container or after original code block ?
+			if (this.container) {
+				this.container.grab(output);
+			}else{
+				output.inject(this.codeblock, 'after');
+				this.container = output;
+			}
+			
+			// set render flag
+			this.isRendered = true;
+
+			return this;
+		},
+
+		/**
+		 * Unlights a codeblock by hiding the enlighter element if present and
+		 * re-displaying the original code.
+		 * 
+		 * @return {EnlighterJS} The current EnlighterJS instance.
+		 */
+		unlight : function() {
+			
+			// already highlighted ?
+			if (this.isRendered) {
+				this.codeblock.setStyle('display', 'inherit');
+				this.container.setStyle('display', 'none');
+			}
+
+			return this;
+		},
+
+		/**
+		 * Extracts the code from a codeblock.
+		 * @author Jose Prado, Andi Dittrich
+		 * @return {String} The plain-text code.
+		 */
+		getCode : function() {
+			var code = this.codeblock.get('html')
+					.replace(/(^\s*\n|\n\s*$)/gi, '')
+					.replace(/&lt;/gim, '<')
+					.replace(/&gt;/gim, '>')
+					.replace(/&amp;/gim, '&');
+
+			// Re-indent code if user option is set.
+			if (this.options.indent > -1) {
+				code = code.replace(/\t/g, new Array(this.options.indent + 1)
+						.join(' '));
+			}
+
+			return code;
+		},
+
+		/**
+		 * Parses a class name for a language:theme combo.
+		 * 
+		 * @param {String} className The html class-name attribute to parse.
+		 * @return {Object} A object containing the found language and theme.
+		 */
+		parseClass : function(className){
+			// force options ?
+			if (this.forceSettings){
+				return {
+					language: this.options.language,
+					theme:	  this.options.theme
+				};
+			}
+			
+			// extract class-name list - ignore empty class-names!
+			var classNames = (className != null ? className.split(' ') : []);
+			
+			// parsed params
+			var language = null;
+			var theme = null;
+			
+			// iterate over classes
+			classNames.each(function(item, index){
+				// language already found ? break
+				if (language != null){
+					return;
+				}
+				
+				// extract attribute patterns
+				var attb = item.split(':');
+				
+				// parsed language available ?
+				if (Language[attb[0]]){
+					language = attb[0];
+				}
+				
+				// language:theme pair found ?
+				if (attb.length == 2){
+					theme = attb[1];					
+				}			
+			});
+
+			// fallback - default options:
+			return {
+				language: (language || this.options.language),
+				theme:	  (theme || this.options.theme)
+			};
+		}
+	});
+
+})();
 /*
 ---
 description: Compiles an array of Tokens into an Element.
@@ -232,203 +443,6 @@ Language.standard = new Class({
 })();
 /*
 ---
-description: Builds and displays an element containing highlighted code bits.
-
-license: MIT-style X11 License
-
-authors:
-  - Jose Prado
-  - Andi Dittrich
-
-requires:
-  - Core/1.4.5
-
-provides: [EnlighterJS]
-...
- */
-(function() {
-
-	var EnlighterJS = this.EnlighterJS = new Class({
-
-		Implements : Options,
-
-		options : {
-			language : 'standard',
-			theme : 'standard',
-			indent : -1
-		},
-
-		compiler : null,
-
-		/**
-		 * @constructs
-		 * @param {Object}
-		 *            options The options object.
-		 * @return {EnlighterJS} The current EnlighterJS instance.
-		 */
-		initialize : function(options) {
-			this.setOptions(options);
-			
-			// valid language selected ?
-			if (!Language[this.options.language]){
-				this.options.language = 'standard';
-			}
-			
-			// initialize compiler & parser
-			this.compiler = new Compiler.Inline();
-
-			return this;
-		},
-
-		/**
-		 * Takes a codeblock and highlights the code inside of it using the
-		 * stored parser/compilers. It reads the class name to figure out what
-		 * language and theme to use for highlighting.
-		 * 
-		 * @param {String|Element} codeblock The codeblock to highlight.
-		 * @param {String|Element} [container] Optional container to inject the highlighted element into.
-		 * @return {EnlighterJS} The current EnlighterJS instance.
-		 */
-		light : function(codeblock, container){
-			// get elements
-			var codeblock = document.id(codeblock);
-			var container = document.id(container);
-			
-			// extract code to highlight
-			var code = this.getCode(codeblock);
-
-			// extract options from css class
-			var inlineOptions = this.parseClass(codeblock.get('class'));
-
-			// enlighter object available ?
-			var enlighter = codeblock.retrieve('enlighter');
-						
-			// EnlighterJS exists so just toggle display.
-			if (enlighter !== null) {
-				codeblock.setStyle('display', 'none');
-				enlighter.setStyle('display', 'inherit');
-				return this;
-			}			
-
-			// Load language parser
-			language = new Language[inlineOptions.language](code, {});
-
-			// parse/tokenize the code
-			var tokens = language.getTokens();
-			
-			// compile tokens -> generate output
-			var output = this.compiler.compile(language, inlineOptions.theme, tokens);
-
-			//output.store('codeblock', codeblock);
-			//output.store('plaintext', code);
-
-			// grab content into specific container or after original code block ?
-			if (container) {
-				container.empty();
-				container.grab(output);
-			} else {
-				codeblock.setStyle('display', 'none');
-				output.inject(codeblock, 'after');
-			}
-
-			// store generated element into original one
-			codeblock.store('enlighter', this);
-
-			return this;
-		},
-
-		/**
-		 * Unlights a codeblock by hiding the enlighter element if present and
-		 * re-displaying the original code.
-		 * 
-		 * @param {String|Element}
-		 *            codeblock The element to unlight.
-		 * @return {EnlighterJS} The current EnlighterJS instance.
-		 */
-		unlight : function(codeblock) {
-			// get element
-			codeblock = document.id(codeblock);
-
-			var enlighter = codeblock.retrieve('enlighter');
-
-			// hide enlighted element, display original
-			if (enlighter !== null) {
-				codeblock.setStyle('display', 'inherit');
-				enlighter.setStyle('display', 'none');
-			}
-
-			return this;
-		},
-
-		/**
-		 * Extracts the code from a codeblock.
-		 * 
-		 * @param {Element}
-		 *            codeblock The codeblock that contains the code.
-		 * @return {String} The plain-text code.
-		 */
-		getCode : function(codeblock) {
-			var code = codeblock.get('html')
-					.replace(/(^\s*\n|\n\s*$)/gi, '')
-					.replace(/&lt;/gim, '<')
-					.replace(/&gt;/gim, '>')
-					.replace(/&amp;/gim, '&');
-
-			// Re-indent code if user option is set.
-			if (this.options.indent > -1) {
-				code = code.replace(/\t/g, new Array(this.options.indent + 1)
-						.join(' '));
-			}
-
-			return code;
-		},
-
-		/**
-		 * Parses a class name for a language:theme combo.
-		 * 
-		 * @param {String} className The html class-name attribute to parse.
-		 * @return {Object} A object containing the found language and theme.
-		 */
-		parseClass : function(className){
-			// extract classname list
-			var classNames = className.split(' ');
-			
-			// parsed params
-			var language = null;
-			var theme = null;
-			
-			// iterate over classes
-			classNames.each(function(item, index){
-				// language already found ? break
-				if (language != null){
-					return;
-				}
-				
-				// extract attribute patterns
-				var attb = item.split(':');
-				
-				// parsed language available ?
-				if (Language[attb[0]]){
-					language = attb[0];
-				}
-				
-				// language:theme pair found ?
-				if (attb.length == 2){
-					theme = attb[1];					
-				}			
-			});
-
-			// fallback - default options:
-			return {
-				language: language || this.options.language,
-				theme:	  theme || this.options.theme
-			};
-		}
-	});
-
-})();
-/*
----
 description: Extends MooTools.Element with light(), unlight() shortcuts
 
 license: MIT-style X11 License
@@ -454,14 +468,15 @@ provides: [EnlighterJS]
 		 * @returns {Element} The current Element instance.
 		 */
 		light : function(options) {
-			var enlighter = this.retrieve('enlighter');
+			var enlighter = this.retrieve('EnlighterInstance');
 
 			// create new enlighter instance
 			if (enlighter === null) {
-				enlighter = new EnlighterJS(options);
+				enlighter = new EnlighterJS(this, options, null);
+				this.store('EnlighterInstance', enlighter);
 			}
 
-			enlighter.light(this);
+			enlighter.light();
 
 			return this;
 		},
@@ -472,10 +487,10 @@ provides: [EnlighterJS]
 		 * @returns {Element} The current Element instance.
 		 */
 		unlight : function() {
-			var enlighter = this.retrieve('enlighter');
+			var enlighter = this.retrieve('EnlighterInstance');
 
 			if (enlighter !== null) {
-				enlighter.unlight(this);
+				enlighter.unlight();
 			}
 
 			return this;
@@ -1081,12 +1096,12 @@ Tokenizer.Lazy = new Class({
      * inner matches. Faster than LighterTokenizer.Strict, but less robust and
      * prone to erroneous matches.
      *
-     * @param {Fuel} fuel       The fuel to use for parsing.
+     * @param {Language} language       The language to use for parsing.
      * @param {String} code     The code to parse.
      * @param {Number} [offset] Optional offset to add to the match index.
      * @return {Array} The array of matches found.
      */
-    _parse: function(fuel, code, offset)
+    _parse: function(language, code, offset)
     {
         var tokens = [],
             match = null,
@@ -1095,7 +1110,7 @@ Tokenizer.Lazy = new Class({
         
         offset = offset || 0;
         
-        Object.each(fuel.getRules(), function(regex, rule) {
+        Object.each(language.getRules(), function(regex, rule) {
             while (null !== (match = regex.exec(code))) {
                 index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
                 text  = match[1] || match[0];
@@ -1159,12 +1174,12 @@ Tokenizer.Xml = new Class({
     
     /**
      * Xml Tokenizer
-     * @author Jose Prado
+     * @author Jose Prado, Andi Dittrich
      *
      * @param {Language} lang       The language to use for parsing.
      * @param {String} code     The code to parse.
      * @param {Number} [offset] Optional offset to add to the match index.
-     * @return {Array} The array of matches found.
+     * @return {Array} The array of tokens found.
      */
     _parse: function(lang, code, offset)
     {
@@ -1190,8 +1205,306 @@ Tokenizer.Xml = new Class({
             tokens.push(new Token(match[3], 'kw1', match.index + match[1].length + match[2].length));
         }
         
+        // apply rules
+        Object.each(lang.getRules(), function(regex, rule) {
+            while (null !== (match = regex.exec(code))) {
+                index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
+                text  = match[1] || match[0];
+                tokens.push(new Token(text, rule, index + offset));
+            }
+        }, this);
+        
+        // sort tokens
+        tokens = tokens.sort(function(token1, token2) {
+            return token1.index - token2.index;
+        });
+        
+        for (var i = 0, j = 0; i < tokens.length; i++) {
+            
+            if (tokens[i] === null) { continue; }
+            
+            for (j = i + 1; j < tokens.length && tokens[i] !== null; j++) {
+                if (tokens[j] === null) {
+                    continue;
+                } else if (tokens[j].isBeyond(tokens[i])) {
+                    break;
+                } else if (tokens[j].overlaps(tokens[i])) {
+                    tokens[i] = null;
+                } else if (tokens[i].contains(tokens[j])) {
+                    tokens[j] = null;
+                }
+            }
+        }
+        
+        tokens = tokens.clean();
+        
         return tokens;
     }
+});
+/*!
+---
+name: Helper
+description: Helper to initialize multiple enlighter instances on your page
+
+license: MIT-style X11 License
+
+authors:
+  - Andi Dittrich
+  
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Helper]
+...
+ */
+
+EnlighterJS.Helper = new Class({
+	
+	Implements: Options,
+
+	options: {
+		grouping: true
+	},
+		
+	/**
+	 * @constructs
+	 * @param {Object} options The options object.
+	 */
+	initialize : function(elements, options) {
+		this.setOptions(options);
+		
+		if (!options){
+			options = {};
+		}
+					
+		// element grouping enabled ?
+		if (this.options.grouping){
+			// get seperated groups and single elements
+			var seperated = this.getGroups(elements);
+			
+			// highlight single elements (non grouped)
+			seperated.single.each(function(el){
+				el.light(options);
+			});
+			
+			// create & highlight groups
+			Object.each(seperated.groups, function(obj){
+				
+				// create new tab pane
+				var tabpane = new EnlighterJS.TabPane(options);
+
+				// put enlighted objects into the tabpane
+				obj.each(function(el){
+					// create new tab
+					var container = tabpane.addTab(el.get('data-title'));
+					
+					options.forceSettings = true;
+					
+					// run enlighter
+					(new EnlighterJS(el, options, container)).light();
+					
+				});
+				
+				// select first tab
+				tabpane.getContainer().inject(obj[0], 'before');
+				tabpane.selectTab(0);
+				
+			});
+			
+		}else{
+			// highlight all elements
+			elements.light(options);
+		}		
+	},
+	
+	/**
+	 * Get an object with arrays of elements identified by their group-names
+	 * @param {Array} elements Array of elements to parse
+	 * @returns {Object} 
+	 */
+	getGroups: function(elements){
+		var groups = {};
+		var ungrouped = [];
+		
+		// group elements
+		elements.each(function(el){
+			// extract group name
+			var groupName = el.get('data-enlighter-group');
+			
+			// build element tree
+			if (groupName){
+				if (groups[groupName]){
+					groups[groupName].push(el);
+				}else{
+					groups[groupName] = [el];
+				}
+			}else{
+				ungrouped.push(el);
+			}
+		});
+		
+		return {
+			groups: groups,
+			single: ungrouped
+		};
+	},
+	
+	
+});
+/*!
+---
+name: TapPane
+description: Displays multiple code-blocks within a group
+
+license: MIT-style X11 License
+
+authors:
+  - Andi Dittrich
+  
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.TabPane]
+...
+ */
+
+EnlighterJS.TabPane = new Class({
+	
+	Implements: Options,
+	
+	options: {
+		theme: 'standard'
+	},
+	
+	// wrapper container which contains the controls + panes
+	container: null,
+	
+	// control container - contains the tab names
+	controlContainer: null,
+	
+	// pane container - contains the tab panes
+	paneContainer: null,
+	
+	tabs: [],
+	
+	// current active tab
+	selectedTabIndex: 0,
+	
+	/**
+	 * @constructs
+	 * @param {Object} options The options object.
+	 */
+	initialize : function(options) {
+		this.setOptions(options);
+		
+		// create container
+		this.container = new Element('div', {
+			'class': this.options.theme + 'EnlighterJSTabPane'
+		});
+		
+		// create container structure
+		this.controlContainer = new Element('ul', {
+			'class': 'controls'
+		});
+		this.paneContainer = new Element('div', {
+			'class': 'pane'
+		});
+		
+		this.container.grab(this.controlContainer);
+		this.container.grab(this.paneContainer);
+	},
+	
+	selectTab: function(index){
+		if (index < this.tabs.length){
+			// hide current tab
+			this.tabs[this.selectedTabIndex].pane.setStyle('display', 'none');
+			this.tabs[this.selectedTabIndex].control.removeClass('selected');
+			
+			// show selected tab
+			this.tabs[index].pane.setStyle('display', 'block');
+			this.tabs[index].control.addClass('selected');
+			
+			// store selected index
+			this.selectedTabIndex = index;
+		}
+	},
+	
+	addTab: function(name){
+		// create new control element
+		var ctrl = new Element('li', {
+			text: name
+		});
+		this.controlContainer.grab(ctrl);
+		
+		// get new tab position
+		var tabIndex = this.tabs.length;
+		
+		// select event - display tab
+		ctrl.addEvent('click', function(){
+			this.selectTab(tabIndex);
+		}.bind(this));
+		
+		// create new tab element
+		var tab = new Element('div', {
+			'styles': {
+				'display': 'none'
+			}
+		});
+		this.paneContainer.grab(tab);
+		
+		// store new tab
+		this.tabs.push({
+			control: ctrl,
+			pane: tab
+		});
+		
+		// return created tab element
+		return tab;
+	},
+	
+	getContainer: function(){
+		return this.container;
+	}
+
+	
+});
+/*
+---
+description: XML language.
+
+license: MIT-style
+
+authors:
+  - Jose Prado
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+  - Language
+
+provides: [Language.xml]
+...
+*/
+Language.xml = new Class ({
+    
+    Extends: Language,
+    language: 'xml',
+    tokenizerType: 'Xml',
+    
+    initialize: function(code, options) {
+
+        // Common HTML patterns
+        this.patterns = {
+            'comments':    {pattern: /(?:\&lt;|<)!--[\s\S]*?--(?:\&gt;|>)/gim,          alias: 'co1'},
+            'cdata':       {pattern: /(?:\&lt;|<)!\[CDATA\[[\s\S]*?\]\](?:\&gt;|>)/gim, alias: 'st1'},
+            'closingTags': {pattern: /(?:\&lt;|<)\/[A-Z][A-Z0-9]*?(?:\&gt;|>)/gi,       alias: 'kw1'},
+            'doctype':     {pattern: /(?:\&lt;|<)!DOCTYPE[\s\S]+?(?:\&gt;|>)/gim,       alias: 'st2'},
+            'version':     {pattern: /(?:\&lt;|<)\?xml[\s\S]+?\?(?:\&gt;|>)/gim,       alias: 'kw2'}
+        };
+        
+        this.parent(code, options);
+    }
+    
 });
 /*
 ---
@@ -1272,20 +1585,9 @@ provides: [Language.html]
 */
 Language.html = new Class ({
     
-    Extends: Language,
-    language: 'html',
-    tokenizerType: 'Xml',
-    
-    initialize: function(code, options) {
+    Extends: Language.xml,
 
-        // Common HTML patterns
-        this.patterns = {
-            'comments':    {pattern: /(?:\&lt;|<)!--[\s\S]*?--(?:\&gt;|>)/gim,          alias: 'co1'},
-            'cdata':       {pattern: /(?:\&lt;|<)!\[CDATA\[[\s\S]*?\]\](?:\&gt;|>)/gim, alias: 'st1'},
-            'closingTags': {pattern: /(?:\&lt;|<)\/[A-Z][A-Z0-9]*?(?:\&gt;|>)/gi,       alias: 'kw1'},
-            'doctype':     {pattern: /(?:\&lt;|<)!DOCTYPE[\s\S]+?(?:\&gt;|>)/gim,       alias: 'st2'}
-        };
-        
+    initialize: function(code, options) {
         this.parent(code, options);
     }
     

@@ -1,0 +1,98 @@
+/*
+---
+description: Template to build custom Themes for EnlighterJS
+
+license: MIT-style
+
+authors:
+- Jose Prado
+- Andi Dittrich
+...
+*/
+.myLighter {
+	font-family: Monaco, Courier, Monospace;
+	font-size: 12px;
+	overflow: auto;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -o-pre-wrap;
+	white-space: -pre-wrap;
+	word-wrap: break-word;
+}
+.myLighter span {
+	color: black;
+	font-size: 12px;
+}
+.myLighter .mynum {
+	background-color: #f2f2f2;
+	color: #939393;
+	font-size: 10px;
+	text-align: center;
+	width: 30px;
+}
+.myLighter .myline {
+	background-color: #fff;
+	padding: 0 3px 0 10px;
+	padding-left: 15px;
+	padding-right: 5px;
+}
+.myLighter .myfirst { padding-top: 5px; }
+.myLighter .mylast  { padding-bottom: 5px; }
+.myLighter .alt { background-color: #F4F8FC; }
+
+/** Pre specific styles */
+pre.myLighter {
+	padding-left: 15px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+/** OL specific styles */
+ol.myLighter {
+	font-size: 10px;
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+	padding-left: 0;
+}
+ol.myLighter li { margin-left: 40px; }
+
+/** Div specific styles */
+div.myLighter .mynum {
+	display: block;
+	float: left;
+}
+div.myLighter .myline {
+	display: block;
+	margin-left: 30px;
+	min-height: 12px;
+}
+div.myLighter div {
+	clear: left;
+	overflow: auto;
+}
+
+/** Table specific styles */
+table.myLighter .mynum {}
+table.myLighter .myline {}
+	
+/** Symbol styles */
+.myLighter .de1 {}
+.myLighter .de2 {}
+.myLighter .kw1 { color: #; }
+.myLighter .kw2 { color: #; }
+.myLighter .kw3 { color: #; }
+.myLighter .kw4 { color: #; }
+.myLighter .co1 { color: #; }
+.myLighter .co2 { color: #; }
+.myLighter .st0 { color: #; }
+.myLighter .st1 { color: #; }
+.myLighter .st2 { color: #; }
+.myLighter .nu0 { color: #; }
+.myLighter .me0 { color: #; }
+.myLighter .me1 { color: #; }
+.myLighter .br0 { color: #; }
+.myLighter .sy0 { color: #; }
+.myLighter .es0 { color: #; }
+.myLighter .re0 { color: #; }

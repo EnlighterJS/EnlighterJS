@@ -1,21 +1,81 @@
-	<p>No Code. Should render empty.</p>
+	<h4>No Code. Should render empty.</h4>
 	<pre class="js"></pre>
 	
-	<p>White space two lines. Should render nothing as they are chopped</p>
+	<h4>White space two lines. Should render nothing as they are chopped</h4>
 	<pre class="js"> 
  		   	</pre>
 	
-	<p>White space only. Should render whitespace minus line breaks minus chopped lines.</p>
+	<h4>White space only. Should render whitespace minus line breaks minus chopped lines.</h4>
 	<pre class="js">   		
 			
 			</pre>
-	
-	<p>Multiple classes. Should still render as Javascript</p>
-	<pre class="js:panic moo tools">
-var myMootools = new Class({});
+
+	<h4>Single Class with git theme</h4>
+	<pre class="js:git">
+if (this.options.editable) {
+    lighter.set('contenteditable', 'true');
+}
+	</pre>
+		
+	<h4>Multiple classes. Should still render as Javascript (git theme) - NOT PHP</h4>
+	<pre class="js:git js:panic moo tools php">
+if (this.options.editable) {
+    lighter.set('contenteditable', 'true');
+}
+
+define('hello', 1234);
+mysql_connect(a, b, c, d);
 	</pre>
 	
-	<p>No class should render with standard language/theme</p>
+	<h4>No class - should render with default language/theme</h4>
 	<pre>
 var myMootools = new Class({});
 	</pre>
+	
+	<h4>Should be unlighted - unlight() is called on the element</h4>
+	<pre id="unlightMe" class="js:git">
+compile: function(language, theme, tokens)
+   {
+       var lighter = this._compile(language, theme, tokens);
+       
+       // Set class and id attributes.
+       lighter.set('class', theme + 'Lighter');
+       lighter.set('id', 'Lighter_' + Date.now());
+       
+       if (this.options.editable) {
+           lighter.set('contenteditable', 'true');
+       }
+       
+       return lighter;
+   },
+	</pre>
+	
+	<h4>Should be lighted - unlight().light() is called on the element</h4>
+	<pre id="relightMe" class="js:git">
+compile: function(language, theme, tokens)
+   {
+       var lighter = this._compile(language, theme, tokens);
+       return lighter;
+   },
+	</pre>	
+	
+	<h4>Should be grouped together</h4>
+	<pre class="js:git" data-enlighter-group="helloworld" data-title="Javascript">
+console.info("Hello World - I'am Javascript");
+	</pre>
+	<pre class="java:git" data-enlighter-group="helloworld" data-title="pure Java">
+System.out.println("Hello World - I'am Java");	
+	</pre>
+	<pre class="php:git" data-enlighter-group="helloworld" data-title="PHP Script">
+echo 'Hello World - I\'am PHP';	
+	</pre>	
+	
+	<script type="text/javascript">
+		window.addEvent('load', function() {
+			// unlight element
+			document.id('unlightMe').unlight();
+			
+			// relight element
+			document.id('relightMe').unlight().light();
+		});
+	</script>

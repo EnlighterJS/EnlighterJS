@@ -1,7 +1,7 @@
-Lighter.js Documentation
+EnlighterJS Documentation
 <div id="docs" markdown="1">
 
-Class: Lighter {#Lighter}
+Class: EnligherJS {#EnligherJS}
 =========================
 
 Creates and returns an Element with syntax-highlighted source code using the supplied parameters.
@@ -33,14 +33,12 @@ var myLighter = new Lighter(codeblock[, options]);
 ### Options:
 
 * altLines  - (*string*: defaults to empty) Set to 'hover' for alternate line styling on mouse-over or use any of the MooTools selectors pseudo-classes to style a specific set of lines (e.g. odd, even, first-child).
-* clipboard - (*element*: defaults to null) The element to attach the copy-to-clipboard function.
 * container - (*string*: defaults to null) Id of the container to inject the Lighter element into.
 * editable  - (*boolean*: defaults to false) Whether or not to allow editing of the element.
 * flame     - (*string*, defaults to standard) The Flame to use. Can be overridden in the element class.
 * fuel      - (*string*, defaults to standard) The Fuel to use. Can be overridden in the element class.
 * id        - (*string*: defaults to 'Lighter_' + unique id) The id of the Lighter instance.
 * indent    - (*integer*: defaults to -1) Number of spaces to replace tabs with. Leave blank or set to -1 to keep tabs intact.
-* matchType - (*string*, defaults to standard) Whether to use the standard or the lazy match finder.
 * mode      - (*string*, defaults to pre) Which type of Lighter to output. Can be set to inline, pre, ol, div, and table.
 * path        - (*string*, defaults to Lighter.js path) Path to use when dynamically including scripts/stylesheets. No need to change unless files are moved outside of the default folder.
 * strict - (*boolean*: defaults to false) Whether to find matches everywhere or only in segments delimited by code like &lt;?php ?&gt; 

@@ -32,12 +32,12 @@ Tokenizer.Lazy = new Class({
      * inner matches. Faster than LighterTokenizer.Strict, but less robust and
      * prone to erroneous matches.
      *
-     * @param {Fuel} fuel       The fuel to use for parsing.
+     * @param {Language} language       The language to use for parsing.
      * @param {String} code     The code to parse.
      * @param {Number} [offset] Optional offset to add to the match index.
      * @return {Array} The array of matches found.
      */
-    _parse: function(fuel, code, offset)
+    _parse: function(language, code, offset)
     {
         var tokens = [],
             match = null,
@@ -46,7 +46,7 @@ Tokenizer.Lazy = new Class({
         
         offset = offset || 0;
         
-        Object.each(fuel.getRules(), function(regex, rule) {
+        Object.each(language.getRules(), function(regex, rule) {
             while (null !== (match = regex.exec(code))) {
                 index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
                 text  = match[1] || match[0];

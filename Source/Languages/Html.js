@@ -17,20 +17,9 @@ provides: [Language.html]
 */
 Language.html = new Class ({
     
-    Extends: Language,
-    language: 'html',
-    tokenizerType: 'Xml',
-    
-    initialize: function(code, options) {
+    Extends: Language.xml,
 
-        // Common HTML patterns
-        this.patterns = {
-            'comments':    {pattern: /(?:\&lt;|<)!--[\s\S]*?--(?:\&gt;|>)/gim,          alias: 'co1'},
-            'cdata':       {pattern: /(?:\&lt;|<)!\[CDATA\[[\s\S]*?\]\](?:\&gt;|>)/gim, alias: 'st1'},
-            'closingTags': {pattern: /(?:\&lt;|<)\/[A-Z][A-Z0-9]*?(?:\&gt;|>)/gi,       alias: 'kw1'},
-            'doctype':     {pattern: /(?:\&lt;|<)!DOCTYPE[\s\S]+?(?:\&gt;|>)/gim,       alias: 'st2'}
-        };
-        
+    initialize: function(code, options) {
         this.parent(code, options);
     }
     

@@ -1,4 +1,4 @@
-Lighter
+EnlighterJS
 =======
 
 Lighter is a free syntax highlighting class developed for MooTools. It was created with the MooTools developer in mind and takes advantage of many of the Framework's features. Using it can be as simple as adding a single script to your webpage, selecting the elements you wish to highlight, and Lighter takes care of the rest. It is currently in use on the MooTools forge so you are seeing it in action right there.
@@ -14,7 +14,6 @@ Features
 * Outputs in various formats like ordered lists and tables. Choose the method that works best for you.
 * GeSHi-like class naming for (hopeful) style interoperability.
 * Extensible language and themeing engines.
-* Quirky Lighter analogies included with every download.
 
 
 How to use
