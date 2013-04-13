@@ -1,0 +1,21 @@
+/*!
+---
+name: EnlighterJS
+description: Syntax Highlighter for MooTools - based on the famous Lighter.js from Jose Prado
+
+license: MIT-style X11 License
+
+authors:
+  - Andi Dittrich (author of EnlighterJS fork)
+  - Jose Prado (author of original Lighter.js)
+  
+download: https://github.com/AndiDittrich/EnlighterJS
+website: http://www.a3non.org/go/enlighterjs
+demo: http://static.andidittrich.de/EnlighterJS/Demo.html
+  
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS]
+...
+ */

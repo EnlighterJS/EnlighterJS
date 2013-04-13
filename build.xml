@@ -36,7 +36,7 @@
 		<ant antfile="util/concat-compress.xml">
 			<property name="compress.description" value="Enlighter" />
 			<property name="compress.type" value="js" />
-			<property name="compress.input" value="Source/EnlighterJS.js Source/Compiler.js Source/Language.js Source/Element.EnlighterJS.js Source/Tokenizer.js Source/Token.js Source/Compiler/Inline.js Source/Compiler/Lines.js Source/Compiler/List.js Source/Tokenizer/Smart.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js Source/Helper.js Source/TabPane.js ${include.languages}" />
+			<property name="compress.input" value="notice.txt Source/EnlighterJS.js Source/Compiler.js Source/Language.js Source/Element.EnlighterJS.js Source/Tokenizer.js Source/Token.js Source/Compiler/Inline.js Source/Compiler/Lines.js Source/Compiler/List.js Source/Tokenizer/Smart.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js Source/Helper.js Source/TabPane.js ${include.languages}" />
 			<property name="compress.output" value="EnlighterJS.yui.js" />
 			<property name="uncompress.output" value="EnlighterJS.js" />
 		</ant>
@@ -45,10 +45,11 @@
 		<ant antfile="util/concat-compress.xml">
 			<property name="compress.description" value="Enlighter" />
 			<property name="compress.type" value="css" />
-			<property name="compress.input" value="${include.themes}" />
+			<property name="compress.input" value="notice.txt ${include.themes}" />
 			<property name="compress.output" value="EnlighterJS.yui.css" />
 			<property name="uncompress.output" value="EnlighterJS.css" />
 		</ant>
+		
 	</target>
 
 	<!-- Generate Testcases -->

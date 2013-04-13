@@ -1,4 +1,24 @@
-/*
+/*!
+---
+name: EnlighterJS
+description: Syntax Highlighter for MooTools - based on the famous Lighter.js from Jose Prado
+
+license: MIT-style X11 License
+
+authors:
+  - Andi Dittrich (author of EnlighterJS fork)
+  - Jose Prado (author of original Lighter.js)
+  
+download: https://github.com/AndiDittrich/EnlighterJS
+website: http://www.a3non.org/go/enlighterjs
+demo: http://static.andidittrich.de/EnlighterJS/Demo.html
+  
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS]
+...
+ *//*
 ---
 name: EnlighterJS
 description: Syntax Highlighter based on the famous Lighter.js from Jose Prado
@@ -244,7 +264,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - Core/1.3
+  - Core/1.4.5
 
 provides: [Language]
 ...
@@ -561,7 +581,7 @@ authors:
   - Jose Prado
 
 requires:
-  - Core/1.3
+  - Core/1.4.5
 
 provides: [Token]
 ...
@@ -637,8 +657,7 @@ authors:
 - Jose Prado
 
 requires:
-- core/1.3: '*'
-- Compiler
+- Core/1.4.5
 
 provides: [Compiler.Inline]
 ...
@@ -687,8 +706,7 @@ authors:
   - Jose Prado
 
 requires:
-  - Core/1.3
-  - Compiler
+  - Core/1.4.5
 
 provides: [Compiler.Lines]
 ...
@@ -815,8 +833,7 @@ authors:
   - Jose Prado
 
 requires:
-  - Core/1.3
-  - Compiler
+  - Core/1.4.5
 
 provides: [Compiler.List]
 ...
@@ -902,8 +919,7 @@ authors:
   - Jose Prado
 
 requires:
-  - Core/1.3
-  - Tokenizer
+  - Core/1.4.5
 
 provides: [Tokenizer.Smart]
 ...
@@ -1023,8 +1039,7 @@ authors:
   - Jose Prado
 
 requires:
-  - Core/1.3
-  - Tokenizer
+  - Core/1.4.5
 
 provides: [Tokenizer.Lazy]
 ...
@@ -1106,7 +1121,6 @@ authors:
 
 requires:
   - Core/1.4.5
-  - Tokenizer
 
 provides: [Tokenizer.Xml]
 ...
@@ -1430,7 +1444,6 @@ authors:
 
 requires:
   - Core/1.4.5
-  - Language
 
 provides: [Language.xml]
 ...
@@ -1466,8 +1479,7 @@ authors:
   - Jose Prado
 
 requires:
-  - Core/1.3
-  - Fuel
+  - Core/1.4.5
 
 provides: [Language.css]
 ...
@@ -1528,7 +1540,6 @@ authors:
 
 requires:
   - Core/1.4.5
-  - Language
 
 provides: [Language.html]
 ...
@@ -1553,8 +1564,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - Core/1.3
-  - Language
+  - Core/1.4.5
   
 provides: [Language.java]
 ...
@@ -1610,8 +1620,7 @@ authors:
   - Jose Prado
 
 requires:
-  - Core/1.3
-  - Language
+  - Core/1.4.5
 
 provides: [Language.js]
 ...
@@ -1691,9 +1700,8 @@ authors:
   - Jose Prado
 
 requires:
-  - Core/1.3
-  - Language
-
+  - Core/1.4.5
+  
 provides: [Language.md]
 ...
 */
@@ -1729,8 +1737,7 @@ authors:
   - Jose Prado
 
 requires:
-  - Core/1.3
-  - Language
+  - Core/1.4.5
 
 provides: [Language.php]
 ...
@@ -1798,8 +1805,7 @@ authors:
   - Italo Maia
 
 requires:
-  - Core/1.3
-  - Language
+  - Core/1.4.5
 
 provides: [Language.python]
 ...
@@ -1898,8 +1904,7 @@ authors:
   - Jose Prado
 
 requires:
-  - Core/1.3
-  - Language
+  - Core/1.4.5
 
 provides: [Language.ruby]
 ...
@@ -1963,8 +1968,7 @@ authors:
   - Jose Prado
 
 requires:
-  - Core/1.3
-  - Language
+  - Core/1.4.5
 
 provides: [Language.shell]
 ...
@@ -2012,8 +2016,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - Core/1.3
-  - Language
+  - Core/1.4.5
 
 provides: [Language.sql]
 ...
