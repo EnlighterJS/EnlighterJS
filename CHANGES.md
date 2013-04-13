@@ -13,3 +13,5 @@
 * Modified the usage - one EnlighterJS instance per codeblock is required (strict oop design)
 * Modified the usage - HTML5 data- attributes are used instead of css class attribute language:theme combo
 * Added XML and HTML support (incorrect html support got fixed)
+* Added support for tab based code-groups (displays multiple code-blocks within a tab-pane)
+* Removed the outdated class-documentation of Lighter.js (extensive documentation/inline comments are in the source files)

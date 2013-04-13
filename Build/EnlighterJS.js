@@ -42,8 +42,7 @@ provides: [EnlighterJS]
 
 		/**
 		 * @constructs
-		 * @param {Object}
-		 *            options The options object.
+		 * @param {Object} options The options object.
 		 * @return {EnlighterJS} The current EnlighterJS instance.
 		 */
 		initialize : function(codeblock, options, container) {

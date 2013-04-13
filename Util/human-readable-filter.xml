@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-	Conten Filter
+	Content Filter
 	Adds Linebreaks after comments
 	
 	@requires	Java 1.5
