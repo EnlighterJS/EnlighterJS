@@ -12,11 +12,11 @@ requires:
 - core/1.4.5
 
 provides: [Languages/Mylang.js]
- ...
+...
 */
-Fuel.myFuel = new Class ({
+Language.mylang = new Class ({
 	
-	Extends: Fuel,
+	Extends: Language,
 	language: '',
 	
 	initialize: function(options)
