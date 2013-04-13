@@ -1,4 +1,4 @@
-/*!
+/*
 ---
 name: EnlighterJS
 description: Syntax Highlighter based on the famous Lighter.js from Jose Prado
