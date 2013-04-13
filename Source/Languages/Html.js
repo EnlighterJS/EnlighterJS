@@ -10,7 +10,6 @@ authors:
 
 requires:
   - Core/1.4.5
-  - Language
 
 provides: [Language.html]
 ...

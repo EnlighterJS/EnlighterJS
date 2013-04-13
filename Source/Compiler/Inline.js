@@ -8,8 +8,7 @@ authors:
 - Jose Prado
 
 requires:
-- core/1.3: '*'
-- Compiler
+- Core/1.4.5
 
 provides: [Compiler.Inline]
 ...

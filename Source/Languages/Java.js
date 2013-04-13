@@ -9,8 +9,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - Core/1.3
-  - Language
+  - Core/1.4.5
   
 provides: [Language.java]
 ...

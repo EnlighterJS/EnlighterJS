@@ -8,7 +8,7 @@ authors:
   - Jose Prado
 
 requires:
-  - Core/1.3
+  - Core/1.4.5
 
 provides: [Token]
 ...
