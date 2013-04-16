@@ -87,6 +87,12 @@ It's strongly recommended to use the Element style syntax or the EnlighterJS.Hel
 		grouping: false
 	});
 	
+Instead of initializing EnlighterJS manually, since version 1.1 it is possible to use a simple html-metatag (called *EnlighterJS Metainit*) to run Enlighter on your page (with basic config options). This will be usefull if you only need a basic setup. Take a look into the examples *Tests/Testcase.Metainit.html* to see how it is working!
+
+	#HTML
+	<!-- Initialize EnlighterJS -->	
+	<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="standard" data-theme="standard" data-indent="5" data-compiler="List" data-altlines="none" data-selector="pre" />
+	
 	
 	
 Advanced usage
