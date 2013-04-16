@@ -1482,7 +1482,7 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.css]
+provides: [Language.cpp]
 ...
 */
 Language.cpp = new Class({
@@ -1526,7 +1526,7 @@ Language.cpp = new Class({
 });
 /*
 ---
-description: Cpp Language.
+description: C Language.
 
 license: MIT-style
 
@@ -1536,10 +1536,10 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.css]
+provides: [Language.c]
 ...
 */
-Language.cpp = new Class({
+Language.c = new Class({
     
     Extends: Language.cpp,
     language: 'c',
