@@ -1,3 +1,7 @@
+### Version 1.1 ###
+* Added Cpp and C language support
+* Added metatag-based initialization
+
 ### Version 1.0 ###
 
 * Initial Release of EnlighterJS (fork of [Lighter.js](https://github.com/pradador/Lighter) v3.0)

@@ -12,7 +12,7 @@ Features
 --------
 
 * Written in MooTools. Requires version 1.4+
-* Includes build-in support for CSS, HTML, Javascript, XML, Java, Markdown, PHP, Python, Ruby, Shellscript and SQL
+* Includes build-in support for CSS, HTML, Javascript, XML, Java, Markdown, PHP, Python, Ruby, Shellscript, C++, C and SQL
 * Easy to use with familiar MooTools syntax.
 * Supports code-groups (displays multiple code-blocks within a tab-pane)
 * Outputs in various formats like ordered lists or inline. Choose the method that works best for you.

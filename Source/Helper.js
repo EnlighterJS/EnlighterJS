@@ -52,7 +52,7 @@ EnlighterJS.Helper = new Class({
 				
 				// copy options
 				var localoptions = this.options;
-				
+								
 				// get group-leader theme
 				localoptions.theme = obj[0].get('data-enlighter-theme') || this.options.theme;
 			
