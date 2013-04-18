@@ -6,16 +6,17 @@ license: MIT-style
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
   - Core/1.4.5
 
-provides: [Tokenizer.Smart]
+provides: [EnlighterJS.Tokenizer.Smart]
 ...
 */
-Tokenizer.Smart = new Class({
+EnlighterJS.Tokenizer.Smart = new Class({
 
-    Extends: Tokenizer,
+    Extends: EnlighterJS.Tokenizer,
     
     /**
      * @constructs
@@ -33,14 +34,14 @@ Tokenizer.Smart = new Class({
      */
     _parse: function(fuel, code, offset)
     {
-        var wicks        = [],
+        var tokens        = [],
             startIndex   = 0,
             matchIndex   = code.length,
             insertIndex  = 0,
             match        = null,
             text         = null,
             type         = null,
-            newWick      = null,
+            newToken      = null,
             rules        = {},
             currentMatch = null,
             futureMatch  = null;
@@ -79,15 +80,15 @@ Tokenizer.Smart = new Class({
                 }
             }
             
-            /* Create a new Wick out of found match. Otherwise break out of loop since no
+            /* Create a new Token out of found match. Otherwise break out of loop since no
                matches are left. */
             if (match !== null) {
             
                 // If $1 capture group exists, use $1 instead of full match.
                 index = (match[1] && match[0].contains(match[1])) ? match.index + match[0].indexOf(match[1]) : match.index;
                 text  = match[1] || match[0];
-                newWick = new Wick(text, type, index + offset);
-                wicks.push(newWick);
+                newToken = new EnlighterJS.Token(text, type, index + offset);
+                tokens.push(newToken);
                 
                 /* Find the next match of current rule and store its index. If not done, the nextIndex
                    would be at the start of current match, thus creating an infinite loop*/
@@ -109,12 +110,12 @@ Tokenizer.Smart = new Class({
                 /* Set startIndex to the end of current match if min is located behind it. Normally this
                    would signal an inner match. Future upgrades should do this test in the min loop
                    in order to find the actual earliest match. */
-                startIndex = Math.max(min, newWick.end - offset);
+                startIndex = Math.max(min, newToken.end - offset);
             } else {
                 break;
             }
         }
         
-        return wicks;
+        return tokens;
     }
 });

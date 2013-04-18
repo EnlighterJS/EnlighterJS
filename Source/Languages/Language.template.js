@@ -14,9 +14,9 @@ requires:
 provides: [Languages/Mylang.js]
 ...
 */
-Language.mylang = new Class ({
+EnlighterJS.Language.mylang = new Class ({
 	
-	Extends: Language,
+	Extends: EnlighterJS.Language,
 	language: '',
 	
 	initialize: function(options)

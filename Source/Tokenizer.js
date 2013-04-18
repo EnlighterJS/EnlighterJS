@@ -11,12 +11,10 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Tokenizer]
+provides: [EnlighterJS.Tokenizer]
 ...
 */
-(function(){
-
-var Tokenizer = this.Tokenizer = new Class({
+EnlighterJS.Tokenizer = new Class({
     
     Implements: [Options],
     
@@ -75,7 +73,7 @@ var Tokenizer = this.Tokenizer = new Class({
         for (var i = 0, pointer = 0; i < tokens.length; i++) {
             if (pointer < tokens[i].index) {
                 text = code.substring(pointer, tokens[i].index);
-                token = new Token(text, 'unknown', pointer);
+                token = new EnlighterJS.Token(text, 'unknown', pointer);
                 tokens.splice(i, 0, token);
             }
             pointer = tokens[i].end;
@@ -84,7 +82,7 @@ var Tokenizer = this.Tokenizer = new Class({
         // Add the final unmatched piece if it exists.
         if (pointer < code.length) {
             text = code.substring(pointer, code.length);
-            token = new Token(text, 'unknown', pointer);
+            token = new EnlighterJS.Token(text, 'unknown', pointer);
             tokens.push(token);
         }
         
@@ -99,5 +97,3 @@ var Tokenizer = this.Tokenizer = new Class({
         throw new Error('Extending classes must override the _parse method.');
     }
 });
-
-})();

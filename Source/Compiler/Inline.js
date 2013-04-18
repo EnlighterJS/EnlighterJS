@@ -1,49 +1,46 @@
 /*
 ---
-description: Compiles an array of Wicks into an Element.
+description: Compiles an array of tokens into inline elements, grabbed into a outer container.
 
-license: MIT-style
+license: MIT-style X11
 
 authors:
-- Jose Prado
+- Andi Dittrich
 
 requires:
 - Core/1.4.5
 
-provides: [Compiler.Inline]
+provides: [EnlighterJS.Compiler.Inline]
 ...
 */
-Compiler.Inline = new Class({
-    
-    Extends: Compiler,
-    
-    options: {
-        containerTag: 'pre'
-    },
-    
-    initialize: function(options)
-    {
-        this.parent(options);
-    },
-    
-    _compile: function(fuel, flame, wicks)
-    {
-        var innerHTML = '',
-            wick      = null,
-            className = '',
-            text      = '',
-            i;
-        
-        // Step through each match and add wicks as text to the innerHtml.
-        for (i = 0; i < wicks.length; i++) {
-            wick = wicks[i];
-            text = wick.text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;');
-            className = wick.type ? fuel.aliases[wick.type] || wick.type : '';
-            innerHTML += '<span class="' + className + '">' + text + '</span>';
-        }
-        
-        return new Element(this.options.containerTag, {
-            'html': innerHTML
-        });
-    }
+EnlighterJS.Compiler.Inline = new Class({
+
+	Extends : EnlighterJS.Compiler,
+
+	options : {
+		containerTag : 'pre'
+	},
+
+	initialize : function(options){
+		this.parent(options);
+	},
+
+	_compile : function(language, theme){
+		// create output container element
+		var container = new Element(this.options.containerTag);
+		
+		// generate output based on ordered list of tokens
+		language.getTokens().each(function(token, index){
+			// get classname
+			var className = token.type ? (language.aliases[token.type] || token.type) : '';
+			
+			// create new inline element which contains the token - htmlspecialchars get escaped by mootools setText !
+			container.grab(new Element('span', {
+				'class': className,
+				'text': token.text
+			}));
+		});
+
+		return container;
+	}
 });

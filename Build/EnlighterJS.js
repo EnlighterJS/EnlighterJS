@@ -34,152 +34,146 @@ requires:
 provides: [EnlighterJS]
 ...
  */
-(function() {
+var EnlighterJS = new Class({
 
-	var EnlighterJS = this.EnlighterJS = new Class({
+	Implements : Options,
 
-		Implements : Options,
+	options : {
+		language : 'standard',
+		theme : 'standard',
+		compiler: 'List',
+		indent : -1,
+		forceTheme: false
+	},
 
-		options : {
-			language : 'standard',
-			theme : 'standard',
-			compiler: 'List',
-			indent : -1,
-			forceTheme: false
-		},
+	// used compiler instance
+	compiler: null,
+	
+	// used codeblock to highlight
+	codeblock: null,
+	
+	// used container to store highlighted code
+	container: null,
+	
+	// lightning active ?
+	isRendered: false,
 
-		// used compiler instance
-		compiler: null,
-		
-		// used codeblock to highlight
-		codeblock: null,
-		
-		// used container to store highlighted code
-		container: null,
-		
-		// lightning active ?
-		isRendered: false,
-
-		/**
-		 * @constructs
-		 * @param {Object} options The options object.
-		 * @return {EnlighterJS} The current EnlighterJS instance.
-		 */
-		initialize : function(codeblock, options, container) {
-			this.setOptions(options);
-								
-			// valid language selected ?
-			if (!Language[this.options.language]){
-				this.options.language = 'standard';
-			}
-			
-			// initialize compiler
-			if (Compiler[this.options.compiler]){
-				this.compiler = new Compiler[this.options.compiler](options);
-			}else{
-				this.compiler = new Compiler.List(options);
-			}
-			
-			// store codeblock
-			this.codeblock = document.id(codeblock);
-			
-			// store/create container
-			if (container){
-				this.container = document.id(container);
-			}
-			
-			return this;
-		},
-
-		/**
-		 * Takes a codeblock and highlights the code inside of it using the
-		 * stored parser/compilers. It reads the class name to figure out what
-		 * language and theme to use for highlighting.
-		 * 
-		 * @return {EnlighterJS} The current EnlighterJS instance.
-		 */
-		light : function(){
-			// hide original codeblock
-			this.codeblock.setStyle('display', 'none');
-			
-			// EnlighterJS exists so just toggle display.
-			if (this.isRendered) {				
-				this.container.setStyle('display', 'inherit');
-				return this;
-			}			
-
-			// extract code to highlight
-			var code = this.getCode();
-			
-			// get language name - use options as fallback  
-			var languageName = this.codeblock.get('data-enlighter-language') || this.options.language;
-			
-			// get theme name - use options as fallback
-			var themeName = (this.options.forceTheme ? null : this.codeblock.get('data-enlighter-theme')) || this.options.theme;
-				
-			// Load language parser
-			language = new Language[languageName](code, {});
-
-			// parse/tokenize the code
-			var tokens = language.getTokens();
-			
-			// compile tokens -> generate output
-			var output = this.compiler.compile(language, themeName, tokens);
-
-			// grab content into specific container or after original code block ?
-			if (this.container) {
-				this.container.grab(output);
-			}else{
-				output.inject(this.codeblock, 'after');
-				this.container = output;
-			}
-			
-			// set render flag
-			this.isRendered = true;
-
-			return this;
-		},
-
-		/**
-		 * Unlights a codeblock by hiding the enlighter element if present and
-		 * re-displaying the original code.
-		 * 
-		 * @return {EnlighterJS} The current EnlighterJS instance.
-		 */
-		unlight : function() {
-			
-			// already highlighted ?
-			if (this.isRendered) {
-				this.codeblock.setStyle('display', 'inherit');
-				this.container.setStyle('display', 'none');
-			}
-
-			return this;
-		},
-
-		/**
-		 * Extracts the code from a codeblock.
-		 * @author Jose Prado, Andi Dittrich
-		 * @return {String} The plain-text code.
-		 */
-		getCode : function() {
-			var code = this.codeblock.get('html')
-					.replace(/(^\s*\n|\n\s*$)/gi, '')
-					.replace(/&lt;/gim, '<')
-					.replace(/&gt;/gim, '>')
-					.replace(/&amp;/gim, '&');
-
-			// Re-indent code if user option is set.
-			if (this.options.indent > -1) {
-				code = code.replace(/\t/g, new Array(this.options.indent + 1)
-						.join(' '));
-			}
-
-			return code;
+	/**
+	 * @constructs
+	 * @param {Object} options The options object.
+	 * @return {EnlighterJS} The current EnlighterJS instance.
+	 */
+	initialize : function(codeblock, options, container) {
+		this.setOptions(options);
+							
+		// valid language selected ?
+		if (!EnlighterJS.Language[this.options.language]){
+			this.options.language = 'standard';
 		}
-	});
+		
+		// initialize compiler
+		if (EnlighterJS.Compiler[this.options.compiler]){
+			this.compiler = new EnlighterJS.Compiler[this.options.compiler](options);
+		}else{
+			this.compiler = new EnlighterJS.Compiler.List(options);
+		}
+		
+		// store codeblock
+		this.codeblock = document.id(codeblock);
+		
+		// store/create container
+		if (container){
+			this.container = document.id(container);
+		}
+		
+		return this;
+	},
 
-})();
+	/**
+	 * Takes a codeblock and highlights the code inside of it using the
+	 * stored parser/compilers. It reads the class name to figure out what
+	 * language and theme to use for highlighting.
+	 * 
+	 * @return {EnlighterJS} The current EnlighterJS instance.
+	 */
+	light : function(){
+		// hide original codeblock
+		this.codeblock.setStyle('display', 'none');
+		
+		// EnlighterJS exists so just toggle display.
+		if (this.isRendered) {				
+			this.container.setStyle('display', 'inherit');
+			return this;
+		}			
+
+		// extract code to highlight
+		var code = this.getCode();
+		
+		// get language name - use options as fallback  
+		var languageName = this.codeblock.get('data-enlighter-language') || this.options.language;
+		
+		// get theme name - use options as fallback
+		var themeName = (this.options.forceTheme ? null : this.codeblock.get('data-enlighter-theme')) || this.options.theme;
+			
+		// Load language parser
+		language = new EnlighterJS.Language[languageName](code, {});
+		
+		// compile tokens -> generate output
+		var output = this.compiler.compile(language, themeName);
+
+		// grab content into specific container or after original code block ?
+		if (this.container) {
+			this.container.grab(output);
+		}else{
+			output.inject(this.codeblock, 'after');
+			this.container = output;
+		}
+		
+		// set render flag
+		this.isRendered = true;
+
+		return this;
+	},
+
+	/**
+	 * Unlights a codeblock by hiding the enlighter element if present and
+	 * re-displaying the original code.
+	 * 
+	 * @return {EnlighterJS} The current EnlighterJS instance.
+	 */
+	unlight : function() {
+		
+		// already highlighted ?
+		if (this.isRendered) {
+			this.codeblock.setStyle('display', 'inherit');
+			this.container.setStyle('display', 'none');
+		}
+
+		return this;
+	},
+
+	/**
+	 * Extracts the code from a codeblock.
+	 * @author Jose Prado, Andi Dittrich
+	 * @return {String} The plain-text code.
+	 */
+	getCode : function() {
+		var code = this.codeblock.get('html')
+				.replace(/(^\s*\n|\n\s*$)/gi, '')
+				.replace(/&lt;/gim, '<')
+				.replace(/&gt;/gim, '>')
+				.replace(/&amp;/gim, '&');
+
+		// Re-indent code if user option is set.
+		if (this.options.indent > -1) {
+			code = code.replace(/\t/g, new Array(this.options.indent + 1)
+					.join(' '));
+		}
+
+		return code;
+	}
+});
+
 /*
 ---
 description: Compiles an array of Tokens into an Element.
@@ -193,66 +187,61 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Compiler]
+provides: [EnlighterJS.Compiler]
 ...
 */
-(function(){
+EnlighterJS.Compiler = new Class({
 
-var Compiler = this.Compiler = new Class({
-    
-    Implements: Options,
-    
-    options: {
-        editable: false
-    },
-    
-    /**
-     * @constructs
-     * @param {Object} [options] The options object to use.
-     * @return {Compiler} The current Compiler instance.
-     */
-    initialize: function(options)
-    {
-        this.setOptions(options);
-        
-        return this;
-    },
-    
-    /**
-     * Compiles an array of tokens into a highlighted element using a language and
-     * a theme.
-     * 
-     * @param {Language}   language  The Language used when parsing.
-     * @param {String} theme The Theme to use.
-     * @param {Array}  tokens The array of tokens to compile.
-     * @return {Element} The generated Element.
-     */
-    compile: function(language, theme, tokens)
-    {
-        var lighter = this._compile(language, theme, tokens);
-        
-        // Set class and id attributes.
-        lighter.set('class', theme + 'Lighter');
-        lighter.set('id', 'Lighter_' + Date.now());
-        
-        if (this.options.editable) {
-            lighter.set('contenteditable', 'true');
-        }
-        
-        return lighter;
-    },
-    
-    /**
-     * Extending classes must override this method and return a highlighted
-     * Element using the language and theme that were passed in.
-     */
-    _compile: function(language, theme, tokens)
-    {
-        throw new Error('Extending classes must override the _compile method.');
-    }
+	Implements : Options,
+
+	options : {
+		editable : false
+	},
+
+	/**
+	 * @constructs
+	 * @param {Object}
+	 *            [options] The options object to use.
+	 * @return {Compiler} The current Compiler instance.
+	 */
+	initialize : function(options){
+		this.setOptions(options);
+
+		return this;
+	},
+
+	/**
+	 * Compiles an array of tokens into a highlighted element using a language and a theme.
+	 * 
+	 * @param {Language}
+	 *            language The Language used when parsing.
+	 * @param {String}
+	 *            theme The Theme to use.
+	 * @return {Element} The generated Element.
+	 */
+	compile : function(language, theme){
+		var container = this._compile(language, theme);
+
+		// set class and id attributes.
+		container.addClass(theme + 'EnlighterJS');		
+		container.addClass('EnlighterJSRendered');		
+		container.set('id', 'EnlighterJS_' + String.uniqueID());
+
+		// enable the html5 editable option ?
+		if (this.options.editable){
+			container.set('contenteditable', 'true');
+		}
+
+		return container;
+	},
+
+	/**
+	 * Extending classes must override this method and return a highlighted Element using the language and theme that were passed in.
+	 */
+	_compile : function(language, theme){
+		throw new Error('Extending classes must override the _compile method.');
+	}
 });
-
-})();
 /*
 ---
 description: Code parsing engine for Lighter.
@@ -269,9 +258,7 @@ requires:
 provides: [Language]
 ...
 */
-(function() {
-    
-var Language = this.Language = new Class({
+EnlighterJS.Language = new Class({
     
     Implements: [Options],
     options: {},
@@ -323,7 +310,7 @@ var Language = this.Language = new Class({
         this.code = code;
         
         // create new tokenizer
-        this.tokenizer = new Tokenizer[this.tokenizerType](options);
+        this.tokenizer = new EnlighterJS.Tokenizer[this.tokenizerType](options);
         
         // Add delimiter rules.
         if (this.delimiters.start) {
@@ -401,17 +388,15 @@ var Language = this.Language = new Class({
     }
 });
 
-Language.standard = new Class({
+EnlighterJS.Language.standard = new Class({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     
     initialize: function(options)
     {
         this.parent(options);
     }
 });
-
-})();
 /*
 ---
 description: Extends MooTools.Element with light(), unlight() shortcuts
@@ -481,12 +466,10 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Tokenizer]
+provides: [EnlighterJS.Tokenizer]
 ...
 */
-(function(){
-
-var Tokenizer = this.Tokenizer = new Class({
+EnlighterJS.Tokenizer = new Class({
     
     Implements: [Options],
     
@@ -545,7 +528,7 @@ var Tokenizer = this.Tokenizer = new Class({
         for (var i = 0, pointer = 0; i < tokens.length; i++) {
             if (pointer < tokens[i].index) {
                 text = code.substring(pointer, tokens[i].index);
-                token = new Token(text, 'unknown', pointer);
+                token = new EnlighterJS.Token(text, 'unknown', pointer);
                 tokens.splice(i, 0, token);
             }
             pointer = tokens[i].end;
@@ -554,7 +537,7 @@ var Tokenizer = this.Tokenizer = new Class({
         // Add the final unmatched piece if it exists.
         if (pointer < code.length) {
             text = code.substring(pointer, code.length);
-            token = new Token(text, 'unknown', pointer);
+            token = new EnlighterJS.Token(text, 'unknown', pointer);
             tokens.push(token);
         }
         
@@ -569,8 +552,6 @@ var Tokenizer = this.Tokenizer = new Class({
         throw new Error('Extending classes must override the _parse method.');
     }
 });
-
-})();
 /*
 ---
 description: Represents a token with its source code position and type.
@@ -579,17 +560,22 @@ license: MIT-style
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
   - Core/1.4.5
 
-provides: [Token]
+provides: [EnlighterJS.Token]
 ...
 */
-(function() {
+EnlighterJS.Token = new Class({
     
-var Token = this.Token = new Class({
-    
+	text: null,
+	type: null,
+	index: -1,
+	length: -1,
+	end: -1,
+	
     /**
      * Creates an instance of Token.
      *
@@ -645,269 +631,142 @@ var Token = this.Token = new Class({
         return this.index + ' - ' + this.text + ' - ' + this.end;
     }
 });
-
-})();
 /*
 ---
-description: Compiles an array of Wicks into an Element.
+description: Compiles an array of tokens into inline elements, grabbed into a outer container.
 
-license: MIT-style
+license: MIT-style X11
 
 authors:
-- Jose Prado
+- Andi Dittrich
 
 requires:
 - Core/1.4.5
 
-provides: [Compiler.Inline]
+provides: [EnlighterJS.Compiler.Inline]
 ...
 */
-Compiler.Inline = new Class({
-    
-    Extends: Compiler,
-    
-    options: {
-        containerTag: 'pre'
-    },
-    
-    initialize: function(options)
-    {
-        this.parent(options);
-    },
-    
-    _compile: function(fuel, flame, wicks)
-    {
-        var innerHTML = '',
-            wick      = null,
-            className = '',
-            text      = '',
-            i;
-        
-        // Step through each match and add wicks as text to the innerHtml.
-        for (i = 0; i < wicks.length; i++) {
-            wick = wicks[i];
-            text = wick.text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;');
-            className = wick.type ? fuel.aliases[wick.type] || wick.type : '';
-            innerHTML += '<span class="' + className + '">' + text + '</span>';
-        }
-        
-        return new Element(this.options.containerTag, {
-            'html': innerHTML
-        });
-    }
+EnlighterJS.Compiler.Inline = new Class({
+
+	Extends : EnlighterJS.Compiler,
+
+	options : {
+		containerTag : 'pre'
+	},
+
+	initialize : function(options){
+		this.parent(options);
+	},
+
+	_compile : function(language, theme){
+		// create output container element
+		var container = new Element(this.options.containerTag);
+		
+		// generate output based on ordered list of tokens
+		language.getTokens().each(function(token, index){
+			// get classname
+			var className = token.type ? (language.aliases[token.type] || token.type) : '';
+			
+			// create new inline element which contains the token - htmlspecialchars get escaped by mootools setText !
+			container.grab(new Element('span', {
+				'class': className,
+				'text': token.text
+			}));
+		});
+
+		return container;
+	}
 });
 /*
 ---
-description: Compiles an array of Wicks into an Element.
+description: Compiles an array of tokens into li-elements, grabbed into a outer ol-container.
 
-license: MIT-style
+license: MIT-style X11
 
 authors:
-  - Jose Prado
+  - Andi Dittrich
 
 requires:
   - Core/1.4.5
 
-provides: [Compiler.Lines]
+provides: [EnlighterJS.Compiler.List]
 ...
 */
-Compiler.Lines = new Class({
-    
-    Extends: Compiler,
-    
-    options: {
-        altLines: null,
-        containerTag: {
-            parent: 'div',
-            child:  null
-        },
-        linesTag: {
-            parent: 'div',
-            child:  'span'
-        },
-        numbersTag: 'span'
-    },
-    
-    initialize: function(options)
-    {
-        this.parent(options);
-    },
-    
-    _compile: function(fuel, flame, wicks)
-    {
-        var el           = new Element(this.options.containerTag.parent),
-            innerHtml    = '',
-            lineNum      = 1,
-            lines        = null,
-            wick         = null,
-            className    = '',
-            text         = '',
-            i, j;
+EnlighterJS.Compiler.List = new Class({
 
-        // If lines need to be wrapped in an inner parent, create that element
-        // with this test. (E.g, tbody in a table)
-        if (this.options.containerTag.child !== null) {
-            el = new Element(containerTag.child).inject(el);
-        }
-        
-        innerHtml += '<' + this.options.linesTag.parent + '>';
-        
-        innerHtml += '<' + this.options.numbersTag + ' class="' + flame + 'num">'
-            + lineNum++
-            + '</' + this.options.numbersTag + '>';
-        
-        innerHtml += '<' + this.options.linesTag.child
-            + ' class="' + flame + 'line">';
+	Extends : EnlighterJS.Compiler,
 
-        // Step through each match and add wicks to the Element by breaking
-        // them up into individual lines.
-        for (i = 0; i < wicks.length; i++) {
-            wick  = wicks[i];
-            lines = wick.text.split('\n');
-            for (j = 0; j < lines.length; j++) {
-                
-                if (lines[j].length > 0) {
-                    className = wick.type ? fuel.aliases[wick.type] || wick.type : '',
-                    text = lines[j].replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;');
-                    innerHtml += '<span class="' + className + '">' + text + '</span>';
-                }
-                
-                if (j < lines.length - 1) {
-                    innerHtml += '</' + this.options.linesTag.child + '>';
-                    innerHtml += '</' + this.options.linesTag.parent + '>';
-                    innerHtml += '<' + this.options.linesTag.parent + '>';
-                    
-                    innerHtml += '<' + this.options.numbersTag
-                        + ' class="' + flame + 'num">'
-                        + lineNum++
-                        + '</' + this.options.numbersTag + '>';
-                    
-                    innerHtml += '<' + this.options.linesTag.child
-                        + ' class="' + flame + 'line">';
-                }
-            }
-        };
-        
-        innerHtml += '</' + this.options.linesTag.child + '>';
-        innerHtml += '</' + this.options.linesTag.parent + '>';
-        el.set('html', innerHtml);
+	options : {
+		altLines : 'hoverEnabled',
+		containerTag : 'ol'
+	},
 
-        // Add alternate line styles based on pseudo-selector.
-        switch (this.options.altLines) {
-            case null:
-                break;
-                
-            case 'hover':
-                el.getElements(this.options.containerTag.child || this.options.containerTag.parent).addEvents({
-                    'mouseover': function() { this.toggleClass('alt'); },
-                    'mouseout':  function() { this.toggleClass('alt'); }
-                });
-                break;
-                
-            default:
-                el.getChildren(':' + this.options.altLines)
-                    .getElement('.' + flame + 'line')
-                    .addClass('alt');
-                break;
-        }
+	initialize : function(options){
+		this.parent(options);
+	},
 
-        // Add first/last line classes to correct element based on mode.
-        el.getFirst().getChildren().addClass(flame + 'first');
-        el.getLast().getChildren().addClass(flame + 'last');
 
-        // Ensure we return the real parent, not just an inner element like a tbody.
-        if (this.options.containerTag.child) {
-            el = el.getParent();
-        }
-        
-        return el;
-    }
-});
-/*
----
-description: Compiles an array of Wicks into an OL Element.
+	_compile : function(language, theme){
+		// create new outer container element
+		var container = new Element(this.options.containerTag);
+		
+		// current line element
+		var currentLine = new Element('li');
+		
+		// generate output based on ordered list of tokens
+		language.getTokens().each(function(token, index){
+			// get classname
+			var className = token.type ? (language.aliases[token.type] || token.type) : '';
+			
+			// split the token into lines
+			var lines = token.text.split('\n');
+			
+			// linebreaks found ?
+			if (lines.length > 1){
+				// just add the first line
+				currentLine.grab(new Element('span', {
+					'class': className,
+					'text': lines.shift()
+				}));
+				
+				// generate element for each line
+				lines.each(function(line, lineNumber){
+					// grab old line into output container
+					container.grab(currentLine);
+					
+					// create new line
+					currentLine = new Element('li');
+					
+					// create new token-element
+					currentLine.grab(new Element('span', {
+						'class': className,
+						'text': line
+					}));
+				});				
+			}else{
+				// just add the token
+				currentLine.grab(new Element('span', {
+					'class': className,
+					'text': token.text
+				}));	
+			}			
+		});
+		
+		// grab last line into container
+		container.grab(currentLine);
 
-license: MIT-style
+		// add line classes to elements
+		container.getFirst().addClass('firstline');
+		container.getLast().addClass('lastline');
 
-authors:
-  - Jose Prado
+		// highlight alt lines ?
+		if (this.options.altLines){
+			// add hover enable class
+			container.getChildren().addClass(this.options.altLines);
+		}
 
-requires:
-  - Core/1.4.5
-
-provides: [Compiler.List]
-...
-*/
-Compiler.List = new Class({
-    
-    Extends: Compiler,
-    
-    options: {
-        altLines: null,
-        containerTag: 'ol'
-    },
-    
-    initialize: function(options)
-    {
-        this.parent(options);
-    },
-    
-    _compile: function(fuel, flame, wicks)
-    {
-        var el        = new Element(this.options.containerTag),
-            innerHTML = '<li class="' + flame + 'line ' + flame + 'first">',
-            wick      = null,
-            text      = '',
-            className = '',
-            lines     = null,
-            i, j;
-        
-        // Step through each match and add wicks to the Element by breaking
-        // them up into individual lines.
-        for (i = 0; i < wicks.length; i++) {
-            wick  = wicks[i];
-            lines = wick.text.split('\n');
-            for (j = 0; j < lines.length; j++) {
-                
-                if (lines[j].length > 0) {
-                    className = wick.type ? fuel.aliases[wick.type] || wick.type : '';
-                    text = lines[j].replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;');
-                    innerHTML += '<span class="' + className + '">' + text + '</span>';
-                }
-
-                if (j < lines.length - 1) {
-                    className = flame + 'line';
-                    innerHTML += '</li><li class="' + className + '">';
-                }
-            }
-        }
-        
-        innerHTML += '</li>';
-        el.set('html', innerHTML);
-
-        // Add last line classes to correct element.
-        el.getLast().addClass(flame + 'last');
-        
-
-        // Add alternate line styles based on pseudo-selector.
-        switch (this.options.altLines) {
-            case null:
-                break;
-                
-            case 'hover':
-                el.getElements('li').addEvents({
-                    'mouseover': function() { this.toggleClass('alt'); },
-                    'mouseout':  function() { this.toggleClass('alt'); }
-                });
-                break;
-                
-            default:
-                el.getChildren(':' + this.options.altLines).addClass('alt');
-                break;
-        }
-        
-        return el;
-    }
+		return container;
+	}
 });
 /*
 ---
@@ -917,16 +776,17 @@ license: MIT-style
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
   - Core/1.4.5
 
-provides: [Tokenizer.Smart]
+provides: [EnlighterJS.Tokenizer.Smart]
 ...
 */
-Tokenizer.Smart = new Class({
+EnlighterJS.Tokenizer.Smart = new Class({
 
-    Extends: Tokenizer,
+    Extends: EnlighterJS.Tokenizer,
     
     /**
      * @constructs
@@ -944,14 +804,14 @@ Tokenizer.Smart = new Class({
      */
     _parse: function(fuel, code, offset)
     {
-        var wicks        = [],
+        var tokens        = [],
             startIndex   = 0,
             matchIndex   = code.length,
             insertIndex  = 0,
             match        = null,
             text         = null,
             type         = null,
-            newWick      = null,
+            newToken      = null,
             rules        = {},
             currentMatch = null,
             futureMatch  = null;
@@ -990,15 +850,15 @@ Tokenizer.Smart = new Class({
                 }
             }
             
-            /* Create a new Wick out of found match. Otherwise break out of loop since no
+            /* Create a new Token out of found match. Otherwise break out of loop since no
                matches are left. */
             if (match !== null) {
             
                 // If $1 capture group exists, use $1 instead of full match.
                 index = (match[1] && match[0].contains(match[1])) ? match.index + match[0].indexOf(match[1]) : match.index;
                 text  = match[1] || match[0];
-                newWick = new Wick(text, type, index + offset);
-                wicks.push(newWick);
+                newToken = new EnlighterJS.Token(text, type, index + offset);
+                tokens.push(newToken);
                 
                 /* Find the next match of current rule and store its index. If not done, the nextIndex
                    would be at the start of current match, thus creating an infinite loop*/
@@ -1020,13 +880,13 @@ Tokenizer.Smart = new Class({
                 /* Set startIndex to the end of current match if min is located behind it. Normally this
                    would signal an inner match. Future upgrades should do this test in the min loop
                    in order to find the actual earliest match. */
-                startIndex = Math.max(min, newWick.end - offset);
+                startIndex = Math.max(min, newToken.end - offset);
             } else {
                 break;
             }
         }
         
-        return wicks;
+        return tokens;
     }
 });
 /*
@@ -1037,6 +897,7 @@ license: MIT-style
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
   - Core/1.4.5
@@ -1044,9 +905,9 @@ requires:
 provides: [Tokenizer.Lazy]
 ...
 */
-Tokenizer.Lazy = new Class({
+EnlighterJS.Tokenizer.Lazy = new Class({
     
-    Extends: Tokenizer,
+    Extends: EnlighterJS.Tokenizer,
     
     /**
      * @constructs
@@ -1080,7 +941,7 @@ Tokenizer.Lazy = new Class({
             while (null !== (match = regex.exec(code))) {
                 index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
                 text  = match[1] || match[0];
-                tokens.push(new Token(text, rule, index + offset));
+                tokens.push(new EnlighterJS.Token(text, rule, index + offset));
             }
         }, this);
         
@@ -1122,12 +983,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Tokenizer.Xml]
+provides: [EnlighterJS.Tokenizer.Xml]
 ...
 */
-Tokenizer.Xml = new Class({
+EnlighterJS.Tokenizer.Xml = new Class({
     
-    Extends: Tokenizer,
+    Extends: EnlighterJS.Tokenizer,
     
     /**
      * @constructs
@@ -1158,16 +1019,16 @@ Tokenizer.Xml = new Class({
             
         // Create array of matches containing opening tags, attributes, values, and separators.
         while ((match = tagPattern.exec(code)) != null) {
-        	tokens.push(new Token(match[1], 'kw1', match.index));
+        	tokens.push(new EnlighterJS.Token(match[1], 'kw1', match.index));
             while((attMatch = attPattern.exec(match[2])) != null) {
                 index = match.index + match[1].length + attMatch.index;
-                tokens.push(new Token(attMatch[1], 'kw2', index)); // Attributes
+                tokens.push(new EnlighterJS.Token(attMatch[1], 'kw2', index)); // Attributes
                 index += attMatch[1].length + attMatch[2].length;
-                tokens.push(new Token(attMatch[3], 'kw1', index)); // Separators (=)
+                tokens.push(new EnlighterJS.Token(attMatch[3], 'kw1', index)); // Separators (=)
                 index += attMatch[3].length + attMatch[4].length;
-                tokens.push(new Token(attMatch[5], 'kw3', index)); // Values
+                tokens.push(new EnlighterJS.Token(attMatch[5], 'kw3', index)); // Values
             }
-            tokens.push(new Token(match[3], 'kw1', match.index + match[1].length + match[2].length));
+            tokens.push(new EnlighterJS.Token(match[3], 'kw1', match.index + match[1].length + match[2].length));
         }
         
         // apply rules
@@ -1175,7 +1036,7 @@ Tokenizer.Xml = new Class({
             while (null !== (match = regex.exec(code))) {
                 index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
                 text  = match[1] || match[0];
-                tokens.push(new Token(text, rule, index + offset));
+                tokens.push(new EnlighterJS.Token(text, rule, index + offset));
             }
         }, this);
         
@@ -1363,8 +1224,11 @@ EnlighterJS.TabPane = new Class({
 	initialize : function(cssClassname) {
 		// create container
 		this.container = new Element('div', {
-			'class': cssClassname
+			'class': 'EnlighterJSTabPane'
 		});
+		
+		// add theme based classname
+		this.container.addClass(cssClassname);
 		
 		// create container structure
 		this.controlContainer = new Element('ul', {
@@ -1482,12 +1346,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.cpp]
+provides: [EnlighterJS.Language.cpp]
 ...
 */
-Language.cpp = new Class({
+EnlighterJS.Language.cpp = new Class({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'cpp',
         
     initialize: function(code, options) {
@@ -1536,17 +1400,15 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.c]
+provides: [EnlighterJS.Language.c]
 ...
 */
-Language.c = new Class({
+EnlighterJS.Language.c = new Class({
     
-    Extends: Language.cpp,
+    Extends: EnlighterJS.Language.cpp,
     language: 'c',
         
     initialize: function(code, options) {
-        
-      
         
         
         this.parent(code, options);
@@ -1565,12 +1427,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.xml]
+provides: [EnlighterJS.Language.xml]
 ...
 */
-Language.xml = new Class ({
+EnlighterJS.Language.xml = new Class ({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'xml',
     tokenizerType: 'Xml',
     
@@ -1601,12 +1463,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.css]
+provides: [EnlighterJS.Language.css]
 ...
 */
-Language.css = new Class({
+EnlighterJS.Language.css = new Class({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'css',
         
     initialize: function(code, options) {
@@ -1661,12 +1523,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.html]
+provides: [EnlighterJS.Language.html]
 ...
 */
-Language.html = new Class ({
+EnlighterJS.Language.html = new Class ({
     
-    Extends: Language.xml,
+    Extends: EnlighterJS.Language.xml,
 
     initialize: function(code, options) {
         this.parent(code, options);
@@ -1686,12 +1548,12 @@ authors:
 requires:
   - Core/1.4.5
   
-provides: [Language.java]
+provides: [EnlighterJS.Language.java]
 ...
 */
-Language.java = new Class ({
+EnlighterJS.Language.java = new Class ({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'java',
     
     initialize: function(code, options)
@@ -1742,12 +1604,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.js]
+provides: [EnlighterJS.Language.js]
 ...
 */
-Language.js = new Class({
+EnlighterJS.Language.js = new Class({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'js',
     
     initialize: function(code, options)
@@ -1822,12 +1684,12 @@ authors:
 requires:
   - Core/1.4.5
   
-provides: [Language.md]
+provides: [EnlighterJS.Language.md]
 ...
 */
-Language.md = new Class ({
+EnlighterJS.Language.md = new Class ({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'md',
     
     initialize: function(code, options)
@@ -1859,12 +1721,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.php]
+provides: [EnlighterJS.Language.php]
 ...
 */
-Language.php = new Class({
+EnlighterJS.Language.php = new Class({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'php',
     
     initialize: function(code, options)
@@ -1927,12 +1789,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.python]
+provides: [EnlighterJS.Language.python]
 ...
 */
-Language.python = new Class({
+EnlighterJS.Language.python = new Class({
     
-    Extends:Language,
+    Extends: EnlighterJS.Language,
     language:'python',
     
     initialize: function(code, options)
@@ -2026,12 +1888,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.ruby]
+provides: [EnlighterJS.Language.ruby]
 ...
 */
-Language.ruby = new Class ({
+EnlighterJS.Language.ruby = new Class ({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'ruby',
     
     initialize: function(code, options)
@@ -2090,12 +1952,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.shell]
+provides: [EnlighterJS.Language.shell]
 ...
 */
-Language.shell = new Class ({
+EnlighterJS.Language.shell = new Class ({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'shell',
     
     initialize: function(code, options)
@@ -2138,12 +2000,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.sql]
+provides: [EnlighterJS.Language.sql]
 ...
 */
-Language.sql = new Class ({
+EnlighterJS.Language.sql = new Class ({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'sql',
     
     initialize: function(code, options)

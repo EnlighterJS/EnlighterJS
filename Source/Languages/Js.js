@@ -10,12 +10,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.js]
+provides: [EnlighterJS.Language.js]
 ...
 */
-Language.js = new Class({
+EnlighterJS.Language.js = new Class({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'js',
     
     initialize: function(code, options)

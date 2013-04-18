@@ -10,120 +10,49 @@ authors:
 
 ...
 */
-.tuttiEnlighterJSTabPane .controls{
-	margin: 0px 0px 0px 40px;
-	padding: 0px;
-}
 .tuttiEnlighterJSTabPane .controls li{
-	float: left;
-	display: block;
-	list-style: none;
-	padding: 3px 10px 3px 10px;
-	margin: 0px 5px 0px 5px;
 	background-color: #ffffff;
-	border-radius: 5px;
-	font-size: 12px;
-	color: #000000;
-	font-family: Courier, monospace;
-	cursor: pointer;
 }
-.tuttiEnlighterJSTabPane .controls .selected, .tuttiEnlighterJSTabPane .controls .selected:hover{
+.tuttiEnlighterJSTabPane .controls .selected, .tuttiEnlighterJSTabPane .controls .selected:hover, .tuttiEnlighterJSTabPane .controls li:hover{
 	background-color: #F4F8FC;
 }
-.tuttiEnlighterJSTabPane .pane{
-	padding: 5px 0px 0px 0px;
-	clear: left;
-}
-.tuttiLighter {
-	font-family: Monaco, Courier, Monospace;
-	font-size: 12px;
-	overflow: auto;
-	white-space: pre-wrap;
-	word-wrap: break-word;
-}
-.tuttiLighter span {
-	color: black;
-	font-size: 12px;
-}
-.tuttiLighter .tuttinum {
-	background-color: #f2f2f2;
-	color: #939393;
-	font-size: 10px;
-	text-align: center;
-	width: 30px;
-}
-.tuttiLighter .tuttiline {
-	background-color: #fff;
-	border-left: 1px solid #f9f9f9;
-	padding: 0 3px 0 10px;
-	padding-left: 15px;
-	padding-right: 5px;
-}
-.tuttiLighter .tuttifirst { padding-top: 5px; }
-.tuttiLighter .tuttilast  { padding-bottom: 5px; }
-.tuttiLighter .alt { background-color: #F4F8FC; color: #000; }
 
-/** Pre specific styles */
-pre.tuttiLighter {
-	padding-left: 15px;
-	padding-right: 5px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+.tuttiEnlighterJS {
+	color: #000000;
 }
-
-/** OL specific styles */
-ol.tuttiLighter {
+ol.tuttiEnlighterJS {
 	background-color: #fbfbfb;
-	color: #aaa;
-	font-size: 10px;
-	margin-top: 0;
-	margin-bottom: 0;
-	margin-left: 0;
-	padding-left: 0;
-}
-ol.tuttiLighter li {
-	background-color: #fff;
-	margin-left: 40px;
+	list-style-type: decimal;
 }
 
-/** Div specific styles */
-div.tuttiLighter .tuttinum {
-	background-color: #fbfbfb;
-	display: block;
-	float: left;
-	min-height: 16px;
+ol.tuttiEnlighterJS li{
+	border: none;
+	line-height: 16px;
 }
-div.tuttiLighter .tuttiline {
-	display: block;
-	margin-left: 30px;
-	min-height: 16px;
+ol.tuttiEnlighterJS li:hover{
+	color: #000000;
 }
-div.tuttiLighter div {
-	background-color: #fff;
-	clear: left;
-	overflow: auto;
+ol.tuttiEnlighterJS li.hoverEnabled:hover{
+	background-color: #F4F8FC;
+	border: none;
 }
 
-/** Table specific styles */
-table.tuttiLighter .tuttinum {}
-table.tuttiLighter .tuttiline {}
-	
 /** Symbol styles */
-.tuttiLighter .de1 { color: #6eb13f; }
-.tuttiLighter .de2 { color: #6eb13f; }
-.tuttiLighter .kw1 { color: #8600c9; }
-.tuttiLighter .kw2 { color: #3a1d72; font-weight: bold; }
-.tuttiLighter .kw3 { color: #4F9FCF; }
-.tuttiLighter .kw4 { color: #4F9FCF; }
-.tuttiLighter .co1 { color: #bbb; }
-.tuttiLighter .co2 { color: #bbb; }
-.tuttiLighter .st0 { color: #bc670f; background-color: rgba(251,233,173,0.1);}
-.tuttiLighter .st1 { color: #bc670f; background-color: rgba(251,233,173,0.1);}
-.tuttiLighter .st2 { color: #bc670f; background-color: rgba(251,233,173,0.1);}
-.tuttiLighter .nu0 { color: #6700b9; }
-.tuttiLighter .me0 { color: #000; }
-.tuttiLighter .me1 { color: #6eb13f; font-weight: bold; }
-.tuttiLighter .br0 { color: #4f4f4f; }
-.tuttiLighter .sy0 { color: #626fc9; }
-.tuttiLighter .es0 { color: #4f4f4f; }
-.tuttiLighter .re0 { color: #d44950; }
+.tuttiEnlighterJS .de1 { color: #6eb13f; }
+.tuttiEnlighterJS .de2 { color: #6eb13f; }
+.tuttiEnlighterJS .kw1 { color: #8600c9; }
+.tuttiEnlighterJS .kw2 { color: #3a1d72; font-weight: bold; }
+.tuttiEnlighterJS .kw3 { color: #4F9FCF; }
+.tuttiEnlighterJS .kw4 { color: #4F9FCF; }
+.tuttiEnlighterJS .co1 { color: #bbb; }
+.tuttiEnlighterJS .co2 { color: #bbb; }
+.tuttiEnlighterJS .st0 { color: #bc670f; background-color: rgba(251,233,173,0.1);}
+.tuttiEnlighterJS .st1 { color: #bc670f; background-color: rgba(251,233,173,0.1);}
+.tuttiEnlighterJS .st2 { color: #bc670f; background-color: rgba(251,233,173,0.1);}
+.tuttiEnlighterJS .nu0 { color: #6700b9; }
+.tuttiEnlighterJS .me0 { color: #000; }
+.tuttiEnlighterJS .me1 { color: #6eb13f; font-weight: bold; }
+.tuttiEnlighterJS .br0 { color: #4f4f4f; }
+.tuttiEnlighterJS .sy0 { color: #626fc9; }
+.tuttiEnlighterJS .es0 { color: #4f4f4f; }
+.tuttiEnlighterJS .re0 { color: #d44950; }

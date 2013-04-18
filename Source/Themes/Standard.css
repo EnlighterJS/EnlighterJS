@@ -10,11 +10,12 @@ authors:
 
 ...
 */
-.standardEnlighterJSTabPane .controls{
+/* tab panel */
+.EnlighterJSTabPane .controls{
 	margin: 0px 0px 0px 40px;
 	padding: 0px;
 }
-.standardEnlighterJSTabPane .controls li{
+.EnlighterJSTabPane .controls li{
 	float: left;
 	display: block;
 	list-style: none;
@@ -27,109 +28,97 @@ authors:
 	font-family: Courier, monospace;
 	cursor: pointer;
 }
-.standardEnlighterJSTabPane .controls li:hover{
+.EnlighterJSTabPane .controls li:hover{
 	background-color: #e5e5e5;
 }
-.standardEnlighterJSTabPane .controls .selected, .standardEnlighterJSTabPane .controls .selected:hover{
+.EnlighterJSTabPane .controls .selected, .EnlighterJSTabPane .controls .selected:hover{
 	background-color: #ccffcc;
 }
-.standardEnlighterJSTabPane .pane{
+.EnlighterJSTabPane .pane{
 	padding: 5px 0px 0px 0px;
 	clear: left;
 }
-.standardLighter {
+
+/* default styles */
+.EnlighterJSRendered {
 	font-family: Monaco, Courier, Monospace;
-	font-size: 12px;
+	font-size: 10px;
+	line-height: 16px;
 	overflow: auto;
 	white-space: pre-wrap;
 	word-wrap: break-word;
+	margin: 0px;
+	padding: 0px;
 }
-.standardLighter span {
-	color: black;
-	font-size: 12px;
+
+/* Inline specific styles */
+pre.EnlighterJSRendered {
+	background-color: #fff;
+	padding: 5px 5px 5px 15px;
 }
-.standardLighter .standardnum {
-	background-color: #f2f2f2;
+
+/* LIST specific styles */
+ol.EnlighterJSRendered {
 	color: #939393;
 	font-size: 10px;
-	text-align: center;
-	width: 30px;
+	background-color: #f2f2f2;
+	color: #939393;
+	margin: 0px 0px 20px 0px;
+	padding: 0px;
+	text-indent: 0px;
+	list-style: decimal-leading-zero outside;
 }
-.standardLighter .standardline {
+ol.EnlighterJSRendered li {
+	margin: 0px 0px 0px 40px; 
 	background-color: #fff;
 	border-top: 1px solid #fff;
 	border-bottom: 1px solid #fff;
 	border-left: 1px solid #939393;
-	padding: 0 3px 0 10px;
-	padding-left: 15px;
-	padding-right: 5px;
+	padding: 0px 5px 0px 14px;
+	line-height: 14px;
+	color: #939393;
+	list-style: decimal-leading-zero outside;
 }
-.standardLighter .standardfirst { padding-top: 5px; }
-.standardLighter .standardlast  { padding-bottom: 5px; }
-.standardLighter .alt {
+
+ol.EnlighterJSRendered li.firstline {
+	padding-top: 5px;
+}
+ol.EnlighterJSRendered li.lastline  { 
+	padding-bottom: 5px; 
+}
+
+ol.EnlighterJSRendered li.hoverEnabled:hover {
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
 	background-color: #F4F8FC;
 }
 
-/** Pre specific styles */
-pre.standardLighter {
-	background-color: #fff;
-	padding-left: 15px;
-	padding-right: 5px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+/* default symbol style */
+.EnlighterJSRendered span {
+	color: #000000;
+	font-size: inherit;
+	margin: 0px;
+	padding: 0px;
+	line-height: inherit;
+	font-size: 12px;
 }
 
-/** OL specific styles */
-ol.standardLighter {
-	color: #939393;
-	font-size: 10px;
-	list-style: decimal-leading-zero;
-	background-color: #f2f2f2;
-	margin-top: 0;
-	margin-bottom: 0;
-	margin-left: 0;
-	padding-left: 0;
-}
-ol.standardLighter li { margin-left: 40px; }
-
-/** Div specific styles */
-div.standardLighter .standardnum {
-	display: block;
-	float: left;
-}
-div.standardLighter .standardline {
-	display: block;
-	margin-left: 30px;
-	min-height: 12px;
-}
-div.standardLighter div {
-	clear: left;
-	overflow: auto;
-	background-color: #f2f2f2;
-}
-
-/** Table specific styles */
-table.standardLighter .standardnum {}
-table.standardLighter .standardline {}
-	
-/** Symbol styles */
-.standardLighter .de1 {}
-.standardLighter .de2 {}
-.standardLighter .kw1 { color: #1b609a; }
-.standardLighter .kw2 { color: #9a6f1b; }
-.standardLighter .kw3 { color: #784e0c; }
-.standardLighter .kw4 { color: #9a6f1b; }
-.standardLighter .co1 { color: #888888; }
-.standardLighter .co2 { color: #888888; }
-.standardLighter .st0 { color: #489a1b; }
-.standardLighter .st1 { color: #489a1b; }
-.standardLighter .st2 { color: #489a1b; }
-.standardLighter .nu0 { color: #70483d; }
-.standardLighter .me0 { color: #666666; }
-.standardLighter .me1 { color: #666666; }
-.standardLighter .br0 { color: #444444; }
-.standardLighter .sy0 { color: #444444; }
-.standardLighter .es0 { color: #444444; }
-.standardLighter .re0 { color: #784e0c; }
+/* theme symbol styles */
+.EnlighterJSRendered .de1 {}
+.EnlighterJSRendered .de2 {}
+.EnlighterJSRendered .kw1 { color: #1b609a; }
+.EnlighterJSRendered .kw2 { color: #9a6f1b; }
+.EnlighterJSRendered .kw3 { color: #784e0c; }
+.EnlighterJSRendered .kw4 { color: #9a6f1b; }
+.EnlighterJSRendered .co1 { color: #888888; }
+.EnlighterJSRendered .co2 { color: #888888; }
+.EnlighterJSRendered .st0 { color: #489a1b; }
+.EnlighterJSRendered .st1 { color: #489a1b; }
+.EnlighterJSRendered .st2 { color: #489a1b; }
+.EnlighterJSRendered .nu0 { color: #70483d; }
+.EnlighterJSRendered .me0 { color: #666666; }
+.EnlighterJSRendered .me1 { color: #666666; }
+.EnlighterJSRendered .br0 { color: #444444; }
+.EnlighterJSRendered .sy0 { color: #444444; }
+.EnlighterJSRendered .es0 { color: #444444; }
+.EnlighterJSRendered .re0 { color: #784e0c; }

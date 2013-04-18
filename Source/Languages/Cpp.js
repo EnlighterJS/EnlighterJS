@@ -10,12 +10,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.cpp]
+provides: [EnlighterJS.Language.cpp]
 ...
 */
-Language.cpp = new Class({
+EnlighterJS.Language.cpp = new Class({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'cpp',
         
     initialize: function(code, options) {

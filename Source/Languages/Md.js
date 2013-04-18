@@ -10,12 +10,12 @@ authors:
 requires:
   - Core/1.4.5
   
-provides: [Language.md]
+provides: [EnlighterJS.Language.md]
 ...
 */
-Language.md = new Class ({
+EnlighterJS.Language.md = new Class ({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'md',
     
     initialize: function(code, options)

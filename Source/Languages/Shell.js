@@ -10,12 +10,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.shell]
+provides: [EnlighterJS.Language.shell]
 ...
 */
-Language.shell = new Class ({
+EnlighterJS.Language.shell = new Class ({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'shell',
     
     initialize: function(code, options)

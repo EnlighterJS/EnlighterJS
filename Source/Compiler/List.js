@@ -1,86 +1,91 @@
 /*
 ---
-description: Compiles an array of Wicks into an OL Element.
+description: Compiles an array of tokens into li-elements, grabbed into a outer ol-container.
 
-license: MIT-style
+license: MIT-style X11
 
 authors:
-  - Jose Prado
+  - Andi Dittrich
 
 requires:
   - Core/1.4.5
 
-provides: [Compiler.List]
+provides: [EnlighterJS.Compiler.List]
 ...
 */
-Compiler.List = new Class({
-    
-    Extends: Compiler,
-    
-    options: {
-        altLines: null,
-        containerTag: 'ol'
-    },
-    
-    initialize: function(options)
-    {
-        this.parent(options);
-    },
-    
-    _compile: function(fuel, flame, wicks)
-    {
-        var el        = new Element(this.options.containerTag),
-            innerHTML = '<li class="' + flame + 'line ' + flame + 'first">',
-            wick      = null,
-            text      = '',
-            className = '',
-            lines     = null,
-            i, j;
-        
-        // Step through each match and add wicks to the Element by breaking
-        // them up into individual lines.
-        for (i = 0; i < wicks.length; i++) {
-            wick  = wicks[i];
-            lines = wick.text.split('\n');
-            for (j = 0; j < lines.length; j++) {
-                
-                if (lines[j].length > 0) {
-                    className = wick.type ? fuel.aliases[wick.type] || wick.type : '';
-                    text = lines[j].replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;');
-                    innerHTML += '<span class="' + className + '">' + text + '</span>';
-                }
+EnlighterJS.Compiler.List = new Class({
 
-                if (j < lines.length - 1) {
-                    className = flame + 'line';
-                    innerHTML += '</li><li class="' + className + '">';
-                }
-            }
-        }
-        
-        innerHTML += '</li>';
-        el.set('html', innerHTML);
+	Extends : EnlighterJS.Compiler,
 
-        // Add last line classes to correct element.
-        el.getLast().addClass(flame + 'last');
-        
+	options : {
+		altLines : 'hoverEnabled',
+		containerTag : 'ol'
+	},
 
-        // Add alternate line styles based on pseudo-selector.
-        switch (this.options.altLines) {
-            case null:
-                break;
-                
-            case 'hover':
-                el.getElements('li').addEvents({
-                    'mouseover': function() { this.toggleClass('alt'); },
-                    'mouseout':  function() { this.toggleClass('alt'); }
-                });
-                break;
-                
-            default:
-                el.getChildren(':' + this.options.altLines).addClass('alt');
-                break;
-        }
-        
-        return el;
-    }
+	initialize : function(options){
+		this.parent(options);
+	},
+
+
+	_compile : function(language, theme){
+		// create new outer container element
+		var container = new Element(this.options.containerTag);
+		
+		// current line element
+		var currentLine = new Element('li');
+		
+		// generate output based on ordered list of tokens
+		language.getTokens().each(function(token, index){
+			// get classname
+			var className = token.type ? (language.aliases[token.type] || token.type) : '';
+			
+			// split the token into lines
+			var lines = token.text.split('\n');
+			
+			// linebreaks found ?
+			if (lines.length > 1){
+				// just add the first line
+				currentLine.grab(new Element('span', {
+					'class': className,
+					'text': lines.shift()
+				}));
+				
+				// generate element for each line
+				lines.each(function(line, lineNumber){
+					// grab old line into output container
+					container.grab(currentLine);
+					
+					// create new line
+					currentLine = new Element('li');
+					
+					// create new token-element
+					currentLine.grab(new Element('span', {
+						'class': className,
+						'text': line
+					}));
+				});				
+			}else{
+				// just add the token
+				currentLine.grab(new Element('span', {
+					'class': className,
+					'text': token.text
+				}));	
+			}			
+		});
+		
+		// grab last line into container
+		container.grab(currentLine);
+
+		// add line classes to elements
+		container.getFirst().addClass('firstline');
+		container.getLast().addClass('lastline');
+
+		// highlight alt lines ?
+		if (this.options.altLines){
+			// add hover enable class
+			container.getChildren().addClass(this.options.altLines);
+		}
+
+		return container;
+	}
 });

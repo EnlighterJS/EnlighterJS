@@ -93,6 +93,19 @@ Instead of initializing EnlighterJS manually, since version 1.1 it is possible t
 	<!-- Initialize EnlighterJS -->	
 	<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="standard" data-theme="standard" data-indent="5" data-compiler="List" data-altlines="none" data-selector="pre" />
 	
+Options
+-------
+
+* theme - (string) Lets you set which Theme to use from the options section. If a Theme is specified in the class name of the source code, that choice will take precedence (values: standard, git, mocha, panic, tutti, twilight)- default: standard
+* language - (string) Lets you set which Language to use from the options section. If a Language is specified in the data-enlighter-language attribute of the source code, that choice will take precedence (values: standard,  js, css, html, php, python, ruby, xml, shell, java, md, sql) - default: standard
+* indent - (integer) Number of spaces to replace tabs with - default: -1 (no replacement)
+* forceTheme - (boolean) Ignore the theme settings specified within the data-enlighter-theme attribute - default: false
+* compiler - (string) The compiler type which is used to generate the highlighted html output data (values: "Inline", "List") - default: List
+	* **Inline**: The generated content will be wrapped into an outer container of the type *containerTag* - all parsed tokens are put into single span-tags with their corresponding classes
+	* **List**: Each line (splittet by \n) is wrapped into a single li-tag. The outer container is defined by *containerTag* and should be *ol* or *ul* !
+* containerTag - (string) The html tag-name of the container tag within the generated code is wrapped then using the Inline- or List-Compiler
+* altLines - (string) Defines a css-classname which is added on each line of the *List* view. To enable build-in hover effects for alt-lines set it to "hoverEnabled" (default), *null* to disable it or to any custom class
+* editable - (boolean) Set to true if you'd like to allow editing of the highlighted element. Note: Highlighting isn't real-time so any edits might not have the correct highlighting - default: false
 	
 	
 Advanced usage
@@ -138,12 +151,13 @@ Be sure to check out the Options section to see the various options you can use.
 	#JS
 	// highlight all pre tags - default language 'js", default theme 'panic', enable grouping (enabled by default)
 	new EnlighterJS.Helper($$('pre'), {
-		altLines : 'hover',
-		indent : 2,
+		altLines : 'hoverEnabled',
+		indent : 4,
 		editable: false,
 		language: 'js',
 		theme: 'panic',
-		grouping: true
+		grouping: true,
+		compiler: 'List'
 	});
 	
 	
@@ -170,18 +184,6 @@ For Example: only include html+css+js syntax highlighting
 	<!-- Languages to include !-->
 	<property name="include.languages" value="Source/Languages/Css.js Source/Languages/Html.js Source/Languages/Js.js" />
 		
-	
-Options
--------
-
-* altLines - (string) Pseudo-selector enabled field which lets you specify a group of lines you'd like to apply the alt styles to. Check out Selectors in the MooTools documentation for possible values. You can also set this to "hover" which highlights lines as you mouse-over them.
-* editable - (boolean) Set to true if you'd like to allow editing of the highlighted element. Note: Highlighting isn't real-time so any edits might not have the correct highlighting - default: false
-* theme - (string) Lets you set which Theme to use from the options section. If a Theme is specified in the class name of the source code, that choice will take precedence (values: standard, git, mocha, panic, tutti, twilight)- default: standard
-* language - (string) Lets you set which Language to use from the options section. If a Language is specified in the data-enlighter-language attribute of the source code, that choice will take precedence (values: standard,  js, css, html, php, python, ruby, xml, shell, java, md, sql) - default: standard
-* indent - (integer) Number of spaces to replace tabs with - default: -1 (no replacement)
-* forceTheme - (boolean) Ignore the theme settings specified within the data-enlighter-theme attribute - default: false
-* compiler - (string) The compiler type which is used to generate the highlighted html output data (values: "Inline", "List", "Lines") - default: List
-* containerTag - (string) The html tag-name of the container tag within the generated code is wrapped then using the Inline- or List-Compiler - **NOTE** this options differs for Lines-Compiler type
 
 Compatibility
 -------------

@@ -10,12 +10,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.ruby]
+provides: [EnlighterJS.Language.ruby]
 ...
 */
-Language.ruby = new Class ({
+EnlighterJS.Language.ruby = new Class ({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'ruby',
     
     initialize: function(code, options)

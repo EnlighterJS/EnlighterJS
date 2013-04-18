@@ -11,12 +11,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.html]
+provides: [EnlighterJS.Language.html]
 ...
 */
-Language.html = new Class ({
+EnlighterJS.Language.html = new Class ({
     
-    Extends: Language.xml,
+    Extends: EnlighterJS.Language.xml,
 
     initialize: function(code, options) {
         this.parent(code, options);

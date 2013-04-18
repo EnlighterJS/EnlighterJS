@@ -6,17 +6,22 @@ license: MIT-style
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
   - Core/1.4.5
 
-provides: [Token]
+provides: [EnlighterJS.Token]
 ...
 */
-(function() {
+EnlighterJS.Token = new Class({
     
-var Token = this.Token = new Class({
-    
+	text: null,
+	type: null,
+	index: -1,
+	length: -1,
+	end: -1,
+	
     /**
      * Creates an instance of Token.
      *
@@ -72,5 +77,3 @@ var Token = this.Token = new Class({
         return this.index + ' - ' + this.text + ' - ' + this.end;
     }
 });
-
-})();

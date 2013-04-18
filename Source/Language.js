@@ -14,9 +14,7 @@ requires:
 provides: [Language]
 ...
 */
-(function() {
-    
-var Language = this.Language = new Class({
+EnlighterJS.Language = new Class({
     
     Implements: [Options],
     options: {},
@@ -68,7 +66,7 @@ var Language = this.Language = new Class({
         this.code = code;
         
         // create new tokenizer
-        this.tokenizer = new Tokenizer[this.tokenizerType](options);
+        this.tokenizer = new EnlighterJS.Tokenizer[this.tokenizerType](options);
         
         // Add delimiter rules.
         if (this.delimiters.start) {
@@ -146,14 +144,12 @@ var Language = this.Language = new Class({
     }
 });
 
-Language.standard = new Class({
+EnlighterJS.Language.standard = new Class({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     
     initialize: function(options)
     {
         this.parent(options);
     }
 });
-
-})();

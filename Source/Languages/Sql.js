@@ -11,12 +11,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.sql]
+provides: [EnlighterJS.Language.sql]
 ...
 */
-Language.sql = new Class ({
+EnlighterJS.Language.sql = new Class ({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'sql',
     
     initialize: function(code, options)

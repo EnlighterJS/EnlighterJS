@@ -10,17 +10,15 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.c]
+provides: [EnlighterJS.Language.c]
 ...
 */
-Language.c = new Class({
+EnlighterJS.Language.c = new Class({
     
-    Extends: Language.cpp,
+    Extends: EnlighterJS.Language.cpp,
     language: 'c',
         
     initialize: function(code, options) {
-        
-      
         
         
         this.parent(code, options);

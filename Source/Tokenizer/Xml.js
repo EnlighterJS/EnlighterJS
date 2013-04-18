@@ -10,12 +10,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Tokenizer.Xml]
+provides: [EnlighterJS.Tokenizer.Xml]
 ...
 */
-Tokenizer.Xml = new Class({
+EnlighterJS.Tokenizer.Xml = new Class({
     
-    Extends: Tokenizer,
+    Extends: EnlighterJS.Tokenizer,
     
     /**
      * @constructs
@@ -46,16 +46,16 @@ Tokenizer.Xml = new Class({
             
         // Create array of matches containing opening tags, attributes, values, and separators.
         while ((match = tagPattern.exec(code)) != null) {
-        	tokens.push(new Token(match[1], 'kw1', match.index));
+        	tokens.push(new EnlighterJS.Token(match[1], 'kw1', match.index));
             while((attMatch = attPattern.exec(match[2])) != null) {
                 index = match.index + match[1].length + attMatch.index;
-                tokens.push(new Token(attMatch[1], 'kw2', index)); // Attributes
+                tokens.push(new EnlighterJS.Token(attMatch[1], 'kw2', index)); // Attributes
                 index += attMatch[1].length + attMatch[2].length;
-                tokens.push(new Token(attMatch[3], 'kw1', index)); // Separators (=)
+                tokens.push(new EnlighterJS.Token(attMatch[3], 'kw1', index)); // Separators (=)
                 index += attMatch[3].length + attMatch[4].length;
-                tokens.push(new Token(attMatch[5], 'kw3', index)); // Values
+                tokens.push(new EnlighterJS.Token(attMatch[5], 'kw3', index)); // Values
             }
-            tokens.push(new Token(match[3], 'kw1', match.index + match[1].length + match[2].length));
+            tokens.push(new EnlighterJS.Token(match[3], 'kw1', match.index + match[1].length + match[2].length));
         }
         
         // apply rules
@@ -63,7 +63,7 @@ Tokenizer.Xml = new Class({
             while (null !== (match = regex.exec(code))) {
                 index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
                 text  = match[1] || match[0];
-                tokens.push(new Token(text, rule, index + offset));
+                tokens.push(new EnlighterJS.Token(text, rule, index + offset));
             }
         }, this);
         

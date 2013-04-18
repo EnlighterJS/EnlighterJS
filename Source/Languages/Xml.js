@@ -11,12 +11,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.xml]
+provides: [EnlighterJS.Language.xml]
 ...
 */
-Language.xml = new Class ({
+EnlighterJS.Language.xml = new Class ({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'xml',
     tokenizerType: 'Xml',
     

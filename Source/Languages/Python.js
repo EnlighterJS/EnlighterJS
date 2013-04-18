@@ -10,12 +10,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.python]
+provides: [EnlighterJS.Language.python]
 ...
 */
-Language.python = new Class({
+EnlighterJS.Language.python = new Class({
     
-    Extends:Language,
+    Extends: EnlighterJS.Language,
     language:'python',
     
     initialize: function(code, options)

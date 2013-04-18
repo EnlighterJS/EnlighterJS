@@ -6,24 +6,25 @@
 	<title>EnlighterJS - sql</title>
 	
 	<!-- Include EnlighterJS Styles -->
-	<link rel="stylesheet" type="text/css" href="../Build/EnlighterJS.yui.css" />
+	<link rel="stylesheet" type="text/css" href="../Build/EnlighterJS.css" />
 	
 	<!-- Include MooTools Framework -->
 	<script type="text/javascript" src="mootools-core-1.4.5-full-nocompat.js"></script>
 
 	<!-- Include EnlighterJS -->
-	<script type="text/javascript" src="../Build/EnlighterJS.yui.js" ></script>
+	<script type="text/javascript" src="../Build/EnlighterJS.js" ></script>
 		
 	<!-- Initialize EnlighterJS -->	
 	<script type="text/javascript">
 		window.addEvent('domready', function() {
 			// highlight all pre tags
 			new EnlighterJS.Helper($$('pre'), {
-				altLines : 'hover',
+				altLines : 'hoverEnabled',
 				indent : 2,
 				editable: false,
 				language: 'js',
-				theme: 'panic'
+				theme: 'standard',
+				compiler: 'List'
 			});
 			
 		});

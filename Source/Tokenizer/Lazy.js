@@ -6,6 +6,7 @@ license: MIT-style
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
   - Core/1.4.5
@@ -13,9 +14,9 @@ requires:
 provides: [Tokenizer.Lazy]
 ...
 */
-Tokenizer.Lazy = new Class({
+EnlighterJS.Tokenizer.Lazy = new Class({
     
-    Extends: Tokenizer,
+    Extends: EnlighterJS.Tokenizer,
     
     /**
      * @constructs
@@ -49,7 +50,7 @@ Tokenizer.Lazy = new Class({
             while (null !== (match = regex.exec(code))) {
                 index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
                 text  = match[1] || match[0];
-                tokens.push(new Token(text, rule, index + offset));
+                tokens.push(new EnlighterJS.Token(text, rule, index + offset));
             }
         }, this);
         

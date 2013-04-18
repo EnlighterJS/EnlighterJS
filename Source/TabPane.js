@@ -39,8 +39,11 @@ EnlighterJS.TabPane = new Class({
 	initialize : function(cssClassname) {
 		// create container
 		this.container = new Element('div', {
-			'class': cssClassname
+			'class': 'EnlighterJSTabPane'
 		});
+		
+		// add theme based classname
+		this.container.addClass(cssClassname);
 		
 		// create container structure
 		this.controlContainer = new Element('ul', {

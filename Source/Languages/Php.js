@@ -10,12 +10,12 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [Language.php]
+provides: [EnlighterJS.Language.php]
 ...
 */
-Language.php = new Class({
+EnlighterJS.Language.php = new Class({
     
-    Extends: Language,
+    Extends: EnlighterJS.Language,
     language: 'php',
     
     initialize: function(code, options)

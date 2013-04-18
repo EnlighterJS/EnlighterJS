@@ -1,3 +1,17 @@
+### Version 1.2 ###
+* Replaced Compiler.Inline with a new version (full DOM based handling)
+* Replaced Compiler.List with a new version (full DOM based handling)
+* Removed the Compiler.Lines (it does exactly the same as Compiler.List, but used div-elements)
+* Fixed rendering bug within html-comments (specialchars didn't got replaced - solved by new compilers)
+* Moved all subclasses into EnlighterJS object-namespace
+* Modified id-naming-scheme of generated output containers (old: Lighter_ + (new Date()); new: EnlighterJS_ + String.uniqueID())
+* Added class *EnlighterJSRendered* to generated container
+* Modiefied the css-classname for theming (old: <themename>Lighter; new: <themename>EnligherJS)
+* Replaced all standard-themes with rewritten versions - now they are all extending the standard theme, only the colors differs
+* Reduced the size of the css files to ~8kB
+* Enhanced the css robustness
+* Modified the usage of *altLines* option: altLines now defines a name of a css class which is added on each line of the *List* view
+
 ### Version 1.1 ###
 * Added Cpp and C language support
 * Added metatag-based initialization

@@ -10,10 +10,32 @@
 			
 			</pre>
 
+	<h4>Should rendered as full HTML comment - NOT &lt;!--</h4>
+	<pre data-enlighter-language="html" data-enlighter-theme="git">
+	&lt;!-- &lt;meta name=&quot;MetaTest&quot; version=&quot;1.9.2&quot; /&gt; --&gt;
+	</pre>
+
+	<h4>Should also rendered as full HTML comment</h4>
+	<pre data-enlighter-language="html" data-enlighter-theme="git">
+	&lt;!-- <meta name="MetaTest" version="1.9.2" /> --&gt;
+	</pre>
+	
+		
 	<h4>git theme</h4>
 	<pre data-enlighter-language="js" data-enlighter-theme="git">
 if (this.options.editable) {
     lighter.set('contenteditable', 'true');
+}
+	</pre>
+	
+	<h4>Should be display in the style: comment,newline,code,newline,newline</h4>
+	<pre data-enlighter-language="js" data-enlighter-theme="git">
+// should the element set to be editable ?	
+if (this.options.editable) {
+
+	// set the html5 contenteditable attribute
+	lighter.set('contenteditable', 'true');
+    
 }
 	</pre>
 	
