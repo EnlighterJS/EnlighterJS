@@ -1,0 +1,83 @@
+<pre data-enlighter-language="md" data-enlighter-theme="git">
+Tokens.js Documentation
+
+Class: Token {#Token}
+===================
+
+[Lighter.js]() helper class. Creates a new Token instance which stores relevant info about matched RegEx bits.
+
+
+Token Method: constructor {#Token:constructor}
+--------------------------------------------
+
+### Syntax:
+
+	var myToken = new Token(match, type, index);
+
+### Arguments:
+
+1. match - (*array*) Result of an exec() call.
+2. type  - (*string*) The type/category of the match. 
+3. index - (*integer*) Start position of the match.
+
+### Returns:
+
+* (*object*) A new Token instance.
+
+
+
+Token Method: contains {#Token:contains}
+--------------------------------------
+
+Checks if a Token is contained within another token. E.g. The index property is located within the start and end indexes of the other Token. 
+
+### Syntax:
+
+	token1.contains(token2);
+
+### Arguments:
+
+1. token - (*Token*) The Token object to find.
+
+### Returns:
+
+* (*boolean*) Whether or not Token2 begins within Token1.
+
+
+
+Token Method: isBeyond {#Token:isBeyond}
+--------------------------------------
+
+Checks if a Token is located past another Token. E.g. The index property is located past the index+length properties of the other Token.
+
+### Syntax:
+
+	token1.isBeyond(token2);
+
+### Arguments:
+
+1. token - (*Token*) The Token object to compare with.
+
+### Returns:
+
+* (*boolean*) Whether or not token1 is located past token2.
+
+
+
+Token Method: overlaps {#Token:overlaps}
+---------------------------------------
+
+Checks if a Token overlaps another Token if they begin at the same index. E.g. The index properties are the same and the length is longer than the length of the other Token.
+
+### Syntax:
+
+	token1.overlaps(token2);
+
+### Arguments:
+
+1. token - (*Token*) The Token object to compare with.
+
+### Returns:
+
+* (*boolean*) Whether or not token1 overlaps token2.
+</pre>

@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>EnlighterJS - php</title>
+	
+	<!-- Include EnlighterJS Styles -->
+	<link rel="stylesheet" type="text/css" href="../Build/EnlighterJS.css" />
+	
+	<!-- Include MooTools Framework -->
+	<script type="text/javascript" src="mootools-core-1.4.5-full-nocompat.js"></script>
+
+	<!-- Include EnlighterJS -->
+	<script type="text/javascript" src="../Build/EnlighterJS.js" ></script>
+		
+	<!-- Initialize EnlighterJS -->	
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			// highlight all pre tags
+			new EnlighterJS.Helper($$('pre'), {
+				altLines : 'hoverEnabled',
+				indent : 2,
+				editable: false,
+				language: 'js',
+				theme: 'standard',
+				compiler: 'List'
+			});
+			
+		});
+	</script>
+</head>
+<body>
+
+	<!-- TESTCASE START -->
+	<pre data-enlighter-language="php" data-enlighter-theme="git">
+&lt;?php
+// Comments
+
+/*
+This is
+a comment
+block
+*/
+
+/** Keywords */
+
+die() echo() empty() exit() eval() include() include_once() isset() list() require() require_once() return() print() unset()
+
+__CLASS__ __DIR__ __FILE__ __FUNCTION__ __METHOD__ __NAMESPACE__
+
+abstract and array() as break case catch cfunction class clone const continue declare default do else elseif enddeclare endfor endforeach endif endswitch endwhile extends final for foreach function global goto if implements interface instanceof namespace new old_function or private protected public static switch throw try use var while xor
+
+/** String's */
+echo 'this is a simple string';
+
+echo 'You can also have embedded newlines in 
+strings this way as it is \'
+okay to do'; // Don't you agree
+
+// Outputs: Arnold once said: "I'll be back"
+echo 'Arnold once said: "I\'ll be back"';
+
+// Heredoc
+$str = &lt;&lt;&lt;EOD
+Example of string
+spanning multiple lines
+using heredoc syntax.
+EOD;
+
+// Nowdoc
+$str = &lt;&lt;&lt;'EOD'
+Example of string
+spanning multiple lines
+using nowdoc syntax.
+EOD;
+
+/** Numbers */
+
+$a = 1234; // decimal number
+$a = -123; // a negative number
+$a = 0123; // octal number (equivalent to 83 decimal)
+$a = 0x1A; // hexadecimal number (equivalent to 26 decimal)
+$a = 1.234; 
+$b = 1.2e3; 
+$c = 7E-10;
+?>
+
+/** Test Snippet */
+$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
+
+/* check connection */
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
+
+/* Create table doesn't return a resultset */
+if ($mysqli->query("CREATE TEMPORARY TABLE myCity LIKE City") === TRUE) {
+    printf("Table myCity successfully created.\n");
+}
+
+/* Select queries return a resultset */
+if ($result = $mysqli->query("SELECT Name FROM City LIMIT 10")) {
+    printf("Select returned %d rows.\n", $result->num_rows);
+
+    /* free result set */
+    $result->close();
+}
+
+/* If we have to retrieve large amount of data we use MYSQLI_USE_RESULT */
+if ($result = $mysqli->query("SELECT * FROM City", MYSQLI_USE_RESULT)) {
+
+    /* Note, that we can't execute any functions which interact with the
+       server until result set was closed. All calls will return an
+       'out of sync' error */
+    if (!$mysqli->query("SET @a:='this will not work'")) {
+        printf("Error: %s\n", $mysqli->error);
+    }
+    $result->close();
+}
+
+$mysqli->close();
+		</pre>
+		<pre class="php:mocha" id="php2">
+&lt;?php
+/** Testing strict mode in Language. Html tags not highlighted. */
+if ($expression) { 
+    ?&gt;
+    &lt;strong&gt;This is true.&lt;/strong&gt;
+    &lt;?php 
+} else { 
+    ?&gt;
+    &lt;strong&gt;This is false.&lt;/strong&gt;
+    &lt;?php 
+}
+?&gt;
+</pre>
+	<!-- TESTCASE STOP -->
+</body>
+</html>

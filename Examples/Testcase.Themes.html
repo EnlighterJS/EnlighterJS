@@ -1,0 +1,487 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>EnlighterJS - Themes</title>
+	
+	<!-- Include EnlighterJS Styles -->
+	<link rel="stylesheet" type="text/css" href="../Build/EnlighterJS.css" />
+	
+	<!-- Include MooTools Framework -->
+	<script type="text/javascript" src="mootools-core-1.4.5-full-nocompat.js"></script>
+
+	<!-- Include EnlighterJS -->
+	<script type="text/javascript" src="../Build/EnlighterJS.js" ></script>
+		
+	<!-- Initialize EnlighterJS -->	
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			// highlight all pre tags
+			new EnlighterJS.Helper($$('pre'), {
+				altLines : 'hoverEnabled',
+				indent : 2,
+				editable: false,
+				language: 'js',
+				theme: 'standard',
+				compiler: 'List'
+			});
+			
+		});
+	</script>
+</head>
+<body>
+
+	<!-- TESTCASE START -->
+		<h4>Standard Theme</h4>
+	<pre data-enlighter-language="js" data-enlighter-theme="standard" data-enlighter-group="helloworld" data-enlighter-title="Javascript">
+this.tokens = tokens || [];
+options = this.options;
+
+// Set Lighter/Language/Theme relationship.
+this.lighter = lighter;
+this.theme = new Theme[theme || this.defaultTheme](lighter, this);
+
+// Add delimiter rules if not in strict mode
+if (!options.strict) {
+	if (this.delimiters.start) this.addLanguage('delimBeg', this.delimiters.start, 'de1');
+	if (this.delimiters.end)   this.addLanguage('delimEnd', this.delimiters.end,   'de2');
+}
+
+// Set Keyword Rules from this.keywords object.
+this.keywords.each(function(keywordSet, ruleName) {
+	if (keywordSet.csv != '') {
+		this.addLanguage(ruleName, this.csvToRegExp(keywordSet.csv, "g"), keywordSet.alias);
+	}
+}, this);
+	</pre>
+	<pre data-enlighter-language="java" data-enlighter-group="helloworld" data-enlighter-title="pure Java">
+// Source:  http://en.wikipedia.org/wiki/Java_%28programming_language%29
+// OddEven.java
+import javax.swing.JOptionPane;
+ 
+public class OddEven {
+    /**
+     * "input" is the number that the user gives to the computer
+     */
+    private int input; // a whole number("int" means integer)
+ 
+    /**
+     * This is the constructor method. It gets called when an object of the OddEven type
+     * is being created.
+     */
+    public OddEven() {
+        /*
+         * In most Java programs constructors can initialize objects with default values, or create
+         * other objects that this object might use to perform its functions. In some Java programs, the
+         * constructor may simply be an empty function if nothing needs to be initialized prior to the
+         * functioning of the object. In this program's case, an empty constructor would suffice.
+         * A constructor must exist; however, if the user doesn't put one in then the compiler
+         * will create an empty one.
+         */
+    }
+}
+	</pre>
+	<pre data-enlighter-language="php" data-enlighter-group="helloworld" data-enlighter-title="PHP Script">
+/** Test Snippet */
+$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
+
+/* check connection */
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
+
+/* Create table doesn't return a resultset */
+if ($mysqli->query("CREATE TEMPORARY TABLE myCity LIKE City") === TRUE) {
+    printf("Table myCity successfully created.\n");
+}
+
+/* Select queries return a resultset */
+if ($result = $mysqli->query("SELECT Name FROM City LIMIT 10")) {
+    printf("Select returned %d rows.\n", $result->num_rows);
+
+    /* free result set */
+    $result->close();
+}
+	</pre>	
+	
+	
+	
+	
+		<h4>Git Theme</h4>
+	<pre data-enlighter-language="js" data-enlighter-theme="git" data-enlighter-group="helloworld1" data-enlighter-title="Javascript">
+this.tokens = tokens || [];
+options = this.options;
+
+// Set Lighter/Language/Theme relationship.
+this.lighter = lighter;
+this.theme = new Theme[theme || this.defaultTheme](lighter, this);
+
+// Add delimiter rules if not in strict mode
+if (!options.strict) {
+	if (this.delimiters.start) this.addLanguage('delimBeg', this.delimiters.start, 'de1');
+	if (this.delimiters.end)   this.addLanguage('delimEnd', this.delimiters.end,   'de2');
+}
+
+// Set Keyword Rules from this.keywords object.
+this.keywords.each(function(keywordSet, ruleName) {
+	if (keywordSet.csv != '') {
+		this.addLanguage(ruleName, this.csvToRegExp(keywordSet.csv, "g"), keywordSet.alias);
+	}
+}, this);
+	</pre>
+	<pre data-enlighter-language="java" data-enlighter-group="helloworld1" data-enlighter-title="pure Java">
+// Source:  http://en.wikipedia.org/wiki/Java_%28programming_language%29
+// OddEven.java
+import javax.swing.JOptionPane;
+ 
+public class OddEven {
+    /**
+     * "input" is the number that the user gives to the computer
+     */
+    private int input; // a whole number("int" means integer)
+ 
+    /**
+     * This is the constructor method. It gets called when an object of the OddEven type
+     * is being created.
+     */
+    public OddEven() {
+        /*
+         * In most Java programs constructors can initialize objects with default values, or create
+         * other objects that this object might use to perform its functions. In some Java programs, the
+         * constructor may simply be an empty function if nothing needs to be initialized prior to the
+         * functioning of the object. In this program's case, an empty constructor would suffice.
+         * A constructor must exist; however, if the user doesn't put one in then the compiler
+         * will create an empty one.
+         */
+    }
+}
+	</pre>
+	<pre data-enlighter-language="php" data-enlighter-group="helloworld1" data-enlighter-title="PHP Script">
+/** Test Snippet */
+$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
+
+/* check connection */
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
+
+/* Create table doesn't return a resultset */
+if ($mysqli->query("CREATE TEMPORARY TABLE myCity LIKE City") === TRUE) {
+    printf("Table myCity successfully created.\n");
+}
+
+/* Select queries return a resultset */
+if ($result = $mysqli->query("SELECT Name FROM City LIMIT 10")) {
+    printf("Select returned %d rows.\n", $result->num_rows);
+
+    /* free result set */
+    $result->close();
+}
+	</pre>	
+	
+	
+	
+	
+	<h4>Mocha Theme</h4>
+	<pre data-enlighter-language="js" data-enlighter-theme="mocha" data-enlighter-group="helloworld2" data-enlighter-title="Javascript">
+this.tokens = tokens || [];
+options = this.options;
+
+// Set Lighter/Language/Theme relationship.
+this.lighter = lighter;
+this.theme = new Theme[theme || this.defaultTheme](lighter, this);
+
+// Add delimiter rules if not in strict mode
+if (!options.strict) {
+	if (this.delimiters.start) this.addLanguage('delimBeg', this.delimiters.start, 'de1');
+	if (this.delimiters.end)   this.addLanguage('delimEnd', this.delimiters.end,   'de2');
+}
+
+// Set Keyword Rules from this.keywords object.
+this.keywords.each(function(keywordSet, ruleName) {
+	if (keywordSet.csv != '') {
+		this.addLanguage(ruleName, this.csvToRegExp(keywordSet.csv, "g"), keywordSet.alias);
+	}
+}, this);
+	</pre>
+	<pre data-enlighter-language="java" data-enlighter-group="helloworld2" data-enlighter-title="pure Java">
+// Source:  http://en.wikipedia.org/wiki/Java_%28programming_language%29
+// OddEven.java
+import javax.swing.JOptionPane;
+ 
+public class OddEven {
+    /**
+     * "input" is the number that the user gives to the computer
+     */
+    private int input; // a whole number("int" means integer)
+ 
+    /**
+     * This is the constructor method. It gets called when an object of the OddEven type
+     * is being created.
+     */
+    public OddEven() {
+        /*
+         * In most Java programs constructors can initialize objects with default values, or create
+         * other objects that this object might use to perform its functions. In some Java programs, the
+         * constructor may simply be an empty function if nothing needs to be initialized prior to the
+         * functioning of the object. In this program's case, an empty constructor would suffice.
+         * A constructor must exist; however, if the user doesn't put one in then the compiler
+         * will create an empty one.
+         */
+    }
+}
+	</pre>
+	<pre data-enlighter-language="php" data-enlighter-group="helloworld2" data-enlighter-title="PHP Script">
+/** Test Snippet */
+$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
+
+/* check connection */
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
+
+/* Create table doesn't return a resultset */
+if ($mysqli->query("CREATE TEMPORARY TABLE myCity LIKE City") === TRUE) {
+    printf("Table myCity successfully created.\n");
+}
+
+/* Select queries return a resultset */
+if ($result = $mysqli->query("SELECT Name FROM City LIMIT 10")) {
+    printf("Select returned %d rows.\n", $result->num_rows);
+
+    /* free result set */
+    $result->close();
+}
+	</pre>
+	
+	
+	
+	<h4>Panic Theme</h4>
+	<pre data-enlighter-language="js" data-enlighter-theme="panic" data-enlighter-group="helloworld3" data-enlighter-title="Javascript">
+this.tokens = tokens || [];
+options = this.options;
+
+// Set Lighter/Language/Theme relationship.
+this.lighter = lighter;
+this.theme = new Theme[theme || this.defaultTheme](lighter, this);
+
+// Add delimiter rules if not in strict mode
+if (!options.strict) {
+	if (this.delimiters.start) this.addLanguage('delimBeg', this.delimiters.start, 'de1');
+	if (this.delimiters.end)   this.addLanguage('delimEnd', this.delimiters.end,   'de2');
+}
+
+// Set Keyword Rules from this.keywords object.
+this.keywords.each(function(keywordSet, ruleName) {
+	if (keywordSet.csv != '') {
+		this.addLanguage(ruleName, this.csvToRegExp(keywordSet.csv, "g"), keywordSet.alias);
+	}
+}, this);
+	</pre>
+	<pre data-enlighter-language="java" data-enlighter-group="helloworld3" data-enlighter-title="pure Java">
+// Source:  http://en.wikipedia.org/wiki/Java_%28programming_language%29
+// OddEven.java
+import javax.swing.JOptionPane;
+ 
+public class OddEven {
+    /**
+     * "input" is the number that the user gives to the computer
+     */
+    private int input; // a whole number("int" means integer)
+ 
+    /**
+     * This is the constructor method. It gets called when an object of the OddEven type
+     * is being created.
+     */
+    public OddEven() {
+        /*
+         * In most Java programs constructors can initialize objects with default values, or create
+         * other objects that this object might use to perform its functions. In some Java programs, the
+         * constructor may simply be an empty function if nothing needs to be initialized prior to the
+         * functioning of the object. In this program's case, an empty constructor would suffice.
+         * A constructor must exist; however, if the user doesn't put one in then the compiler
+         * will create an empty one.
+         */
+    }
+}
+	</pre>
+	<pre data-enlighter-language="php" data-enlighter-group="helloworld3" data-enlighter-title="PHP Script">
+/** Test Snippet */
+$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
+
+/* check connection */
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
+
+/* Create table doesn't return a resultset */
+if ($mysqli->query("CREATE TEMPORARY TABLE myCity LIKE City") === TRUE) {
+    printf("Table myCity successfully created.\n");
+}
+
+/* Select queries return a resultset */
+if ($result = $mysqli->query("SELECT Name FROM City LIMIT 10")) {
+    printf("Select returned %d rows.\n", $result->num_rows);
+
+    /* free result set */
+    $result->close();
+}
+	</pre>		
+	
+	
+	
+	<h4>Tutti Theme</h4>
+	<pre data-enlighter-language="js" data-enlighter-theme="tutti" data-enlighter-group="helloworld4" data-enlighter-title="Javascript">
+this.tokens = tokens || [];
+options = this.options;
+
+// Set Lighter/Language/Theme relationship.
+this.lighter = lighter;
+this.theme = new Theme[theme || this.defaultTheme](lighter, this);
+
+// Add delimiter rules if not in strict mode
+if (!options.strict) {
+	if (this.delimiters.start) this.addLanguage('delimBeg', this.delimiters.start, 'de1');
+	if (this.delimiters.end)   this.addLanguage('delimEnd', this.delimiters.end,   'de2');
+}
+
+// Set Keyword Rules from this.keywords object.
+this.keywords.each(function(keywordSet, ruleName) {
+	if (keywordSet.csv != '') {
+		this.addLanguage(ruleName, this.csvToRegExp(keywordSet.csv, "g"), keywordSet.alias);
+	}
+}, this);
+	</pre>
+	<pre data-enlighter-language="java" data-enlighter-group="helloworld4" data-enlighter-title="pure Java">
+// Source:  http://en.wikipedia.org/wiki/Java_%28programming_language%29
+// OddEven.java
+import javax.swing.JOptionPane;
+ 
+public class OddEven {
+    /**
+     * "input" is the number that the user gives to the computer
+     */
+    private int input; // a whole number("int" means integer)
+ 
+    /**
+     * This is the constructor method. It gets called when an object of the OddEven type
+     * is being created.
+     */
+    public OddEven() {
+        /*
+         * In most Java programs constructors can initialize objects with default values, or create
+         * other objects that this object might use to perform its functions. In some Java programs, the
+         * constructor may simply be an empty function if nothing needs to be initialized prior to the
+         * functioning of the object. In this program's case, an empty constructor would suffice.
+         * A constructor must exist; however, if the user doesn't put one in then the compiler
+         * will create an empty one.
+         */
+    }
+}
+	</pre>
+	<pre data-enlighter-language="php" data-enlighter-group="helloworld4" data-enlighter-title="PHP Script">
+/** Test Snippet */
+$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
+
+/* check connection */
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
+
+/* Create table doesn't return a resultset */
+if ($mysqli->query("CREATE TEMPORARY TABLE myCity LIKE City") === TRUE) {
+    printf("Table myCity successfully created.\n");
+}
+
+/* Select queries return a resultset */
+if ($result = $mysqli->query("SELECT Name FROM City LIMIT 10")) {
+    printf("Select returned %d rows.\n", $result->num_rows);
+
+    /* free result set */
+    $result->close();
+}
+	</pre>		
+	
+	
+	
+	<h4>Twilight Theme</h4>
+	<pre data-enlighter-language="js" data-enlighter-theme="twilight" data-enlighter-group="helloworld5" data-enlighter-title="Javascript">
+this.tokens = tokens || [];
+options = this.options;
+
+// Set Lighter/Language/Theme relationship.
+this.lighter = lighter;
+this.theme = new Theme[theme || this.defaultTheme](lighter, this);
+
+// Add delimiter rules if not in strict mode
+if (!options.strict) {
+	if (this.delimiters.start) this.addLanguage('delimBeg', this.delimiters.start, 'de1');
+	if (this.delimiters.end)   this.addLanguage('delimEnd', this.delimiters.end,   'de2');
+}
+
+// Set Keyword Rules from this.keywords object.
+this.keywords.each(function(keywordSet, ruleName) {
+	if (keywordSet.csv != '') {
+		this.addLanguage(ruleName, this.csvToRegExp(keywordSet.csv, "g"), keywordSet.alias);
+	}
+}, this);
+	</pre>
+	<pre data-enlighter-language="java" data-enlighter-group="helloworld5" data-enlighter-title="pure Java">
+// Source:  http://en.wikipedia.org/wiki/Java_%28programming_language%29
+// OddEven.java
+import javax.swing.JOptionPane;
+ 
+public class OddEven {
+    /**
+     * "input" is the number that the user gives to the computer
+     */
+    private int input; // a whole number("int" means integer)
+ 
+    /**
+     * This is the constructor method. It gets called when an object of the OddEven type
+     * is being created.
+     */
+    public OddEven() {
+        /*
+         * In most Java programs constructors can initialize objects with default values, or create
+         * other objects that this object might use to perform its functions. In some Java programs, the
+         * constructor may simply be an empty function if nothing needs to be initialized prior to the
+         * functioning of the object. In this program's case, an empty constructor would suffice.
+         * A constructor must exist; however, if the user doesn't put one in then the compiler
+         * will create an empty one.
+         */
+    }
+}
+	</pre>
+	<pre data-enlighter-language="php" data-enlighter-group="helloworld5" data-enlighter-title="PHP Script">
+/** Test Snippet */
+$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
+
+/* check connection */
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
+
+/* Create table doesn't return a resultset */
+if ($mysqli->query("CREATE TEMPORARY TABLE myCity LIKE City") === TRUE) {
+    printf("Table myCity successfully created.\n");
+}
+
+/* Select queries return a resultset */
+if ($result = $mysqli->query("SELECT Name FROM City LIMIT 10")) {
+    printf("Select returned %d rows.\n", $result->num_rows);
+
+    /* free result set */
+    $result->close();
+}
+	</pre>		
+	<!-- TESTCASE STOP -->
+</body>
+</html>
