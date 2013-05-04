@@ -19,7 +19,9 @@ EnlighterJS.Compiler.List = new Class({
 
 	options : {
 		altLines : 'hoverEnabled',
-		containerTag : 'ol'
+		containerTag : 'ol',
+		oddClassname: 'odd',
+		evenClassname: 'even'
 	},
 
 	initialize : function(options){
@@ -79,6 +81,14 @@ EnlighterJS.Compiler.List = new Class({
 		// add line classes to elements
 		container.getFirst().addClass('firstline');
 		container.getLast().addClass('lastline');
+		
+		// add odd/even classes
+		if (this.options.evenClassname){
+			container.getElements('li:even').addClass(this.options.evenClassname);
+		}
+		if (this.options.oddClassname){
+			container.getElements('li:odd').addClass(this.options.oddClassname);
+		}
 
 		// highlight alt lines ?
 		if (this.options.altLines){

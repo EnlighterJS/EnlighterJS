@@ -15,6 +15,8 @@
 
 	<!-- Generate Build -->
 	<target name="compress">
+		<!-- set date vars !-->
+		<tstamp/>
 
 		<!-- Concatenating Files ! -->
 		<echo message="Concatenating ${compress.description} Files.." />
@@ -35,6 +37,19 @@
 		<ant antfile="util/human-readable-filter.xml">
 			<property name="filter.file" value="${build.dir}${compress.output}" />
 		</ant>
+		
+		<!-- Get checksums !-->
+		<checksum file="${build.dir}${uncompress.output}" property="uncompress.checksum"/>
+		
+		<!-- add build vars !-->
+		<replace file="${build.dir}${compress.output}" token="{{VERSION}}" value="${build.var.version}" />
+		<replace file="${build.dir}${uncompress.output}" token="{{VERSION}}" value="${build.var.version}" />
+		
+		<replace file="${build.dir}${compress.output}" token="{{BUILD}}" value="${uncompress.checksum}" />
+		<replace file="${build.dir}${uncompress.output}" token="{{BUILD}}" value="${uncompress.checksum}" />
+		
+		<replace file="${build.dir}${compress.output}" token="{{DATE}}" value="${TODAY}" />
+		<replace file="${build.dir}${uncompress.output}" token="{{DATE}}" value="${TODAY}" />
 
 	</target>
 </project>

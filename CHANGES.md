@@ -1,3 +1,11 @@
+### Version 1.4 ###
+* Added Quickstart Example
+* Renamed *Tests/* to *Examples/* 
+
+### Version 1.3 ###
+* Added odd/even classes to Compiler.List
+* Added Version+Build informations to css+js builds
+
 ### Version 1.2 ###
 * Replaced Compiler.Inline with a new version (full DOM based handling)
 * Replaced Compiler.List with a new version (full DOM based handling)

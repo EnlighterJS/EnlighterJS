@@ -19,7 +19,7 @@ Features
 * Extensible language and theme engines - add your own one.
 * Simple CSS based themes
 * ANT build-script included for easy custom builds
-* Small footprint: 44kB js + 14kB css (including ALL build-in languages)
+* Small footprint: 44kB js + 8kB css (including ALL build-in languages)
 
 Screenshots
 -----------
@@ -27,11 +27,41 @@ Screenshots
 ![Screenshot 1](http://static.andidittrich.de/EnlighterJS/screenshot1.png)
 ![Screenshot 2](http://static.andidittrich.de/EnlighterJS/screenshot2.png)
 
+Quickstart
+----------
+This is a minimalistic example how to highlight sourcecode with EnlighterJS. The working example (correct js+css pathes) is available within the EnlighterJS package in *Examples/Quickstart.html*
+
+	#HTML
+	<head>
+	...
+	<!-- Include EnlighterJS Styles -->
+	<link rel="stylesheet" type="text/css" href="EnlighterJS.yui.css" />
+	
+	<!-- Include MooTools Framework -->
+	<script type="text/javascript" src="mootools-core-1.4.5-full-nocompat.js"></script>
+
+	<!-- Include EnlighterJS -->
+	<script type="text/javascript" src="EnlighterJS.yui.js" ></script>
+	
+	<!-- Initialize EnlighterJS -->	
+	<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="standard" data-theme="git" data-indent="4" data-compiler="List" data-altlines="none" data-selector="pre" />
+	...
+	</head>
+	
+	<body>
+	...
+	<!-- This code will be highlighted as Javascript !-->
+	<pre data-enlighter-language="js">
+	this.tokens = tokens || [];
+	options = this.options;
+	</pre>
+	...
+	</body>
 
 How to use
 ----------
 
-Download EnlighterJS and extract the files. You will find some examples located in the *Test/* directory.
+Download EnlighterJS and extract the files. You will find some examples located in the *Examples/* directory.
 Copy the prebuild files of the *Build/* directory into a web-accessible directory of your choice. 
 
 Link to the EnlighterJS.yui.js javascript file and the EnlighterJS.yui.css stylesheet in the head section of your document after the MooTools file. 
@@ -106,6 +136,8 @@ Options
 * containerTag - (string) The html tag-name of the container tag within the generated code is wrapped then using the Inline- or List-Compiler
 * altLines - (string) Defines a css-classname which is added on each line of the *List* view. To enable build-in hover effects for alt-lines set it to "hoverEnabled" (default), *null* to disable it or to any custom class
 * editable - (boolean) Set to true if you'd like to allow editing of the highlighted element. Note: Highlighting isn't real-time so any edits might not have the correct highlighting - default: false
+* oddClassname - (String) CSS-classname of all odd lines used within Compiler.List - default: "odd"
+* evenClassname - (String) CSS-classname of all even lines used within Compiler.List - default: "even"
 	
 	
 Advanced usage

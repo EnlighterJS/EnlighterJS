@@ -4,6 +4,8 @@ name: EnlighterJS
 description: Syntax Highlighter for MooTools - based on the famous Lighter.js from Jose Prado
 
 license: MIT-style X11 License
+version: 1.3
+build: da071aefe0be6b06013b53d3db517883/April 19 2013
 
 authors:
   - Andi Dittrich (author of EnlighterJS fork)
@@ -698,7 +700,9 @@ EnlighterJS.Compiler.List = new Class({
 
 	options : {
 		altLines : 'hoverEnabled',
-		containerTag : 'ol'
+		containerTag : 'ol',
+		oddClassname: 'odd',
+		evenClassname: 'even'
 	},
 
 	initialize : function(options){
@@ -758,6 +762,14 @@ EnlighterJS.Compiler.List = new Class({
 		// add line classes to elements
 		container.getFirst().addClass('firstline');
 		container.getLast().addClass('lastline');
+		
+		// add odd/even classes
+		if (this.options.evenClassname){
+			container.getElements('li:even').addClass(this.options.evenClassname);
+		}
+		if (this.options.oddClassname){
+			container.getElements('li:odd').addClass(this.options.oddClassname);
+		}
 
 		// highlight alt lines ?
 		if (this.options.altLines){

@@ -10,10 +10,11 @@
 	
 !-->
 <project name="EnlighterJS" default="build" basedir=".">
-
+		
 	<!-- Target Properties ! -->
 	<property name="yui.jar" value="Util/yuicompressor-2.4.7.jar" />
 	<property name="build.dir" value="Build/" />
+	<property name="build.var.version" value="1.4" />
 	
 	<!-- ANT.contrib package -->
 	<path id="ant.contrib.classpath" location="Util/ant-contrib-0.6.jar"></path>
@@ -57,17 +58,17 @@
 		<for param="filename" list="css,html,js,java,md,php,ruby,sql,unit,xml,Themes,cpp">
 			<sequential>
 				<!-- Remove old file !-->
-				<delete file="Tests/Testcase.@{filename}.html" />
+				<delete file="ExamplesTestcase.@{filename}.html" />
 				
 				<!-- Duplicate Template File !-->
-				<copy file="Tests/Template.html" tofile="Tests/Testcase.@{filename}.html" />
+				<copy file="Examples/Template.html" tofile="Examples/Testcase.@{filename}.html" />
 				
 				<!-- Load Testdata !-->
-				<loadfile property="data.@{filename}" srcFile="Tests/data/@{filename}.html" />
+				<loadfile property="data.@{filename}" srcFile="Examples/data/@{filename}.html" />
 				
 				<!-- replace placeholder with testdata content !-->
-				<replace file="Tests/Testcase.@{filename}.html" token="{{TITLE}}" value="@{filename}" />
-				<replace file="Tests/Testcase.@{filename}.html" token="{{CONTENT}}" value="${data.@{filename}}" />
+				<replace file="Examples/Testcase.@{filename}.html" token="{{TITLE}}" value="@{filename}" />
+				<replace file="Examples/Testcase.@{filename}.html" token="{{CONTENT}}" value="${data.@{filename}}" />
 					
 			</sequential>
 		</for>

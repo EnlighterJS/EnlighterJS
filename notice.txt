@@ -4,6 +4,8 @@ name: EnlighterJS
 description: Syntax Highlighter for MooTools - based on the famous Lighter.js from Jose Prado
 
 license: MIT-style X11 License
+version: {{VERSION}}
+build: {{BUILD}}/{{DATE}}
 
 authors:
   - Andi Dittrich (author of EnlighterJS fork)
