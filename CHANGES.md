@@ -1,3 +1,6 @@
+### Version 1.5 ###
+* Added language support for NSIS (Nullsoft Scriptable Install System) provided by Jan T. Sott
+
 ### Version 1.4 ###
 * Added Quickstart Example
 * Renamed *Tests/* to *Examples/* 
