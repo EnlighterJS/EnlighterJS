@@ -4,8 +4,8 @@ name: EnlighterJS
 description: Syntax Highlighter for MooTools - based on the famous Lighter.js from Jose Prado
 
 license: MIT-style X11 License
-version: 1.5
-build: c613df227c992dcee9625889d9d08b22/June 6 2013
+version: 1.5.1
+build: 2ef0d43413f8303c7c155b83eb80db52/June 22 2013
 
 authors:
   - Andi Dittrich (author of EnlighterJS fork)
@@ -2058,12 +2058,13 @@ description: Nullsoft Scriptable Install System (NSIS) fuel.
 license: MIT-style
 
 authors:
-- Jan T. Sott
+  - Jan T. Sott
 
 requires:
-- core/1.4.5
+  - core/1.4.5
 
 provides: [EnlighterJS.Language.nsis]
+...
 */
 EnlighterJS.Language.nsis = new Class ({
   
