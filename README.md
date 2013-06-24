@@ -27,6 +27,10 @@ Screenshots
 ![Screenshot 1](http://static.andidittrich.de/EnlighterJS/screenshot1.png)
 ![Screenshot 2](http://static.andidittrich.de/EnlighterJS/screenshot2.png)
 
+Plugins
+-------
+* [Enlighter for WordPress](http://wordpress.org/plugins/enlighter/) - The official EnlighterJS plugin for WordPress
+
 Quickstart
 ----------
 This is a minimalistic example how to highlight sourcecode with EnlighterJS. The working example (correct js+css pathes) is available within the EnlighterJS package in *Examples/Quickstart.html*
