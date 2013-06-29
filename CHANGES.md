@@ -1,3 +1,15 @@
+### Version 1.6 ###
+* Fixed Testcase-Buildscript: Testcase files didn't got removed on build
+* Bugfix: Added missing check of unknown languages (throws javascript error)
+* Added RAW language: text is rendered unhighlighted
+* Added lowercase-text-transforms to language- and theme-names - "GIT, Git, git" are valid names for the "git" theme
+
+### Version 1.5.2 ###
+* Added Plugin section to readme file
+
+### Version 1.5.1 ###
+* fixed YAML header within NSIS language support
+
 ### Version 1.5 ###
 * Added language support for NSIS (Nullsoft Scriptable Install System) provided by Jan T. Sott
 

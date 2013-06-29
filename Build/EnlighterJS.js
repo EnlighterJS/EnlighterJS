@@ -4,8 +4,8 @@ name: EnlighterJS
 description: Syntax Highlighter for MooTools - based on the famous Lighter.js from Jose Prado
 
 license: MIT-style X11 License
-version: 1.5.1
-build: 2ef0d43413f8303c7c155b83eb80db52/June 22 2013
+version: 1.6
+build: 37c148c44b39b50ff4a43ddd86785025/June 29 2013
 
 authors:
   - Andi Dittrich (author of EnlighterJS fork)
@@ -69,7 +69,7 @@ var EnlighterJS = new Class({
 		this.setOptions(options);
 							
 		// valid language selected ?
-		if (!EnlighterJS.Language[this.options.language]){
+		if (!EnlighterJS.Language[this.options.language.toLowerCase()]){
 			this.options.language = 'standard';
 		}
 		
@@ -112,7 +112,12 @@ var EnlighterJS = new Class({
 		var code = this.getCode();
 		
 		// get language name - use options as fallback  
-		var languageName = this.codeblock.get('data-enlighter-language') || this.options.language;
+		var languageName = this.codeblock.get('data-enlighter-language').toLowerCase();
+		
+		// valid language selected ?
+		if (!EnlighterJS.Language[languageName]){
+			languageName = this.options.language.toLowerCase();
+		}
 		
 		// get theme name - use options as fallback
 		var themeName = (this.options.forceTheme ? null : this.codeblock.get('data-enlighter-theme')) || this.options.theme;
@@ -121,7 +126,7 @@ var EnlighterJS = new Class({
 		language = new EnlighterJS.Language[languageName](code, {});
 		
 		// compile tokens -> generate output
-		var output = this.compiler.compile(language, themeName);
+		var output = this.compiler.compile(language, themeName.toLowerCase());
 
 		// grab content into specific container or after original code block ?
 		if (this.container) {
@@ -2109,4 +2114,33 @@ EnlighterJS.Language.nsis = new Class ({
     // Call parent constructor AFTER instance variables are set.
     this.parent(options);
   }
+});/*
+---
+description: RAW Language - returns pure raw text
+
+license: MIT-style
+
+authors:
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Language.raw]
+...
+*/
+EnlighterJS.Language.raw = new Class({
+    
+    Extends: EnlighterJS.Language.cpp,
+    language: 'raw',
+        
+    initialize: function(code, options) {
+    	this.code = code;
+    },
+    
+    getTokens: function(){
+    	return [
+    	        new EnlighterJS.Token(this.code, '', 0)
+    	];
+    }
 });

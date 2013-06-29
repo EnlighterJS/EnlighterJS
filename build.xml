@@ -6,7 +6,7 @@
 	
 	@requires	MooTools.Core > 1.4
 	@author		Andi Dittrich <andi.dittrich@a3non.org>
-	@version	1.0
+	@version	1.1
 	
 !-->
 <project name="EnlighterJS" default="build" basedir=".">
@@ -14,7 +14,7 @@
 	<!-- Target Properties ! -->
 	<property name="yui.jar" value="Util/yuicompressor-2.4.7.jar" />
 	<property name="build.dir" value="Build/" />
-	<property name="build.var.version" value="1.5.1" />
+	<property name="build.var.version" value="1.6" />
 	
 	<!-- ANT.contrib package -->
 	<path id="ant.contrib.classpath" location="Util/ant-contrib-0.6.jar"></path>
@@ -31,7 +31,7 @@
 		<property name="include.themes" value="Source/Themes/Git.css Source/Themes/Mocha.css Source/Themes/Panic.css Source/Themes/Tutti.css Source/Themes/Twilight.css" />
 
 		<!-- Languages to include !-->
-		<property name="include.languages" value="Source/Languages/Cpp.js Source/Languages/C.js Source/Languages/Xml.js Source/Languages/Css.js Source/Languages/Html.js Source/Languages/Java.js Source/Languages/Js.js Source/Languages/Md.js Source/Languages/Php.js Source/Languages/Python.js Source/Languages/Ruby.js Source/Languages/Shell.js Source/Languages/Sql.js Source/Languages/Nsis.js" />
+		<property name="include.languages" value="Source/Languages/Cpp.js Source/Languages/C.js Source/Languages/Xml.js Source/Languages/Css.js Source/Languages/Html.js Source/Languages/Java.js Source/Languages/Js.js Source/Languages/Md.js Source/Languages/Php.js Source/Languages/Python.js Source/Languages/Ruby.js Source/Languages/Shell.js Source/Languages/Sql.js Source/Languages/Nsis.js Source/Languages/Raw.js" />
 		
 		<!-- ****************************** JS BUILD LIBRARY **************************** -->
 		<ant antfile="util/concat-compress.xml">
@@ -58,7 +58,7 @@
 		<for param="filename" list="css,html,js,java,md,php,ruby,sql,unit,xml,Themes,cpp,nsis">
 			<sequential>
 				<!-- Remove old file !-->
-				<delete file="ExamplesTestcase.@{filename}.html" />
+				<delete file="Examples/Testcase.@{filename}.html" />
 				
 				<!-- Duplicate Template File !-->
 				<copy file="Examples/Template.html" tofile="Examples/Testcase.@{filename}.html" />

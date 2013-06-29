@@ -47,7 +47,7 @@ var EnlighterJS = new Class({
 		this.setOptions(options);
 							
 		// valid language selected ?
-		if (!EnlighterJS.Language[this.options.language]){
+		if (!EnlighterJS.Language[this.options.language.toLowerCase()]){
 			this.options.language = 'standard';
 		}
 		
@@ -90,7 +90,12 @@ var EnlighterJS = new Class({
 		var code = this.getCode();
 		
 		// get language name - use options as fallback  
-		var languageName = this.codeblock.get('data-enlighter-language') || this.options.language;
+		var languageName = this.codeblock.get('data-enlighter-language').toLowerCase();
+		
+		// valid language selected ?
+		if (!EnlighterJS.Language[languageName]){
+			languageName = this.options.language.toLowerCase();
+		}
 		
 		// get theme name - use options as fallback
 		var themeName = (this.options.forceTheme ? null : this.codeblock.get('data-enlighter-theme')) || this.options.theme;
@@ -99,7 +104,7 @@ var EnlighterJS = new Class({
 		language = new EnlighterJS.Language[languageName](code, {});
 		
 		// compile tokens -> generate output
-		var output = this.compiler.compile(language, themeName);
+		var output = this.compiler.compile(language, themeName.toLowerCase());
 
 		// grab content into specific container or after original code block ?
 		if (this.container) {
