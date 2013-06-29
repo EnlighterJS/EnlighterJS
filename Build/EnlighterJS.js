@@ -5,7 +5,7 @@ description: Syntax Highlighter for MooTools - based on the famous Lighter.js fr
 
 license: MIT-style X11 License
 version: 1.6
-build: 37c148c44b39b50ff4a43ddd86785025/June 29 2013
+build: cc9ab7f7e77053fc15cdf1a20dce06fd/June 29 2013
 
 authors:
   - Andi Dittrich (author of EnlighterJS fork)
@@ -112,11 +112,13 @@ var EnlighterJS = new Class({
 		var code = this.getCode();
 		
 		// get language name - use options as fallback  
-		var languageName = this.codeblock.get('data-enlighter-language').toLowerCase();
+		var languageName = this.codeblock.get('data-enlighter-language') + '';
 		
 		// valid language selected ?
-		if (!EnlighterJS.Language[languageName]){
-			languageName = this.options.language.toLowerCase();
+		if (EnlighterJS.Language[languageName.toLowerCase()]){
+			languageName = languageName.toLowerCase();
+		}else{
+			languageName = this.options.language.toLowerCase();	
 		}
 		
 		// get theme name - use options as fallback

@@ -90,11 +90,13 @@ var EnlighterJS = new Class({
 		var code = this.getCode();
 		
 		// get language name - use options as fallback  
-		var languageName = this.codeblock.get('data-enlighter-language').toLowerCase();
+		var languageName = this.codeblock.get('data-enlighter-language') + '';
 		
 		// valid language selected ?
-		if (!EnlighterJS.Language[languageName]){
-			languageName = this.options.language.toLowerCase();
+		if (EnlighterJS.Language[languageName.toLowerCase()]){
+			languageName = languageName.toLowerCase();
+		}else{
+			languageName = this.options.language.toLowerCase();	
 		}
 		
 		// get theme name - use options as fallback
