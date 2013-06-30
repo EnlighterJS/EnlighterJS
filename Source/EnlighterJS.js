@@ -37,6 +37,9 @@ var EnlighterJS = new Class({
 	
 	// lightning active ?
 	isRendered: false,
+	
+	// alias manager
+	aliasManager: null,
 
 	/**
 	 * @constructs
@@ -45,12 +48,10 @@ var EnlighterJS = new Class({
 	 */
 	initialize : function(codeblock, options, container) {
 		this.setOptions(options);
-							
-		// valid language selected ?
-		if (!EnlighterJS.Language[this.options.language.toLowerCase()]){
-			this.options.language = 'standard';
-		}
 		
+		// create new alias manager instance
+		this.aliasManager = new EnlighterJS.Alias(options);
+				
 		// initialize compiler
 		if (EnlighterJS.Compiler[this.options.compiler]){
 			this.compiler = new EnlighterJS.Compiler[this.options.compiler](options);
@@ -89,19 +90,12 @@ var EnlighterJS = new Class({
 		// extract code to highlight
 		var code = this.getCode();
 		
-		// get language name - use options as fallback  
-		var languageName = this.codeblock.get('data-enlighter-language') + '';
-		
-		// valid language selected ?
-		if (EnlighterJS.Language[languageName.toLowerCase()]){
-			languageName = languageName.toLowerCase();
-		}else{
-			languageName = this.options.language.toLowerCase();	
-		}
+		// get language name - use alias manager to check language string and validate
+		var languageName = this.aliasManager.getLanguage(this.codeblock.get('data-enlighter-language'));
 		
 		// get theme name - use options as fallback
 		var themeName = (this.options.forceTheme ? null : this.codeblock.get('data-enlighter-theme')) || this.options.theme;
-			
+		
 		// Load language parser
 		language = new EnlighterJS.Language[languageName](code, {});
 		

@@ -1,3 +1,13 @@
+### Version 1.7 ###
+* Added Language Aliases - e.g. "javascript" is a valid name for EnlighterJS.Language.js
+	* Javascript -> js
+	* Markdown -> md
+	* no-highlight -> raw
+	* bash -> shell
+	* styles -> css
+	* c++ -> cpp
+* Added check of default language within options - improoved fallback function to "standard" highlighting mode
+
 ### Version 1.6 ###
 * Fixed Testcase-Buildscript: Testcase files didn't got removed on build
 * Bugfix: Added missing check of unknown languages (throws javascript error)

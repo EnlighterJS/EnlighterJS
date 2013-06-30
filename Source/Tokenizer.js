@@ -43,29 +43,7 @@ EnlighterJS.Tokenizer = new Class({
         var tokens = [],
             text  = null,
             token  = null;
-        
-//        if (this.options.strict && language.hasDelimiters()) {
-//            var match    = null,
-//                endMatch = null,
-//                codeBeg  = 0,
-//                codeEnd  = code.length,
-//                codeSeg  = '';
-//            
-//            while ((match = language.delimiters.start.exec(code)) != null) {
-//                language.delimiters.end.lastIndex = language.delimiters.start.lastIndex;
-//                if ((endMatch = language.delimiters.end.exec(code)) != null) {
-//                    tokens.push(new Token(match[0], 'de1', match.index));
-//                    codeBeg = language.delimiters.start.lastIndex;
-//                    codeEnd = endMatch.index - 1;
-//                    codeSeg = code.substring(codeBeg, codeEnd);
-//                    tokens.append(this._parse(language, codeSeg, codeBeg));
-//                    tokens.push(new Token(endMatch[0], 'de2', endMatch.index));
-//                }
-//            }
-//        } else {
-//            tokens.append(this._parse(language, code, offset));
-//        }
-        
+
         // parse code
         tokens = this._parse(language, code, offset);
         

@@ -4,8 +4,8 @@ name: EnlighterJS
 description: Syntax Highlighter for MooTools - based on the famous Lighter.js from Jose Prado
 
 license: MIT-style X11 License
-version: 1.6
-build: cc9ab7f7e77053fc15cdf1a20dce06fd/June 29 2013
+version: 1.7
+build: c44dcd6d4ad0e846012908b0a7e2df5b/June 30 2013
 
 authors:
   - Andi Dittrich (author of EnlighterJS fork)
@@ -59,6 +59,9 @@ var EnlighterJS = new Class({
 	
 	// lightning active ?
 	isRendered: false,
+	
+	// alias manager
+	aliasManager: null,
 
 	/**
 	 * @constructs
@@ -67,12 +70,10 @@ var EnlighterJS = new Class({
 	 */
 	initialize : function(codeblock, options, container) {
 		this.setOptions(options);
-							
-		// valid language selected ?
-		if (!EnlighterJS.Language[this.options.language.toLowerCase()]){
-			this.options.language = 'standard';
-		}
 		
+		// create new alias manager instance
+		this.aliasManager = new EnlighterJS.Alias(options);
+				
 		// initialize compiler
 		if (EnlighterJS.Compiler[this.options.compiler]){
 			this.compiler = new EnlighterJS.Compiler[this.options.compiler](options);
@@ -111,19 +112,12 @@ var EnlighterJS = new Class({
 		// extract code to highlight
 		var code = this.getCode();
 		
-		// get language name - use options as fallback  
-		var languageName = this.codeblock.get('data-enlighter-language') + '';
-		
-		// valid language selected ?
-		if (EnlighterJS.Language[languageName.toLowerCase()]){
-			languageName = languageName.toLowerCase();
-		}else{
-			languageName = this.options.language.toLowerCase();	
-		}
+		// get language name - use alias manager to check language string and validate
+		var languageName = this.aliasManager.getLanguage(this.codeblock.get('data-enlighter-language'));
 		
 		// get theme name - use options as fallback
 		var themeName = (this.options.forceTheme ? null : this.codeblock.get('data-enlighter-theme')) || this.options.theme;
-			
+		
 		// Load language parser
 		language = new EnlighterJS.Language[languageName](code, {});
 		
@@ -408,6 +402,80 @@ EnlighterJS.Language.standard = new Class({
 });
 /*
 ---
+description: defines a key/value object with language aliases e.g. javascript -> js
+
+license: MIT-style
+
+authors:
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Alias]
+...
+*/
+EnlighterJS.Alias = new Class({
+	
+	Implements : Options,
+	
+	options: {
+		'language': 'standard'
+	},
+
+	/**
+	 * @constructs
+	 * @param {Object} options The options object.
+	 */
+	initialize : function(options) {
+		this.setOptions(options);
+	},	
+	
+	// map of language aliases
+	languageAliases: {
+		'javascript': 'js',
+		'markdown': 'md',
+		'no-highlight': 'raw',
+		'c++': 'cpp',
+		'styles': 'css',
+		'bash': 'shell'
+	},
+	
+	// get language name, process aliases and default languages
+	getLanguage: function(languageName){
+		// get default language
+		var defaultLanguage = (this.options.language != null ? this.options.language.trim().toLowerCase() : null);
+		
+		// default language class available ?
+		if (defaultLanguage == null || defaultLanguage.trim() == '' || !EnlighterJS.Language[defaultLanguage]){
+			defaultLanguage = 'standard';
+		}
+		
+		// valid string ?
+		if (languageName == null || languageName.trim() == ''){
+			return defaultLanguage;
+		}
+		
+		// "clean" languge name
+		languageName = languageName.trim().toLowerCase();
+		
+		// alias available ?
+		if (this.languageAliases[languageName]){
+			languageName = this.languageAliases[languageName];
+		}
+		
+		// language class available ?
+		if (EnlighterJS.Language[languageName]){
+			return languageName;
+		}else{
+			return defaultLanguage;
+		}
+	}
+		
+		
+		
+});/*
+---
 description: Extends MooTools.Element with light(), unlight() shortcuts
 
 license: MIT-style X11 License
@@ -507,29 +575,7 @@ EnlighterJS.Tokenizer = new Class({
         var tokens = [],
             text  = null,
             token  = null;
-        
-//        if (this.options.strict && language.hasDelimiters()) {
-//            var match    = null,
-//                endMatch = null,
-//                codeBeg  = 0,
-//                codeEnd  = code.length,
-//                codeSeg  = '';
-//            
-//            while ((match = language.delimiters.start.exec(code)) != null) {
-//                language.delimiters.end.lastIndex = language.delimiters.start.lastIndex;
-//                if ((endMatch = language.delimiters.end.exec(code)) != null) {
-//                    tokens.push(new Token(match[0], 'de1', match.index));
-//                    codeBeg = language.delimiters.start.lastIndex;
-//                    codeEnd = endMatch.index - 1;
-//                    codeSeg = code.substring(codeBeg, codeEnd);
-//                    tokens.append(this._parse(language, codeSeg, codeBeg));
-//                    tokens.push(new Token(endMatch[0], 'de2', endMatch.index));
-//                }
-//            }
-//        } else {
-//            tokens.append(this._parse(language, code, offset));
-//        }
-        
+
         // parse code
         tokens = this._parse(language, code, offset);
         

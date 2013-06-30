@@ -37,10 +37,17 @@
 	<pre data-enlighter-language="UNKNOWN" >var x = "hello world";</pre>
 	
 	<h4>RAW Code - should be rendered unhighlighted</h4>
-	<pre data-enlighter-language="raw" >var x = "hello world";</pre>
+	<pre data-enlighter-language="raw" >var x = "hello world";
+// don't highlight me!!!</pre>
 	
 	<h4>UPPERCASE language name- should be rendered as javascript</h4>
 	<pre data-enlighter-language="JS" >var x ={
+	 a: "hello world",
+	 b: 3
+	 };</pre>
+	 
+	<h4>Empty language attribute - should be rendered as standard</h4>
+	<pre data-enlighter-language="" >var x ={
 	 a: "hello world",
 	 b: 3
 	 };</pre>
@@ -51,7 +58,27 @@ if (this.options.editable) {
     lighter.set('contenteditable', 'true');
 }
 	</pre>
+	
+	<h4>Language Alias "markdown" - should rendered as markdown (md)</h4>
+	<pre data-enlighter-language="MarkDOWN">
+### Version 1.5.2 ###
+* Added Plugin section to readme file
 
+### Version 1.5.1 ###
+* fixed YAML header within NSIS language support
+
+### Version 1.5 ###
+* Added language support for NSIS (Nullsoft Scriptable Install System) provided by Jan T. Sott
+
+### Version 1.4 ###
+* Added Quickstart Example
+* Renamed *Tests/* to *Examples/* 
+
+### Version 1.3 ###
+* Added odd/even classes to Compiler.List
+* Added Version+Build informations to css+js builds	
+	</pre>
+	
 	<h4>No Code. Should render empty.</h4>
 	<pre data-enlighter-language="js" ></pre>
 	
