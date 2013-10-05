@@ -3,11 +3,11 @@
 /*!
 ---
 name: EnlighterJS
-description: Syntax Highlighter for MooTools - based on the famous Lighter.js from Jose Prado
+description: Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-style X11 License
-version: 1.7
-build: c44dcd6d4ad0e846012908b0a7e2df5b/June 30 2013
+version: 1.7.1
+build: 6f3c1bcb2c530f0ea1e1f77a7f24a634/October 5 2013
 
 authors:
   - Andi Dittrich (author of EnlighterJS fork)
@@ -32,7 +32,7 @@ return this}var c=this.getCode();var b=this.aliasManager.getLanguage(this.codebl
 this.aliases={};this.rules={};this.code=b;this.tokenizer=new EnlighterJS.Tokenizer[this.tokenizerType](a);if(this.delimiters.start){this.addRule("delimBeg",this.delimiters.start,"de1")}if(this.delimiters.end){this.addRule("delimEnd",this.delimiters.end,"de2")}Object.each(this.keywords,function(d,c){if(d.csv!=""){this.addRule(c,this.csvToRegExp(d.csv,d.mod||"g"),d.alias)}},this);Object.each(this.patterns,function(c,d){this.addRule(d,c.pattern,c.alias)
 },this)},getTokens:function(){return this.tokenizer.parse(this,this.code,0)},getRules:function(){return this.rules},hasDelimiters:function(){return this.delimiters.start&&this.delimiters.end},addRule:function(c,b,a){this.rules[c]=b;this.addAlias(c,a)},addAlias:function(b,a){this.aliases[b]=a||b},csvToRegExp:function(a,b){return new RegExp("\\b("+a.replace(/,\s*/g,"|")+")\\b",b)},delimToRegExp:function(d,b,a,e,f){d=d.escapeRegExp();
 if(b){b=b.escapeRegExp()}a=(a)?a.escapeRegExp():d;var c=(b)?d+"[^"+a+b+"\\n]*(?:"+b+".[^"+a+b+"\\n]*)*"+a:d+"[^"+a+"\\n]*"+a;return new RegExp(c+(f||""),e||"")},strictRegExp:function(){var b="(";for(var a=0;a<arguments.length;a++){b+=arguments[a].escapeRegExp();b+=(a<arguments.length-1)?"|":""}b+=")";return new RegExp(b,"gim")}});EnlighterJS.Language.standard=new Class({Extends:EnlighterJS.Language,initialize:function(a){this.parent(a)
-}});EnlighterJS.Alias=new Class({Implements:Options,options:{language:"standard"},initialize:function(a){this.setOptions(a)},languageAliases:{javascript:"js",markdown:"md","no-highlight":"raw","c++":"cpp",styles:"css",bash:"shell"},getLanguage:function(a){var b=(this.options.language!=null?this.options.language.trim().toLowerCase():null);if(b==null||b.trim()==""||!EnlighterJS.Language[b]){b="standard"
+}});EnlighterJS.Alias=new Class({Implements:Options,options:{language:"standard"},initialize:function(a){this.setOptions(a)},languageAliases:{javascript:"js",markdown:"md","no-highlight":"raw","c++":"cpp",styles:"css",bash:"shell",json:"js"},getLanguage:function(a){var b=(this.options.language!=null?this.options.language.trim().toLowerCase():null);if(b==null||b.trim()==""||!EnlighterJS.Language[b]){b="standard"
 }if(a==null||a.trim()==""){return b}a=a.trim().toLowerCase();if(this.languageAliases[a]){a=this.languageAliases[a]}if(EnlighterJS.Language[a]){return a}else{return b}}});(function(){Element.implement({light:function(a){var b=this.retrieve("EnlighterInstance");if(b===null){b=new EnlighterJS(this,a,null);this.store("EnlighterInstance",b)}b.light();return this},unlight:function(){var a=this.retrieve("EnlighterInstance");
 if(a!==null){a.unlight()}return this}})})();EnlighterJS.Tokenizer=new Class({Implements:[Options],options:{strict:false},initialize:function(a){this.setOptions(a)},parse:function(h,c,g){var d=[],f=null,b=null;d=this._parse(h,c,g);for(var a=0,e=0;a<d.length;a++){if(e<d[a].index){f=c.substring(e,d[a].index);b=new EnlighterJS.Token(f,"unknown",e);d.splice(a,0,b)}e=d[a].end}if(e<c.length){f=c.substring(e,c.length);
 b=new EnlighterJS.Token(f,"unknown",e);d.push(b)}return d},_parse:function(c,a,b){throw new Error("Extending classes must override the _parse method.")}});EnlighterJS.Token=new Class({text:null,type:null,index:-1,length:-1,end:-1,initialize:function(c,b,a){this.text=c;this.type=b;this.index=a;this.length=this.text.length;this.end=this.index+this.length},contains:function(a){return(a.index>=this.index&&a.index<this.end)

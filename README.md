@@ -1,7 +1,7 @@
 EnlighterJS
 ===========
 
-EnlighterJS is a free, easy-to-use, syntax highlighting class developed for MooTools. It is based on the famous [Lighter.js](https://github.com/pradador/Lighter "Ligher.js") from Jose Prado.
+EnlighterJS is a free, easy-to-use, syntax highlighting class developed for MooTools. It is based on the famous [Lighter.js](https://github.com/pradador/Lighter "Ligher.js").
 Using it can be as simple as adding a single script to your webpage, selecting the elements you wish to highlight, and EnlighterJS takes care of the rest.
 It also supports the automatic creation of tab-panes to display code-groups together (useful for multi-language examples - e.g. html+css+js)
 A simple demo can be found [here](http://static.andidittrich.de/EnlighterJS/Demo.html "EnligherJS Theme Demo")

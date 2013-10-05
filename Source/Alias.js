@@ -36,7 +36,8 @@ EnlighterJS.Alias = new Class({
 		'no-highlight': 'raw',
 		'c++': 'cpp',
 		'styles': 'css',
-		'bash': 'shell'
+		'bash': 'shell',
+		'json': 'js'
 	},
 	
 	// get language name, process aliases and default languages

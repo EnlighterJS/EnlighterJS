@@ -3,11 +3,11 @@
 /*!
 ---
 name: EnlighterJS
-description: Syntax Highlighter for MooTools - based on the famous Lighter.js from Jose Prado
+description: Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-style X11 License
-version: 1.7
-build: 3b993daf2b0dff02dc5922f2c61d90d6/June 30 2013
+version: 1.7.1
+build: 97924d21c8ffba8e80364f64e2a7a4ab/October 5 2013
 
 authors:
   - Andi Dittrich (author of EnlighterJS fork)
@@ -24,7 +24,7 @@ provides: [EnlighterJS]
 ...
  */.EnlighterJSTabPane .controls{margin:0 0 0 40px;padding:0}.EnlighterJSTabPane .controls li{float:left;display:block;list-style:none;padding:3px 10px 3px 10px;margin:0 5px 0 5px;background-color:#f2f2f2;border-radius:5px;font-size:12px;color:#000;font-family:Courier,monospace;cursor:pointer}.EnlighterJSTabPane .controls li:hover{background-color:#e5e5e5}.EnlighterJSTabPane .controls .selected,.EnlighterJSTabPane .controls .selected:hover{background-color:#cfc}
 .EnlighterJSTabPane .pane{padding:5px 0 0 0;clear:left}.EnlighterJSRendered{font-family:Monaco,Courier,Monospace;font-size:10px;line-height:16px;overflow:auto;white-space:pre-wrap;word-wrap:break-word;margin:0;padding:0}pre.EnlighterJSRendered{background-color:#fff;padding:5px 5px 5px 15px}ol.EnlighterJSRendered{color:#939393;font-size:10px;background-color:#f2f2f2;color:#939393;margin:0 0 20px 0;padding:0;text-indent:0;list-style:decimal-leading-zero outside}
-ol.EnlighterJSRendered li{margin:0 0 0 40px;background-color:#fff;border-top:1px solid #fff;border-bottom:1px solid #fff;border-left:1px solid #939393;padding:0 5px 0 14px;line-height:14px;color:#939393;list-style:decimal-leading-zero outside}ol.EnlighterJSRendered li.firstline{padding-top:5px}ol.EnlighterJSRendered li.lastline{padding-bottom:5px}ol.EnlighterJSRendered li.hoverEnabled:hover{border-top:1px solid #eee;border-bottom:1px solid #eee;background-color:#f4f8fc}
+ol.EnlighterJSRendered li{margin:0 0 0 40px;background-color:#fff;border-top:1px solid #fff;border-bottom:1px solid #fff;border-left:1px solid #939393;padding:0 5px 0 14px;line-height:14px;color:#939393;list-style:decimal-leading-zero outside;font-size:inherit}ol.EnlighterJSRendered li.firstline{padding-top:5px}ol.EnlighterJSRendered li.lastline{padding-bottom:5px}ol.EnlighterJSRendered li.hoverEnabled:hover{border-top:1px solid #eee;border-bottom:1px solid #eee;background-color:#f4f8fc}
 .EnlighterJSRendered span{color:#000;font-size:inherit;margin:0;padding:0;line-height:inherit;font-size:12px}.EnlighterJSRendered .kw1{color:#1b609a}.EnlighterJSRendered .kw2{color:#9a6f1b}.EnlighterJSRendered .kw3{color:#784e0c}.EnlighterJSRendered .kw4{color:#9a6f1b}.EnlighterJSRendered .co1{color:#888}.EnlighterJSRendered .co2{color:#888}.EnlighterJSRendered .st0{color:#489a1b}.EnlighterJSRendered .st1{color:#489a1b}
 .EnlighterJSRendered .st2{color:#489a1b}.EnlighterJSRendered .nu0{color:#70483d}.EnlighterJSRendered .me0{color:#666}.EnlighterJSRendered .me1{color:#666}.EnlighterJSRendered .br0{color:#444}.EnlighterJSRendered .sy0{color:#444}.EnlighterJSRendered .es0{color:#444}.EnlighterJSRendered .re0{color:#784e0c}.gitEnlighterJS{border-bottom:1px solid #eee;border-top:1px solid #eee;font-family:Courier,monospace}
 ol.gitEnlighterJS li{border:0;line-height:20px}ol.gitEnlighterJS li.hoverEnabled:hover{background-color:#ffc;border:0}ol.gitEnlighterJS{list-style-type:decimal}.gitEnlighterJS .de1{color:#cf6a4c}.gitEnlighterJS .de2{color:#cf6a4c}.gitEnlighterJS .kw1{color:#000;font-weight:bold}.gitEnlighterJS .kw2{color:#0086b3}.gitEnlighterJS .kw3{color:#458;font-weight:bold}.gitEnlighterJS .kw4{color:#990073}.gitEnlighterJS .co1{color:#998;font-style:italic}

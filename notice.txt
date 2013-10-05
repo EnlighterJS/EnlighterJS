@@ -1,7 +1,7 @@
 /*!
 ---
 name: EnlighterJS
-description: Syntax Highlighter for MooTools - based on the famous Lighter.js from Jose Prado
+description: Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-style X11 License
 version: {{VERSION}}

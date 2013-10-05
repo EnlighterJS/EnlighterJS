@@ -78,6 +78,7 @@ ol.EnlighterJSRendered li {
 	line-height: 14px;
 	color: #939393;
 	list-style: decimal-leading-zero outside;
+	font-size: inherit;
 }
 
 ol.EnlighterJSRendered li.firstline {

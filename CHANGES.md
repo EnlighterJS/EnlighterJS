@@ -1,3 +1,10 @@
+### Version 1.8 ###
+* Added support for Inline-Syntax-Highlighting
+* Added JSON language alias (parsed as javascript)
+
+### Version 1.7.1 ###
+* CSS Hotfix for bad linenumbers in Chrome @see http://wordpress.org/support/topic/bad-line-numbers-in-chrome?replies=3 - thanks to **cdonts**
+
 ### Version 1.7 ###
 * Added Language Aliases - e.g. "javascript" is a valid name for EnlighterJS.Language.js
 	* Javascript -> js

@@ -1,11 +1,11 @@
 /*!
 ---
 name: EnlighterJS
-description: Syntax Highlighter for MooTools - based on the famous Lighter.js from Jose Prado
+description: Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-style X11 License
-version: 1.7
-build: 3b993daf2b0dff02dc5922f2c61d90d6/June 30 2013
+version: 1.7.1
+build: 97924d21c8ffba8e80364f64e2a7a4ab/October 5 2013
 
 authors:
   - Andi Dittrich (author of EnlighterJS fork)
@@ -100,6 +100,7 @@ ol.EnlighterJSRendered li {
 	line-height: 14px;
 	color: #939393;
 	list-style: decimal-leading-zero outside;
+	font-size: inherit;
 }
 
 ol.EnlighterJSRendered li.firstline {

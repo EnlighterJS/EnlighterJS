@@ -14,7 +14,7 @@
 	<!-- Target Properties ! -->
 	<property name="yui.jar" value="Util/yuicompressor-2.4.7.jar" />
 	<property name="build.dir" value="Build/" />
-	<property name="build.var.version" value="1.7" />
+	<property name="build.var.version" value="1.7.1" />
 	
 	<!-- ANT.contrib package -->
 	<path id="ant.contrib.classpath" location="Util/ant-contrib-0.6.jar"></path>
@@ -55,7 +55,7 @@
 
 	<!-- Generate Testcases -->
 	<target name="testcases">
-		<for param="filename" list="css,html,js,java,md,php,ruby,sql,unit,xml,Themes,cpp,nsis">
+		<for param="filename" list="css,html,js,java,md,php,ruby,sql,unit,xml,Themes,cpp,nsis,json">
 			<sequential>
 				<!-- Remove old file !-->
 				<delete file="Examples/Testcase.@{filename}.html" />

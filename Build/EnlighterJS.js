@@ -1,11 +1,11 @@
 /*!
 ---
 name: EnlighterJS
-description: Syntax Highlighter for MooTools - based on the famous Lighter.js from Jose Prado
+description: Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-style X11 License
-version: 1.7
-build: c44dcd6d4ad0e846012908b0a7e2df5b/June 30 2013
+version: 1.7.1
+build: 6f3c1bcb2c530f0ea1e1f77a7f24a634/October 5 2013
 
 authors:
   - Andi Dittrich (author of EnlighterJS fork)
@@ -438,7 +438,8 @@ EnlighterJS.Alias = new Class({
 		'no-highlight': 'raw',
 		'c++': 'cpp',
 		'styles': 'css',
-		'bash': 'shell'
+		'bash': 'shell',
+		'json': 'js'
 	},
 	
 	// get language name, process aliases and default languages
