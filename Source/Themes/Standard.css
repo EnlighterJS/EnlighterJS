@@ -88,6 +88,11 @@ ol.EnlighterJSRendered li.lastline  {
 	padding-bottom: 5px; 
 }
 
+/* special line highlight color */
+ol.EnlighterJSRendered li.specialline {
+	background-color: #F4F8FC;
+}
+
 ol.EnlighterJSRendered li.hoverEnabled:hover {
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;

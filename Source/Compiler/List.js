@@ -28,14 +28,29 @@ EnlighterJS.Compiler.List = new Class({
 		this.parent(options);
 	},
 
-
-	_compile : function(language, theme){
+	/**
+	 * Compiles an array of tokens into a highlighted element using a language and a theme.
+	 * 
+	 * @param {Language}
+	 *            language The Language used when parsing.
+	 * @param {String}
+	 *            theme The Theme to use.
+	 * @param {SpecialLineHighlighter}
+	 * 			  lines to highlight           
+	 * @return {Element} The generated Element.
+	 */
+	_compile : function(language, theme, specialLines){
 		// create new outer container element
 		var container = new Element(this.options.containerTag);
 		
-		// current line element
-		var currentLine = new Element('li');
+		// line number count
+		var lineCounter = 1;
 		
+		// current line element
+		var currentLine = new Element('li', {
+			'class': (specialLines.isSpecialLine(lineCounter) ? 'specialline' : '')
+		});
+				
 		// generate output based on ordered list of tokens
 		language.getTokens().each(function(token, index){
 			// get classname
@@ -57,9 +72,14 @@ EnlighterJS.Compiler.List = new Class({
 					// grab old line into output container
 					container.grab(currentLine);
 					
-					// create new line
-					currentLine = new Element('li');
+					// new line
+					lineCounter++;
 					
+					// create new line, add special line classes
+					currentLine = new Element('li', {
+						'class': (specialLines.isSpecialLine(lineCounter) ? 'specialline' : '')
+					});
+										
 					// create new token-element
 					currentLine.grab(new Element('span', {
 						'class': className,

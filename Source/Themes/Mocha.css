@@ -38,6 +38,12 @@ ol.mochaEnlighterJS li.hoverEnabled:hover{
 	border: none;
 	border-left: 2px solid #939393;
 }
+
+/* special line highlight color */
+ol.mochaEnlighterJS li.specialline {
+	background-color: #423F43;
+}
+
 pre.mochaEnlighterJS {
 	background-color: #2D2522;
 }

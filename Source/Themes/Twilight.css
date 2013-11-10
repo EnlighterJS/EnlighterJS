@@ -48,6 +48,11 @@ ol.twilightEnlighterJS li.hoverEnabled:hover{
 	border-left: 1px solid #939393;
 }
 
+/* special line highlight color */
+ol.twilightEnlighterJS li.specialline {
+	background-color: #202021;
+}
+
 /** Symbol styles */
 .twilightEnlighterJS .de1 { color: #fff; }
 .twilightEnlighterJS .de2 { color: #fff; }

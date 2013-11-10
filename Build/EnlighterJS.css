@@ -4,8 +4,8 @@ name: EnlighterJS
 description: Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-style X11 License
-version: 1.7.1
-build: 97924d21c8ffba8e80364f64e2a7a4ab/October 5 2013
+version: 1.8
+build: 44fcaedaaa33f2910e4f7d44aac52557/November 10 2013
 
 authors:
   - Andi Dittrich (author of EnlighterJS fork)
@@ -110,6 +110,11 @@ ol.EnlighterJSRendered li.lastline  {
 	padding-bottom: 5px; 
 }
 
+/* special line highlight color */
+ol.EnlighterJSRendered li.specialline {
+	background-color: #F4F8FC;
+}
+
 ol.EnlighterJSRendered li.hoverEnabled:hover {
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
@@ -177,6 +182,11 @@ ol.gitEnlighterJS li.hoverEnabled:hover{
 	border: none;
 }
 
+/* special line highlight color */
+ol.gitEnlighterJS li.specialline {
+	background-color: #fffff2;
+}
+
 /* non leading zero */
 ol.gitEnlighterJS {
 	list-style-type: decimal;
@@ -241,6 +251,12 @@ ol.mochaEnlighterJS li.hoverEnabled:hover{
 	border: none;
 	border-left: 2px solid #939393;
 }
+
+/* special line highlight color */
+ol.mochaEnlighterJS li.specialline {
+	background-color: #423F43;
+}
+
 pre.mochaEnlighterJS {
 	background-color: #2D2522;
 }
@@ -348,6 +364,10 @@ ol.tuttiEnlighterJS li.hoverEnabled:hover{
 	background-color: #F4F8FC;
 	border: none;
 }
+/* special line highlight color */
+ol.tuttiEnlighterJS li.specialline {
+	background-color: #F4F8FC;
+}
 
 /** Symbol styles */
 .tuttiEnlighterJS .de1 { color: #6eb13f; }
@@ -416,6 +436,11 @@ ol.twilightEnlighterJS li.hoverEnabled:hover{
 	background-color: #202021;
 	border: none;
 	border-left: 1px solid #939393;
+}
+
+/* special line highlight color */
+ol.twilightEnlighterJS li.specialline {
+	background-color: #202021;
 }
 
 /** Symbol styles */

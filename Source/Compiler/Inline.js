@@ -25,7 +25,18 @@ EnlighterJS.Compiler.Inline = new Class({
 		this.parent(options);
 	},
 
-	_compile : function(language, theme){
+	/**
+	 * Compiles an array of tokens into a highlighted element using a language and a theme.
+	 * 
+	 * @param {Language}
+	 *            language The Language used when parsing.
+	 * @param {String}
+	 *            theme The Theme to use.
+	 * @param {SpecialLineHighlighter}
+	 * 			  lines to highlight           
+	 * @return {Element} The generated Element.
+	 */
+	_compile : function(language, theme, specialLines){
 		// create output container element
 		var container = new Element(this.options.containerTag);
 		

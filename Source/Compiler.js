@@ -41,10 +41,12 @@ EnlighterJS.Compiler = new Class({
 	 *            language The Language used when parsing.
 	 * @param {String}
 	 *            theme The Theme to use.
+	 * @param {SpecialLineHighlighter}
+	 * 			  lines to highlight           
 	 * @return {Element} The generated Element.
 	 */
-	compile : function(language, theme){
-		var container = this._compile(language, theme);
+	compile : function(language, theme, specialLines){
+		var container = this._compile(language, theme, specialLines);
 
 		// set class and id attributes.
 		container.addClass(theme + 'EnlighterJS');		
@@ -62,7 +64,7 @@ EnlighterJS.Compiler = new Class({
 	/**
 	 * Extending classes must override this method and return a highlighted Element using the language and theme that were passed in.
 	 */
-	_compile : function(language, theme){
+	_compile : function(language, theme, specialLines){
 		throw new Error('Extending classes must override the _compile method.');
 	}
 });

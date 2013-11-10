@@ -4,8 +4,8 @@ name: EnlighterJS
 description: Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-style X11 License
-version: 1.7.1
-build: 6f3c1bcb2c530f0ea1e1f77a7f24a634/October 5 2013
+version: 1.8
+build: e44079501117bd7e1443d6d34b8383e7/November 10 2013
 
 authors:
   - Andi Dittrich (author of EnlighterJS fork)
@@ -118,11 +118,14 @@ var EnlighterJS = new Class({
 		// get theme name - use options as fallback
 		var themeName = (this.options.forceTheme ? null : this.codeblock.get('data-enlighter-theme')) || this.options.theme;
 		
+		// special lines to highlight ?
+		var specialLines = new EnlighterJS.SpecialLineHighlighter(this.codeblock.get('data-enlighter-highlight'));
+		
 		// Load language parser
 		language = new EnlighterJS.Language[languageName](code, {});
 		
 		// compile tokens -> generate output
-		var output = this.compiler.compile(language, themeName.toLowerCase());
+		var output = this.compiler.compile(language, themeName.toLowerCase(), specialLines);
 
 		// grab content into specific container or after original code block ?
 		if (this.container) {
@@ -179,6 +182,76 @@ var EnlighterJS = new Class({
 
 /*
 ---
+name: Special Line Highlighter
+description: Highlights special lines
+
+license: MIT-style X11 License
+
+authors:
+  - Andi Dittrich
+  
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.SpecialLineHighlighter]
+...
+ */
+
+EnlighterJS.SpecialLineHighlighter = new Class({
+		
+	// storage of line numbers to highlight
+	specialLines: {},
+	
+	/**
+	 * @constructs
+	 * @param {String} html attribute content "highlight" - scheme 4,5,6,10-12,19
+	 */
+	initialize : function(lineNumberString){
+		// special lines given ?
+		if (lineNumberString == null || lineNumberString.length == 0){
+			return;
+		}
+		
+		// split attribute string into segments
+		var segments = lineNumberString.split(',');
+				
+		// iterate over segments
+		segments.each(function(item, index){
+			// pattern xxxx-yyyy
+			var parts = item.match(/([0-9]+)-([0-9]+)/);
+			
+			// single line or line-range
+			if (parts!=null){				
+				// 2 items required
+				var start = parts[1].toInt();
+				var stop = parts[2].toInt();
+				
+				// valid range ?
+				if (stop > start){
+					// add lines to storage
+					for (var i=start;i<=stop;i++){
+						this.specialLines['l' + i] = true;
+					}
+				}
+			}else{
+				// add line to storage
+				this.specialLines['l' + item.toInt()] = true;
+			}
+		}.bind(this));
+	},
+	
+	/**
+	 * Check if the given linenumber is a special line
+	 * @param Integer lineNumber
+	 * @returns {Boolean}
+	 */
+	isSpecialLine: function(lineNumber){
+		return (this.specialLines['l' + lineNumber] || false);
+	}
+	
+});
+/*
+---
 description: Compiles an array of Tokens into an Element.
 
 license: MIT-style
@@ -220,10 +293,12 @@ EnlighterJS.Compiler = new Class({
 	 *            language The Language used when parsing.
 	 * @param {String}
 	 *            theme The Theme to use.
+	 * @param {SpecialLineHighlighter}
+	 * 			  lines to highlight           
 	 * @return {Element} The generated Element.
 	 */
-	compile : function(language, theme){
-		var container = this._compile(language, theme);
+	compile : function(language, theme, specialLines){
+		var container = this._compile(language, theme, specialLines);
 
 		// set class and id attributes.
 		container.addClass(theme + 'EnlighterJS');		
@@ -241,7 +316,7 @@ EnlighterJS.Compiler = new Class({
 	/**
 	 * Extending classes must override this method and return a highlighted Element using the language and theme that were passed in.
 	 */
-	_compile : function(language, theme){
+	_compile : function(language, theme, specialLines){
 		throw new Error('Extending classes must override the _compile method.');
 	}
 });
@@ -714,7 +789,18 @@ EnlighterJS.Compiler.Inline = new Class({
 		this.parent(options);
 	},
 
-	_compile : function(language, theme){
+	/**
+	 * Compiles an array of tokens into a highlighted element using a language and a theme.
+	 * 
+	 * @param {Language}
+	 *            language The Language used when parsing.
+	 * @param {String}
+	 *            theme The Theme to use.
+	 * @param {SpecialLineHighlighter}
+	 * 			  lines to highlight           
+	 * @return {Element} The generated Element.
+	 */
+	_compile : function(language, theme, specialLines){
 		// create output container element
 		var container = new Element(this.options.containerTag);
 		
@@ -763,14 +849,29 @@ EnlighterJS.Compiler.List = new Class({
 		this.parent(options);
 	},
 
-
-	_compile : function(language, theme){
+	/**
+	 * Compiles an array of tokens into a highlighted element using a language and a theme.
+	 * 
+	 * @param {Language}
+	 *            language The Language used when parsing.
+	 * @param {String}
+	 *            theme The Theme to use.
+	 * @param {SpecialLineHighlighter}
+	 * 			  lines to highlight           
+	 * @return {Element} The generated Element.
+	 */
+	_compile : function(language, theme, specialLines){
 		// create new outer container element
 		var container = new Element(this.options.containerTag);
 		
-		// current line element
-		var currentLine = new Element('li');
+		// line number count
+		var lineCounter = 1;
 		
+		// current line element
+		var currentLine = new Element('li', {
+			'class': (specialLines.isSpecialLine(lineCounter) ? 'specialline' : '')
+		});
+				
 		// generate output based on ordered list of tokens
 		language.getTokens().each(function(token, index){
 			// get classname
@@ -792,9 +893,14 @@ EnlighterJS.Compiler.List = new Class({
 					// grab old line into output container
 					container.grab(currentLine);
 					
-					// create new line
-					currentLine = new Element('li');
+					// new line
+					lineCounter++;
 					
+					// create new line, add special line classes
+					currentLine = new Element('li', {
+						'class': (specialLines.isSpecialLine(lineCounter) ? 'specialline' : '')
+					});
+										
 					// create new token-element
 					currentLine.grab(new Element('span', {
 						'class': className,

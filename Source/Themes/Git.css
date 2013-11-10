@@ -30,6 +30,11 @@ ol.gitEnlighterJS li.hoverEnabled:hover{
 	border: none;
 }
 
+/* special line highlight color */
+ol.gitEnlighterJS li.specialline {
+	background-color: #fffff2;
+}
+
 /* non leading zero */
 ol.gitEnlighterJS {
 	list-style-type: decimal;

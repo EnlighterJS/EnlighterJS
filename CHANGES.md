@@ -1,9 +1,12 @@
-### Version 1.8 ###
+### Version 1.9 ###
 * Added support for Inline-Syntax-Highlighting
-* Added JSON language alias (parsed as javascript)
+
+### Version 1.8 ###
+* Added highlighting for special-lines, just add the attribute `data-enlighter-highlight="1,2,8-10"` to highlight the lines 1,2,8,9,10
 
 ### Version 1.7.1 ###
 * CSS Hotfix for bad linenumbers in Chrome @see http://wordpress.org/support/topic/bad-line-numbers-in-chrome?replies=3 - thanks to **cdonts**
+* Added JSON language alias (parsed as javascript)
 
 ### Version 1.7 ###
 * Added Language Aliases - e.g. "javascript" is a valid name for EnlighterJS.Language.js

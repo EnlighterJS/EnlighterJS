@@ -20,6 +20,7 @@ Features
 * Simple CSS based themes
 * ANT build-script included for easy custom builds
 * Small footprint: 44kB js + 8kB css (including ALL build-in languages)
+* Highlighting of special lines
 
 Screenshots
 -----------
@@ -31,7 +32,7 @@ Plugins
 -------
 * [Enlighter for WordPress](http://wordpress.org/plugins/enlighter/) - The official EnlighterJS plugin for WordPress
 
-Quickstart
+How to use
 ----------
 This is a minimalistic example how to highlight sourcecode with EnlighterJS. The working example (correct js+css pathes) is available within the EnlighterJS package in *Examples/Quickstart.html*
 
@@ -62,9 +63,8 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
 	...
 	</body>
 
-How to use
-----------
-
+Basic Usage
+-----------
 Download EnlighterJS and extract the files. You will find some examples located in the *Examples/* directory.
 Copy the prebuild files of the *Build/* directory into a web-accessible directory of your choice. 
 
@@ -127,6 +127,25 @@ Instead of initializing EnlighterJS manually, since version 1.1 it is possible t
 	<!-- Initialize EnlighterJS -->	
 	<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="standard" data-theme="standard" data-indent="5" data-compiler="List" data-altlines="none" data-selector="pre" />
 	
+Since version 1.8, it's possible to highlight special lines of code. Just add the attribute `data-enlighter-highlight` to your codeblock and provide a set of lines to mark (ranges supported).
+
+	#HTML
+	// just highlight line number 2
+	<pre data-enlighter-language="js" data-enlighter-highlight="2">
+	this.tokens = tokens || [];
+	options = this.options;
+	</pre>
+	
+	// highlight line 2,3,4
+	<pre data-enlighter-language="js" data-enlighter-highlight="2-4">
+	new EnlighterJS.Helper($$('pre'), {
+		altLines : 'hover',
+		indent : 5,
+		grouping: false
+	});
+	</pre>
+
+	
 Options
 -------
 
@@ -139,7 +158,6 @@ Options
 	* **List**: Each line (splittet by \n) is wrapped into a single li-tag. The outer container is defined by *containerTag* and should be *ol* or *ul* !
 * containerTag - (string) The html tag-name of the container tag within the generated code is wrapped then using the Inline- or List-Compiler
 * altLines - (string) Defines a css-classname which is added on each line of the *List* view. To enable build-in hover effects for alt-lines set it to "hoverEnabled" (default), *null* to disable it or to any custom class
-* editable - (boolean) Set to true if you'd like to allow editing of the highlighted element. Note: Highlighting isn't real-time so any edits might not have the correct highlighting - default: false
 * oddClassname - (String) CSS-classname of all odd lines used within Compiler.List - default: "odd"
 * evenClassname - (String) CSS-classname of all even lines used within Compiler.List - default: "even"
 	

@@ -36,6 +36,10 @@ ol.tuttiEnlighterJS li.hoverEnabled:hover{
 	background-color: #F4F8FC;
 	border: none;
 }
+/* special line highlight color */
+ol.tuttiEnlighterJS li.specialline {
+	background-color: #F4F8FC;
+}
 
 /** Symbol styles */
 .tuttiEnlighterJS .de1 { color: #6eb13f; }

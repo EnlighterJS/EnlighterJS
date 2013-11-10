@@ -14,7 +14,7 @@
 	<!-- Target Properties ! -->
 	<property name="yui.jar" value="Util/yuicompressor-2.4.7.jar" />
 	<property name="build.dir" value="Build/" />
-	<property name="build.var.version" value="1.7.1" />
+	<property name="build.var.version" value="1.8" />
 	
 	<!-- ANT.contrib package -->
 	<path id="ant.contrib.classpath" location="Util/ant-contrib-0.6.jar"></path>
@@ -37,7 +37,7 @@
 		<ant antfile="util/concat-compress.xml">
 			<property name="compress.description" value="Enlighter" />
 			<property name="compress.type" value="js" />
-			<property name="compress.input" value="notice.txt Source/EnlighterJS.js Source/Compiler.js Source/Language.js Source/Alias.js Source/Element.EnlighterJS.js Source/Tokenizer.js Source/Token.js Source/Compiler/Inline.js Source/Compiler/List.js Source/Tokenizer/Smart.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js Source/Helper.js Source/TabPane.js Source/Metainit.js ${include.languages}" />
+			<property name="compress.input" value="notice.txt Source/EnlighterJS.js Source/SpecialLineHighlighter.js Source/Compiler.js Source/Language.js Source/Alias.js Source/Element.EnlighterJS.js Source/Tokenizer.js Source/Token.js Source/Compiler/Inline.js Source/Compiler/List.js Source/Tokenizer/Smart.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js Source/Helper.js Source/TabPane.js Source/Metainit.js ${include.languages}" />
 			<property name="compress.output" value="EnlighterJS.yui.js" />
 			<property name="uncompress.output" value="EnlighterJS.js" />
 		</ant>

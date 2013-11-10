@@ -96,11 +96,14 @@ var EnlighterJS = new Class({
 		// get theme name - use options as fallback
 		var themeName = (this.options.forceTheme ? null : this.codeblock.get('data-enlighter-theme')) || this.options.theme;
 		
+		// special lines to highlight ?
+		var specialLines = new EnlighterJS.SpecialLineHighlighter(this.codeblock.get('data-enlighter-highlight'));
+		
 		// Load language parser
 		language = new EnlighterJS.Language[languageName](code, {});
 		
 		// compile tokens -> generate output
-		var output = this.compiler.compile(language, themeName.toLowerCase());
+		var output = this.compiler.compile(language, themeName.toLowerCase(), specialLines);
 
 		// grab content into specific container or after original code block ?
 		if (this.container) {
