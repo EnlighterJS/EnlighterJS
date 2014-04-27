@@ -1,0 +1,68 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="python">links  = [element for element in liste if element &lt; pivotelement]</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<pre data-enlighter-language="python">
+# SOURCE: http://de.wikipedia.org/wiki/Python_%28Programmiersprache%29
+def stack():
+  l = []
+  def pop(): return l.pop()
+  def push(element): l.append(element)
+  def isempty(): return len(l) == 0
+  return pop, push, isempty
+ 
+POP, PUSH, ISEMPTY = stack()
+
+while True:
+    try:
+        num = raw_input("Eine Zahl eingeben: ")
+        num = int(num)
+        break
+    except ValueError:
+        print("Eine _Zahl_, bitte!")
+        
+'''
+Multiline String Comment Style1
+Hello
+'''        
+
+def curry(func, knownargument):
+    return lambda unknownargument: func(unknownargument, knownargument)
+    
+"""
+Multiline String Comment Style2
+Hello
+""" 
+
+def quicksort(liste):
+    if len(liste) <= 1:
+        return liste
+    pivotelement = liste.pop()
+    links  = [element for element in liste if element < pivotelement]
+    rechts = [element for element in liste if element >= pivotelement]
+    return quicksort(links) + [pivotelement] + quicksort(rechts)     
+
+using webapp.runner do (config):
+    config.time_zone = 'UTC'
+    config.log_level = 'debug'
+
+# @SOURCE: http://docs.python.org/2/tutorial/classes.html     
+class Mapping:
+    def __init__(self, iterable):
+        self.items_list = []
+        self.__update(iterable)
+
+    def update(self, iterable):
+        for item in iterable:
+            self.items_list.append(item)
+
+    __update = update   # private copy of original update() method
+
+class MappingSubclass(Mapping):
+
+    def update(self, keys, values):
+        # provides new signature for update()
+        # but does not break __init__()
+        for item in zip(keys, values):
+            self.items_list.append(item)    
+</pre>

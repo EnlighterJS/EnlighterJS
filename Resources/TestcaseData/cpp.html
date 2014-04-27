@@ -1,0 +1,50 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="cpp">void CRectangle::set_value(int a);</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<!-- SOURCE: http://www.cplusplus.com/doc/tutorial/classes/ -->
+<pre data-enlighter-language="cpp">
+// SOURCE: http://www.cplusplus.com/doc/tutorial/classes/
+
+// classes example
+#include &lt;iostream&gt;
+#define DOIT 1
+using namespace std;
+
+class CRectangle {
+    int x, y;
+  public:
+    void set_values (int,int);
+    int area () {return (x*y);}
+};
+
+void CRectangle::set_values (int a, int b) {
+  x = a;
+  y = b;
+}
+
+/*
+void CRectangle::set_valueA (int a) {
+  x = a;
+}
+*/
+
+int main () {
+  CRectangle rect;
+  rect.set_values (3,4);
+  cout << "area: " << rect.area();
+  
+  CRectangle rect2 = new CRectangle();
+  
+  int x = 0x54b4c2;
+  int y = 291;
+  int z = 0b1110101;
+  
+  
+  #ifdef DOIT
+  cout << __FILE__ << __LINE__;
+  #endif
+  
+  return 0;
+}
+</pre>

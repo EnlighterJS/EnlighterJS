@@ -1,0 +1,47 @@
+/*
+---
+description: Inspired by MooTools code coloring.
+
+license: MIT-style
+
+authors:
+ - Jose Prado
+ - Andi Dittrich
+
+...
+*/
+/* theme symbol styles */
+.mootoolsEnlighterJS .de1 {}
+.mootoolsEnlighterJS .de2 {}
+.mootoolsEnlighterJS .kw1 { color: #1b609a; }
+.mootoolsEnlighterJS .kw2 { color: #9a6f1b; }
+.mootoolsEnlighterJS .kw3 { color: #784e0c; }
+.mootoolsEnlighterJS .kw4 { color: #9a6f1b; }
+.mootoolsEnlighterJS .co1 { color: #888888; }
+.mootoolsEnlighterJS .co2 { color: #888888; }
+.mootoolsEnlighterJS .st0 { color: #489a1b; }
+.mootoolsEnlighterJS .st1 { color: #489a1b; }
+.mootoolsEnlighterJS .st2 { color: #489a1b; }
+.mootoolsEnlighterJS .nu0 { color: #70483d; }
+.mootoolsEnlighterJS .me0 { color: #666666; }
+.mootoolsEnlighterJS .me1 { color: #666666; }
+.mootoolsEnlighterJS .br0 { color: #444444; }
+.mootoolsEnlighterJS .sy0 { color: #444444; }
+.mootoolsEnlighterJS .es0 { color: #444444; }
+.mootoolsEnlighterJS .re0 { color: #784e0c; }
+
+/* Raw Code Pane */
+.mootoolsEnlighterJSWrapper pre{
+	line-height: 16px;
+}
+.mootoolsEnlighterJSWrapper .EnlighterJSRawButton{
+	padding: 3px 10px 3px 10px;
+	margin: 0px 5px 0px 5px;
+	background-color: #f2f2f2;
+	border-radius: 5px;
+	border: solid 0px #ffffff;
+	color: #000000;
+}
+.mootoolsEnlighterJSWrapper .EnlighterJSRawButton:hover{
+	background-color: #e5e5e5;
+}

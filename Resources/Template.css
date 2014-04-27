@@ -1,0 +1,38 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 80px;
+}
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #010101;
+  padding-top: 7px;
+  border-top: solid 3px #0055b5;
+}
+#navbar-wrapper{
+	background: #f0f0f0;
+	padding: 10px 0px 0px 0px;
+}
+.navbar{
+	border-bottom: solid 3px #0055b5;
+	background-color: #010101 !important;
+}
+.navbar-brand{
+	color: #ffffff !important;
+}
+.navbar-right{
+	padding: 0px 20px 0px 0px;
+}
+
+/* dropdown without js */
+.nav > li:hover ul{
+	display: block;
+}
+h2, h3, h4{
+	clear: left;
+}

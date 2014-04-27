@@ -1,29 +1,29 @@
 /*!
 ---
 name: EnlighterJS
-description: Syntax Highlighter for MooTools - based on the famous Lighter.js
+description: Post Syntax Highlighter for MooTools - based on the famous Lighter.js
 
-license: MIT-style X11 License
-version: 1.8
-build: e44079501117bd7e1443d6d34b8383e7/November 10 2013
+license: MIT-Style X11 License
+version: 2.0
+build: 626c2b592085877aed8a314ae790f2ac/April 28 2014
 
 authors:
-  - Andi Dittrich (author of EnlighterJS fork)
+  - Andi Dittrich (author of EnlighterJS)
   - Jose Prado (author of original Lighter.js)
   
 download: https://github.com/AndiDittrich/EnlighterJS
-website: http://www.a3non.org/go/enlighterjs
-demo: http://static.andidittrich.de/EnlighterJS/Demo.html
+website: http://enlighterjs.andidittrich.de/
+demo: http://enlighterjs.andidittrich.de/Themes.html
   
 requires:
   - Core/1.4.5
 
 provides: [EnlighterJS]
 ...
- *//*
+*//*
 ---
 name: EnlighterJS
-description: Syntax Highlighter based on the famous Lighter.js from Jose Prado
+description: Syntax Highlighter based on the famous Lighter.js
 
 license: MIT-style X11 License
 
@@ -41,18 +41,19 @@ var EnlighterJS = new Class({
 	Implements : Options,
 
 	options : {
-		language : 'standard',
-		theme : 'standard',
-		compiler: 'List',
+		language : 'generic',
+		theme : 'Enlighter',
+		renderer: 'Block',
 		indent : -1,
-		forceTheme: false
+		forceTheme: false,
+		rawButton: false
 	},
 
-	// used compiler instance
-	compiler: null,
+	// used renderer instance
+	renderer: null,
 	
 	// used codeblock to highlight
-	codeblock: null,
+	originalCodeblock: null,
 	
 	// used container to store highlighted code
 	container: null,
@@ -60,36 +61,36 @@ var EnlighterJS = new Class({
 	// lightning active ?
 	isRendered: false,
 	
-	// alias manager
-	aliasManager: null,
+	// language alias manager
+	languageManager: null,
+
 
 	/**
 	 * @constructs
+	 * @param {Element} originalCodeblock An Element containing code to highlight
 	 * @param {Object} options The options object.
-	 * @return {EnlighterJS} The current EnlighterJS instance.
+	 * @param {Element} container (optional) The output container - if not defined, the output will be injected after the originalCodeblock
 	 */
-	initialize : function(codeblock, options, container) {
+	initialize : function(originalCodeblock, options, container) {
 		this.setOptions(options);
 		
-		// create new alias manager instance
-		this.aliasManager = new EnlighterJS.Alias(options);
+		// create new language alias manager instance
+		this.languageManager = new EnlighterJS.LanguageManager(options);
 				
-		// initialize compiler
-		if (EnlighterJS.Compiler[this.options.compiler]){
-			this.compiler = new EnlighterJS.Compiler[this.options.compiler](options);
+		// initialize renderer
+		if (this.options.renderer == 'Inline'){
+			this.renderer = new EnlighterJS.Renderer.InlineRenderer(options);
 		}else{
-			this.compiler = new EnlighterJS.Compiler.List(options);
+			this.renderer = new EnlighterJS.Renderer.BlockRenderer(options);
 		}
-		
-		// store codeblock
-		this.codeblock = document.id(codeblock);
+				
+		// store codeblock element
+		this.originalCodeblock = document.id(originalCodeblock);
 		
 		// store/create container
 		if (container){
 			this.container = document.id(container);
 		}
-		
-		return this;
 	},
 
 	/**
@@ -99,86 +100,182 @@ var EnlighterJS = new Class({
 	 * 
 	 * @return {EnlighterJS} The current EnlighterJS instance.
 	 */
-	light : function(){
-		// hide original codeblock
-		this.codeblock.setStyle('display', 'none');
-		
-		// EnlighterJS exists so just toggle display.
-		if (this.isRendered) {				
-			this.container.setStyle('display', 'inherit');
-			return this;
-		}			
-
-		// extract code to highlight
-		var code = this.getCode();
-		
-		// get language name - use alias manager to check language string and validate
-		var languageName = this.aliasManager.getLanguage(this.codeblock.get('data-enlighter-language'));
-		
-		// get theme name - use options as fallback
-		var themeName = (this.options.forceTheme ? null : this.codeblock.get('data-enlighter-theme')) || this.options.theme;
-		
-		// special lines to highlight ?
-		var specialLines = new EnlighterJS.SpecialLineHighlighter(this.codeblock.get('data-enlighter-highlight'));
-		
-		// Load language parser
-		language = new EnlighterJS.Language[languageName](code, {});
-		
-		// compile tokens -> generate output
-		var output = this.compiler.compile(language, themeName.toLowerCase(), specialLines);
-
-		// grab content into specific container or after original code block ?
-		if (this.container) {
-			this.container.grab(output);
+	enlight : function(enabled){
+		// show highlighted sourcecode ?
+		if (enabled){
+			// get element language
+			var rawLanguageName = this.originalCodeblock.get('data-enlighter-language');
+			
+			// ignore higlighting ?
+			if (rawLanguageName == 'no-highlight'){
+				return;
+			}
+			
+			// hide original codeblock
+			this.originalCodeblock.setStyle('display', 'none');
+			
+			// EnlighterJS exists so just toggle display.
+			if (this.isRendered) {				
+				this.container.setStyle('display', 'inherit');
+				return this;
+			}
+			
+			// get language name - use alias manager to check language string and validate
+			var languageName = this.languageManager.getLanguage(rawLanguageName);
+			
+			// get theme name - use options as fallback
+			var themeName = (this.options.forceTheme ? null : this.originalCodeblock.get('data-enlighter-theme')) || this.options.theme || 'Enlighter';
+			
+			// special lines to highlight ?
+			var specialLines = new EnlighterJS.SpecialLineHighlighter(this.originalCodeblock.get('data-enlighter-highlight'));
+			
+			// Load language parser
+			language = new EnlighterJS.Language[languageName](this.getRawCode(true));
+			
+			// compile tokens -> generate output
+			var output = this.renderer.render(language, specialLines, {
+				lineOffset: (this.originalCodeblock.get('data-enlighter-lineoffset') || null),
+				lineNumbers: this.originalCodeblock.get('data-enlighter-linenumbers')
+			});
+			
+			// set class and id attributes.
+			output.addClass(themeName.toLowerCase() + 'EnlighterJS').addClass('EnlighterJS');		
+			output.set('id', 'EnlighterJS_' + String.uniqueID());
+	
+			// show button toolbar ? add wrapper
+			if (this.options.rawButton === true && this.options.renderer == 'Block'){
+				// grab content into specific container or after original code block ?
+				if (this.container) {
+					this.container.grab(output);
+				}else{
+					this.container = new Element('div');
+					
+					// add the highlighted code
+					this.container.grab(output);
+					
+					// put the highlighted code wrapper behind the original	
+					this.container.inject(this.originalCodeblock, 'after');
+				}
+				
+				// add wrapper class
+				this.container.addClass('EnlighterJSWrapper').addClass(themeName.toLowerCase() + 'EnlighterJSWrapper');
+				
+				// create raw content container
+				var rawContentContainer = new Element('pre', {
+					text: this.getRawCode(false),
+					styles: {
+						'display': 'none'
+					}
+				});
+				
+				// add raw content container
+				this.container.grab(rawContentContainer);
+				
+				// visibility flag
+				var highlightedContainerVisible = true;
+				
+				// create toggle "button"
+				this.container.grab(new Element('div', {
+					'class': 'EnlighterJSRawButton',
+					events: {
+						 click: function(){
+							 // toggle raw/highlighted containers
+							 if (highlightedContainerVisible){
+								 output.setStyle('display', 'none');
+								 rawContentContainer.setStyle('display', 'block');
+								 highlightedContainerVisible = false;
+							 }else{
+								 output.setStyle('display', 'block');
+								 rawContentContainer.setStyle('display', 'none');
+								 highlightedContainerVisible = true;
+							 }
+						 }
+					 }
+				}));
+			// normal handling
+			}else{
+				// grab content into specific container or after original code block ?
+				if (this.container) {
+					this.container.grab(output);
+					
+				// just put the highlighted code behind the original	
+				}else{
+					output.inject(this.originalCodeblock, 'after');
+					this.container = output;
+				}
+			}
+			
+			// set render flag
+			this.isRendered = true;
+			
+		// disable highlighting	
 		}else{
-			output.inject(this.codeblock, 'after');
-			this.container = output;
+			// already highlighted ?
+			if (this.isRendered) {
+				this.originalCodeblock.setStyle('display', 'inherit');
+				this.container.setStyle('display', 'none');
+			}
 		}
-		
-		// set render flag
-		this.isRendered = true;
 
 		return this;
 	},
-
+	
 	/**
-	 * Unlights a codeblock by hiding the enlighter element if present and
-	 * re-displaying the original code.
+	 * Takes a codeblock and highlights the code inside. The original codeblock is set to invisible
+	 * @DEPRECATED since v2.0 - this method will be removed in the future
+	 * 
+	 * @return {EnlighterJS} The current EnlighterJS instance.
+	 */
+	light : function(){
+		return this.enlight(true);
+	},
+		
+	/**
+	 * Unlights a codeblock by hiding the enlighter element if present and re-displaying the original code.
+	 * @DEPRECATED since v2.0 - this method will be removed in the future
 	 * 
 	 * @return {EnlighterJS} The current EnlighterJS instance.
 	 */
 	unlight : function() {
-		
-		// already highlighted ?
-		if (this.isRendered) {
-			this.codeblock.setStyle('display', 'inherit');
-			this.container.setStyle('display', 'none');
-		}
-
-		return this;
+		return this.enlight(false);
 	},
 
 	/**
-	 * Extracts the code from a codeblock.
-	 * @author Jose Prado, Andi Dittrich
-	 * @return {String} The plain-text code.
+	 * Extracts the raw code from given codeblock
+	 * @author Andi Dittrich
+	 * @return {String} The plain-text code (raw)
 	 */
-	getCode : function() {
-		var code = this.codeblock.get('html')
-				.replace(/(^\s*\n|\n\s*$)/gi, '')
-				.replace(/&lt;/gim, '<')
-				.replace(/&gt;/gim, '>')
-				.replace(/&amp;/gim, '&');
+	getRawCode: function(reindent) {
+		// get the raw content - remove leading+trailing whitespaces
+		var code = this.originalCodeblock.get('html').trim();
+		
+		// replace html escaped chars
+		code = code.replace(/&amp;/gim, '&').replace(/&lt;/gim, '<').replace(/&gt;/gim, '>');
 
-		// Re-indent code if user option is set.
-		if (this.options.indent > -1) {
-			code = code.replace(/\t/g, new Array(this.options.indent + 1)
-					.join(' '));
+		// replace tabs with spaces ?
+		if (reindent === true){
+			// get indent option value
+			var newIndent = this.options.indent.toInt();
+			
+			// re-indent code if specified
+			if (newIndent > -1){
+				// match all tabs
+				code = code.replace(/(\t*)/gim, function(match, p1, offset, string){
+					// replace n tabs with n*newIndent spaces
+					return (new Array(newIndent * p1.length + 1)).join(' ');
+				});
+			}
 		}
 
 		return code;
 	}
 });
+
+// register namespaces
+EnlighterJS.Language = {};
+EnlighterJS.Renderer = {};
+EnlighterJS.Util = {};
+EnlighterJS.UI = {};
 
 /*
 ---
@@ -191,12 +288,11 @@ authors:
   - Andi Dittrich
   
 requires:
-  - Core/1.4.5
+  - core/1.4.5
 
 provides: [EnlighterJS.SpecialLineHighlighter]
 ...
- */
-
+*/
 EnlighterJS.SpecialLineHighlighter = new Class({
 		
 	// storage of line numbers to highlight
@@ -252,7 +348,7 @@ EnlighterJS.SpecialLineHighlighter = new Class({
 });
 /*
 ---
-description: Compiles an array of Tokens into an Element.
+description: Code parsing engine for EnlighterJS
 
 license: MIT-style
 
@@ -261,219 +357,166 @@ authors:
   - Andi Dittrich
 
 requires:
-  - Core/1.4.5
+  - core/1.4.5
 
-provides: [EnlighterJS.Compiler]
+provides: [EnlighterJS.Language.generic]
 ...
 */
-EnlighterJS.Compiler = new Class({
+EnlighterJS.Language.generic = new Class({
 
-	Implements : Options,
+	tokenizerType : 'Lazy',
+	tokenizer : null,
+	code : null,
 
-	options : {
-		editable : false
+	patterns : {},
+	keywords : {},
+	delimiters : {
+		start: null,
+		end: null
+	},
+
+
+	// commonly used Regex Patterns
+	common : {
+		// Matches a C style single-line comment.
+		slashComments : /(?:^|[^\\])\/\/.*$/gm,
+
+		// Matches a Perl style single-line comment.
+		poundComments : /#.*$/gm,
+
+		// Matches a C style multi-line comment
+		multiComments : /\/\*[\s\S]*?\*\//gm,
+
+		// Matches a string enclosed by single quotes. Legacy.
+		aposStrings : /'[^'\\]*(?:\\.[^'\\]*)*'/gm,
+
+		// Matches a string enclosed by double quotes. Legacy.
+		quotedStrings : /"[^"\\]*(?:\\.[^"\\]*)*"/gm,
+
+		// Matches a string enclosed by single quotes across multiple lines.
+		multiLineSingleQuotedStrings : /'[^'\\]*(?:\\.[^'\\]*)*'/gm,
+
+		// Matches a string enclosed by double quotes across multiple lines.
+		multiLineDoubleQuotedStrings : /"[^"\\]*(?:\\.[^"\\]*)*"/gm,
+
+		// Matches both.
+		multiLineStrings : /'[^'\\]*(?:\\.[^'\\]*)*'|"[^"\\]*(?:\\.[^"\\]*)*"/gm,
+
+		// Matches a string enclosed by single quotes.
+		singleQuotedString : /'[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'/gm,
+
+		// Matches a string enclosed by double quotes.
+		doubleQuotedString : /"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*"/gm,
+
+		// Matches both.
+		strings : /'[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'|"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*"/gm,
+
+		// Matches a property: .property style.
+		properties : /\.([\w]+)\s*/gi,
+
+		// Matches a method call: .methodName() style.
+		methodCalls : /\.([\w]+)\s*\(/gm,
+
+		// Matches a function call: functionName() style.
+		functionCalls : /\b([\w]+)\s*\(/gm,
+
+		// Matches any of the common brackets.
+		brackets : /\{|\}|\(|\)|\[|\]/g,
+
+		// Matches integers, decimals, hexadecimals.
+		numbers : /\b((?:(\d+)?\.)?[0-9]+|0x[0-9A-F]+)\b/gi
 	},
 
 	/**
+	 * Constructor.
+	 * 
 	 * @constructs
 	 * @param {Object}
-	 *            [options] The options object to use.
-	 * @return {Compiler} The current Compiler instance.
+	 *            options
 	 */
-	initialize : function(options){
-		this.setOptions(options);
+	initialize : function(code){
+		// initialize language options
+		this.setupLanguage();
+		
+		this.aliases = {};
+		this.rules = {};
+		this.code = code;
 
-		return this;
-	},
+		// create new tokenizer
+		this.tokenizer = new EnlighterJS.Tokenizer[this.tokenizerType]();
 
-	/**
-	 * Compiles an array of tokens into a highlighted element using a language and a theme.
-	 * 
-	 * @param {Language}
-	 *            language The Language used when parsing.
-	 * @param {String}
-	 *            theme The Theme to use.
-	 * @param {SpecialLineHighlighter}
-	 * 			  lines to highlight           
-	 * @return {Element} The generated Element.
-	 */
-	compile : function(language, theme, specialLines){
-		var container = this._compile(language, theme, specialLines);
-
-		// set class and id attributes.
-		container.addClass(theme + 'EnlighterJS');		
-		container.addClass('EnlighterJSRendered');		
-		container.set('id', 'EnlighterJS_' + String.uniqueID());
-
-		// enable the html5 editable option ?
-		if (this.options.editable){
-			container.set('contenteditable', 'true');
+		// Add delimiter rules.
+		if (this.delimiters.start){
+			this.addRule('delimBeg', this.delimiters.start, 'de1');
 		}
 
-		return container;
+		if (this.delimiters.end){
+			this.addRule('delimEnd', this.delimiters.end, 'de2');
+		}
+
+		// Set Keyword Rules from this.keywords object.
+		Object.each(this.keywords, function(keywordSet, ruleName){
+			// keyword set contains elements ?
+			if (keywordSet.csv != ''){
+				this.addRule(ruleName, this.csvToRegExp(keywordSet.csv, keywordSet.mod || "g"), keywordSet.alias);
+			}
+		}, this);
+
+		// Set Rules from this.patterns object.
+		Object.each(this.patterns, function(regex, ruleName){
+			this.addRule(ruleName, regex.pattern, regex.alias);
+		}, this);
+	},
+	
+	// override this method to setup language params
+	setupLanguage: function(){
 	},
 
-	/**
-	 * Extending classes must override this method and return a highlighted Element using the language and theme that were passed in.
-	 */
-	_compile : function(language, theme, specialLines){
-		throw new Error('Extending classes must override the _compile method.');
+	getTokens : function(){
+		return this.tokenizer.getTokens(this, this.code);
+	},
+
+	getRules : function(){
+		return this.rules;
+	},
+
+	hasDelimiters : function(){
+		return this.delimiters.start && this.delimiters.end;
+	},
+
+	addRule : function(ruleName, regex, className){
+		this.rules[ruleName] = regex;
+		this.addAlias(ruleName, className);
+	},
+
+	addAlias : function(key, alias){
+		this.aliases[key] = alias || key;
+	},
+
+	csvToRegExp : function(csv, mod){
+		return new RegExp('\\b(' + csv.replace(/,\s*/g, '|') + ')\\b', mod);
+	},
+
+	delimToRegExp : function(beg, esc, end, mod, suffix){
+		beg = beg.escapeRegExp();
+		if (esc){
+			esc = esc.escapeRegExp();
+		}
+		end = (end) ? end.escapeRegExp() : beg;
+		var pat = (esc) ? beg + "[^" + end + esc + '\\n]*(?:' + esc + '.[^' + end + esc + '\\n]*)*' + end : beg + "[^" + end + '\\n]*' + end;
+
+		return new RegExp(pat + (suffix || ''), mod || '');
+	},
+
+	strictRegExp : function(){
+		var regex = '(';
+		for (var i = 0; i < arguments.length; i++){
+			regex += arguments[i].escapeRegExp();
+			regex += (i < arguments.length - 1) ? '|' : '';
+		}
+		regex += ')';
+		return new RegExp(regex, "gim");
 	}
-});
-/*
----
-description: Code parsing engine for Lighter.
-
-license: MIT-style
-
-authors:
-  - Jose Prado
-  - Andi Dittrich
-
-requires:
-  - Core/1.4.5
-
-provides: [Language]
-...
-*/
-EnlighterJS.Language = new Class({
-    
-    Implements: [Options],
-    options: {},
-    
-    language: '',
-    tokenizerType: 'Lazy',
-    tokenizer: null,
-    code: null,
-    
-    
-    patterns:   {},
-    keywords:   {},
-    delimiters: {},
-
-    /**
-     * Common Regex Rules
-     */
-    common: {    
-        slashComments: /(?:^|[^\\])\/\/.*$/gm, // Matches a C style single-line comment.
-        poundComments: /#.*$/gm,               // Matches a Perl style single-line comment.
-        multiComments: /\/\*[\s\S]*?\*\//gm,   // Matches a C style multi-line comment.
-        aposStrings:   /'[^'\\]*(?:\\.[^'\\]*)*'/gm, // Matches a string enclosed by single quotes. Legacy.
-        quotedStrings: /"[^"\\]*(?:\\.[^"\\]*)*"/gm, // Matches a string enclosed by double quotes. Legacy.
-        multiLineSingleQuotedStrings: /'[^'\\]*(?:\\.[^'\\]*)*'/gm, // Matches a string enclosed by single quotes across multiple lines.
-        multiLineDoubleQuotedStrings: /"[^"\\]*(?:\\.[^"\\]*)*"/gm, // Matches a string enclosed by double quotes across multiple lines.
-        multiLineStrings:   /'[^'\\]*(?:\\.[^'\\]*)*'|"[^"\\]*(?:\\.[^"\\]*)*"/gm, // Matches both.
-        singleQuotedString: /'[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'/gm, // Matches a string enclosed by single quotes.
-        doubleQuotedString: /"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*"/gm, // Matches a string enclosed by double quotes.
-        strings: /'[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'|"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*"/gm, // Matches both.
-        properties:    /\.([\w]+)\s*/gi,     // Matches a property: .property style.
-        methodCalls:   /\.([\w]+)\s*\(/gm,   // Matches a method call: .methodName() style.
-        functionCalls: /\b([\w]+)\s*\(/gm,   // Matches a function call: functionName() style.
-        brackets:      /\{|\}|\(|\)|\[|\]/g, // Matches any of the common brackets.
-        numbers:       /\b((?:(\d+)?\.)?[0-9]+|0x[0-9A-F]+)\b/gi // Matches integers, decimals, hexadecimals.
-    },
-    
-    /**
-     * Constructor.
-     * 
-     * @constructs
-     * @param {Object} options
-     */
-    initialize: function(code, options)
-    {
-        this.setOptions(options);
-        
-        this.aliases = {};
-        this.rules   = {};
-        this.code = code;
-        
-        // create new tokenizer
-        this.tokenizer = new EnlighterJS.Tokenizer[this.tokenizerType](options);
-        
-        // Add delimiter rules.
-        if (this.delimiters.start) {
-            this.addRule('delimBeg', this.delimiters.start, 'de1');
-        }
-        
-        if (this.delimiters.end) {
-            this.addRule('delimEnd', this.delimiters.end, 'de2');
-        }
-        
-        // Set Keyword Rules from this.keywords object.
-        Object.each(this.keywords, function(keywordSet, ruleName) {
-        	// keyword set contains elements ?
-            if (keywordSet.csv != '') {
-                this.addRule(ruleName, this.csvToRegExp(keywordSet.csv, keywordSet.mod || "g"), keywordSet.alias);
-            }
-        }, this);
-        
-        // Set Rules from this.patterns object.
-        Object.each(this.patterns, function(regex, ruleName) {
-            this.addRule(ruleName, regex.pattern, regex.alias);
-        }, this);
-    },
-    
-    getTokens: function(){
-    	return this.tokenizer.parse(this, this.code, 0);
-    },
-    
-    
-    getRules: function()
-    {
-        return this.rules;
-    },
-    
-    hasDelimiters: function()
-    {
-        return this.delimiters.start && this.delimiters.end;
-    },
-    
-    addRule: function(ruleName, regex, className)
-    {
-        this.rules[ruleName] = regex;
-        this.addAlias(ruleName, className);
-    },
-    
-    addAlias: function(key, alias)
-    {
-        this.aliases[key] = alias || key;
-    },
-    
-    csvToRegExp: function(csv, mod)
-    {
-        return new RegExp('\\b(' + csv.replace(/,\s*/g, '|') + ')\\b', mod);
-    },
-    
-    delimToRegExp: function(beg, esc, end, mod, suffix)
-    {
-        beg = beg.escapeRegExp();
-        if (esc) { esc = esc.escapeRegExp(); }
-        end = (end) ? end.escapeRegExp() : beg;
-        var pat = (esc) ? beg+"[^"+end+esc+'\\n]*(?:'+esc+'.[^'+end+esc+'\\n]*)*'+end : beg+"[^"+end+'\\n]*'+end;
-        
-        return new RegExp(pat+(suffix || ''), mod || '');
-    },
-    
-    strictRegExp: function()
-    {
-        var regex = '(';
-        for (var i = 0; i < arguments.length; i++) {
-            regex += arguments[i].escapeRegExp();
-            regex += (i < arguments.length - 1) ? '|' : '';
-        }
-        regex += ')';
-        return new RegExp(regex, "gim");
-    }
-});
-
-EnlighterJS.Language.standard = new Class({
-    
-    Extends: EnlighterJS.Language,
-    
-    initialize: function(options)
-    {
-        this.parent(options);
-    }
 });
 /*
 ---
@@ -485,17 +528,17 @@ authors:
   - Andi Dittrich
 
 requires:
-  - Core/1.4.5
+  - core/1.4.5
 
-provides: [EnlighterJS.Alias]
+provides: [EnlighterJS.LanguageManager]
 ...
 */
-EnlighterJS.Alias = new Class({
+EnlighterJS.LanguageManager = new Class({
 	
 	Implements : Options,
 	
 	options: {
-		'language': 'standard'
+		'language': 'generic'
 	},
 
 	/**
@@ -508,25 +551,36 @@ EnlighterJS.Alias = new Class({
 	
 	// map of language aliases
 	languageAliases: {
+		'standard': 'generic',
 		'javascript': 'js',
-		'markdown': 'md',
-		'no-highlight': 'raw',
+		'md': 'markdown',
 		'c++': 'cpp',
+		'c': 'cpp',
 		'styles': 'css',
 		'bash': 'shell',
-		'json': 'js'
+		'json': 'js',
+		'py': 'python',
+		'html': 'xml',
+		'jquery': 'js',
+		'mootools': 'js',
+		'ext.js': 'js'
 	},
 	
 	// get language name, process aliases and default languages
 	getLanguage: function(languageName){
 		// get default language
-		var defaultLanguage = (this.options.language != null ? this.options.language.trim().toLowerCase() : null);
+		var defaultLanguage = (this.options.language != null ? this.options.language.trim().toLowerCase() : '');
 		
-		// default language class available ?
-		if (defaultLanguage == null || defaultLanguage.trim() == '' || !EnlighterJS.Language[defaultLanguage]){
-			defaultLanguage = 'standard';
+		// alias available ?
+		if (this.languageAliases[defaultLanguage]){
+			defaultLanguage = this.languageAliases[defaultLanguage];
 		}
 		
+		// default language class available ?
+		if (defaultLanguage.trim() == '' || !EnlighterJS.Language[defaultLanguage]){
+			defaultLanguage = 'generic';
+		}
+				
 		// valid string ?
 		if (languageName == null || languageName.trim() == ''){
 			return defaultLanguage;
@@ -546,63 +600,76 @@ EnlighterJS.Alias = new Class({
 		}else{
 			return defaultLanguage;
 		}
-	}
-		
-		
-		
+	}		
 });/*
 ---
-description: Extends MooTools.Element with light(), unlight() shortcuts
+description: Extends MooTools.Element with the `enlight()` shortcut. Also adds `light()` and `unlight()` for backward compatibility with Lighter.js
 
 license: MIT-style X11 License
 
 authors:
-  - Jose Prado
   - Andi Dittrich
 
 requires:
-  - Core/1.4.5
+  - core/1.4.5
 
-provides: [EnlighterJS]
+provides: [Element.enlight]
 ...
  */
-(function() {
-
+(function(){
 	Element.implement({
 		/**
-		 * Lights an element.
-		 * 
-		 * @param {Object}
-		 *            [options] The options object to use.
+		 * Highlights an element/Removes Element highlighting
+		 *
+		 * @param {Object, Boolean} [options] EnlighterJS options Object or Boolean value to enable/disable highlighting
+		 * @returns {Element} The current Element instance.
+		 */
+		enlight: function(options){
+			// mixed input check - options available ?
+			options = (typeof(options) == "undefined") ? {} : options;
+			
+			// convert "true" to empty Object!
+			options = (options===true) ? {} : options;
+			
+			// enlighter instance already available ?
+			var enlighter = this.retrieve('EnlighterInstance');
+
+			// hide highlighted sourcecode ?
+			if (options === false){
+				if (enlighter !== null) {
+					enlighter.enlight(false);
+				}
+			// highlight sourcecode and use options	
+			}else{
+				// create new enlighter instance
+				if (enlighter === null) {
+					enlighter = new EnlighterJS(this, options, null);
+					this.store('EnlighterInstance', enlighter);
+				}
+				enlighter.enlight(options);
+			}
+			
+			// element instance
+			return this;
+		},
+		
+		/**
+		 * Highlights an element
+		 * @DEPRECATED since v2.0 - this method will be removed in the future
+		 * @param {Object} [options] EnlighterJS Options Object
 		 * @returns {Element} The current Element instance.
 		 */
 		light : function(options) {
-			var enlighter = this.retrieve('EnlighterInstance');
-
-			// create new enlighter instance
-			if (enlighter === null) {
-				enlighter = new EnlighterJS(this, options, null);
-				this.store('EnlighterInstance', enlighter);
-			}
-
-			enlighter.light();
-
-			return this;
+			return this.enlight(options);
 		},
 
 		/**
-		 * Unlights an element.
-		 * 
+		 * Removes/hides Element highlighting
+		 * @DEPRECATED since v2.0 - this method will be removed in the future
 		 * @returns {Element} The current Element instance.
 		 */
-		unlight : function() {
-			var enlighter = this.retrieve('EnlighterInstance');
-
-			if (enlighter !== null) {
-				enlighter.unlight();
-			}
-
-			return this;
+		unlight : function(){
+			return this.enlight(false);
 		}
 	});
 
@@ -623,65 +690,56 @@ provides: [EnlighterJS.Tokenizer]
 ...
 */
 EnlighterJS.Tokenizer = new Class({
-    
-    Implements: [Options],
-    
-    options: {
-        strict: false
-    },
-    
-    /**
-     * @constructs
-     */
-    initialize: function(options)
-    {
-        this.setOptions(options);
-    },
-    
-    /**
-     * Parses source code using language regex rules and returns the array of
-     * tokens.
-     *
-     * @param {Language} language       The Language to use for parsing.
-     * @param {String} code     The source code to parse.
-     * @param {Number} [offset] Optional offset to add to the found index.
-     */
-    parse: function(language, code, offset)
-    {
-        var tokens = [],
-            text  = null,
-            token  = null;
 
-        // parse code
-        tokens = this._parse(language, code, offset);
-        
-        // Add code between matches as an unknown token to the token array.
-        for (var i = 0, pointer = 0; i < tokens.length; i++) {
-            if (pointer < tokens[i].index) {
-                text = code.substring(pointer, tokens[i].index);
-                token = new EnlighterJS.Token(text, 'unknown', pointer);
-                tokens.splice(i, 0, token);
-            }
-            pointer = tokens[i].end;
-        }
-        
-        // Add the final unmatched piece if it exists.
-        if (pointer < code.length) {
-            text = code.substring(pointer, code.length);
-            token = new EnlighterJS.Token(text, 'unknown', pointer);
-            tokens.push(token);
-        }
-        
-        return tokens;
-    },
-    
-    /**
-     * Parsing strategy method which child classes must override.
-     */
-    _parse: function(language, code, offset)
-    {
-        throw new Error('Extending classes must override the _parse method.');
-    }
+	/**
+	 * @constructs
+	 */
+	initialize : function(){
+	},
+
+	/**
+	 * Parses source code using language regex rules and returns the array of tokens.
+	 * 
+	 * @param {Language}
+	 *            language The Language to use for parsing.
+	 * @param {String}
+	 *            code The source code to parse.
+	 * @param {Number}
+	 *            [offset] Optional offset to add to the found index.
+	 */
+	getTokens : function(language, code){
+		var text = null;
+		var token = null;
+
+		// parse code
+		var tokens = this.parseTokens(language, code);
+
+		// Add code between matches as an unknown token to the token array.
+		for (var i = 0,pointer = 0; i < tokens.length; i++){
+			if (pointer < tokens[i].index){
+				text = code.substring(pointer, tokens[i].index);
+				token = new EnlighterJS.Token(text, 'unknown', pointer);
+				tokens.splice(i, 0, token);
+			}
+			pointer = tokens[i].end;
+		}
+
+		// Add the final unmatched piece if it exists.
+		if (pointer < code.length){
+			text = code.substring(pointer, code.length);
+			token = new EnlighterJS.Token(text, 'unknown', pointer);
+			tokens.push(token);
+		}
+
+		return tokens;
+	},
+
+	/**
+	 * Parsing strategy method which child classes must override.
+	 */
+	parseTokens : function(language, code){
+		throw new Error('Extending classes must override the parseTokens() method.');
+	}
 });
 /*
 ---
@@ -694,7 +752,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - Core/1.4.5
+  - core/1.4.5
 
 provides: [EnlighterJS.Token]
 ...
@@ -715,8 +773,7 @@ EnlighterJS.Token = new Class({
      * @param {String} type  The type of match.
      * @param {Number} index The index where the match was found.
      */
-    initialize: function(text, type, index)
-    {
+    initialize: function(text, type, index){
         this.text   = text;
         this.type   = type;
         this.index  = index;
@@ -730,8 +787,7 @@ EnlighterJS.Token = new Class({
      * @param Token token The Token to test against.
      * @return Boolean Whether or not the Token is contained within this one.
      */
-    contains: function(token)
-    {
+    contains: function(token){
         return (token.index >= this.index && token.index < this.end);
     },
     
@@ -741,8 +797,7 @@ EnlighterJS.Token = new Class({
      * @param Token token The Token to test against.
      * @return Boolean Whether or not this Token is past the test one.
      */
-    isBeyond: function(token)
-    {
+    isBeyond: function(token){
         return (this.index >= token.end);
     },
     
@@ -752,13 +807,11 @@ EnlighterJS.Token = new Class({
      * @param Token token The Token to test against.
      * @return Boolean Whether or not this Token overlaps the test one.
      */
-    overlaps: function(token)
-    {
+    overlaps: function(token){
         return (this.index == token.index && this.length > token.length);
     },
     
-    toString: function()
-    {
+    toString: function(){
         return this.index + ' - ' + this.text + ' - ' + this.end;
     }
 });
@@ -769,41 +822,36 @@ description: Compiles an array of tokens into inline elements, grabbed into a ou
 license: MIT-style X11
 
 authors:
-- Andi Dittrich
+	- Andi Dittrich
 
 requires:
-- Core/1.4.5
+	- core/1.4.5
 
-provides: [EnlighterJS.Compiler.Inline]
+provides: [EnlighterJS.Renderer.InlineRenderer]
 ...
 */
-EnlighterJS.Compiler.Inline = new Class({
-
-	Extends : EnlighterJS.Compiler,
-
+EnlighterJS.Renderer.InlineRenderer = new Class({
+	Implements: Options,
+	
 	options : {
-		containerTag : 'pre'
+		inlineContainerTag : 'span'
 	},
 
 	initialize : function(options){
-		this.parent(options);
+		this.setOptions(options);
 	},
 
 	/**
-	 * Compiles an array of tokens into a highlighted element using a language and a theme.
+	 * Renders the generated Tokens
 	 * 
-	 * @param {Language}
-	 *            language The Language used when parsing.
-	 * @param {String}
-	 *            theme The Theme to use.
-	 * @param {SpecialLineHighlighter}
-	 * 			  lines to highlight           
-	 * @return {Element} The generated Element.
+	 * @param {Language} language The Language used when parsing.
+	 * @param {SpecialLineHighlighter} specialLines Instance to define the lines to highlight           
+	 * @return {Element} The renderer output
 	 */
-	_compile : function(language, theme, specialLines){
+	render : function(language, specialLines, localOptions){
 		// create output container element
-		var container = new Element(this.options.containerTag);
-		
+		var container = new Element(this.options.inlineContainerTag);
+
 		// generate output based on ordered list of tokens
 		language.getTokens().each(function(token, index){
 			// get classname
@@ -821,7 +869,7 @@ EnlighterJS.Compiler.Inline = new Class({
 });
 /*
 ---
-description: Compiles an array of tokens into li-elements, grabbed into a outer ol-container.
+description: Renders the generated Tokens into li-elements, grabbed into a outer ul/ol-container.
 
 license: MIT-style X11
 
@@ -829,40 +877,45 @@ authors:
   - Andi Dittrich
 
 requires:
-  - Core/1.4.5
+  - core/1.4.5
 
-provides: [EnlighterJS.Compiler.List]
+provides: [EnlighterJS.Renderer.BlockRenderer]
 ...
 */
-EnlighterJS.Compiler.List = new Class({
-
-	Extends : EnlighterJS.Compiler,
-
+EnlighterJS.Renderer.BlockRenderer = new Class({
+	Implements: Options,
+	
 	options : {
-		altLines : 'hoverEnabled',
-		containerTag : 'ol',
+		hover : 'hoverEnabled',
 		oddClassname: 'odd',
-		evenClassname: 'even'
+		evenClassname: 'even',
+		showLinenumbers: true
 	},
 
 	initialize : function(options){
-		this.parent(options);
+		this.setOptions(options);
 	},
 
 	/**
-	 * Compiles an array of tokens into a highlighted element using a language and a theme.
+	 * Renders the generated Tokens
 	 * 
-	 * @param {Language}
-	 *            language The Language used when parsing.
-	 * @param {String}
-	 *            theme The Theme to use.
-	 * @param {SpecialLineHighlighter}
-	 * 			  lines to highlight           
-	 * @return {Element} The generated Element.
+	 * @param {Language} language The Language used when parsing.
+	 * @param {SpecialLineHighlighter} specialLines Instance to define the lines to highlight           
+	 * @return {Element} The renderer output
 	 */
-	_compile : function(language, theme, specialLines){
-		// create new outer container element
-		var container = new Element(this.options.containerTag);
+	render : function(language, specialLines, localOptions){
+		// create new outer container element - use ol tag if lineNumbers are enabled. element attribute settings are priorized
+		var container = null;
+		if (localOptions.lineNumbers != null){
+			container = new Element((localOptions.lineNumbers.toLowerCase() === 'true') ? 'ol' : 'ul');
+		}else{
+			container = new Element(this.options.showLinenumbers ? 'ol' : 'ul');
+		}
+		
+		// add start attribute ?
+		if (localOptions.lineNumbers && localOptions.lineOffset && localOptions.lineOffset.toInt() > 1){
+			container.set('start', localOptions.lineOffset);
+		}
 		
 		// line number count
 		var lineCounter = 1;
@@ -871,7 +924,7 @@ EnlighterJS.Compiler.List = new Class({
 		var currentLine = new Element('li', {
 			'class': (specialLines.isSpecialLine(lineCounter) ? 'specialline' : '')
 		});
-				
+		
 		// generate output based on ordered list of tokens
 		language.getTokens().each(function(token, index){
 			// get classname
@@ -931,135 +984,14 @@ EnlighterJS.Compiler.List = new Class({
 			container.getElements('li:odd').addClass(this.options.oddClassname);
 		}
 
-		// highlight alt lines ?
-		if (this.options.altLines){
+		// highlight lines ?
+		if (this.options.hover && this.options.hover != "NULL"){
 			// add hover enable class
-			container.getChildren().addClass(this.options.altLines);
+			container.getChildren().addClass(this.options.hover);
 		}
 
 		return container;
 	}
-});
-/*
----
-description: Smart parsing engine for Lighter.
-
-license: MIT-style
-
-authors:
-  - Jose Prado
-  - Andi Dittrich
-
-requires:
-  - Core/1.4.5
-
-provides: [EnlighterJS.Tokenizer.Smart]
-...
-*/
-EnlighterJS.Tokenizer.Smart = new Class({
-
-    Extends: EnlighterJS.Tokenizer,
-    
-    /**
-     * @constructs
-     */
-    initialize: function(options)
-    {
-        this.parent(options);
-    },
-    
-    /**
-     * @param {Fuel} fuel       The fuel to use for parsing.
-     * @param {String} code     The code to parse.
-     * @param {Number} [offset] Optional offset to add to the match index.
-     * @return {Array} The array of matches found.
-     */
-    _parse: function(fuel, code, offset)
-    {
-        var tokens        = [],
-            startIndex   = 0,
-            matchIndex   = code.length,
-            insertIndex  = 0,
-            match        = null,
-            text         = null,
-            type         = null,
-            newToken      = null,
-            rules        = {},
-            currentMatch = null,
-            futureMatch  = null;
-        
-        offset = offset || 0;
-        
-        // Create assosciative array of rules for faster access via for...in loop instead of .each().
-        Object.each(fuel.getRules(), function(regex, rule) {
-            rules[rule] = { pattern: regex, nextIndex: 0 };
-        }, this);
-        
-        /**
-         * Step through the source code sequentially finding the left-most/earliest matches and then
-         * continuing beyond the end of that match to prevent parser from adding inner matches.
-         */
-        while(startIndex < code.length) {
-            matchIndex = code.length;
-            match      = null;
-            
-            // Apply each rule at the current startIndex.
-            for (var rule in rules) {
-                rules[rule].pattern.lastIndex = startIndex;
-                currentMatch = rules[rule].pattern.exec(code);
-                if (currentMatch === null) {
-                    // Delete rule if there's no matches.
-                    delete rules[rule];
-                } else {
-                    // Find earliest and longest match, then store relevant info.
-                    if (currentMatch.index < matchIndex || (currentMatch.index == matchIndex && match[0].length < currentMatch[0].length)) {
-                        match      = currentMatch;
-                        type       = rule;
-                        matchIndex = currentMatch.index;
-                    }
-                    // Store index of rules' next match in nextIndex property.
-                    rules[rule].nextIndex = rules[rule].pattern.lastIndex - currentMatch[0].length;
-                }
-            }
-            
-            /* Create a new Token out of found match. Otherwise break out of loop since no
-               matches are left. */
-            if (match !== null) {
-            
-                // If $1 capture group exists, use $1 instead of full match.
-                index = (match[1] && match[0].contains(match[1])) ? match.index + match[0].indexOf(match[1]) : match.index;
-                text  = match[1] || match[0];
-                newToken = new EnlighterJS.Token(text, type, index + offset);
-                tokens.push(newToken);
-                
-                /* Find the next match of current rule and store its index. If not done, the nextIndex
-                   would be at the start of current match, thus creating an infinite loop*/
-                futureMatch = rules[type].pattern.exec(code);
-                if (!futureMatch) {
-                    rules[type].nextIndex = code.length;
-                } else {
-                    rules[type].nextIndex = rules[type].pattern.lastIndex - futureMatch[0].length;
-                }
-                
-                // Cycle through "nextIndex" properties and store earliest position in min variable.
-                var min = code.length;
-                for (rule in rules) {
-                    if (rules[rule].nextIndex < min) {
-                        min = rules[rule].nextIndex;
-                    }
-                }
-                
-                /* Set startIndex to the end of current match if min is located behind it. Normally this
-                   would signal an inner match. Future upgrades should do this test in the min loop
-                   in order to find the actual earliest match. */
-                startIndex = Math.max(min, newToken.end - offset);
-            } else {
-                break;
-            }
-        }
-        
-        return tokens;
-    }
 });
 /*
 ---
@@ -1078,70 +1010,65 @@ provides: [Tokenizer.Lazy]
 ...
 */
 EnlighterJS.Tokenizer.Lazy = new Class({
-    
-    Extends: EnlighterJS.Tokenizer,
-    
-    /**
-     * @constructs
-     */
-    initialize: function(options)
-    {
-        this.parent(options);
-    },
-    
-    /**
-     * Brute force the matches by finding all possible matches from all rules.
-     * Then we sort them and cycle through the matches finding and eliminating
-     * inner matches. Faster than LighterTokenizer.Strict, but less robust and
-     * prone to erroneous matches.
-     *
-     * @param {Language} language       The language to use for parsing.
-     * @param {String} code     The code to parse.
-     * @param {Number} [offset] Optional offset to add to the match index.
-     * @return {Array} The array of matches found.
-     */
-    _parse: function(language, code, offset)
-    {
-        var tokens = [],
-            match = null,
-            text  = null,
-            index = null;
-        
-        offset = offset || 0;
-        
-        Object.each(language.getRules(), function(regex, rule) {
-            while (null !== (match = regex.exec(code))) {
-                index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
-                text  = match[1] || match[0];
-                tokens.push(new EnlighterJS.Token(text, rule, index + offset));
-            }
-        }, this);
-        
-        tokens = tokens.sort(function(token1, token2) {
-            return token1.index - token2.index;
-        });
-        
-        for (var i = 0, j = 0; i < tokens.length; i++) {
-            
-            if (tokens[i] === null) { continue; }
-            
-            for (j = i + 1; j < tokens.length && tokens[i] !== null; j++) {
-                if (tokens[j] === null) {
-                    continue;
-                } else if (tokens[j].isBeyond(tokens[i])) {
-                    break;
-                } else if (tokens[j].overlaps(tokens[i])) {
-                    tokens[i] = null;
-                } else if (tokens[i].contains(tokens[j])) {
-                    tokens[j] = null;
-                }
-            }
-        }
-        
-        tokens = tokens.clean();
-        
-        return tokens;
-    }
+
+	Extends : EnlighterJS.Tokenizer,
+
+	/**
+	 * @constructs
+	 */
+	initialize : function(){
+	},
+
+	/**
+	 * Brute force the matches by finding all possible matches from all rules. Then we sort them and cycle through the matches finding and eliminating inner matches. Faster than
+	 * LighterTokenizer.Strict, but less robust and prone to erroneous matches.
+	 * 
+	 * @param {Language}
+	 *            language The language to use for parsing.
+	 * @param {String}
+	 *            code The code to parse.
+	 * @return {Array} The array of matches found.
+	 */
+	parseTokens : function(language, code){
+		var tokens = [];
+		var match = null;
+		var text = null;
+		var index = null;
+
+
+		Object.each(language.getRules(), function(regex, rule){
+			while (null !== (match = regex.exec(code))){
+				index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
+				text = match[1] || match[0];
+				tokens.push(new EnlighterJS.Token(text, rule, index));
+			}
+		}, this);
+
+		tokens = tokens.sort(function(token1, token2){
+			return token1.index - token2.index;
+		});
+
+		for (var i = 0,j = 0; i < tokens.length; i++){
+
+			if (tokens[i] === null){
+				continue;
+			}
+
+			for (j = i + 1; j < tokens.length && tokens[i] !== null; j++){
+				if (tokens[j] === null){
+					continue;
+				}else if (tokens[j].isBeyond(tokens[i])){
+					break;
+				}else if (tokens[j].overlaps(tokens[i])){
+					tokens[i] = null;
+				}else if (tokens[i].contains(tokens[j])){
+					tokens[j] = null;
+				}
+			}
+		}
+
+		return tokens.clean();
+	}
 });
 /*
 ---
@@ -1151,6 +1078,7 @@ license: MIT-style
 
 authors:
   - Andi Dittrich
+  - Jose Prado
 
 requires:
   - Core/1.4.5
@@ -1159,90 +1087,92 @@ provides: [EnlighterJS.Tokenizer.Xml]
 ...
 */
 EnlighterJS.Tokenizer.Xml = new Class({
-    
-    Extends: EnlighterJS.Tokenizer,
-    
-    /**
-     * @constructs
-     */
-    initialize: function(options)
-    {
-        this.parent(options);
-    },
-    
-    /**
-     * Xml Tokenizer
-     * @author Jose Prado, Andi Dittrich
-     *
-     * @param {Language} lang       The language to use for parsing.
-     * @param {String} code     The code to parse.
-     * @param {Number} [offset] Optional offset to add to the match index.
-     * @return {Array} The array of tokens found.
-     */
-    _parse: function(lang, code, offset)
-    {
-    	// Tags + attributes matching and preprocessing.
-        var tagPattern = /((?:\&lt;|<)[A-Z][A-Z0-9]*)(.*?)(\/?(?:\&gt;|>))/gi,
-            attPattern = /\b([\w-]+)([ \t]*)(=)([ \t]*)(['"][^'"]+['"]|[^'" \t]+)/gi,
-            tokens    = [],
-            match      = null,
-            attMatch   = null,
-            index      = 0;
-            
-        // Create array of matches containing opening tags, attributes, values, and separators.
-        while ((match = tagPattern.exec(code)) != null) {
-        	tokens.push(new EnlighterJS.Token(match[1], 'kw1', match.index));
-            while((attMatch = attPattern.exec(match[2])) != null) {
-                index = match.index + match[1].length + attMatch.index;
-                tokens.push(new EnlighterJS.Token(attMatch[1], 'kw2', index)); // Attributes
-                index += attMatch[1].length + attMatch[2].length;
-                tokens.push(new EnlighterJS.Token(attMatch[3], 'kw1', index)); // Separators (=)
-                index += attMatch[3].length + attMatch[4].length;
-                tokens.push(new EnlighterJS.Token(attMatch[5], 'kw3', index)); // Values
-            }
-            tokens.push(new EnlighterJS.Token(match[3], 'kw1', match.index + match[1].length + match[2].length));
-        }
-        
-        // apply rules
-        Object.each(lang.getRules(), function(regex, rule) {
-            while (null !== (match = regex.exec(code))) {
-                index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
-                text  = match[1] || match[0];
-                tokens.push(new EnlighterJS.Token(text, rule, index + offset));
-            }
-        }, this);
-        
-        // sort tokens
-        tokens = tokens.sort(function(token1, token2) {
-            return token1.index - token2.index;
-        });
-        
-        for (var i = 0, j = 0; i < tokens.length; i++) {
-            
-            if (tokens[i] === null) { continue; }
-            
-            for (j = i + 1; j < tokens.length && tokens[i] !== null; j++) {
-                if (tokens[j] === null) {
-                    continue;
-                } else if (tokens[j].isBeyond(tokens[i])) {
-                    break;
-                } else if (tokens[j].overlaps(tokens[i])) {
-                    tokens[i] = null;
-                } else if (tokens[i].contains(tokens[j])) {
-                    tokens[j] = null;
-                }
-            }
-        }
-        
-        tokens = tokens.clean();
-        
-        return tokens;
-    }
+
+	Extends : EnlighterJS.Tokenizer,
+
+	/**
+	 * @constructs
+	 */
+	initialize : function(){
+	},
+
+	/**
+	 * Xml Tokenizer
+	 * 
+	 * @author Jose Prado, Andi Dittrich
+	 * 
+	 * @param {Language}
+	 *            lang The language to use for parsing.
+	 * @param {String}
+	 *            code The code to parse.
+	 * @param {Number}
+	 *            [offset] Optional offset to add to the match index.
+	 * @return {Array} The array of tokens found.
+	 */
+	parseTokens : function(lang, code){
+		// Tags + attributes matching and preprocessing.
+		var tagPattern = /((?:\&lt;|<)[A-Z][A-Z0-9]*)(.*?)(\/?(?:\&gt;|>))/gi;
+		var attPattern = /\b([\w-]+)([ \t]*)(=)([ \t]*)(['"][^'"]+['"]|[^'" \t]+)/gi;
+		
+		// tmp storage
+		var tokens = [];
+		var match = null;
+		var attMatch = null;
+		var index = 0;
+
+		// Create array of matches containing opening tags, attributes, values, and separators.
+		while ((match = tagPattern.exec(code)) != null){
+			tokens.push(new EnlighterJS.Token(match[1], 'kw1', match.index));
+			while ((attMatch = attPattern.exec(match[2])) != null){
+				index = match.index + match[1].length + attMatch.index;
+				tokens.push(new EnlighterJS.Token(attMatch[1], 'kw2', index)); // Attributes
+				index += attMatch[1].length + attMatch[2].length;
+				tokens.push(new EnlighterJS.Token(attMatch[3], 'kw1', index)); // Separators (=)
+				index += attMatch[3].length + attMatch[4].length;
+				tokens.push(new EnlighterJS.Token(attMatch[5], 'st0', index)); // Values
+			}
+			tokens.push(new EnlighterJS.Token(match[3], 'kw1', match.index + match[1].length + match[2].length));
+		}
+
+		// apply rules
+		Object.each(lang.getRules(), function(regex, rule){
+			while (null !== (match = regex.exec(code))){
+				index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
+				text = match[1] || match[0];
+				tokens.push(new EnlighterJS.Token(text, rule, index));
+			}
+		}, this);
+
+		// sort tokens
+		tokens = tokens.sort(function(token1, token2){
+			return token1.index - token2.index;
+		});
+
+		for (var i = 0,j = 0; i < tokens.length; i++){
+
+			if (tokens[i] === null){
+				continue;
+			}
+
+			for (j = i + 1; j < tokens.length && tokens[i] !== null; j++){
+				if (tokens[j] === null){
+					continue;
+				}else if (tokens[j].isBeyond(tokens[i])){
+					break;
+				}else if (tokens[j].overlaps(tokens[i])){
+					tokens[i] = null;
+				}else if (tokens[i].contains(tokens[j])){
+					tokens[j] = null;
+				}
+			}
+		}
+		return tokens.clean();
+	}
 });
 /*
 ---
 name: Helper
-description: Helper to initialize multiple enlighter instances on your page as well as code-groups
+description: Helper to initialize multiple Enlighter instances on your page as well as code-groups
 
 license: MIT-style X11 License
 
@@ -1250,111 +1180,78 @@ authors:
   - Andi Dittrich
   
 requires:
-  - Core/1.4.5
+  - core/1.4.5
 
-provides: [EnlighterJS.Helper]
+provides: [EnlighterJS.Util.Helper]
 ...
- */
-
-EnlighterJS.Helper = new Class({
-	
-	Implements: Options,
-
-	options: {
-		grouping: true,
-		theme: 'standard',
-		language: 'standard'
-	},
-		
-	/**
-	 * @constructs
-	 * @param {Object} options The options object.
-	 */
-	initialize : function(elements, options) {
-		this.setOptions(options);
-	
-		// element grouping enabled ?
-		if (this.options.grouping){
-			// get seperated groups and single elements
-			var seperated = this.getGroups(elements);
+*/
+(function(){
+	EnlighterJS.Util.Helper = (function(elements, options){
+		// element grouping disabled?
+		if (options.grouping===false){
+			// highlight all elements
+			elements.enlight(options);
+			
+		// use grouping	
+		}else{
+			// get separated groups and single elements
+			var groups = {};
+			var ungrouped = [];
+			
+			// group elements
+			Array.each(elements, function(el){
+				// extract group name
+				var groupName = el.get('data-enlighter-group');
+				
+				// build element tree
+				if (groupName){
+					if (groups[groupName]){
+						groups[groupName].push(el);
+					}else{
+						groups[groupName] = [el];
+					}
+				}else{
+					ungrouped.push(el);
+				}
+			});
 			
 			// highlight single elements (non grouped)
-			seperated.single.each(function(el){
-				el.light(options);
+			ungrouped.each(function(el){
+				el.enlight(options);
 			});
 			
 			// force theme defined within options (all group members should have the same theme as group-leader)
-			this.options.forceTheme = true;
+			options.forceTheme = true;
 			
 			// create & highlight groups
-			Object.each(seperated.groups, function(obj){
-				// create new tab pane
-				var tabpane = new EnlighterJS.TabPane();
-				
+			Object.each(groups, function(obj){
 				// copy options
-				var localoptions = this.options;
+				var localoptions = options;
 								
 				// get group-leader theme
-				localoptions.theme = obj[0].get('data-enlighter-theme') || this.options.theme;
-			
+				localoptions.theme = obj[0].get('data-enlighter-theme') || options.theme || 'Enlighter';
+
+				// create new tab pane
+				var tabpane = new EnlighterJS.UI.TabPane(localoptions.theme);
+				
 				// put enlighted objects into the tabpane
-				obj.each(function(el, index){
-					// create new tab - set title with fallbacl
+				Array.each(obj, function(el, index){
+					// create new tab - set title with fallback
 					var container = tabpane.addTab(el.get('data-enlighter-title') || el.get('data-enlighter-language') || localoptions.language);
 															
 					// run enlighter
-					(new EnlighterJS(el, localoptions, container)).light();
+					(new EnlighterJS(el, localoptions, container)).enlight(true);
 					
 				}.bind(this));
-				
-				// add css class based on theme which is used by the groupleader
-				tabpane.getContainer().addClass(localoptions.theme + "EnlighterJSTabPane");
 				
 				// select first tab (group-leader)
 				tabpane.getContainer().inject(obj[0], 'before');
 				tabpane.selectTab(0);
 				
 			}.bind(this));
-			
-		}else{
-			// highlight all elements
-			elements.light(options);
-		}		
-	},
-	
-	/**
-	 * Get an object with arrays of elements identified by their group-names
-	 * @param {Array} elements Array of elements to parse
-	 * @returns {Object} 
-	 */
-	getGroups: function(elements){
-		var groups = {};
-		var ungrouped = [];
-		
-		// group elements
-		elements.each(function(el){
-			// extract group name
-			var groupName = el.get('data-enlighter-group');
-			
-			// build element tree
-			if (groupName){
-				if (groups[groupName]){
-					groups[groupName].push(el);
-				}else{
-					groups[groupName] = [el];
-				}
-			}else{
-				ungrouped.push(el);
-			}
-		});
-		
-		return {
-			groups: groups,
-			single: ungrouped
-		};
-	}	
-	
-});
+		}	
+	});
+})();	
 /*
 ---
 name: TapPane
@@ -1366,13 +1263,12 @@ authors:
   - Andi Dittrich
   
 requires:
-  - Core/1.4.5
+  - core/1.4.5
 
-provides: [EnlighterJS.TabPane]
+provides: [EnlighterJS.UI.TabPane]
 ...
- */
-
-EnlighterJS.TabPane = new Class({
+*/
+EnlighterJS.UI.TabPane = new Class({
 		
 	// wrapper container which contains the controls + panes
 	container: null,
@@ -1396,21 +1292,32 @@ EnlighterJS.TabPane = new Class({
 	initialize : function(cssClassname) {
 		// create container
 		this.container = new Element('div', {
-			'class': 'EnlighterJSTabPane'
+			'class': 'EnlighterJSTabPane ' + cssClassname.toLowerCase() + 'EnlighterJSTabPane'
 		});
-		
-		// add theme based classname
-		this.container.addClass(cssClassname);
 		
 		// create container structure
-		this.controlContainer = new Element('ul', {
-			'class': 'controls'
-		});
+		//	<div class="EnlighterJSTabPane ...">
+		//    <div class="controls">
+		//       <ul> <li>Tab1</li> .... </ul>
+		//    </div>
+		//    <div class="pane">
+		//      <div>Enlighter Tab1</div>
+		//      <div>Enlighter Tab2</div>
+		//    </div>
+		//  </div>
+		this.controlContainer = new Element('ul');
 		this.paneContainer = new Element('div', {
 			'class': 'pane'
+		});		
+		var controlWrapper = new Element('div', {
+			'class': 'controls'
 		});
+		controlWrapper.grab(this.controlContainer);
+		controlWrapper.grab(new Element('div', {
+			'class': 'clearfixList'
+		}));
 		
-		this.container.grab(this.controlContainer);
+		this.container.grab(controlWrapper);
 		this.container.grab(this.paneContainer);
 	},
 	
@@ -1461,7 +1368,7 @@ EnlighterJS.TabPane = new Class({
 		// return created tab element
 		return tab;
 	},
-	
+		
 	getContainer: function(){
 		return this.container;
 	}
@@ -1478,34 +1385,48 @@ authors:
   - Andi Dittrich
 
 requires:
-  - Core/1.4.5
+  - core/1.4.5
 
 provides: [EnlighterJS]
 ...
 */
 window.addEvent('domready', function(){
 	// metadata config available ? -> autoinit
-	var m = $$('meta[name="EnlighterJS"]');
+	var m = document.getElement('meta[name="EnlighterJS"]');
 	
-	// check length
-	if (m.length != 1){
+	// check instance
+	if (!m){
 		return;
 	}
 	
 	// create new options object
 	var options = {
-		language: m[0].get('data-language') || 'standard',
-		theme: m[0].get('data-theme') || 'standard',
-		indent: m[0].get('data-indent').toInt() || -1,
-		compiler: m[0].get('data-compiler') || 'List',
-		altLines: m[0].get('data-altlines') || 'hover'
+		language: m.get('data-language') || 'generic',
+		theme: m.get('data-theme') || 'Enlighter',
+		indent: m.get('data-indent').toInt() || -1,
+		hover: m.get('data-hover') || 'hoverEnabled',
+		rawButton: (m.get('data-rawcodebutton')==='true'),
+		showLinenumbers: (m.get('data-linenumbers')!=='false')
 	};
-		
+
 	// selector available ? if not, match all pre-tags
-	var selector = m[0].get('data-selector') || 'pre';
+	var blockSelector = m.get('data-selector-block') || 'pre';
 	
-	// highlight all matching tags
-	new EnlighterJS.Helper($$(selector), options);
+	// selector available ? if not, match all pre-tags
+	var inlineSelector = m.get('data-selector-inline') || 'code';
+	
+	// highlight all matching block tags
+	if (blockSelector != 'NULL'){
+		options.renderer = 'Block';
+		EnlighterJS.Util.Helper(document.getElements(blockSelector), options);
+	}
+	
+	// highlight all matching inline tags
+	if (inlineSelector != 'NULL'){
+		options.renderer = 'Inline';
+		options.grouping = false;
+		EnlighterJS.Util.Helper(document.getElements(inlineSelector), options);
+	}
 });/*
 ---
 description: Cpp Language.
@@ -1523,11 +1444,9 @@ provides: [EnlighterJS.Language.cpp]
 */
 EnlighterJS.Language.cpp = new Class({
     
-    Extends: EnlighterJS.Language,
-    language: 'cpp',
+    Extends: EnlighterJS.Language.generic,
         
-    initialize: function(code, options) {
-        
+    setupLanguage: function() {
         this.keywords = {
             cpp: {
             	csv: "and,and_eq,asm,auto,bitand,bitor,bool,break,case,catch,char,class,compl,const,const_cast,continue,default,delete,do,double,dynamic_cast,else,enum,explicit,export,extern,false,float,for,friend,goto,if,inline,int,long,mutable,namespace,new,not,not_eq,operator,or,or_eq,private,protected,public,register,reinterpret_cast,return,short,signed,sizeof,static,static_cast,struct,switch,template,this,throw,true,try,typedef,typeid,typename,union,unsigned,using,virtual,void,volatile,wchar_t,while,xor,xor_eq",
@@ -1555,35 +1474,6 @@ EnlighterJS.Language.cpp = new Class({
             'functionCalls': { pattern: this.common.functionCalls, alias: 'de1'},
             'directives':	 { pattern: /#.*$/gm, alias: 'kw2'}
         };
-        
-        
-        this.parent(code, options);
-    }
-});
-/*
----
-description: C Language.
-
-license: MIT-style
-
-authors:
-  - Andi Dittrich
-
-requires:
-  - Core/1.4.5
-
-provides: [EnlighterJS.Language.c]
-...
-*/
-EnlighterJS.Language.c = new Class({
-    
-    Extends: EnlighterJS.Language.cpp,
-    language: 'c',
-        
-    initialize: function(code, options) {
-        
-        
-        this.parent(code, options);
     }
 });
 /*
@@ -1602,26 +1492,37 @@ requires:
 provides: [EnlighterJS.Language.xml]
 ...
 */
-EnlighterJS.Language.xml = new Class ({
-    
-    Extends: EnlighterJS.Language,
-    language: 'xml',
-    tokenizerType: 'Xml',
-    
-    initialize: function(code, options) {
+EnlighterJS.Language.xml = new Class({
 
-        // Common HTML patterns
-        this.patterns = {
-            'comments':    {pattern: /(?:\&lt;|<)!--[\s\S]*?--(?:\&gt;|>)/gim,          alias: 'co1'},
-            'cdata':       {pattern: /(?:\&lt;|<)!\[CDATA\[[\s\S]*?\]\](?:\&gt;|>)/gim, alias: 'st1'},
-            'closingTags': {pattern: /(?:\&lt;|<)\/[A-Z][A-Z0-9]*?(?:\&gt;|>)/gi,       alias: 'kw1'},
-            'doctype':     {pattern: /(?:\&lt;|<)!DOCTYPE[\s\S]+?(?:\&gt;|>)/gim,       alias: 'st2'},
-            'version':     {pattern: /(?:\&lt;|<)\?xml[\s\S]+?\?(?:\&gt;|>)/gim,       alias: 'kw2'}
-        };
-        
-        this.parent(code, options);
-    }
-    
+	Extends : EnlighterJS.Language.generic,
+	tokenizerType : 'Xml',
+
+	setupLanguage: function(){
+		// Common HTML patterns
+		this.patterns = {
+			'comments' : {
+				pattern : /(?:\&lt;|<)!--[\s\S]*?--(?:\&gt;|>)/gim,
+				alias : 'co1'
+			},
+			'cdata' : {
+				pattern : /(?:\&lt;|<)!\[CDATA\[[\s\S]*?\]\](?:\&gt;|>)/gim,
+				alias : 'st1'
+			},
+			'closingTags' : {
+				pattern : /(?:\&lt;|<)\/[A-Z][A-Z0-9]*?(?:\&gt;|>)/gi,
+				alias : 'kw1'
+			},
+			'doctype' : {
+				pattern : /(?:\&lt;|<)!DOCTYPE[\s\S]+?(?:\&gt;|>)/gim,
+				alias : 'st2'
+			},
+			'version' : {
+				pattern : /(?:\&lt;|<)\?xml[\s\S]+?\?(?:\&gt;|>)/gim,
+				alias : 'kw2'
+			}
+		};
+	}
+
 });
 /*
 ---
@@ -1640,10 +1541,9 @@ provides: [EnlighterJS.Language.css]
 */
 EnlighterJS.Language.css = new Class({
     
-    Extends: EnlighterJS.Language,
-    language: 'css',
+    Extends: EnlighterJS.Language.generic,
         
-    initialize: function(code, options) {
+    setupLanguage: function() {
         
         this.keywords = {
             css1: {
@@ -1679,33 +1579,7 @@ EnlighterJS.Language.css = new Class({
             end:   this.strictRegExp('</style>')
         };
         
-        this.parent(code, options);
     }
-});
-/*
----
-description: HTML language fuel.
-
-license: MIT-style
-
-authors:
-  - Jose Prado
-  - Andi Dittrich
-
-requires:
-  - Core/1.4.5
-
-provides: [EnlighterJS.Language.html]
-...
-*/
-EnlighterJS.Language.html = new Class ({
-    
-    Extends: EnlighterJS.Language.xml,
-
-    initialize: function(code, options) {
-        this.parent(code, options);
-    }
-    
 });
 /*
 ---
@@ -1725,10 +1599,9 @@ provides: [EnlighterJS.Language.java]
 */
 EnlighterJS.Language.java = new Class ({
     
-    Extends: EnlighterJS.Language,
-    language: 'java',
-    
-    initialize: function(code, options)
+    Extends: EnlighterJS.Language.generic,
+
+    setupLanguage: function(code)
     {
         this.keywords = {
             reserved: {
@@ -1758,10 +1631,9 @@ EnlighterJS.Language.java = new Class ({
             'numbers':       { pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][-+]?[0-9]+)?|0x[A-F0-9]+|0b[0-1_]+)\b/gim, alias: 'nu0' },
             'properties':    { pattern: this.common.properties, alias: 'me0' },
             'brackets':      { pattern: this.common.brackets, alias: 'br0' },
-            'functionCalls': { pattern: this.common.functionCalls, alias: 'de1'}
+            'functionCalls': { pattern: this.common.functionCalls, alias: 'kw1'}
         };
         
-        this.parent(code, options);
     }
 });
 /*
@@ -1781,10 +1653,9 @@ provides: [EnlighterJS.Language.js]
 */
 EnlighterJS.Language.js = new Class({
     
-    Extends: EnlighterJS.Language,
-    language: 'js',
+    Extends: EnlighterJS.Language.generic,
     
-    initialize: function(code, options)
+    setupLanguage: function()
     {
         this.keywords = {
             commonKeywords: {
@@ -1841,31 +1712,29 @@ EnlighterJS.Language.js = new Class({
             end:   this.strictRegExp('</script>')
         };
         
-        this.parent(code, options);
     }
 });
 /*
 ---
-description: Markdown language fuel.
+description: Markdown language
 
 license: MIT-style
 
 authors:
   - Jose Prado
+  - Andi Dittrich
 
 requires:
-  - Core/1.4.5
+  - core/1.4.5
   
-provides: [EnlighterJS.Language.md]
+provides: [EnlighterJS.Language.markdown]
 ...
 */
-EnlighterJS.Language.md = new Class ({
+EnlighterJS.Language.markdown = new Class ({
     
-    Extends: EnlighterJS.Language,
-    language: 'md',
+    Extends: EnlighterJS.Language.generic,
     
-    initialize: function(code, options)
-    {
+    setupLanguage: function(code){
         this.patterns = {
             'header1': { pattern: /^(.+)\n=+\n/gim,   alias: 'st1' },
             'header2': { pattern: /^(.+)\n-+\n/gim,   alias: 'st2' },
@@ -1877,7 +1746,6 @@ EnlighterJS.Language.md = new Class ({
             'url':     { pattern: /\[[^\]]*\]\([^\)]*\)/g, alias: 'kw4' }
         };
         
-        this.parent(code, options);
     }
     
 });
@@ -1898,11 +1766,9 @@ provides: [EnlighterJS.Language.php]
 */
 EnlighterJS.Language.php = new Class({
     
-    Extends: EnlighterJS.Language,
-    language: 'php',
+    Extends: EnlighterJS.Language.generic,
     
-    initialize: function(code, options)
-    {
+    setupLanguage: function(){
         this.keywords = {
             keywords: {
                 csv: "abstract, and, as, break, case, catch, cfunction, class, clone, const, continue, declare, default, do, else, elseif, enddeclare, endfor, endforeach, endif, endswitch, endwhile, extends, final, for, foreach, function, global, goto, if, implements, interface, instanceof, namespace, new, old_function, or, private, protected, public, static, switch, throw, try, use, var, while, xor",
@@ -1946,7 +1812,6 @@ EnlighterJS.Language.php = new Class({
             end:   this.strictRegExp('?>', '%>')
         };
         
-        this.parent(code, options);
     }
 });
 /*
@@ -1966,10 +1831,9 @@ provides: [EnlighterJS.Language.python]
 */
 EnlighterJS.Language.python = new Class({
     
-    Extends: EnlighterJS.Language,
-    language:'python',
+    Extends: EnlighterJS.Language.generic,
     
-    initialize: function(code, options)
+    setupLanguage: function()
     {
         this.keywords = {
             reserved:{
@@ -1991,8 +1855,17 @@ EnlighterJS.Language.python = new Class({
                 pattern: this.common.poundComments,
                 alias:'co1'
             },
+            /*
             'multiComments': {
                 pattern: /^=begin[\s\S]*?^=end/gm,
+                alias: 'co2'
+            },*/
+            'multiStringComments1': {
+                pattern:  /"""[\s\S]*?"""/gm,
+                alias: 'co2'
+            },
+            'multiStringComments2': {
+                pattern:  /'''[\s\S]*?'''/gm,
                 alias: 'co2'
             },
             'strings': {
@@ -2045,7 +1918,6 @@ EnlighterJS.Language.python = new Class({
             }
         };
           
-        this.parent(code, options);
     }
 });
 /*
@@ -2065,10 +1937,9 @@ provides: [EnlighterJS.Language.ruby]
 */
 EnlighterJS.Language.ruby = new Class ({
     
-    Extends: EnlighterJS.Language,
-    language: 'ruby',
+    Extends: EnlighterJS.Language.generic,
     
-    initialize: function(code, options)
+    setupLanguage: function()
     {
         this.keywords = {
             reserved: {
@@ -2109,7 +1980,6 @@ EnlighterJS.Language.ruby = new Class ({
             'literalRegex': { pattern: this.delimToRegExp("/", "\\", "/", "g", "[iomx]*"),           alias: 're0' }
         };
         
-        this.parent(code, options);
     }
 });
 /*
@@ -2129,10 +1999,9 @@ provides: [EnlighterJS.Language.shell]
 */
 EnlighterJS.Language.shell = new Class ({
     
-    Extends: EnlighterJS.Language,
-    language: 'shell',
+    Extends: EnlighterJS.Language.generic,
     
-    initialize: function(code, options)
+    setupLanguage: function()
     {
         this.keywords = {
             keywords: {
@@ -2155,8 +2024,6 @@ EnlighterJS.Language.shell = new Class ({
                 alias:   'st0'
             }
         };
-        
-        this.parent(code, options);
     }
 });
 /*
@@ -2177,11 +2044,9 @@ provides: [EnlighterJS.Language.sql]
 */
 EnlighterJS.Language.sql = new Class ({
     
-    Extends: EnlighterJS.Language,
-    language: 'sql',
+    Extends: EnlighterJS.Language.generic,
     
-    initialize: function(code, options)
-    {
+    setupLanguage: function(){
         this.keywords = {
             keywords: {
                 csv: 'savepoint, start, absolute, action, add, after, alter, as, asc, at, authorization, begin, bigint, binary, bit, by, cascade, char, character, check, checkpoint, close, collate, column, commit, committed, connect, connection, constraint, contains, continue, create, cube, current, current_date, current_time, cursor, database, date, deallocate, dec, decimal, declare, default, delete, desc, distinct, double, drop, dynamic, else, end, end-exec, escape, except, exec, execute, false, fetch, first, float, for, force, foreign, forward, free, from, full, function, global, goto, grant, group, grouping, having, hour, ignore, index, inner, insensitive, insert, instead, int, integer, intersect, into, is, isolation, key, last, level, load, local, max, min, minute, modify, move, name, national, nchar, next, no, numeric, of, off, on, only, open, option, order, out, output, partial, password, precision, prepare, primary, prior, privileges, procedure, public, read, real, references, relative, repeatable, restrict, return, returns, revoke, rollback, rollup, rows, rule, schema, scroll, second, section, select, sequence, serializable, set, size, smallint, static, statistics, table, temp, temporary, then, time, timestamp, to, top, transaction, translation, trigger, true, truncate, uncommitted, union, unique, update, values, varchar, varying, view, when, where, with, work',
@@ -2207,13 +2072,11 @@ EnlighterJS.Language.sql = new Class ({
             'numbers':			  {pattern: this.common.numbers, alias: 'nu0'},
             'columns':			  {pattern: /`[^`\\]*(?:\\.[^`\\]*)*`/gm, alias: 'kw4'}
         };
-        
-        this.parent(code, options);
     }
 });
 /*
 ---
-description: Nullsoft Scriptable Install System (NSIS) fuel.
+description: Nullsoft Scriptable Install System (NSIS).
 
 license: MIT-style
 
@@ -2228,10 +2091,9 @@ provides: [EnlighterJS.Language.nsis]
 */
 EnlighterJS.Language.nsis = new Class ({
   
-  Extends: EnlighterJS.Language,
-  language: 'nsis',
+  Extends: EnlighterJS.Language.generic,
   
-  initialize: function(options) {
+  setupLanguage: function() {
     // Set of keywords in CSV form. Add multiple keyword hashes for differentiate keyword sets.
 
     this.keywords = {
@@ -2266,8 +2128,6 @@ EnlighterJS.Language.nsis = new Class ({
       'variables':     { pattern: /[\$]{1,2}[0-9a-zA-Z_][\w]*/gim, alias: 'kw4' },
     };
     
-    // Call parent constructor AFTER instance variables are set.
-    this.parent(options);
   }
 });/*
 ---
@@ -2286,14 +2146,14 @@ provides: [EnlighterJS.Language.raw]
 */
 EnlighterJS.Language.raw = new Class({
     
-    Extends: EnlighterJS.Language.cpp,
-    language: 'raw',
+    Extends: EnlighterJS.Language.generic,
         
-    initialize: function(code, options) {
+    initialize: function(code) {
     	this.code = code;
     },
     
     getTokens: function(){
+    	// raw means "no-highlight" - return a single, unknown token with the given sourcecode
     	return [
     	        new EnlighterJS.Token(this.code, '', 0)
     	];

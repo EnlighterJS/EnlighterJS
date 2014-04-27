@@ -1,0 +1,83 @@
+/*
+---
+name: Helper
+description: Helper to initialize multiple Enlighter instances on your page as well as code-groups
+
+license: MIT-style X11 License
+
+authors:
+  - Andi Dittrich
+  
+requires:
+  - core/1.4.5
+
+provides: [EnlighterJS.Util.Helper]
+...
+*/
+(function(){
+	EnlighterJS.Util.Helper = (function(elements, options){
+		// element grouping disabled?
+		if (options.grouping===false){
+			// highlight all elements
+			elements.enlight(options);
+			
+		// use grouping	
+		}else{
+			// get separated groups and single elements
+			var groups = {};
+			var ungrouped = [];
+			
+			// group elements
+			Array.each(elements, function(el){
+				// extract group name
+				var groupName = el.get('data-enlighter-group');
+				
+				// build element tree
+				if (groupName){
+					if (groups[groupName]){
+						groups[groupName].push(el);
+					}else{
+						groups[groupName] = [el];
+					}
+				}else{
+					ungrouped.push(el);
+				}
+			});
+			
+			// highlight single elements (non grouped)
+			ungrouped.each(function(el){
+				el.enlight(options);
+			});
+			
+			// force theme defined within options (all group members should have the same theme as group-leader)
+			options.forceTheme = true;
+			
+			// create & highlight groups
+			Object.each(groups, function(obj){
+				// copy options
+				var localoptions = options;
+								
+				// get group-leader theme
+				localoptions.theme = obj[0].get('data-enlighter-theme') || options.theme || 'Enlighter';
+
+				// create new tab pane
+				var tabpane = new EnlighterJS.UI.TabPane(localoptions.theme);
+				
+				// put enlighted objects into the tabpane
+				Array.each(obj, function(el, index){
+					// create new tab - set title with fallback
+					var container = tabpane.addTab(el.get('data-enlighter-title') || el.get('data-enlighter-language') || localoptions.language);
+															
+					// run enlighter
+					(new EnlighterJS(el, localoptions, container)).enlight(true);
+					
+				}.bind(this));
+				
+				// select first tab (group-leader)
+				tabpane.getContainer().inject(obj[0], 'before');
+				tabpane.selectTab(0);
+				
+			}.bind(this));
+		}	
+	});
+})();	

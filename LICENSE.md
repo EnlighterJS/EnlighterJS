@@ -1,6 +1,6 @@
 The MIT License (X11 License)
 
-Copyright (c) 2009 Jose Prado, 2013 Andi Dittrich
+Copyright (c) 2009 Jose Prado, 2013-2014 Andi Dittrich
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation

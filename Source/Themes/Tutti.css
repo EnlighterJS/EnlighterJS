@@ -24,20 +24,23 @@ ol.tuttiEnlighterJS {
 	background-color: #fbfbfb;
 	list-style-type: decimal;
 }
+ul.tuttiEnlighterJS {
+	background-color: #fbfbfb;
+}
 
-ol.tuttiEnlighterJS li{
+ol.tuttiEnlighterJS li, ul.tuttiEnlighterJS li{
 	border: none;
 	line-height: 16px;
 }
-ol.tuttiEnlighterJS li:hover{
+ol.tuttiEnlighterJS li:hover, ul.tuttiEnlighterJS li:hover{
 	color: #000000;
 }
-ol.tuttiEnlighterJS li.hoverEnabled:hover{
+ol.tuttiEnlighterJS li.hoverEnabled:hover, ul.tuttiEnlighterJS li.hoverEnabled:hover{
 	background-color: #F4F8FC;
 	border: none;
 }
 /* special line highlight color */
-ol.tuttiEnlighterJS li.specialline {
+ol.tuttiEnlighterJS li.specialline, ul.tuttiEnlighterJS li.specialline  {
 	background-color: #F4F8FC;
 }
 
@@ -60,3 +63,11 @@ ol.tuttiEnlighterJS li.specialline {
 .tuttiEnlighterJS .sy0 { color: #626fc9; }
 .tuttiEnlighterJS .es0 { color: #4f4f4f; }
 .tuttiEnlighterJS .re0 { color: #d44950; }
+
+/* Raw Code Pane */
+.tuttiEnlighterJSWrapper pre{
+	background-color: #ffffff;
+	font-size: 12px;
+	color: #000000;
+	line-height: 16px;
+}

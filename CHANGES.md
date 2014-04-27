@@ -1,5 +1,60 @@
-### Version 1.9 ###
+### Version 2.0 ###
 * Added support for Inline-Syntax-Highlighting
+* Added Python Testcase
+* Added DynamicSourcefileLoader (js+css files) used for rapid-development without rebuild (only used within "Development.html")
+* Added Development Playground "Development.html"
+* Added Metainit selector options for inline and block content
+* Added Bootstrap based Demo/Testcases/Templates
+* Added New standard theme "Enlighter"
+* Added Metainit option to disable inline/block highlighting - just use `NULL` as selector 
+* Added C Language Example
+* Added new Markdown Language Example
+* Added new Language Template `Source/Language/Template.mylang.js` with additional comments/instructions how to create your own language
+* Added optional line-number-offset (`start` attribute of `ol` tag used) - just add `data-enlighter-lineoffset="5"` to your codeblock
+* Added global option to enable/disable line-numbers. Local attribute overwrite via `data-enlighter-linenums="false"` is also available
+* Added javascript language aliases for `jquery`, `mootools` and `ext.js`
+* Added Inline code examples for each language
+* Added optional "raw code" button to toggle between highlighted and raw code (usefull to copy code with original identation) - option disabled by default
+* Improved Code Structure
+* Improved XML Testcase
+* Changed: "Compilers" replaced by `BlockRenderer` and `InlineRenderer` classes
+* Changed: Testcase data moved to "Resources/TestcaseData"
+* Changed: Renamed the old standard theme to "MooTools"
+* Changed: Type of EnlighterJS.Util.Helper is changed from `Class` to `Function` - an instance was never used/necessary
+* Changed: The option `compiler` is replaced by `renderer` [Block, Inline]
+* Changed: Demo-URL to `http://enlighterjs.andidittrich.de/`
+* Changed: CSS Class of the output container changed from `EnlighterJSRendererd` to `EnlighterJS` 
+* Changed: `Quickstart.html` and `Development.html` moved to project root
+* Changed: Renamed language `md` to `markdown` - an alias is added for backward compatibility
+* Changed: Option `altline` renamed to `hover` (also used by Metainit)
+* Changed: Initialization of language parameters is now handled into `setupLanguage`
+* Changed: All Themes are derived from `Base.css`
+* Changed: The visibility of Line-Numbers is now controlled via global/local settings and not by the "compiler" option like in previous versions
+* Changed: Block-Content is now always displayed as `ol` or `ul` container, depending on the line-number setting.
+* Changed TabPane Container structure: `ul` item list is wrapped into a div container
+* Changed: Language "no-highlight" will not trigger the Enlighter Engine and keep your code as it is (no styles are added). To display unhighlighted code with the enlighter styles, use `raw` as language instead.
+* Changed: PHP is used to generate the Examples/Testcases
+* Changed XML styling behaviour: attribute values are now expressed as class-type `st0` (string0) instead of kw2
+* Changed: Java function-calls are now expressed as class-type `kw0` (keyword0)
+* Deprecated: The `EnlighterJS.light()` and `EnlighterJS.unlight()` methods got replaced by `enlight(bool)` - backward compatibility included until next major release
+* Deprecated: The `Element.light()` and `Element.unlight()` extensions got replaced by `Element.enlight(bool|object)` - backward compatibility included until next major release
+* Removed: Python ruby style multiline comments
+* Removed: EnlighterJS.Language.standard is replaced by EnlighterJS.Language.generic - an alias is added for backward compatibility
+* Removed the `compiler` option from Metainit options (not needed anymore: inline code is automatically handled by the InlineRenderer and all other code by the BlockRenderer)
+* Removed `C` language class (used as alias for `cpp` before - now implemented as language alias)
+* Removed `HTML` language class (used as alias for `xml` before - now implemented as language alias)
+* Removed unused language names from language files - each language is named/identified by it's own (lowercase) classname
+* Removed unused offsets from Tokenizers
+* Removed unused Tokenizer.Smart from builds
+* Updated ANT-contrib package to 1.0b3
+* Updated YUI Compressor to 2.4.8
+* Bugfix: Using Language-Aliases as default-language failed
+* Bugifx: Python used Ruby Multiline String comment style instead of `""" """; ''' '''`
+* Bugfix: CSS Class "unknown" added to TabPane container
+* Bugfix: Theme settings of TabPane failed using EnlighterJS.Util.Helper directly
+* Bugfix: Missing fallback when passing "null" as theme option
+* Bugfix: Code cleaning for Ampersand `&amp;` was processed as last - to handle chains like `&amp;lt;` => `&lt;` => `<` it is now processed first
+* Bugfix: Added missing right+left borders to git theme
 
 ### Version 1.8 ###
 * Added highlighting for special-lines, just add the attribute `data-enlighter-highlight="1,2,8-10"` to highlight the lines 1,2,8,9,10

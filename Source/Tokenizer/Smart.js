@@ -21,23 +21,20 @@ EnlighterJS.Tokenizer.Smart = new Class({
     /**
      * @constructs
      */
-    initialize: function(options)
-    {
-        this.parent(options);
+    initialize: function(){
     },
     
     /**
-     * @param {Fuel} fuel       The fuel to use for parsing.
-     * @param {String} code     The code to parse.
-     * @param {Number} [offset] Optional offset to add to the match index.
-     * @return {Array} The array of matches found.
+	 * @param {Language}
+	 *            language The language to use for parsing.
+	 * @param {String}
+	 *            code The code to parse.
+	 * @return {Array} The array of matches found.
      */
-    _parse: function(fuel, code, offset)
-    {
+    parseTokens: function(language, code){
         var tokens        = [],
             startIndex   = 0,
             matchIndex   = code.length,
-            insertIndex  = 0,
             match        = null,
             text         = null,
             type         = null,
@@ -46,10 +43,8 @@ EnlighterJS.Tokenizer.Smart = new Class({
             currentMatch = null,
             futureMatch  = null;
         
-        offset = offset || 0;
-        
         // Create assosciative array of rules for faster access via for...in loop instead of .each().
-        Object.each(fuel.getRules(), function(regex, rule) {
+        Object.each(language.getRules(), function(regex, rule) {
             rules[rule] = { pattern: regex, nextIndex: 0 };
         }, this);
         
@@ -87,7 +82,7 @@ EnlighterJS.Tokenizer.Smart = new Class({
                 // If $1 capture group exists, use $1 instead of full match.
                 index = (match[1] && match[0].contains(match[1])) ? match.index + match[0].indexOf(match[1]) : match.index;
                 text  = match[1] || match[0];
-                newToken = new EnlighterJS.Token(text, type, index + offset);
+                newToken = new EnlighterJS.Token(text, type, index);
                 tokens.push(newToken);
                 
                 /* Find the next match of current rule and store its index. If not done, the nextIndex
@@ -110,7 +105,7 @@ EnlighterJS.Tokenizer.Smart = new Class({
                 /* Set startIndex to the end of current match if min is located behind it. Normally this
                    would signal an inner match. Future upgrades should do this test in the min loop
                    in order to find the actual earliest match. */
-                startIndex = Math.max(min, newToken.end - offset);
+                startIndex = Math.max(min, newToken.end);
             } else {
                 break;
             }

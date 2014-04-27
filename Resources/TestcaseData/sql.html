@@ -1,0 +1,36 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="sql">UPDATE Account SET amount=amount-200 WHERE account_number=1234;</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+
+<!-- Source:  http://en.wikipedia.org/wiki/SQL -->
+<pre data-enlighter-language="sql">
+/*Source:  http://en.wikipedia.org/wiki/SQL*/
+
+SELECT `Book.title` AS `Title`,
+ COUNT(*) AS `Authors`
+ FROM `Book` JOIN `Book_author`
+ ON `Book`.`isbn` = `Book_author`.`isbn`
+ GROUP BY `Book`.`title`;
+ 
+DELETE FROM `My_table`
+ WHERE `field2` = 'N'; 
+ 
+ 
+CREATE TABLE tbl_1(id INT);
+ INSERT INTO tbl_1(id) VALUES(1);
+ INSERT INTO tbl_1(id) VALUES(2);
+COMMIT;
+ UPDATE tbl_1 SET id=200 WHERE id=1;
+SAVEPOINT id_1upd;
+ UPDATE tbl_1 SET id=1000 WHERE id=2;
+ROLLBACK TO id_1upd;
+ SELECT id FROM tbl_1;
+ 
+START TRANSACTION;
+ UPDATE Account SET amount=amount-200 WHERE account_number=1234;
+ UPDATE Account SET amount=amount+200 WHERE account_number=2345;
+ 
+IF ERRORS=0 COMMIT;
+IF ERRORS<>0 ROLLBACK;  
+</pre>

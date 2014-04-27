@@ -9,12 +9,11 @@ authors:
   - Andi Dittrich
   
 requires:
-  - Core/1.4.5
+  - core/1.4.5
 
 provides: [EnlighterJS.SpecialLineHighlighter]
 ...
- */
-
+*/
 EnlighterJS.SpecialLineHighlighter = new Class({
 		
 	// storage of line numbers to highlight

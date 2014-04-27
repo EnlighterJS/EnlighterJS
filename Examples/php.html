@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Favicon !-->
+	<link rel="icon" href="../Resources/favicon.png" type="image/png">
+	
+	<title>Language Example: PHP | EnlighterJS</title>
+	
+	<!-- Bootstrap CSS - just 4 styling - not required for enlighterjs -->
+	<link rel="stylesheet" href="../Resources/bootstrap.min.css">
+	<link rel="stylesheet" href="../Resources/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="../Resources/Template.css">
+
+	<!-- Include EnlighterJS Styles -->
+	<link rel="stylesheet" type="text/css" href="../Build/EnlighterJS.css" />
+	
+	<!-- Include MooTools Framework -->
+	<script type="text/javascript" src="../Resources/mootools-core-1.4.5-full-nocompat.js"></script>
+
+	<!-- Include EnlighterJS -->
+	<script type="text/javascript" src="../Build/EnlighterJS.js"></script>	
+
+	<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="javascript" data-indent="4" data-selector-block="pre" data-selector-inline="code" data-rawcodebutton="true" /></head>
+<body>
+	<!-- Topnav -->
+	<div id="navbar-wrapper">
+		<div class="container">
+			<div class="navbar navbar-inverse" role="navigation">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html">EnlighterJS</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="Quickstart.html">Quickstart</a></li>
+					<li><a href="index.html">Docs</a></li>
+					<li class="dropdown"><a href="#">Examples<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Languages</li>
+							<li><a href="html.html">HTML</a></li>
+							<li><a href="css.html">CSS</a></li>
+							<li><a href="js.html">Javascript</a></li>
+							<li><a href="xml.html">XML</a></li>
+							<li><a href="markdown.html">Markdown</a></li>
+							<li><a href="json.html">JSON</a></li>
+							<li><a href="php.html">PHP</a></li>
+							<li><a href="sql.html">SQL</a></li>
+							<li><a href="java.html">Java</a></li>
+							<li><a href="python.html">Python</a></li>
+							<li><a href="cpp.html">C++</a></li>
+							<li><a href="c.html">C</a></li>
+							<li><a href="ruby.html">Ruby</a></li>
+							<li><a href="nsis.html">NSIS</a></li>
+							<li><a href="raw.html">RAW Code</a></li>
+							<li><a href="nohighlight.html">No-Highlighted Code</a></li>
+							
+							<li class="divider"></li>
+							<li class="dropdown-header">Special</li>
+							<li><a href="unit.html">Unit Testcases</a></li>
+						</ul></li>
+					<li><a href="Themes.html">Themes</a></li>
+					
+					<li><a href="http://wordpress.org/plugins/enlighter/">Plugins<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="http://wordpress.org/plugins/enlighter/">Enlighter for WordPress</a></li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="https://github.com/AndiDittrich/EnlighterJS/archive/master.zip">Get EnlighterJS<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-header">Get it from GitHub</li>
+							<li><a href="https://github.com/AndiDittrich/EnlighterJS/archive/master.zip">Download (latest)</a></li>
+							<li><a href="https://github.com/AndiDittrich/EnlighterJS">Browse on GitHub</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- // topnav -->
+
+
+	<!-- Begin page content -->
+	<div class="container">
+		<div class="page-header">
+			<h1>
+				<strong>EnlighterJS</strong> <small>Language Example: PHP</small>
+			</h1>
+		</div>
+		<div id="content">
+			<!-- ############################################################# -->
+			<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="php">echo 'Arnold once said: "I\'ll be back"';</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<pre data-enlighter-language="php">
+&lt;?php
+// Comments
+
+/*
+This is
+a comment
+block
+*/
+
+/** Keywords */
+
+die() echo() empty() exit() eval() include() include_once() isset() list() require() require_once() return() print() unset()
+
+__CLASS__ __DIR__ __FILE__ __FUNCTION__ __METHOD__ __NAMESPACE__
+
+abstract and array() as break case catch cfunction class clone const continue declare default do else elseif enddeclare endfor endforeach endif endswitch endwhile extends final for foreach function global goto if implements interface instanceof namespace new old_function or private protected public static switch throw try use var while xor
+
+/** String's */
+echo 'this is a simple string';
+
+echo 'You can also have embedded newlines in 
+strings this way as it is \'
+okay to do'; // Don't you agree
+
+// Outputs: Arnold once said: "I'll be back"
+echo 'Arnold once said: "I\'ll be back"';
+
+// Heredoc
+$str = &lt;&lt;&lt;EOD
+Example of string
+spanning multiple lines
+using heredoc syntax.
+EOD;
+
+// Nowdoc
+$str = &lt;&lt;&lt;'EOD'
+Example of string
+spanning multiple lines
+using nowdoc syntax.
+EOD;
+
+/** Numbers */
+
+$a = 1234; // decimal number
+$a = -123; // a negative number
+$a = 0123; // octal number (equivalent to 83 decimal)
+$a = 0x1A; // hexadecimal number (equivalent to 26 decimal)
+$a = 1.234; 
+$b = 1.2e3; 
+$c = 7E-10;
+?>
+
+/** Test Snippet */
+$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
+
+/* check connection */
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
+
+/* Create table doesn't return a resultset */
+if ($mysqli->query("CREATE TEMPORARY TABLE myCity LIKE City") === TRUE) {
+    printf("Table myCity successfully created.\n");
+}
+
+/* Select queries return a resultset */
+if ($result = $mysqli->query("SELECT Name FROM City LIMIT 10")) {
+    printf("Select returned %d rows.\n", $result->num_rows);
+
+    /* free result set */
+    $result->close();
+}
+
+/* If we have to retrieve large amount of data we use MYSQLI_USE_RESULT */
+if ($result = $mysqli->query("SELECT * FROM City", MYSQLI_USE_RESULT)) {
+
+    /* Note, that we can't execute any functions which interact with the
+       server until result set was closed. All calls will return an
+       'out of sync' error */
+    if (!$mysqli->query("SET @a:='this will not work'")) {
+        printf("Error: %s\n", $mysqli->error);
+    }
+    $result->close();
+}
+
+$mysqli->close();
+		</pre>
+		<pre class="php:mocha" id="php2">
+&lt;?php
+/** Testing strict mode in Language. Html tags not highlighted. */
+if ($expression) { 
+    ?&gt;
+    &lt;strong&gt;This is true.&lt;/strong&gt;
+    &lt;?php 
+} else { 
+    ?&gt;
+    &lt;strong&gt;This is false.&lt;/strong&gt;
+    &lt;?php 
+}
+?&gt;
+</pre>			<!-- ############################################################# -->
+
+		</div>
+		<!-- // content -->
+
+
+	</div>
+	<!-- // container -->
+
+	<!-- Sticky Footer Message -->
+	<div id="footer">
+		<div class="container">
+			<p class="text-muted">
+				<strong>EnlighterJS</strong> is developed by <a href="http://andidittrich.de">Andi Dittrich</a><br /> <a href="https://github.com/AndiDittrich/EnlighterJS/archive/master.zip">Download</a> EnlighterJS on <a href="https://github.com/AndiDittrich/EnlighterJS">GitHub</a> | It's released under the Terms of <a href="LICENSE.txt">MIT X11 License</a> | Demo created with <a href="http://getbootstrap.com">Bootstrap</a>
+			</p>
+		</div>
+	</div>
+	<!-- // Sticky Footer Message -->
+
+</body>
+</html>

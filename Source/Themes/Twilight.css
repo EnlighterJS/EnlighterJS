@@ -23,9 +23,6 @@ authors:
 	background-color: #000000;
 }
 
-pre.twilightEnlighterJS{
-	background-color: #141414;
-}
 .twilightEnlighterJS span{
 	color: #f8f8f8;
 }
@@ -35,21 +32,25 @@ ol.twilightEnlighterJS {
 	list-style-type: decimal;
 	border: solid 1px #222222;
 }
-
-ol.twilightEnlighterJS li{
+ul.twilightEnlighterJS {
+	color: #000;
+	background-color: #f2f2f2;
+	border: solid 1px #222222;
+}
+ol.twilightEnlighterJS li, ul.twilightEnlighterJS li{
 	border: none;
 	border-left: 1px solid #939393;
 	line-height: 19px;
 	background-color: #141414;
 }
-ol.twilightEnlighterJS li.hoverEnabled:hover{
+ol.twilightEnlighterJS li.hoverEnabled:hover, ul.twilightEnlighterJS li.hoverEnabled:hover{
 	background-color: #202021;
 	border: none;
 	border-left: 1px solid #939393;
 }
 
 /* special line highlight color */
-ol.twilightEnlighterJS li.specialline {
+ol.twilightEnlighterJS li.specialline, ul.twilightEnlighterJS li.specialline {
 	background-color: #202021;
 }
 
@@ -72,3 +73,16 @@ ol.twilightEnlighterJS li.specialline {
 .twilightEnlighterJS .sy0 { color: #fff; }
 .twilightEnlighterJS .es0 { color: #fff; }
 .twilightEnlighterJS .re0 { color: #E57A27; }
+
+/* Raw Code Pane */
+.twilightEnlighterJSWrapper pre{
+	background-color: #141414;
+	font-size: 12px;
+	color: #f8f8f8;
+	line-height: 20px;
+}
+.twilightEnlighterJSWrapper .EnlighterJSRawButton{
+	color: #f8f8f8;
+	background-color: #202021;
+	border: solid 0px #202021;
+}

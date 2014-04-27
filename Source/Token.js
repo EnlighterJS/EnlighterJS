@@ -9,7 +9,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - Core/1.4.5
+  - core/1.4.5
 
 provides: [EnlighterJS.Token]
 ...
@@ -30,8 +30,7 @@ EnlighterJS.Token = new Class({
      * @param {String} type  The type of match.
      * @param {Number} index The index where the match was found.
      */
-    initialize: function(text, type, index)
-    {
+    initialize: function(text, type, index){
         this.text   = text;
         this.type   = type;
         this.index  = index;
@@ -45,8 +44,7 @@ EnlighterJS.Token = new Class({
      * @param Token token The Token to test against.
      * @return Boolean Whether or not the Token is contained within this one.
      */
-    contains: function(token)
-    {
+    contains: function(token){
         return (token.index >= this.index && token.index < this.end);
     },
     
@@ -56,8 +54,7 @@ EnlighterJS.Token = new Class({
      * @param Token token The Token to test against.
      * @return Boolean Whether or not this Token is past the test one.
      */
-    isBeyond: function(token)
-    {
+    isBeyond: function(token){
         return (this.index >= token.end);
     },
     
@@ -67,13 +64,11 @@ EnlighterJS.Token = new Class({
      * @param Token token The Token to test against.
      * @return Boolean Whether or not this Token overlaps the test one.
      */
-    overlaps: function(token)
-    {
+    overlaps: function(token){
         return (this.index == token.index && this.length > token.length);
     },
     
-    toString: function()
-    {
+    toString: function(){
         return this.index + ' - ' + this.text + ' - ' + this.end;
     }
 });

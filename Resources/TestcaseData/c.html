@@ -1,0 +1,91 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="c">volatile uint8_t burstmodeDelayCounter = 0;</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+				
+<pre data-enlighter-language="c">
+// http://andidittrich.de/index.php/2012/04/xbox-360-controller-advanced-rapid-fire-mod/
+#include "Trigger.h"
+#include "Calibration.h"
+
+// KEY STATES
+enum{KEYUP=0, KEYDOWN=1, FALLINGEDGE =2, RISINGEDGE=3, KEYDOWN_LONG=4};
+
+// SYTMEM STATE
+enum{OFFLINE, RAPIDFIRE_SLOW, RAPIDFIRE_FAST, RAPIDFIRE_BURST};
+
+// switch observer
+volatile uint8_t switchState0 = 2;
+volatile uint8_t switchState1 = 127;
+volatile uint8_t switchStateChange = 0;
+
+// system state
+volatile uint8_t systemState = OFFLINE;
+
+// led blink counter
+volatile uint8_t ledBlinkCounter = 0;
+
+// burstmode delay counter
+volatile uint8_t burstmodeDelayCounter = 0;
+
+// switch observer ISR - 48ms steady state required -> 122Hz Update Rate
+ISR (TIMER1_OVF_vect){
+	// increment burstmode counter
+	//burstmodeDelayCounter = burstmodeDelayCounter+1;
+
+	// LED BLink Action
+	if (systemState == RAPIDFIRE_FAST){
+		ledBlinkCounter = ledBlinkCounter+1;
+
+		// ~ 12 Hz Blink rate
+		if (ledBlinkCounter%20 == 0){
+			toggleStatusLed();
+		}
+	}
+
+	// LED BLink Action
+	if (systemState == RAPIDFIRE_BURST){
+		ledBlinkCounter = ledBlinkCounter+1;
+
+		// ~ 18 Hz Blink rate
+		if (ledBlinkCounter < 50){
+			if (ledBlinkCounter%10 == 0){
+				toggleStatusLed();
+			}
+		}else{
+			showStatusLed(0);
+		}
+	}
+
+	// SIGNAL A OBERVING (SWITCH)
+	if (bit_is_clear(PINB, PB4)){
+		// increment -> KEY PRESSED
+		if (switchState0<5){
+			switchState0++;
+		}else{
+			// FALLING EDGE DETECTED
+			if (switchStateChange==KEYUP){
+				switchStateChange = KEYDOWN;
+			}
+		}
+		if (switchState1<255){
+			switchState1++;
+		}else{
+			switchStateChange = KEYDOWN_LONG;
+		}
+	}else{
+		// decrement -> KEY RELEASED
+		if (switchState0>0){
+			switchState0--;
+		}else{
+			// RISING EDGE DETECTED
+			if (switchStateChange==KEYDOWN){
+				switchStateChange = FALLINGEDGE;
+			}
+		}
+		if (switchState1>0){
+			switchState1--;
+		}
+	}
+};
+
+</pre>

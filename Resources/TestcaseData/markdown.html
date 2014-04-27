@@ -1,0 +1,96 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="markdown">### XmlToJsObject</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<pre data-enlighter-language="markdown" data-enlighter-highlight="9,28,47,66">
+XmlToJsObject
+===========
+
+XmlToJsObject is a free, easy-to-use utility to convert XML-Documents/XML-Strings to Javacript-Objects
+
+![Screenshot](http://static.andidittrich.de/XmlToJsObject/screenshot.jpg)
+
+Features
+--------
+
+* Easy XML to JS-Object conversion like JSON to JS-Object
+* Written in Pure-Javascipt (standalone - no framework like jQuery or MooTools required!)
+* Supports XML-Documents (from AJAX/XHR Requests) as well as XML-Strings
+* Smart-Mode automatically merges nodes+attributes for a much easier handling of config files
+* Ultra lightweight: only 3.9kB of Code (uncompressed); 1.64kB (yui compressed)
+* Well commented sourcecode allows easy user modifications/custom extensions
+* Native integration into MooTools (Object.fromXML)
+
+Demo
+----
+The following Examples require the `JSON.stringify` method (supported by all modern browsers)
+
+* [Example](http://static.andidittrich.de/XmlToJsObject/Example.html)
+* [MooTools Example](http://static.andidittrich.de/XmlToJsObject/Example.MooTools.html)
+* [Minimal Example](http://static.andidittrich.de/XmlToJsObject/Example.Minimal.html)
+
+Available Methods
+-----------------
+
+### XmlToJsObject
+Pure Javascript Implementation
+
+```js
+XmlToJsObject(data [, smartMode=true])
+```
+**Description:** Converts a XML-String, XMLNode or XMLDocument into a Javascript-Object
+
+**data**
+Type: mixed ( [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), [XMLDocument](https://developer.mozilla.org/en-US/docs/Web/API/Node), [XMLNode](https://developer.mozilla.org/en-US/docs/Web/API/Node) )
+A valid XML-String, XMLNode or XMLDocument Node containing various child nodes and attributes
+	
+**smartMode**
+Type: [Boolean](http://www.w3schools.com/js/js_datatypes.asp)
+Optional (default=**true**) - Merge attribute names with node-names
+
+### Object.fromXML (MooTools)
+Native MooTools implementation: automatically available when using MooTools on your page!
+
+```js
+Object.fromXML(data [, smartMode=true])
+```
+**Description:** Converts a XML-String, XMLNode or XMLDocument into a Javascript-Object
+
+**data**
+Type: mixed ( [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), [XMLDocument](https://developer.mozilla.org/en-US/docs/Web/API/Node), [XMLNode](https://developer.mozilla.org/en-US/docs/Web/API/Node) )
+A valid XML-String, XMLNode or XMLDocument Node containing various child nodes and attributes
+	
+**smartMode**
+Type: [Boolean](http://www.w3schools.com/js/js_datatypes.asp)
+Optional (default=**true**) - Merge attribute names with node-names
+
+	
+Tested With
+-----------
+* Firefox 27.0.1
+* Chrome 33.0.1750.117
+* Internet Explorer 11.0.9600.16518
+* Safari 5.1.7 (Windows)
+* Android 4.3 (WebView)
+
+
+Browser compatibility
+---------------------
+The XmlToJsObject Utility requires the [DOMParser](http://www.w3schools.com/dom/dom_parser.asp) object. If you want to support earlier versions of the InternetExplorer you can write a [fallback](http://www.w3schools.com/dom/dom_parser.asp) using `new ActiveXObject("Microsoft.XMLDOM")` instead of the DOMParser.
+
+Compatibility Reference: [https://developer.mozilla.org/en-US/docs/Web/API/DOMParser](https://developer.mozilla.org/en-US/docs/Web/API/DOMParser)
+
+* Chrome 1.0+
+* Safari osx+ios (WebKit) 3.2+
+* Internet Explorer 9+
+* Firefox 1.7+
+* Opera 8+
+* Android-Webview 4.3 (Webkit Engine)
+
+
+License
+-------
+
+XmlToJsObject is licensed under [The MIT License (X11)](http://opensource.org/licenses/MIT)
+
+</pre>

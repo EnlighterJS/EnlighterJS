@@ -1,7 +1,7 @@
 /*
 ---
 name: EnlighterJS
-description: Syntax Highlighter based on the famous Lighter.js from Jose Prado
+description: Syntax Highlighter based on the famous Lighter.js
 
 license: MIT-style X11 License
 
@@ -19,18 +19,19 @@ var EnlighterJS = new Class({
 	Implements : Options,
 
 	options : {
-		language : 'standard',
-		theme : 'standard',
-		compiler: 'List',
+		language : 'generic',
+		theme : 'Enlighter',
+		renderer: 'Block',
 		indent : -1,
-		forceTheme: false
+		forceTheme: false,
+		rawButton: false
 	},
 
-	// used compiler instance
-	compiler: null,
+	// used renderer instance
+	renderer: null,
 	
 	// used codeblock to highlight
-	codeblock: null,
+	originalCodeblock: null,
 	
 	// used container to store highlighted code
 	container: null,
@@ -38,36 +39,36 @@ var EnlighterJS = new Class({
 	// lightning active ?
 	isRendered: false,
 	
-	// alias manager
-	aliasManager: null,
+	// language alias manager
+	languageManager: null,
+
 
 	/**
 	 * @constructs
+	 * @param {Element} originalCodeblock An Element containing code to highlight
 	 * @param {Object} options The options object.
-	 * @return {EnlighterJS} The current EnlighterJS instance.
+	 * @param {Element} container (optional) The output container - if not defined, the output will be injected after the originalCodeblock
 	 */
-	initialize : function(codeblock, options, container) {
+	initialize : function(originalCodeblock, options, container) {
 		this.setOptions(options);
 		
-		// create new alias manager instance
-		this.aliasManager = new EnlighterJS.Alias(options);
+		// create new language alias manager instance
+		this.languageManager = new EnlighterJS.LanguageManager(options);
 				
-		// initialize compiler
-		if (EnlighterJS.Compiler[this.options.compiler]){
-			this.compiler = new EnlighterJS.Compiler[this.options.compiler](options);
+		// initialize renderer
+		if (this.options.renderer == 'Inline'){
+			this.renderer = new EnlighterJS.Renderer.InlineRenderer(options);
 		}else{
-			this.compiler = new EnlighterJS.Compiler.List(options);
+			this.renderer = new EnlighterJS.Renderer.BlockRenderer(options);
 		}
-		
-		// store codeblock
-		this.codeblock = document.id(codeblock);
+				
+		// store codeblock element
+		this.originalCodeblock = document.id(originalCodeblock);
 		
 		// store/create container
 		if (container){
 			this.container = document.id(container);
 		}
-		
-		return this;
 	},
 
 	/**
@@ -77,84 +78,180 @@ var EnlighterJS = new Class({
 	 * 
 	 * @return {EnlighterJS} The current EnlighterJS instance.
 	 */
-	light : function(){
-		// hide original codeblock
-		this.codeblock.setStyle('display', 'none');
-		
-		// EnlighterJS exists so just toggle display.
-		if (this.isRendered) {				
-			this.container.setStyle('display', 'inherit');
-			return this;
-		}			
-
-		// extract code to highlight
-		var code = this.getCode();
-		
-		// get language name - use alias manager to check language string and validate
-		var languageName = this.aliasManager.getLanguage(this.codeblock.get('data-enlighter-language'));
-		
-		// get theme name - use options as fallback
-		var themeName = (this.options.forceTheme ? null : this.codeblock.get('data-enlighter-theme')) || this.options.theme;
-		
-		// special lines to highlight ?
-		var specialLines = new EnlighterJS.SpecialLineHighlighter(this.codeblock.get('data-enlighter-highlight'));
-		
-		// Load language parser
-		language = new EnlighterJS.Language[languageName](code, {});
-		
-		// compile tokens -> generate output
-		var output = this.compiler.compile(language, themeName.toLowerCase(), specialLines);
-
-		// grab content into specific container or after original code block ?
-		if (this.container) {
-			this.container.grab(output);
+	enlight : function(enabled){
+		// show highlighted sourcecode ?
+		if (enabled){
+			// get element language
+			var rawLanguageName = this.originalCodeblock.get('data-enlighter-language');
+			
+			// ignore higlighting ?
+			if (rawLanguageName == 'no-highlight'){
+				return;
+			}
+			
+			// hide original codeblock
+			this.originalCodeblock.setStyle('display', 'none');
+			
+			// EnlighterJS exists so just toggle display.
+			if (this.isRendered) {				
+				this.container.setStyle('display', 'inherit');
+				return this;
+			}
+			
+			// get language name - use alias manager to check language string and validate
+			var languageName = this.languageManager.getLanguage(rawLanguageName);
+			
+			// get theme name - use options as fallback
+			var themeName = (this.options.forceTheme ? null : this.originalCodeblock.get('data-enlighter-theme')) || this.options.theme || 'Enlighter';
+			
+			// special lines to highlight ?
+			var specialLines = new EnlighterJS.SpecialLineHighlighter(this.originalCodeblock.get('data-enlighter-highlight'));
+			
+			// Load language parser
+			language = new EnlighterJS.Language[languageName](this.getRawCode(true));
+			
+			// compile tokens -> generate output
+			var output = this.renderer.render(language, specialLines, {
+				lineOffset: (this.originalCodeblock.get('data-enlighter-lineoffset') || null),
+				lineNumbers: this.originalCodeblock.get('data-enlighter-linenumbers')
+			});
+			
+			// set class and id attributes.
+			output.addClass(themeName.toLowerCase() + 'EnlighterJS').addClass('EnlighterJS');		
+			output.set('id', 'EnlighterJS_' + String.uniqueID());
+	
+			// show button toolbar ? add wrapper
+			if (this.options.rawButton === true && this.options.renderer == 'Block'){
+				// grab content into specific container or after original code block ?
+				if (this.container) {
+					this.container.grab(output);
+				}else{
+					this.container = new Element('div');
+					
+					// add the highlighted code
+					this.container.grab(output);
+					
+					// put the highlighted code wrapper behind the original	
+					this.container.inject(this.originalCodeblock, 'after');
+				}
+				
+				// add wrapper class
+				this.container.addClass('EnlighterJSWrapper').addClass(themeName.toLowerCase() + 'EnlighterJSWrapper');
+				
+				// create raw content container
+				var rawContentContainer = new Element('pre', {
+					text: this.getRawCode(false),
+					styles: {
+						'display': 'none'
+					}
+				});
+				
+				// add raw content container
+				this.container.grab(rawContentContainer);
+				
+				// visibility flag
+				var highlightedContainerVisible = true;
+				
+				// create toggle "button"
+				this.container.grab(new Element('div', {
+					'class': 'EnlighterJSRawButton',
+					events: {
+						 click: function(){
+							 // toggle raw/highlighted containers
+							 if (highlightedContainerVisible){
+								 output.setStyle('display', 'none');
+								 rawContentContainer.setStyle('display', 'block');
+								 highlightedContainerVisible = false;
+							 }else{
+								 output.setStyle('display', 'block');
+								 rawContentContainer.setStyle('display', 'none');
+								 highlightedContainerVisible = true;
+							 }
+						 }
+					 }
+				}));
+			// normal handling
+			}else{
+				// grab content into specific container or after original code block ?
+				if (this.container) {
+					this.container.grab(output);
+					
+				// just put the highlighted code behind the original	
+				}else{
+					output.inject(this.originalCodeblock, 'after');
+					this.container = output;
+				}
+			}
+			
+			// set render flag
+			this.isRendered = true;
+			
+		// disable highlighting	
 		}else{
-			output.inject(this.codeblock, 'after');
-			this.container = output;
+			// already highlighted ?
+			if (this.isRendered) {
+				this.originalCodeblock.setStyle('display', 'inherit');
+				this.container.setStyle('display', 'none');
+			}
 		}
-		
-		// set render flag
-		this.isRendered = true;
 
 		return this;
 	},
-
+	
 	/**
-	 * Unlights a codeblock by hiding the enlighter element if present and
-	 * re-displaying the original code.
+	 * Takes a codeblock and highlights the code inside. The original codeblock is set to invisible
+	 * @DEPRECATED since v2.0 - this method will be removed in the future
+	 * 
+	 * @return {EnlighterJS} The current EnlighterJS instance.
+	 */
+	light : function(){
+		return this.enlight(true);
+	},
+		
+	/**
+	 * Unlights a codeblock by hiding the enlighter element if present and re-displaying the original code.
+	 * @DEPRECATED since v2.0 - this method will be removed in the future
 	 * 
 	 * @return {EnlighterJS} The current EnlighterJS instance.
 	 */
 	unlight : function() {
-		
-		// already highlighted ?
-		if (this.isRendered) {
-			this.codeblock.setStyle('display', 'inherit');
-			this.container.setStyle('display', 'none');
-		}
-
-		return this;
+		return this.enlight(false);
 	},
 
 	/**
-	 * Extracts the code from a codeblock.
-	 * @author Jose Prado, Andi Dittrich
-	 * @return {String} The plain-text code.
+	 * Extracts the raw code from given codeblock
+	 * @author Andi Dittrich
+	 * @return {String} The plain-text code (raw)
 	 */
-	getCode : function() {
-		var code = this.codeblock.get('html')
-				.replace(/(^\s*\n|\n\s*$)/gi, '')
-				.replace(/&lt;/gim, '<')
-				.replace(/&gt;/gim, '>')
-				.replace(/&amp;/gim, '&');
+	getRawCode: function(reindent) {
+		// get the raw content - remove leading+trailing whitespaces
+		var code = this.originalCodeblock.get('html').trim();
+		
+		// replace html escaped chars
+		code = code.replace(/&amp;/gim, '&').replace(/&lt;/gim, '<').replace(/&gt;/gim, '>');
 
-		// Re-indent code if user option is set.
-		if (this.options.indent > -1) {
-			code = code.replace(/\t/g, new Array(this.options.indent + 1)
-					.join(' '));
+		// replace tabs with spaces ?
+		if (reindent === true){
+			// get indent option value
+			var newIndent = this.options.indent.toInt();
+			
+			// re-indent code if specified
+			if (newIndent > -1){
+				// match all tabs
+				code = code.replace(/(\t*)/gim, function(match, p1, offset, string){
+					// replace n tabs with n*newIndent spaces
+					return (new Array(newIndent * p1.length + 1)).join(' ');
+				});
+			}
 		}
 
 		return code;
 	}
 });
+
+// register namespaces
+EnlighterJS.Language = {};
+EnlighterJS.Renderer = {};
+EnlighterJS.Util = {};
+EnlighterJS.UI = {};
 

@@ -1,0 +1,33 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="html">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../Build/EnlighterJS.yui.css&quot; /&gt;</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+<pre data-enlighter-language="html">
+&lt;head&gt;
+		&lt;!-- Include EnlighterJS Styles --&gt;
+		&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../Build/EnlighterJS.yui.css&quot; /&gt;
+		
+		&lt;!-- Include MooTools Framework --&gt;
+		&lt;script type=&quot;text/javascript&quot; src=&quot;mootools-core-1.4.5-full-nocompat.js&quot;&gt;&lt;/script&gt;
+		
+		&lt;!-- Include EnlighterJS --&gt;
+		&lt;script type=&quot;text/javascript&quot; src=&quot;../Build/EnlighterJS.yui.js&quot; &gt;&lt;/script&gt;
+		
+		&lt;!-- Initialize EnlighterJS --&gt; 
+		&lt;script type=&quot;text/javascript&quot;&gt;
+		window.addEvent('domready', function() {
+			// highlight all pre tags
+			$$('pre').light({
+				altLines : 'hover',
+				indent : 2,
+				editable: false
+			});
+		});
+		&lt;/script&gt;
+
+&lt;!-- Syntax highlight using Languages/Js.js and default theme --&gt; 
+&lt;pre data-enlighter-language=&quot;css&quot;&gt;var myClass = new Class({})&lt;/pre&gt; 
+ 
+&lt;!-- Syntax highlight using Languages/Php.js and theme from Themes/Twilight.css --&gt; 
+&lt;pre data-enlighter-language=&quot;php&quot; data-enlighter-theme=&quot;twilight&quot;&gt;&lt;?php php_info() ?&gt;&lt;/pre&gt;
+
+</pre>

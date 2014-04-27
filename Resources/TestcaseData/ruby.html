@@ -1,0 +1,105 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="ruby">@users = User.find_all_by_logins(@changesets.collect(&amp;:author).uniq).index_by(&amp;:login)</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<pre data-enlighter-language="ruby">
+=begin
+Multi-line comment test.
+Below are various syntax specific statements
+to test the parser with.
+=end
+
+# Keywords
+alias    and     begin   BEGIN
+break    case    class   def      defined?   do
+else     elsif   END     end      ensure     false
+for      if      in      module   next       nil
+not      or      redo    rescue   retry      return
+self     super   then    true     undef      unless
+until    when    while   yield
+
+# String Tests
+'no interpolation, backslash notation not applied'
+"applied #{interpolation}, and backslashes\n"
+%q(no interpolation)
+%Q(applied #{interpolation} and backslashes)
+%(interpolation and backslashes)
+`echo command interpretation with interpolation and backslashes`
+%x(echo command interpretation with interpolation and backslashes)
+myString = &lt;&lt;DOC
+Multi line string in here doc form.
+  Output will match format of heredoc.
+DOC
+
+# Regular Expressions
+/pattern/
+/pattern/iomx
+%r{pattern}
+%r{pattern}iomx
+
+#Symbols
+:Object
+:myVariable
+::notASymbol
+
+# Number Tests
+123                       # Fixnum
+-123                      # Fixnum (signed)
+1_123                     # Fixnum (underscore is ignored)
+-543                      # Negative Fixnum
+123_456_789_123_456_789   # Bignum
+123.45                    # Float
+1.2e-3                    # Float
+0xaabb                    # (Hexadecimal) Fixnum
+0377                      # (Octal) Fixnum
+-0b1010                   # (Binary [negated]) Fixnum
+0b001_001                 # (Binary) Fixnum
+?a                        # ASCII character code for 'a' (97)
+?\C-a                     # Control-a (1)
+?\M-a                     # Meta-a (225)
+?\M-\C-a                  # Meta-Control-a (129)
+
+# Names
+fred  anObject  _x  three_two_one # Local Variables
+@name  @_  @Size                  # Instance Variables
+@@name  @@_  @@Size               # Class Variables
+def MyClass                       # Constants
+PI = 3.1415926
+class BigBlob
+$params  $PROGRAM  $!  $_  $-a  $-. #Global variables
+
+# Example snippet
+class HistoryController &lt; ApplicationController
+  before_filter :find_node
+  before_filter :repository_member_required
+ 
+  caches_action_content :index
+ 
+	# Single Line Comment
+  def index
+    @changesets = current_repository.changesets.paginate_by_path(@node.path, :page =&gt; params[:page])
+    if api_format?
+      render :layout =&gt; false
+    else
+      @users = User.find_all_by_logins(@changesets.collect(&amp;:author).uniq).index_by(&amp;:login)
+    end
+  end
+  
+  protected
+    def find_node
+      full_path = if params[:paths].last.to_s =~ /\.atom$/
+        request.format = :atom
+        params[:paths].first(params[:paths].size - 1)
+      else
+        params[:paths]
+      end
+      @node = current_repository.node(full_path * &quot;/&quot;)
+      unless @node.accessible_by?(current_user)
+        status_message :error, &quot;You do not have access to this path.&quot;
+        false
+      else
+        true
+      end
+    end
+end
+</pre>

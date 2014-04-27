@@ -3,5 +3,5 @@ name: EnlighterJS
 author: andidittrich
 category: Interface
 tags: [parser, syntax highlighter]
-demo: http://static.andidittrich.de/EnlighterJS/Demo.html
-current: v1.8
+demo: http://enlighterjs.andidittrich.de/Themes.html
+docs: http://enlighterjs.andidittrich.de

@@ -1,43 +1,138 @@
 /*!
 ---
 name: EnlighterJS
-description: Syntax Highlighter for MooTools - based on the famous Lighter.js
+description: Post Syntax Highlighter for MooTools - based on the famous Lighter.js
 
-license: MIT-style X11 License
-version: 1.8
-build: 44fcaedaaa33f2910e4f7d44aac52557/November 10 2013
+license: MIT-Style X11 License
+version: 2.0
+build: a6946f7c78e705d4d346f655f4bc2735/April 28 2014
 
 authors:
-  - Andi Dittrich (author of EnlighterJS fork)
+  - Andi Dittrich (author of EnlighterJS)
   - Jose Prado (author of original Lighter.js)
   
 download: https://github.com/AndiDittrich/EnlighterJS
-website: http://www.a3non.org/go/enlighterjs
-demo: http://static.andidittrich.de/EnlighterJS/Demo.html
+website: http://enlighterjs.andidittrich.de/
+demo: http://enlighterjs.andidittrich.de/Themes.html
   
 requires:
   - Core/1.4.5
 
 provides: [EnlighterJS]
 ...
- *//*
+*//*
 ---
-description: Default theme inspired by MooTools code coloring.
+description: EnlighterJS Theme-Base - All Themes are derived from these styles!
 
 license: MIT-style
 
 authors:
-- Jose Prado
-- Andi Dittrich
-
+  - Andi Dittrich
 ...
 */
-/* tab panel */
-.EnlighterJSTabPane .controls{
+
+/* BASE Styles */
+.EnlighterJS, .EnlighterJSWrapper{
+	font-family: Monaco, Courier, Monospace;
+	font-size: 10px;
+	line-height: 16px;
+	overflow: auto;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	margin: 0px;
+	padding: 0px;
+}
+
+/* Wrapper/Container - used to display raw button*/
+.EnlighterJSWrapper{
+	position: relative;
+}
+
+/* Inline specific styles */
+span.EnlighterJS {
+	padding: 3px 5px 1px 5px;
+	border: solid 1px #e0e0e0;
+	color: #333333;
+	background-color: #f7f7f7;
+	margin: 0px 2px 0px 2px;
+}
+
+/* LIST specific styles */
+ol.EnlighterJS, ul.EnlighterJS{
+	color: #939393;
+	font-size: 10px;
+	background-color: #f2f2f2;
+	color: #939393;
+	margin: 0px 0px 20px 0px;
+	padding: 0px;
+	text-indent: 0px;
+	list-style: decimal-leading-zero outside;
+}
+
+/* line styles */
+ol.EnlighterJS li, ul.EnlighterJS li {
+	margin: 0px;
+	background-color: #ffffff;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	padding: 0px 5px 0px 14px;
+	line-height: 14px;
+	color: #939393;
+	list-style: none;
+	font-size: inherit;
+}
+ol.EnlighterJS li{
+	list-style: decimal-leading-zero outside;
+	margin: 0px 0px 0px 40px;
+	border-left: 1px solid #939393;
+}
+
+/* no-linenumber style */
+ul.EnlighterJS, ul.EnlighterJS li{
+	list-style: none;
+	display: block;
+}
+ul.EnlighterJS li:AFTER{
+	content: ' ';
+}
+
+/* top+bottom offsets */
+ol.EnlighterJS li.firstline, ul.EnlighterJS li.firstline{
+	padding-top: 5px;
+}
+ol.EnlighterJS li.lastline, ul.EnlighterJS li.lastline{ 
+	padding-bottom: 5px; 
+}
+
+/* special line highlight color */
+ol.EnlighterJS li.specialline, ul.EnlighterJS li.specialline {
+	background-color: #F4F8FC;
+}
+
+/* hover effect */
+ol.EnlighterJS li.hoverEnabled:hover, ul.EnlighterJS li.hoverEnabled:hover{
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	background-color: #F4F8FC;
+}
+
+/* default symbol style */
+.EnlighterJS span {
+	color: #000000;
+	margin: 0px;
+	padding: 0px;
+	line-height: inherit;
+	font-size: 12px;
+}
+
+/* TAB Panel */
+.EnlighterJSTabPane .controls {
+}
+.EnlighterJSTabPane .controls ul{
 	margin: 0px 0px 0px 40px;
 	padding: 0px;
 }
-.EnlighterJSTabPane .controls li{
+.EnlighterJSTabPane .controls li {
 	float: left;
 	display: block;
 	list-style: none;
@@ -50,140 +145,247 @@ authors:
 	font-family: Courier, monospace;
 	cursor: pointer;
 }
-.EnlighterJSTabPane .controls li:hover{
+
+.EnlighterJSTabPane .controls li:hover {
 	background-color: #e5e5e5;
 }
-.EnlighterJSTabPane .controls .selected, .EnlighterJSTabPane .controls .selected:hover{
+
+.EnlighterJSTabPane .controls .selected,.EnlighterJSTabPane .controls .selected:hover{
 	background-color: #ccffcc;
 }
-.EnlighterJSTabPane .pane{
+.EnlighterJSTabPane .controls .clearfixList{
+	clear: left;
+}
+.EnlighterJSTabPane .pane {
 	padding: 5px 0px 0px 0px;
 	clear: left;
 }
 
-/* default styles */
-.EnlighterJSRendered {
-	font-family: Monaco, Courier, Monospace;
-	font-size: 10px;
+/* Raw Button - show/hide actions */
+.EnlighterJSRawButton{
+	display: none;
+	position: absolute;
+	z-index: 10;
+	right: 10px;
+	top: 10px;
+	background-color: rgba(255, 255, 255, 0.7);
+	color: #717171;
+	cursor: pointer;
+	font-size: 12px;
+	padding: 3px 7px 3px 7px;
+	border: solid 1px #e0e0e0;
+}
+.EnlighterJSRawButton:HOVER{
+	background-color: #f0f0f0;
+}
+.EnlighterJSRawButton::AFTER{
+	content: 'Toggle RAW Code';
+}
+.EnlighterJSWrapper:hover .EnlighterJSRawButton{
+	display: block;
+}
+.EnlighterJSWrapper pre{
+	font-family: inherit;
+	background-color: #ffffff;
+	padding: 5px 5px 5px 10px;
+	line-height: 18px;
+	font-size: 12px;
+	color: #444444;
+	border: none;
+	border-radius: 0px;
+}/*
+---
+description: Inspired by MooTools code coloring.
+
+license: MIT-style
+
+authors:
+ - Jose Prado
+ - Andi Dittrich
+
+...
+*/
+/* theme symbol styles */
+.mootoolsEnlighterJS .de1 {}
+.mootoolsEnlighterJS .de2 {}
+.mootoolsEnlighterJS .kw1 { color: #1b609a; }
+.mootoolsEnlighterJS .kw2 { color: #9a6f1b; }
+.mootoolsEnlighterJS .kw3 { color: #784e0c; }
+.mootoolsEnlighterJS .kw4 { color: #9a6f1b; }
+.mootoolsEnlighterJS .co1 { color: #888888; }
+.mootoolsEnlighterJS .co2 { color: #888888; }
+.mootoolsEnlighterJS .st0 { color: #489a1b; }
+.mootoolsEnlighterJS .st1 { color: #489a1b; }
+.mootoolsEnlighterJS .st2 { color: #489a1b; }
+.mootoolsEnlighterJS .nu0 { color: #70483d; }
+.mootoolsEnlighterJS .me0 { color: #666666; }
+.mootoolsEnlighterJS .me1 { color: #666666; }
+.mootoolsEnlighterJS .br0 { color: #444444; }
+.mootoolsEnlighterJS .sy0 { color: #444444; }
+.mootoolsEnlighterJS .es0 { color: #444444; }
+.mootoolsEnlighterJS .re0 { color: #784e0c; }
+
+/* Raw Code Pane */
+.mootoolsEnlighterJSWrapper pre{
 	line-height: 16px;
-	overflow: auto;
-	white-space: pre-wrap;
-	word-wrap: break-word;
-	margin: 0px;
-	padding: 0px;
+}
+.mootoolsEnlighterJSWrapper .EnlighterJSRawButton{
+	padding: 3px 10px 3px 10px;
+	margin: 0px 5px 0px 5px;
+	background-color: #f2f2f2;
+	border-radius: 5px;
+	border: solid 0px #ffffff;
+	color: #000000;
+}
+.mootoolsEnlighterJSWrapper .EnlighterJSRawButton:hover{
+	background-color: #e5e5e5;
+}/*
+---
+description: EnlighterJS standard style - Inspired by GitHub & Bootstrap colors;
+
+license: MIT-style X11
+
+authors:
+ - Andi Dittrich
+...
+*/
+
+/* default styles */
+.enlighterEnlighterJS, .enlighterEnlighterJSWrapper {
+	font-family: Consolas, "Source Code Pro", "Courier New", Monospace;
 }
 
 /* Inline specific styles */
-pre.EnlighterJSRendered {
-	background-color: #fff;
-	padding: 5px 5px 5px 15px;
+span.enlighterEnlighterJS{
+	border-radius: 3px;
 }
 
 /* LIST specific styles */
-ol.EnlighterJSRendered {
+ol.enlighterEnlighterJS, ul.enlighterEnlighterJS, .enlighterEnlighterJSWrapper pre{
+	font-size: 11px;
 	color: #939393;
-	font-size: 10px;
-	background-color: #f2f2f2;
-	color: #939393;
-	margin: 0px 0px 20px 0px;
-	padding: 0px;
-	text-indent: 0px;
-	list-style: decimal-leading-zero outside;
-}
-ol.EnlighterJSRendered li {
-	margin: 0px 0px 0px 40px; 
-	background-color: #fff;
-	border-top: 1px solid #fff;
-	border-bottom: 1px solid #fff;
-	border-left: 1px solid #939393;
-	padding: 0px 5px 0px 14px;
-	line-height: 14px;
-	color: #939393;
-	list-style: decimal-leading-zero outside;
-	font-size: inherit;
+	border-radius: 8px;
+	border: solid 1px #e0e0e0;
+	background-color: #f9f9f9;
 }
 
-ol.EnlighterJSRendered li.firstline {
-	padding-top: 5px;
+/* line styles */
+ol.enlighterEnlighterJS li, ul.enlighterEnlighterJS li{
+	border: solid 0px #ffffff;
+	padding: 1px 5px 1px 14px;
+	line-height: 16px;
+	color: #aaaaaa;
 }
-ol.EnlighterJSRendered li.lastline  { 
-	padding-bottom: 5px; 
+ol.enlighterEnlighterJS li{
+	list-style: decimal outside;
+	border-left: 1px solid #e0e0e0;
+	padding: 1px 5px 1px 14px;
 }
 
 /* special line highlight color */
-ol.EnlighterJSRendered li.specialline {
-	background-color: #F4F8FC;
+ol.enlighterEnlighterJS li.specialline, ul.enlighterEnlighterJS li.specialline {
+	background-color: #fff0f0;
 }
 
-ol.EnlighterJSRendered li.hoverEnabled:hover {
-	border-top: 1px solid #eee;
-	border-bottom: 1px solid #eee;
-	background-color: #F4F8FC;
+/* hover effect */
+ol.enlighterEnlighterJS li.hoverEnabled:hover, ul.enlighterEnlighterJS li.hoverEnabled:hover {
+	background-color: #ffffe0;
+	border: solid 0px #ffffff;
+	color: #444444;
+}
+ol.enlighterEnlighterJS li.hoverEnabled:hover{
+	border-left: 1px solid #e0e0e0;
 }
 
-/* default symbol style */
-.EnlighterJSRendered span {
-	color: #000000;
-	font-size: inherit;
-	margin: 0px;
-	padding: 0px;
-	line-height: inherit;
+/* symbol styles */
+.enlighterEnlighterJS .de1 { color: #CF6A4C; }
+.enlighterEnlighterJS .de2 { color: #CF6A4C; }
+.enlighterEnlighterJS .kw1 { color: #286491; font-weight:bold; }
+.enlighterEnlighterJS .kw2 { color: #4da0d2; }
+.enlighterEnlighterJS .kw3 { color: #445588; }
+.enlighterEnlighterJS .kw4 { color: #990073; }
+.enlighterEnlighterJS .co1 { color: #9999aa; }
+.enlighterEnlighterJS .co2 { color: #9999aa; }
+.enlighterEnlighterJS .st0 { color: #dd1144; }
+.enlighterEnlighterJS .st1 { color: #dd1144; }
+.enlighterEnlighterJS .st2 { color: #dd1144; }
+.enlighterEnlighterJS .nu0 { color: #009999; }
+.enlighterEnlighterJS .me0 { color: #0086b3; }
+.enlighterEnlighterJS .me1 { color: #0086b3; }
+.enlighterEnlighterJS .br0 { color: #777; }
+.enlighterEnlighterJS .sy0 { color: #777; }
+.enlighterEnlighterJS .es0 { color: #777; }
+.enlighterEnlighterJS .re0 { color: #009926; }
+
+/* Tab Panel */
+.enlighterEnlighterJSTabPane .controls{
+	border-radius: 8px 8px 0px 0px;
+	background-color: #f9f9f9;
+	border: solid 1px #e0e0e0;
+	border-bottom-width: 0px;
+	padding: 5px;
+}
+.enlighterEnlighterJSTabPane .controls li {
+	border-radius: 4px;
+	border: solid 1px #e0e0e0;
 	font-size: 12px;
+	color: #000000;
+	background-color: transparent;
+	font-family: Consolas, "Source Code Pro", "Courier New", Monospace;
+	cursor: pointer;
+}
+.enlighterEnlighterJSTabPane .controls li:hover {
+	background-color: transparent;
+}
+.enlighterEnlighterJSTabPane .controls .selected,.enlighterEnlighterJSTabPane .controls .selected:hover{
+	background-color: #e5e5e5;
+	color: #000000;
+	border-color: #c9c9c9;
+}
+.enlighterEnlighterJSTabPane .enlighterEnlighterJS, .enlighterEnlighterJSTabPane pre{
+	border-radius: 0px 0px 8px 8px;
+}
+.enlighterEnlighterJSTabPane .pane{
+	padding: 0px;
 }
 
-/* theme symbol styles */
-.EnlighterJSRendered .de1 {}
-.EnlighterJSRendered .de2 {}
-.EnlighterJSRendered .kw1 { color: #1b609a; }
-.EnlighterJSRendered .kw2 { color: #9a6f1b; }
-.EnlighterJSRendered .kw3 { color: #784e0c; }
-.EnlighterJSRendered .kw4 { color: #9a6f1b; }
-.EnlighterJSRendered .co1 { color: #888888; }
-.EnlighterJSRendered .co2 { color: #888888; }
-.EnlighterJSRendered .st0 { color: #489a1b; }
-.EnlighterJSRendered .st1 { color: #489a1b; }
-.EnlighterJSRendered .st2 { color: #489a1b; }
-.EnlighterJSRendered .nu0 { color: #70483d; }
-.EnlighterJSRendered .me0 { color: #666666; }
-.EnlighterJSRendered .me1 { color: #666666; }
-.EnlighterJSRendered .br0 { color: #444444; }
-.EnlighterJSRendered .sy0 { color: #444444; }
-.EnlighterJSRendered .es0 { color: #444444; }
-.EnlighterJSRendered .re0 { color: #784e0c; }
-/*
+/* Raw Code Pane */
+.enlighterEnlighterJSWrapper pre{
+	background-color: #ffffff;
+	font-size: 12px;
+	color: #717171;
+}/*
 ---
 description: GitHub inspired theme.
 
 license: MIT-style
 
 authors:
-- Jose Prado
-- Andi Dittrich
-
+  - Andi Dittrich
+  - Jose Prado
 ...
 */
 
 /* borders on top&botton */
-.gitEnlighterJS {
-	border-bottom: 1px solid #eee;
-	border-top: 1px solid #eee; 
+.gitEnlighterJS, .gitEnlighterJSWrapper pre{
+	border: 1px solid #eee;
 	font-family: Courier, monospace;
 }
 
 /* no line borders */
-ol.gitEnlighterJS li{
+ol.gitEnlighterJS li, ul.gitEnlighterJS li{
 	border: none;
 	line-height: 20px;
 }
 
 /* hover color */
-ol.gitEnlighterJS li.hoverEnabled:hover{
+ol.gitEnlighterJS li.hoverEnabled:hover, ul.gitEnlighterJS li.hoverEnabled:hover{
 	background-color: #ffffcc;
 	border: none;
 }
 
 /* special line highlight color */
-ol.gitEnlighterJS li.specialline {
+ol.gitEnlighterJS li.specialline, ul.gitEnlighterJS li.specialline {
 	background-color: #fffff2;
 }
 
@@ -211,7 +413,18 @@ ol.gitEnlighterJS {
 .gitEnlighterJS .sy0 { color: #777; }
 .gitEnlighterJS .es0 { color: #777; }
 .gitEnlighterJS .re0 { color: #009926; }
-/*
+
+/* Raw Code Pane */
+.gitEnlighterJSWrapper pre{
+	background-color: #ffffff;
+	font-size: 12px;
+	color: #000000;
+	line-height: 20px;
+}
+.gitEnlighterJSWrapper .EnlighterJSRawButton{
+	color: #0086b3;
+	border: solid 0px #000000;
+}/*
 ---
 description: TextMate mocha inspired theme.
 
@@ -241,31 +454,29 @@ ol.mochaEnlighterJS {
 	color: #000;
 	list-style-type: decimal;
 }
-ol.mochaEnlighterJS li{
+ul.mochaEnlighterJS {
+	background-color: #BBCCD5;
+	color: #000;
+}
+ol.mochaEnlighterJS li, ul.mochaEnlighterJS li{
 	border: none;
 	border-left: 2px solid #939393;
 	background-color: #2D2522;
 }
-ol.mochaEnlighterJS li.hoverEnabled:hover{
+ol.mochaEnlighterJS li.hoverEnabled:hover, ul.mochaEnlighterJS li.hoverEnabled:hover{
 	background-color: #423F43;
 	border: none;
 	border-left: 2px solid #939393;
 }
 
 /* special line highlight color */
-ol.mochaEnlighterJS li.specialline {
+ol.mochaEnlighterJS li.specialline, ul.mochaEnlighterJS li.specialline {
 	background-color: #423F43;
 }
 
-pre.mochaEnlighterJS {
-	background-color: #2D2522;
-}
 .mochaEnlighterJS span{
 	color: #f8f8f8;
 }
-
-
-
 
 /** Symbol Styles */
 .mochaEnlighterJS .de1 { color: #CF6A4C; }
@@ -286,7 +497,20 @@ pre.mochaEnlighterJS {
 .mochaEnlighterJS .sy0 { color: #777; }
 .mochaEnlighterJS .es0 { color: #777; }
 .mochaEnlighterJS .re0 { color: #B55B8B; }
-/*
+
+/* Raw Code Pane */
+.mochaEnlighterJSWrapper pre{
+	background-color: #2D2522;
+	font-size: 12px;
+	color: #e0e0e0;
+	line-height: 14px;
+	border-left: 2px solid #939393;
+}
+.mochaEnlighterJSWrapper .EnlighterJSRawButton{
+	background-color: #BBCCD5;
+	border: solid 0px #BBCCD5;
+	color: #000;
+}/*
 ---
 description: Panic Coda inspired theme.
 
@@ -326,7 +550,22 @@ authors:
 .panicEnlighterJS .br0 { color: #000; }
 .panicEnlighterJS .sy0 { color: #000; }
 .panicEnlighterJS .es0 { color: #000; }
-.panicEnlighterJS .re0 { color: #8A000F; }/*
+.panicEnlighterJS .re0 { color: #8A000F; }
+
+/* Raw Code Pane */
+.panicEnlighterJSWrapper pre{
+	background-color: #ffffff;
+	font-size: 12px;
+	color: #000000;
+	line-height: 16px;
+}
+.panicEnlighterJSWrapper .EnlighterJSRawButton{
+	color: #A00083;
+	border: solid 0px #000000;
+}
+.panicEnlighterJSWrapper .EnlighterJSRawButton:hover{
+	background-color: #F4F8FC;	
+}/*
 ---
 description: MacRabbit Espresso inspired theme.
 
@@ -352,20 +591,23 @@ ol.tuttiEnlighterJS {
 	background-color: #fbfbfb;
 	list-style-type: decimal;
 }
+ul.tuttiEnlighterJS {
+	background-color: #fbfbfb;
+}
 
-ol.tuttiEnlighterJS li{
+ol.tuttiEnlighterJS li, ul.tuttiEnlighterJS li{
 	border: none;
 	line-height: 16px;
 }
-ol.tuttiEnlighterJS li:hover{
+ol.tuttiEnlighterJS li:hover, ul.tuttiEnlighterJS li:hover{
 	color: #000000;
 }
-ol.tuttiEnlighterJS li.hoverEnabled:hover{
+ol.tuttiEnlighterJS li.hoverEnabled:hover, ul.tuttiEnlighterJS li.hoverEnabled:hover{
 	background-color: #F4F8FC;
 	border: none;
 }
 /* special line highlight color */
-ol.tuttiEnlighterJS li.specialline {
+ol.tuttiEnlighterJS li.specialline, ul.tuttiEnlighterJS li.specialline  {
 	background-color: #F4F8FC;
 }
 
@@ -388,7 +630,14 @@ ol.tuttiEnlighterJS li.specialline {
 .tuttiEnlighterJS .sy0 { color: #626fc9; }
 .tuttiEnlighterJS .es0 { color: #4f4f4f; }
 .tuttiEnlighterJS .re0 { color: #d44950; }
-/*
+
+/* Raw Code Pane */
+.tuttiEnlighterJSWrapper pre{
+	background-color: #ffffff;
+	font-size: 12px;
+	color: #000000;
+	line-height: 16px;
+}/*
 ---
 description: TextMate twilight inspired theme.
 
@@ -413,9 +662,6 @@ authors:
 	background-color: #000000;
 }
 
-pre.twilightEnlighterJS{
-	background-color: #141414;
-}
 .twilightEnlighterJS span{
 	color: #f8f8f8;
 }
@@ -425,21 +671,25 @@ ol.twilightEnlighterJS {
 	list-style-type: decimal;
 	border: solid 1px #222222;
 }
-
-ol.twilightEnlighterJS li{
+ul.twilightEnlighterJS {
+	color: #000;
+	background-color: #f2f2f2;
+	border: solid 1px #222222;
+}
+ol.twilightEnlighterJS li, ul.twilightEnlighterJS li{
 	border: none;
 	border-left: 1px solid #939393;
 	line-height: 19px;
 	background-color: #141414;
 }
-ol.twilightEnlighterJS li.hoverEnabled:hover{
+ol.twilightEnlighterJS li.hoverEnabled:hover, ul.twilightEnlighterJS li.hoverEnabled:hover{
 	background-color: #202021;
 	border: none;
 	border-left: 1px solid #939393;
 }
 
 /* special line highlight color */
-ol.twilightEnlighterJS li.specialline {
+ol.twilightEnlighterJS li.specialline, ul.twilightEnlighterJS li.specialline {
 	background-color: #202021;
 }
 
@@ -462,3 +712,16 @@ ol.twilightEnlighterJS li.specialline {
 .twilightEnlighterJS .sy0 { color: #fff; }
 .twilightEnlighterJS .es0 { color: #fff; }
 .twilightEnlighterJS .re0 { color: #E57A27; }
+
+/* Raw Code Pane */
+.twilightEnlighterJSWrapper pre{
+	background-color: #141414;
+	font-size: 12px;
+	color: #f8f8f8;
+	line-height: 20px;
+}
+.twilightEnlighterJSWrapper .EnlighterJSRawButton{
+	color: #f8f8f8;
+	background-color: #202021;
+	border: solid 0px #202021;
+}
