@@ -5,10 +5,10 @@ description: Compiles an array of tokens into inline elements, grabbed into a ou
 license: MIT-style X11
 
 authors:
-	- Andi Dittrich
+  - Andi Dittrich
 
 requires:
-	- core/1.4.5
+  - core/1.4.5
 
 provides: [EnlighterJS.Renderer.InlineRenderer]
 ...

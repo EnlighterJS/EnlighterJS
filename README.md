@@ -238,6 +238,7 @@ EnlighterJS provides 3 ways to get manually initialized:
 **Notice:** You can pass any of the [Global Options](#global_options) with each method. Every method will invoke the `EnlighterJS` constructor.
 
 #### Option 1 - Native Element extension ####
+
     #JS
     // get element by it's ID and activate highlighting using markdown as language
     document.id('myCustomCode').enlight({
@@ -249,6 +250,7 @@ EnlighterJS provides 3 ways to get manually initialized:
     document.id('myCustomCode').enlight(false);
 
 #### Option 2 - Use an EnlighterJS instance (OOP Style) ####
+
     #JS
     // create a new EnlighterJS instance
     var myEnlighter = new EnlighterJS(document.id('myCustomCode'), {
@@ -260,6 +262,7 @@ EnlighterJS provides 3 ways to get manually initialized:
     myEnlighter.enlight(true);
 
 #### Option 3 - Use an EnlighterJS.Util.Helper utility function ####
+
     #JS
     // Highlight all code tags (inline code) and use Javascript as default language
     EnlighterJS.Util.Helper(document.getElements('code'), {
@@ -316,12 +319,14 @@ Some options need to be applied directly to the container elements which holds t
 * **data-enlighter-lineoffset** (number) - Start value of line-numbering e.g. "5" to start with line 5 - attribute `start` of the ol tag is set | Block Content option
 
 #### Example 1 ####
+
     #HTML
     <pre data-enlighter-language="js" data-enlighter-linenumbers="false" data-enlighter-lineoffset="5">
     ...
     </pre>
 
 #### Example 2 ####
+
     #HTML
     <p>
     EnlighterJS also supports <code class="special" data-enlighter-language="js">alert('Inline Sourcecode highlighting');</code> (since version 2.0).
@@ -401,9 +406,9 @@ Or Include only your custom themes
 Removing/Adding languages is also easy as this - they are defined by the *include.languages* property.
 For Example: only include html+css+js syntax highlighting (be carefull - html is an alias for XML!, you have to include `Xml.js`)
 
-	#XML
-	<!-- Languages to include !-->
-	<property name="include.languages" value="Source/Languages/Css.js Source/Languages/Xml.js Source/Languages/Js.js" />
+    #XML
+    <!-- Languages to include !-->
+    <property name="include.languages" value="Source/Languages/Css.js Source/Languages/Xml.js Source/Languages/Js.js" />
 		
 
 Compatibility
