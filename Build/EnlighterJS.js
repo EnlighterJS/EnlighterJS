@@ -4,8 +4,8 @@ name: EnlighterJS
 description: Post Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-Style X11 License
-version: 2.0
-build: 626c2b592085877aed8a314ae790f2ac/April 28 2014
+version: 2.1
+build: 7f88b90cb7de0eb75cf259da64a12e1a/May 12 2014
 
 authors:
   - Andi Dittrich (author of EnlighterJS)
@@ -46,7 +46,8 @@ var EnlighterJS = new Class({
 		renderer: 'Block',
 		indent : -1,
 		forceTheme: false,
-		rawButton: false
+		rawButton: false,
+		ampersandCleanup: true
 	},
 
 	// used renderer instance
@@ -127,7 +128,7 @@ var EnlighterJS = new Class({
 			var themeName = (this.options.forceTheme ? null : this.originalCodeblock.get('data-enlighter-theme')) || this.options.theme || 'Enlighter';
 			
 			// special lines to highlight ?
-			var specialLines = new EnlighterJS.SpecialLineHighlighter(this.originalCodeblock.get('data-enlighter-highlight'));
+			var specialLines = new EnlighterJS.SpecialLineHighlighter(this.originalCodeblock.get('data-enlighter-highlight'), this.originalCodeblock.get('data-enlighter-lineoffset'));
 			
 			// Load language parser
 			language = new EnlighterJS.Language[languageName](this.getRawCode(true));
@@ -249,8 +250,13 @@ var EnlighterJS = new Class({
 		// get the raw content - remove leading+trailing whitespaces
 		var code = this.originalCodeblock.get('html').trim();
 		
+		// cleanup ampersand ?
+		if (this.options.ampersandCleanup===true){
+			code = code.replace(/&amp;/gim, '&');
+		}
+		
 		// replace html escaped chars
-		code = code.replace(/&amp;/gim, '&').replace(/&lt;/gim, '<').replace(/&gt;/gim, '>');
+		code = code.replace(/&lt;/gim, '<').replace(/&gt;/gim, '>').replace(/&nbsp;/gim, ' ');
 
 		// replace tabs with spaces ?
 		if (reindent === true){
@@ -302,11 +308,14 @@ EnlighterJS.SpecialLineHighlighter = new Class({
 	 * @constructs
 	 * @param {String} html attribute content "highlight" - scheme 4,5,6,10-12,19
 	 */
-	initialize : function(lineNumberString){
+	initialize : function(lineNumberString, lineOffsetString){
 		// special lines given ?
 		if (lineNumberString == null || lineNumberString.length == 0){
 			return;
 		}
+		
+		// line offset available ?
+		var lineOffset = (lineOffsetString != null && lineOffsetString.toInt() > 1 ? lineOffsetString.toInt()-1 : 0);
 		
 		// split attribute string into segments
 		var segments = lineNumberString.split(',');
@@ -319,8 +328,8 @@ EnlighterJS.SpecialLineHighlighter = new Class({
 			// single line or line-range
 			if (parts!=null){				
 				// 2 items required
-				var start = parts[1].toInt();
-				var stop = parts[2].toInt();
+				var start = parts[1].toInt()-lineOffset;
+				var stop = parts[2].toInt()-lineOffset;
 				
 				// valid range ?
 				if (stop > start){
@@ -331,7 +340,7 @@ EnlighterJS.SpecialLineHighlighter = new Class({
 				}
 			}else{
 				// add line to storage
-				this.specialLines['l' + item.toInt()] = true;
+				this.specialLines['l' + (item.toInt()-lineOffset)] = true;
 			}
 		}.bind(this));
 	},
@@ -822,10 +831,10 @@ description: Compiles an array of tokens into inline elements, grabbed into a ou
 license: MIT-style X11
 
 authors:
-	- Andi Dittrich
+  - Andi Dittrich
 
 requires:
-	- core/1.4.5
+  - core/1.4.5
 
 provides: [EnlighterJS.Renderer.InlineRenderer]
 ...
@@ -912,8 +921,8 @@ EnlighterJS.Renderer.BlockRenderer = new Class({
 			container = new Element(this.options.showLinenumbers ? 'ol' : 'ul');
 		}
 		
-		// add start attribute ?
-		if (localOptions.lineNumbers && localOptions.lineOffset && localOptions.lineOffset.toInt() > 1){
+		// add "start" attribute ?
+		if ((localOptions.lineNumbers || this.options.showLinenumbers) && localOptions.lineOffset && localOptions.lineOffset.toInt() > 1){
 			container.set('start', localOptions.lineOffset);
 		}
 		
@@ -1180,7 +1189,7 @@ authors:
   - Andi Dittrich
   
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Util.Helper]
 ...
@@ -1220,14 +1229,14 @@ provides: [EnlighterJS.Util.Helper]
 				el.enlight(options);
 			});
 			
-			// force theme defined within options (all group members should have the same theme as group-leader)
-			options.forceTheme = true;
-			
 			// create & highlight groups
 			Object.each(groups, function(obj){
 				// copy options
-				var localoptions = options;
-								
+				var localoptions = Object.clone(options);
+
+				// force theme defined within options (all group members should have the same theme as group-leader)
+				localoptions.forceTheme = true;
+				
 				// get group-leader theme
 				localoptions.theme = obj[0].get('data-enlighter-theme') || options.theme || 'Enlighter';
 

@@ -23,11 +23,14 @@ EnlighterJS.SpecialLineHighlighter = new Class({
 	 * @constructs
 	 * @param {String} html attribute content "highlight" - scheme 4,5,6,10-12,19
 	 */
-	initialize : function(lineNumberString){
+	initialize : function(lineNumberString, lineOffsetString){
 		// special lines given ?
 		if (lineNumberString == null || lineNumberString.length == 0){
 			return;
 		}
+		
+		// line offset available ?
+		var lineOffset = (lineOffsetString != null && lineOffsetString.toInt() > 1 ? lineOffsetString.toInt()-1 : 0);
 		
 		// split attribute string into segments
 		var segments = lineNumberString.split(',');
@@ -40,8 +43,8 @@ EnlighterJS.SpecialLineHighlighter = new Class({
 			// single line or line-range
 			if (parts!=null){				
 				// 2 items required
-				var start = parts[1].toInt();
-				var stop = parts[2].toInt();
+				var start = parts[1].toInt()-lineOffset;
+				var stop = parts[2].toInt()-lineOffset;
 				
 				// valid range ?
 				if (stop > start){
@@ -52,7 +55,7 @@ EnlighterJS.SpecialLineHighlighter = new Class({
 				}
 			}else{
 				// add line to storage
-				this.specialLines['l' + item.toInt()] = true;
+				this.specialLines['l' + (item.toInt()-lineOffset)] = true;
 			}
 		}.bind(this));
 	},

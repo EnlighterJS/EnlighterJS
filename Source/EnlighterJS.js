@@ -24,7 +24,8 @@ var EnlighterJS = new Class({
 		renderer: 'Block',
 		indent : -1,
 		forceTheme: false,
-		rawButton: false
+		rawButton: false,
+		ampersandCleanup: true
 	},
 
 	// used renderer instance
@@ -105,7 +106,7 @@ var EnlighterJS = new Class({
 			var themeName = (this.options.forceTheme ? null : this.originalCodeblock.get('data-enlighter-theme')) || this.options.theme || 'Enlighter';
 			
 			// special lines to highlight ?
-			var specialLines = new EnlighterJS.SpecialLineHighlighter(this.originalCodeblock.get('data-enlighter-highlight'));
+			var specialLines = new EnlighterJS.SpecialLineHighlighter(this.originalCodeblock.get('data-enlighter-highlight'), this.originalCodeblock.get('data-enlighter-lineoffset'));
 			
 			// Load language parser
 			language = new EnlighterJS.Language[languageName](this.getRawCode(true));
@@ -227,8 +228,13 @@ var EnlighterJS = new Class({
 		// get the raw content - remove leading+trailing whitespaces
 		var code = this.originalCodeblock.get('html').trim();
 		
+		// cleanup ampersand ?
+		if (this.options.ampersandCleanup===true){
+			code = code.replace(/&amp;/gim, '&');
+		}
+		
 		// replace html escaped chars
-		code = code.replace(/&amp;/gim, '&').replace(/&lt;/gim, '<').replace(/&gt;/gim, '>');
+		code = code.replace(/&lt;/gim, '<').replace(/&gt;/gim, '>').replace(/&nbsp;/gim, ' ');
 
 		// replace tabs with spaces ?
 		if (reindent === true){

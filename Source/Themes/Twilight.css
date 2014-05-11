@@ -8,12 +8,33 @@ authors:
 - Jose Prado
 - Andi Dittrich
 
+styles:
+ base:
+   font-family: Monaco, Courier, Monospace
+   font-size: 12px
+   color: '#f8f8f8'
+ line:
+   font-family: Monaco, Courier, Monospace
+   font-size: 10px
+   line-height: 16px
+   color: '#939393'
+ raw:
+   font-family: Monaco, Courier, Monospace
+   font-size: 12px
+   line-height: 20px
+   color: '#f8f8f8'
+   background-color: '#141414'        
+ hover:
+   background-color: '#202021'
+ specialline:
+   background-color: ' #202021'
 ...
 */
 .twilightEnlighterJSTabPane .controls li{
 	background-color: #303030;
 	font-size: 12px;
 	color: #f2f2f2;
+	border-radius: 0px;
 }
 .twilightEnlighterJSTabPane .controls li:hover{
 	color: #8F9657;
@@ -23,17 +44,21 @@ authors:
 	background-color: #000000;
 }
 
+/* Inline Styles */
+span.twilightEnlighterJS{
+	background-color: #141414;
+	border: none;
+}
+
 .twilightEnlighterJS span{
 	color: #f8f8f8;
 }
 ol.twilightEnlighterJS {
-	color: #000;
 	background-color: #f2f2f2;
 	list-style-type: decimal;
 	border: solid 1px #222222;
 }
 ul.twilightEnlighterJS {
-	color: #000;
 	background-color: #f2f2f2;
 	border: solid 1px #222222;
 }

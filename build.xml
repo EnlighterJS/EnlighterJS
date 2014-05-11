@@ -15,7 +15,7 @@
 	<property name="yui.jar" value="Util/yuicompressor-2.4.8.jar" />
 	<property name="build.dir" value="Build/" />
 	<property name="www.dir" value="PublicHtml/" />
-	<property name="build.var.version" value="2.0" />
+	<property name="build.var.version" value="2.1" />
 	
 	<!-- ANT.contrib package -->
 	<path id="ant.contrib.classpath" location="Util/ant-contrib-1.0b3.jar"></path>
@@ -82,6 +82,7 @@
 		<exec executable="php">
 			<arg value="Util/PageGenerator.php" />
 			<arg value="${www.dir}" />
+			<arg value="v${build.var.version}" />
 		</exec>		
 		
 		<!-- Copy resources !-->

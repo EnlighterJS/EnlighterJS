@@ -5,14 +5,17 @@
  * @author Andi Dittrich
  * @license MIT Style X11
  */
-$enlighterMetaInitDirective = '<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="javascript" data-indent="4" data-selector-block="pre" data-selector-inline="code" data-rawcodebutton="true" />';
+$enlighterMetaInitDirective = '<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="generic" data-indent="4" data-selector-block="pre" data-selector-inline="code" data-rawcodebutton="true" />';
 
 function cdnbase($file){
 	return $file;
 }
 
 // Get output dir
-$outputDir = (count($argv)==2 ? $argv[1] : 'Output/');
+$outputDir = (count($argv)>=2 ? $argv[1] : 'Output/');
+
+// Get Build Version
+define('ENLIGHTERJS_VERSION', (count($argv)>=3 ? $argv[2] : 'unknown'));
 
 // === README ============================================================
 // create Readme.html
@@ -21,6 +24,15 @@ renderTemplate($outputDir.'index.html', array(
 	'pageContent' => $readmeContent,
 	'pageTitle' => 'Advanced Javascript based Syntax Highlighter for MooTools',
 	'headerContent' => $enlighterMetaInitDirective
+));
+
+// === Changelog ============================================================
+// create Changelog.html
+$readmeContent = renderMarkdownDocument(file_get_contents('CHANGES.md'));
+renderTemplate($outputDir.'Changelog.html', array(
+'pageContent' => $readmeContent,
+'pageTitle' => 'Changelog',
+'headerContent' => $enlighterMetaInitDirective
 ));
 
 // === QUICKSTART ========================================================

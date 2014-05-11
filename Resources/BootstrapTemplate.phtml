@@ -32,11 +32,16 @@
 		<div class="container">
 			<div class="navbar navbar-inverse" role="navigation">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="index.html">EnlighterJS</a>
+					<a class="navbar-brand" href="index.html">EnlighterJS <?php echo ENLIGHTERJS_VERSION ?></a>
 				</div>
 				<ul class="nav navbar-nav">
 					<li><a href="Quickstart.html">Quickstart</a></li>
-					<li><a href="index.html">Docs</a></li>
+					<li><a href="index.html">Docs<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="index.html">Documentation</a></li>
+							<li><a href="Changelog.html">Changelog</a></li>
+						</ul>
+					</li>
 					<li class="dropdown"><a href="#">Examples<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Languages</li>

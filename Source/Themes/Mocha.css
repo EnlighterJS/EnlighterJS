@@ -8,6 +8,26 @@ authors:
 - Jose Prado
 - Andi Dittrich
 
+styles:
+ base:
+   font-family: Monaco, Courier, Monospace
+   font-size: 12px
+   color: '#000000'
+ line:
+   font-family: Monaco, Courier, Monospace
+   font-size: 10px
+   line-height: 16px
+   color: '#f8f8f8'
+ raw:
+   font-family: Monaco, Courier, Monospace
+   font-size: 12px
+   line-height: 14px
+   color: '#e0e0e0'
+   background-color: '#2D2522'     
+ hover:
+   background-color: '#423F43'
+ specialline:
+   background-color: '#423F43'
 ...
 */
 .mochaEnlighterJSTabPane .controls li{
@@ -20,22 +40,27 @@ authors:
 	background-color: #BBCCD5;
 }
 
+/* Inline Styles */
+span.mochaEnlighterJS{
+	background-color: #2D2522;
+	border: none;
+}
+
 .mochaEnlighterJS {
 	color: #f8f8f8;
 }
 ol.mochaEnlighterJS {
 	background-color: #BBCCD5;
-	color: #000;
 	list-style-type: decimal;
 }
 ul.mochaEnlighterJS {
 	background-color: #BBCCD5;
-	color: #000;
 }
 ol.mochaEnlighterJS li, ul.mochaEnlighterJS li{
 	border: none;
 	border-left: 2px solid #939393;
 	background-color: #2D2522;
+	color: #000000;
 }
 ol.mochaEnlighterJS li.hoverEnabled:hover, ul.mochaEnlighterJS li.hoverEnabled:hover{
 	background-color: #423F43;

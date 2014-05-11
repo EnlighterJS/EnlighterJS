@@ -43,8 +43,8 @@ EnlighterJS.Renderer.BlockRenderer = new Class({
 			container = new Element(this.options.showLinenumbers ? 'ol' : 'ul');
 		}
 		
-		// add start attribute ?
-		if (localOptions.lineNumbers && localOptions.lineOffset && localOptions.lineOffset.toInt() > 1){
+		// add "start" attribute ?
+		if ((localOptions.lineNumbers || this.options.showLinenumbers) && localOptions.lineOffset && localOptions.lineOffset.toInt() > 1){
 			container.set('start', localOptions.lineOffset);
 		}
 		

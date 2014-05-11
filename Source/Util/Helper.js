@@ -9,7 +9,7 @@ authors:
   - Andi Dittrich
   
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Util.Helper]
 ...
@@ -49,14 +49,14 @@ provides: [EnlighterJS.Util.Helper]
 				el.enlight(options);
 			});
 			
-			// force theme defined within options (all group members should have the same theme as group-leader)
-			options.forceTheme = true;
-			
 			// create & highlight groups
 			Object.each(groups, function(obj){
 				// copy options
-				var localoptions = options;
-								
+				var localoptions = Object.clone(options);
+
+				// force theme defined within options (all group members should have the same theme as group-leader)
+				localoptions.forceTheme = true;
+				
 				// get group-leader theme
 				localoptions.theme = obj[0].get('data-enlighter-theme') || options.theme || 'Enlighter';
 

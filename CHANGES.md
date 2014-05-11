@@ -1,3 +1,19 @@
+### Version 2.1 ###
+* Added Changelog to doc pages
+* Added Inline Highlighting example to the Theme-Demo page
+* Added Build Version to doc pages
+* Added option `ampersandCleanup` to enable/disable code cleanup for ampersand signs
+* Added YAML metadata to each theme containing basic style informations - used within the official [Enlighter WordPress Plugin](http://wordpress.org/plugins/enlighter/)
+* Improved theme designs
+* Changed the tab design of the "Git" Theme
+* Changed rgba background-color values of "Tutti" Theme to hex (#fffdf7)
+* Bugifx: Option "data-enlighter-offset" not recognized if local option "data-enlighter-linenumbers" was missing
+* Bugfix: Some CSS Container margin fixes
+* Bugfix: Global options got modified by EnlighterJS.Util.Helper (using codegroups) which caused an unexcepted behaviour (options of multiple instances got merged)
+* Bugfix: Added missing inline-theme-styles
+* Bugfix: Optional linenumber-offset not recognized for highlighting/pointing out special lines of code
+* Bugfix: Code cleanup for `nbsp;` escape sequence missing
+
 ### Version 2.0 ###
 * Added support for Inline-Syntax-Highlighting
 * Added Python Testcase
@@ -21,7 +37,7 @@
 * Changed: Testcase data moved to "Resources/TestcaseData"
 * Changed: Renamed the old standard theme to "MooTools"
 * Changed: Type of EnlighterJS.Util.Helper is changed from `Class` to `Function` - an instance was never used/necessary
-* Changed: The option `compiler` is replaced by `renderer` [Block, Inline]
+* Changed: The option `compiler` is replaced by `renderer` Block/Inline
 * Changed: Demo-URL to `http://enlighterjs.andidittrich.de/`
 * Changed: CSS Class of the output container changed from `EnlighterJSRendererd` to `EnlighterJS` 
 * Changed: `Quickstart.html` and `Development.html` moved to project root

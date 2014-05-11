@@ -7,7 +7,27 @@ license: MIT-style
 authors:
  - Jose Prado
  - Andi Dittrich
-
+ 
+styles:
+ base:
+   font-family: Monaco, Courier, Monospace
+   font-size: 12px
+   color: '#000000'
+ line:
+   font-family: Monaco, Courier, Monospace
+   font-size: 10px
+   line-height: 16px
+   color: '#939393'
+ raw:
+   font-family: Monaco, Courier, Monospace
+   font-size: 12px
+   line-height: 16px
+   color: '#444444'
+   background-color: '#ffffff'   
+ hover:
+   background-color: '#F4F8FC'
+ specialline:
+   background-color: '#F4F8FC'
 ...
 */
 /* theme symbol styles */

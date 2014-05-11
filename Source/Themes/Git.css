@@ -7,6 +7,27 @@ license: MIT-style
 authors:
   - Andi Dittrich
   - Jose Prado
+  
+styles:
+ base:
+   font-family: Courier, monospace
+   font-size: 12px
+   color: '#000000'
+ line:
+   font-family: Courier, monospace
+   font-size: 10px
+   line-height: 16px
+   color: '#939393'
+ raw:
+   font-family: Courier, monospace
+   font-size: 12px
+   line-height: 20px
+   color: '#000000'
+   background-color: '#ffffff'   
+ hover:
+   background-color: '#ffffcc'
+ specialline:
+   background-color: '#fffff2'
 ...
 */
 
@@ -69,3 +90,20 @@ ol.gitEnlighterJS {
 	color: #0086b3;
 	border: solid 0px #000000;
 }
+
+/* Tab Styles */
+.gitEnlighterJSTabPane .controls{
+	background-color: #f2f2f2;
+}
+.gitEnlighterJSTabPane .controls ul{
+	margin: 0px 0px 0px 35px;
+}
+.gitEnlighterJSTabPane .controls li{
+	border-radius: 0px;
+}
+.gitEnlighterJSTabPane .pane{
+	padding: 0px;
+}
+.gitEnlighterJSTabPane .gitEnlighterJS{
+	border-top-color: #e0e0e0;
+} 

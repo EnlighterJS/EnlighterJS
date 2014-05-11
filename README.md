@@ -288,7 +288,8 @@ The following options can be passed to the following methods to customize the re
 * **renderer** - (string) Defines the renderer used to generate the output. Use `Inline` for Inline-Syntax-Highlighting or `Block` for standard highlighting - default: **Block**
 * **rawButton** - (boolean) Enables the optional "RAW Code Button" which will appear in ever codeblock (Block Renderer) to switch between highlighted and un-highlighted code - default: **false**
 * **grouping** - (boolean) Enables code-groups (only used by `EnlighterJS.Util.Helper` utility) - default: **true**
-* **inlineContainerTag** - (string) The html tag-name of the container (inline-syntax-highlighting only) where the generated code is wrapped into - default: **"span"** 
+* **inlineContainerTag** - (string) The html tag-name of the container (inline-syntax-highlighting only) where the generated code is wrapped into - default: **"span"**
+* **ampersandCleanup** - (boolean) Should the ampersand escape sequence `&#38;amp;` automatically replaced by the ampersand sign during code cleanup ? Useful to resolve double escaped html code - default: **true**
 
 #### Example ####
 

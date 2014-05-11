@@ -13,6 +13,9 @@ function cdnbase($file){
 // Get output dir
 $outputDir = (count($argv)==2 ? $argv[1] : 'Output/');
 
+// Get Build Version
+define('ENLIGHTERJS_VERSION', '');
+
 // === Language Examples =================================================
 $languages = array(
 	'C', 'Cpp', 'CSS', 'HTML', 'Java', 'js', 'JSON', 'MarkDown', 'NSIS', 'PHP', 'Python', 'Ruby', 'SQL', 'Unit', 'XML', 'RAW', 'NoHighlight'

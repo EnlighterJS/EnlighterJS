@@ -31,11 +31,16 @@
 		<div class="container">
 			<div class="navbar navbar-inverse" role="navigation">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="index.html">EnlighterJS</a>
+					<a class="navbar-brand" href="index.html">EnlighterJS </a>
 				</div>
 				<ul class="nav navbar-nav">
 					<li><a href="Quickstart.html">Quickstart</a></li>
-					<li><a href="index.html">Docs</a></li>
+					<li><a href="index.html">Docs<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="index.html">Documentation</a></li>
+							<li><a href="Changelog.html">Changelog</a></li>
+						</ul>
+					</li>
 					<li class="dropdown"><a href="#">Examples<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li class="dropdown-header">Languages</li>
@@ -92,7 +97,13 @@
 		</div>
 		<div id="content">
 			<!-- ############################################################# -->
-				<h4>Unknown Language - should be highlighted as standard</h4>
+				<h4>Line-Offset 4</h4>
+	<pre data-enlighter-language="javascript" data-enlighter-lineoffset="4">alert('hello world');</pre>
+	
+	<h4>Line-Offset 4; Force Linenumbers OFF</h4>
+	<pre data-enlighter-language="javascript" data-enlighter-lineoffset="4" data-enlighter-linenumbers="false">alert('hello world');</pre>
+		
+	<h4>Unknown Language - should be highlighted as standard</h4>
 	<pre data-enlighter-language="UNKNOWN" >var x = "hello world";</pre>
 	
 	<h4>RAW Code - should be rendered unhighlighted</h4>
