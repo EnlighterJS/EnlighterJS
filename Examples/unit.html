@@ -16,13 +16,13 @@
 	<link rel="stylesheet" href="../Resources/Template.css">
 
 	<!-- Include EnlighterJS Styles -->
-	<link rel="stylesheet" type="text/css" href="../Build/EnlighterJS.css" />
+	<link rel="stylesheet" type="text/css" href="../Build/EnlighterJS.yui.css" />
 	
 	<!-- Include MooTools Framework -->
 	<script type="text/javascript" src="../Resources/mootools-core-1.4.5-full-nocompat.js"></script>
 
 	<!-- Include EnlighterJS -->
-	<script type="text/javascript" src="../Build/EnlighterJS.js"></script>	
+	<script type="text/javascript" src="../Build/EnlighterJS.yui.js"></script>	
 
 	<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="javascript" data-indent="4" data-selector-block="pre" data-selector-inline="code" data-rawcodebutton="true" /></head>
 <body>
@@ -55,6 +55,7 @@
 							<li><a href="java.html">Java</a></li>
 							<li><a href="python.html">Python</a></li>
 							<li><a href="cpp.html">C++</a></li>
+							<li><a href="csharp.html">C#</a></li>
 							<li><a href="c.html">C</a></li>
 							<li><a href="ruby.html">Ruby</a></li>
 							<li><a href="nsis.html">NSIS</a></li>
@@ -97,7 +98,16 @@
 		</div>
 		<div id="content">
 			<!-- ############################################################# -->
-				<h4>Line-Offset 4</h4>
+				<h4>Line indentation of first line shouldn't removed</h4>
+<pre data-enlighter-language="javascript">
+	alert('hello world');
+	new FX.scroll(args);
+	}
+
+// other stuff	
+</pre>
+	
+	<h4>Line-Offset 4</h4>
 	<pre data-enlighter-language="javascript" data-enlighter-lineoffset="4">alert('hello world');</pre>
 	
 	<h4>Line-Offset 4; Force Linenumbers OFF</h4>

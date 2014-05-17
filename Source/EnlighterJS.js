@@ -221,12 +221,14 @@ var EnlighterJS = new Class({
 
 	/**
 	 * Extracts the raw code from given codeblock
-	 * @author Andi Dittrich
 	 * @return {String} The plain-text code (raw)
 	 */
 	getRawCode: function(reindent) {
-		// get the raw content - remove leading+trailing whitespaces
-		var code = this.originalCodeblock.get('html').trim();
+		// get the raw content
+		var code = this.originalCodeblock.get('html');
+		
+		// remove empty lines at the beginning+end of the codeblock
+		code = code.replace(/(^\s*\n|\n\s*$)/gi, '');
 		
 		// cleanup ampersand ?
 		if (this.options.ampersandCleanup===true){

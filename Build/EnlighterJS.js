@@ -4,8 +4,8 @@ name: EnlighterJS
 description: Post Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-Style X11 License
-version: 2.1
-build: 7f88b90cb7de0eb75cf259da64a12e1a/May 12 2014
+version: 2.2
+build: 349e21bf9ca3eb132c7df880bf52d588/May 17 2014
 
 authors:
   - Andi Dittrich (author of EnlighterJS)
@@ -243,12 +243,14 @@ var EnlighterJS = new Class({
 
 	/**
 	 * Extracts the raw code from given codeblock
-	 * @author Andi Dittrich
 	 * @return {String} The plain-text code (raw)
 	 */
 	getRawCode: function(reindent) {
-		// get the raw content - remove leading+trailing whitespaces
-		var code = this.originalCodeblock.get('html').trim();
+		// get the raw content
+		var code = this.originalCodeblock.get('html');
+		
+		// remove empty lines at the beginning+end of the codeblock
+		code = code.replace(/(^\s*\n|\n\s*$)/gi, '');
 		
 		// cleanup ampersand ?
 		if (this.options.ampersandCleanup===true){
@@ -572,7 +574,8 @@ EnlighterJS.LanguageManager = new Class({
 		'html': 'xml',
 		'jquery': 'js',
 		'mootools': 'js',
-		'ext.js': 'js'
+		'ext.js': 'js',
+		'c#': 'csharp'
 	},
 	
 	// get language name, process aliases and default languages
@@ -1483,6 +1486,58 @@ EnlighterJS.Language.cpp = new Class({
             'functionCalls': { pattern: this.common.functionCalls, alias: 'de1'},
             'directives':	 { pattern: /#.*$/gm, alias: 'kw2'}
         };
+    }
+});
+/*
+---
+description: C Sharp Language patterns.
+
+license: MIT-style
+
+authors:
+  - Joshua Maag
+
+requires:
+  - Core/1.4.5
+  
+provides: [EnlighterJS.Language.csharp]
+...
+*/
+EnlighterJS.Language.csharp = new Class ({
+    
+    Extends: EnlighterJS.Language.generic,
+
+    setupLanguage: function(){
+        this.keywords = {
+            reserved: {
+                csv:   "as, base, break, case, catch, checked, continue, default, do, else, event, explicit, false, finally, fixed, for, foreach, goto, if, implicit, internal, is, lock, namespace, new, null, operator, params, private, protected, public, ref, return, sizeof, stackalloc, switch, this, throw, true, try, typeof, unchecked, using, void, while",
+                alias: 'kw1'
+            },
+            keywords: {
+            	csv:   "abstract, async, class, const, delegate, dynamic, event, extern, in, interface, out, override, readonly, sealed, static, unsafe, virtual, volatile",
+            	alias: 'kw3'
+            },
+            primitives: {
+                csv:   "bool, byte, char, decimal, double, enum, float, int, long, sbyte, short, struct, uint, ulong, ushort, object, string",
+                alias: 'kw2'
+            },
+            internal: {
+            	csv:   "System",
+            	alias: 'kw4'
+            }
+        },
+        
+        this.patterns = {
+            'slashComments': { pattern: this.common.slashComments, alias: 'co1'},
+            'multiComments': { pattern: this.common.multiComments, alias: 'co2'},
+            'chars':         { pattern: this.common.singleQuotedString, alias: 'st0' },
+            'strings':       { pattern: this.common.doubleQuotedString, alias: 'st1' },
+            'numbers':       { pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][-+]?[0-9]+)?|0x[A-F0-9]+|0b[0-1_]+)\b/gim, alias: 'nu0' },
+            'brackets':      { pattern: this.common.brackets, alias: 'br0' },
+            'functionCalls': { pattern: this.common.functionCalls, alias: 'me0'},
+			'methodCalls':   { pattern: this.common.methodCalls, alias: 'me1'}
+        };
+        
     }
 });
 /*

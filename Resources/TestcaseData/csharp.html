@@ -1,0 +1,45 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="csharp">System.out.println("Hello World!");</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<pre data-enlighter-language="csharp">
+// Source: https://en.wikipedia.org/wiki/C_Sharp_syntax#Attributes
+public class EdibleAttribute : Attribute
+{
+    public EdibleAttribute() : base()
+    {
+ 
+    }
+ 
+    public EdibleAttribute(bool isNotPoisonous)
+    {
+        this.IsPoisonous = !isNotPoisonous;
+    }
+ 
+    public bool IsPoisonous { get; set; }
+}
+
+
+// Source:  https://en.wikipedia.org/wiki/C_Sharp_syntax#Events
+public class MainWindow : System.Windows.Controls.Window
+{
+    private Button button1;
+ 
+    public MainWindow()
+    {
+        button1 = new Button();
+        button1.Text = "Click me!";
+ 
+        /* Subscribe to the event */
+        button1.ClickEvent += button1_OnClick;
+ 
+        /* Alternate syntax that is considered old: 
+           button1.MouseClick += new MouseEventHandler(button1_OnClick); */
+    }
+ 
+    protected void button1_OnClick(object sender, MouseEventArgs e)
+    {
+        MessageBox.Show("Clicked!");
+    }
+}
+</pre>

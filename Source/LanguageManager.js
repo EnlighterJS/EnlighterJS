@@ -43,7 +43,8 @@ EnlighterJS.LanguageManager = new Class({
 		'html': 'xml',
 		'jquery': 'js',
 		'mootools': 'js',
-		'ext.js': 'js'
+		'ext.js': 'js',
+		'c#': 'csharp'
 	},
 	
 	// get language name, process aliases and default languages

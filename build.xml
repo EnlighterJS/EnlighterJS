@@ -15,7 +15,7 @@
 	<property name="yui.jar" value="Util/yuicompressor-2.4.8.jar" />
 	<property name="build.dir" value="Build/" />
 	<property name="www.dir" value="PublicHtml/" />
-	<property name="build.var.version" value="2.1" />
+	<property name="build.var.version" value="2.2" />
 	
 	<!-- ANT.contrib package -->
 	<path id="ant.contrib.classpath" location="Util/ant-contrib-1.0b3.jar"></path>
@@ -32,7 +32,7 @@
 		<property name="include.themes" value="Source/Themes/MooTools.css Source/Themes/Enlighter.css Source/Themes/Git.css Source/Themes/Mocha.css Source/Themes/Panic.css Source/Themes/Tutti.css Source/Themes/Twilight.css" />
 
 		<!-- Languages to include !-->
-		<property name="include.languages" value="Source/Language/Cpp.js Source/Language/Xml.js Source/Language/Css.js Source/Language/Java.js Source/Language/Js.js Source/Language/Markdown.js Source/Language/Php.js Source/Language/Python.js Source/Language/Ruby.js Source/Language/Shell.js Source/Language/Sql.js Source/Language/Nsis.js Source/Language/Raw.js" />
+		<property name="include.languages" value="Source/Language/Cpp.js Source/Language/CSharp.js Source/Language/Xml.js Source/Language/Css.js Source/Language/Java.js Source/Language/Js.js Source/Language/Markdown.js Source/Language/Php.js Source/Language/Python.js Source/Language/Ruby.js Source/Language/Shell.js Source/Language/Sql.js Source/Language/Nsis.js Source/Language/Raw.js" />
 		
 		<!-- Sourcefiles to include !-->
 		<property name="include.JSsources" value="Source/EnlighterJS.js Source/SpecialLineHighlighter.js Source/Language/Generic.js Source/LanguageManager.js Source/Native/Element.EnlighterJS.js Source/Tokenizer.js Source/Token.js Source/Renderer/InlineRenderer.js Source/Renderer/BlockRenderer.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js Source/Util/Helper.js Source/UI/TabPane.js Source/Util/Metainit.js" />

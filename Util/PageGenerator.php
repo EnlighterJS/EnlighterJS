@@ -46,7 +46,7 @@ renderTemplate($outputDir.'Quickstart.html', array(
 
 // === Language Examples =================================================
 $languages = array(
-	'C', 'Cpp', 'CSS', 'HTML', 'Java', 'js', 'JSON', 'MarkDown', 'NSIS', 'PHP', 'Python', 'Ruby', 'SQL', 'Unit', 'XML', 'RAW', 'NoHighlight'
+	'C', 'Cpp', 'CSharp', 'CSS', 'HTML', 'Java', 'js', 'JSON', 'MarkDown', 'NSIS', 'PHP', 'Python', 'Ruby', 'SQL', 'Unit', 'XML', 'RAW', 'NoHighlight'
 );
 foreach ($languages as $lang){
 	$langContent = file_get_contents('Resources/TestcaseData/'.strtolower($lang).'.html');

@@ -1,3 +1,10 @@
+### Version 2.2 ##
+* Added language support for C# (csharp) [provided by Joshua Maag](https://github.com/joshmaag)
+* Added C# language example
+* Added language alias "c#" for language csharp
+* Changed: using YUI compressed file within Examples+PublicHtml pages
+* Bugfix: Indentation of first line got lost - thanks to [cdonts](http://wordpress.org/support/topic/no-indentation-in-the-first-line?replies=2)
+
 ### Version 2.1 ###
 * Added Changelog to doc pages
 * Added Inline Highlighting example to the Theme-Demo page
