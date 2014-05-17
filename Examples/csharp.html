@@ -8,7 +8,7 @@
 	<!-- Favicon !-->
 	<link rel="icon" href="../Resources/favicon.png" type="image/png">
 	
-	<title>Language Example: HTML | EnlighterJS</title>
+	<title>Language Example: Java | EnlighterJS</title>
 	
 	<!-- Bootstrap CSS - just 4 styling - not required for enlighterjs -->
 	<link rel="stylesheet" href="../Resources/bootstrap.min.css">
@@ -93,45 +93,57 @@
 	<div class="container">
 		<div class="page-header">
 			<h1>
-				<strong>EnlighterJS</strong> <small>Language Example: HTML</small>
+				<strong>EnlighterJS</strong> <small>Language Example: C#</small>
 			</h1>
 		</div>
 		<div id="content">
 			<!-- ############################################################# -->
 			<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-<code data-enlighter-language="html">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../Build/EnlighterJS.yui.css&quot; /&gt;</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+<code data-enlighter-language="java">System.out.println("Hello World!");</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
 </p>
-<pre data-enlighter-language="html">
-&lt;head&gt;
-		&lt;!-- Include EnlighterJS Styles --&gt;
-		&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../Build/EnlighterJS.yui.css&quot; /&gt;
-		
-		&lt;!-- Include MooTools Framework --&gt;
-		&lt;script type=&quot;text/javascript&quot; src=&quot;mootools-core-1.4.5-full-nocompat.js&quot;&gt;&lt;/script&gt;
-		
-		&lt;!-- Include EnlighterJS --&gt;
-		&lt;script type=&quot;text/javascript&quot; src=&quot;../Build/EnlighterJS.yui.js&quot; &gt;&lt;/script&gt;
-		
-		&lt;!-- Initialize EnlighterJS --&gt; 
-		&lt;script type=&quot;text/javascript&quot;&gt;
-		window.addEvent('domready', function() {
-			// highlight all pre tags
-			$$('pre').light({
-				altLines : 'hover',
-				indent : 2,
-				editable: false
-			});
-		});
-		&lt;/script&gt;
 
-&lt;!-- Syntax highlight using Languages/Js.js and default theme --&gt; 
-&lt;pre data-enlighter-language=&quot;css&quot;&gt;var myClass = new Class({})&lt;/pre&gt; 
+<pre data-enlighter-language="csharp">
+
+// Source: https://en.wikipedia.org/wiki/C_Sharp_syntax#Attributes
+public class EdibleAttribute : Attribute
+{
+    public EdibleAttribute() : base()
+    {
  
-&lt;!-- Syntax highlight using Languages/Php.js and theme from Themes/Twilight.css --&gt; 
-&lt;pre data-enlighter-language=&quot;php&quot; data-enlighter-theme=&quot;twilight&quot;&gt;&lt;?php php_info() ?&gt;&lt;/pre&gt;
+    }
+ 
+    public EdibleAttribute(bool isNotPoisonous)
+    {
+        this.IsPoisonous = !isNotPoisonous;
+    }
+ 
+    public bool IsPoisonous { get; set; }
+}
 
-</pre>
-			<!-- ############################################################# -->
+
+// Source:  https://en.wikipedia.org/wiki/C_Sharp_syntax#Events
+public class MainWindow : System.Windows.Controls.Window
+{
+    private Button button1;
+ 
+    public MainWindow()
+    {
+        button1 = new Button();
+        button1.Text = "Click me!";
+ 
+        /* Subscribe to the event */
+        button1.ClickEvent += button1_OnClick;
+ 
+        /* Alternate syntax that is considered old: 
+           button1.MouseClick += new MouseEventHandler(button1_OnClick); */
+    }
+ 
+    protected void button1_OnClick(object sender, MouseEventArgs e)
+    {
+        MessageBox.Show("Clicked!");
+    }
+}
+</pre>			<!-- ############################################################# -->
 
 		</div>
 		<!-- // content -->
