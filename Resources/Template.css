@@ -36,3 +36,16 @@ body {
 h2, h3, h4{
 	clear: left;
 }
+
+.form-group{
+	padding: 5px 10px 5px 0px;
+	border-left: solid 3px #e0e0e0;
+	background-color: #f9f9f9;
+}
+.form-group .checkbox{
+	display: block;
+	padding: 5px 0px 5px 40px;
+}
+.form-group .checkbox label{
+	color: #707070;
+}

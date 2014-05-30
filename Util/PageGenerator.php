@@ -43,6 +43,14 @@ renderTemplate($outputDir.'Quickstart.html', array(
 	'headerContent' => $enlighterMetaInitDirective
 ));
 
+// === Builder ========================================================
+$builderContent = captureTemplate('Resources/Builder.phtml') ;
+renderTemplate($outputDir.'Builder.html', array(
+'pageContent' => $builderContent,
+'pageTitle' => 'Generate your custom EnlighterJS Build',
+'headerContent' => ''
+));
+
 
 // === Language Examples =================================================
 $languages = array(

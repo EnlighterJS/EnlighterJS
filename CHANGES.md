@@ -1,3 +1,10 @@
+### Version 2.2.1 ##
+* Added Web-based Build-Service to easily generate custom EnlighterJS packages
+* Added Webbuild Target (used for Promethium CloudBuilder Service)
+* Improved Build-File
+* Removed "Util/human-readable-filter.xml" - formattings moved into the "concat-compress" task
+* Bugfix: Invalid directory names within buildfile
+
 ### Version 2.2 ##
 * Added language support for C# (csharp) [provided by Joshua Maag](https://github.com/joshmaag)
 * Added C# language example

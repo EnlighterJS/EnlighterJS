@@ -6,6 +6,10 @@ Using it can be as simple as adding a single script and style to your website, c
 It also supports the automatic creation of tab-panes to display groups of code together (useful for multi-language examples - e.g. html+css+js)
 The Documentation as well as the Theme Demo is available [here](http://enlighterjs.andidittrich.de "EnligherJS Documentation")
 
+### Download ###
+* [Download Full-Package](https://github.com/AndiDittrich/EnlighterJS/archive/master.zip)
+* [Custom-Builds](http://enlighterjs.andidittrich.de/Builder.html)
+
 ![Screenshot](http://enlighterjs.andidittrich.de/screenshot1.png)
 
 Features

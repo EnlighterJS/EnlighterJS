@@ -4,8 +4,8 @@ name: EnlighterJS
 description: Post Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-Style X11 License
-version: 2.2
-build: 349e21bf9ca3eb132c7df880bf52d588/May 17 2014
+version: 2.2.1
+build: 57f86abaae4b557601cdd55a28e9c912/May 31 2014
 
 authors:
   - Andi Dittrich (author of EnlighterJS)
@@ -615,78 +615,6 @@ EnlighterJS.LanguageManager = new Class({
 	}		
 });/*
 ---
-description: Extends MooTools.Element with the `enlight()` shortcut. Also adds `light()` and `unlight()` for backward compatibility with Lighter.js
-
-license: MIT-style X11 License
-
-authors:
-  - Andi Dittrich
-
-requires:
-  - core/1.4.5
-
-provides: [Element.enlight]
-...
- */
-(function(){
-	Element.implement({
-		/**
-		 * Highlights an element/Removes Element highlighting
-		 *
-		 * @param {Object, Boolean} [options] EnlighterJS options Object or Boolean value to enable/disable highlighting
-		 * @returns {Element} The current Element instance.
-		 */
-		enlight: function(options){
-			// mixed input check - options available ?
-			options = (typeof(options) == "undefined") ? {} : options;
-			
-			// convert "true" to empty Object!
-			options = (options===true) ? {} : options;
-			
-			// enlighter instance already available ?
-			var enlighter = this.retrieve('EnlighterInstance');
-
-			// hide highlighted sourcecode ?
-			if (options === false){
-				if (enlighter !== null) {
-					enlighter.enlight(false);
-				}
-			// highlight sourcecode and use options	
-			}else{
-				// create new enlighter instance
-				if (enlighter === null) {
-					enlighter = new EnlighterJS(this, options, null);
-					this.store('EnlighterInstance', enlighter);
-				}
-				enlighter.enlight(options);
-			}
-			
-			// element instance
-			return this;
-		},
-		
-		/**
-		 * Highlights an element
-		 * @DEPRECATED since v2.0 - this method will be removed in the future
-		 * @param {Object} [options] EnlighterJS Options Object
-		 * @returns {Element} The current Element instance.
-		 */
-		light : function(options) {
-			return this.enlight(options);
-		},
-
-		/**
-		 * Removes/hides Element highlighting
-		 * @DEPRECATED since v2.0 - this method will be removed in the future
-		 * @returns {Element} The current Element instance.
-		 */
-		unlight : function(){
-			return this.enlight(false);
-		}
-	});
-
-})();/*
----
 description: Code parsing engine for Lighter.
 
 license: MIT-style
@@ -1182,6 +1110,78 @@ EnlighterJS.Tokenizer.Xml = new Class({
 	}
 });
 /*
+---
+description: Extends MooTools.Element with the `enlight()` shortcut. Also adds `light()` and `unlight()` for backward compatibility with Lighter.js
+
+license: MIT-style X11 License
+
+authors:
+  - Andi Dittrich
+
+requires:
+  - core/1.4.5
+
+provides: [Element.enlight]
+...
+ */
+(function(){
+	Element.implement({
+		/**
+		 * Highlights an element/Removes Element highlighting
+		 *
+		 * @param {Object, Boolean} [options] EnlighterJS options Object or Boolean value to enable/disable highlighting
+		 * @returns {Element} The current Element instance.
+		 */
+		enlight: function(options){
+			// mixed input check - options available ?
+			options = (typeof(options) == "undefined") ? {} : options;
+			
+			// convert "true" to empty Object!
+			options = (options===true) ? {} : options;
+			
+			// enlighter instance already available ?
+			var enlighter = this.retrieve('EnlighterInstance');
+
+			// hide highlighted sourcecode ?
+			if (options === false){
+				if (enlighter !== null) {
+					enlighter.enlight(false);
+				}
+			// highlight sourcecode and use options	
+			}else{
+				// create new enlighter instance
+				if (enlighter === null) {
+					enlighter = new EnlighterJS(this, options, null);
+					this.store('EnlighterInstance', enlighter);
+				}
+				enlighter.enlight(options);
+			}
+			
+			// element instance
+			return this;
+		},
+		
+		/**
+		 * Highlights an element
+		 * @DEPRECATED since v2.0 - this method will be removed in the future
+		 * @param {Object} [options] EnlighterJS Options Object
+		 * @returns {Element} The current Element instance.
+		 */
+		light : function(options) {
+			return this.enlight(options);
+		},
+
+		/**
+		 * Removes/hides Element highlighting
+		 * @DEPRECATED since v2.0 - this method will be removed in the future
+		 * @returns {Element} The current Element instance.
+		 */
+		unlight : function(){
+			return this.enlight(false);
+		}
+	});
+
+})();/*
 ---
 name: Helper
 description: Helper to initialize multiple Enlighter instances on your page as well as code-groups

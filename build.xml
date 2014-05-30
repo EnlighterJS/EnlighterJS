@@ -15,8 +15,20 @@
 	<property name="yui.jar" value="Util/yuicompressor-2.4.8.jar" />
 	<property name="build.dir" value="Build/" />
 	<property name="www.dir" value="PublicHtml/" />
-	<property name="build.var.version" value="2.2" />
+	<property name="build.var.version" value="2.2.1" />
 	
+	<!-- Themes to include !-->
+	<property name="include.themes" value="Source/Themes/MooTools.css Source/Themes/Enlighter.css Source/Themes/Git.css Source/Themes/Mocha.css Source/Themes/Panic.css Source/Themes/Tutti.css Source/Themes/Twilight.css" />
+
+	<!-- Languages to include !-->
+	<property name="include.languages" value="Source/Language/Cpp.js Source/Language/CSharp.js Source/Language/Xml.js Source/Language/Css.js Source/Language/Java.js Source/Language/Js.js Source/Language/Markdown.js Source/Language/Php.js Source/Language/Python.js Source/Language/Ruby.js Source/Language/Shell.js Source/Language/Sql.js Source/Language/Nsis.js Source/Language/RAW.js" />
+
+	<!-- Base Sourcefiles to include !-->
+	<property name="include.JsBaseSources" value="Source/EnlighterJS.js Source/SpecialLineHighlighter.js Source/Language/Generic.js Source/LanguageManager.js  Source/Tokenizer.js Source/Token.js Source/Renderer/InlineRenderer.js Source/Renderer/BlockRenderer.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js" />
+
+	<!-- Additional Features to include !-->
+	<property name="include.JsFeatures" value="Source/Native/Element.EnlighterJS.js Source/Util/Helper.js Source/UI/TabPane.js Source/Util/Metainit.js" />	
+		
 	<!-- ANT.contrib package -->
 	<path id="ant.contrib.classpath" location="Util/ant-contrib-1.0b3.jar"></path>
 	<taskdef resource="net/sf/antcontrib/antlib.xml">
@@ -26,28 +38,19 @@
 	<!-- Generate Build -->
 	<target name="build">
 		<!-- Cleanup Build Dir -->
-		<delete dir="${build.dir}" />
-		
-		<!-- Themes to include !-->
-		<property name="include.themes" value="Source/Themes/MooTools.css Source/Themes/Enlighter.css Source/Themes/Git.css Source/Themes/Mocha.css Source/Themes/Panic.css Source/Themes/Tutti.css Source/Themes/Twilight.css" />
-
-		<!-- Languages to include !-->
-		<property name="include.languages" value="Source/Language/Cpp.js Source/Language/CSharp.js Source/Language/Xml.js Source/Language/Css.js Source/Language/Java.js Source/Language/Js.js Source/Language/Markdown.js Source/Language/Php.js Source/Language/Python.js Source/Language/Ruby.js Source/Language/Shell.js Source/Language/Sql.js Source/Language/Nsis.js Source/Language/Raw.js" />
-		
-		<!-- Sourcefiles to include !-->
-		<property name="include.JSsources" value="Source/EnlighterJS.js Source/SpecialLineHighlighter.js Source/Language/Generic.js Source/LanguageManager.js Source/Native/Element.EnlighterJS.js Source/Tokenizer.js Source/Token.js Source/Renderer/InlineRenderer.js Source/Renderer/BlockRenderer.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js Source/Util/Helper.js Source/UI/TabPane.js Source/Util/Metainit.js" />
+		<delete dir="${build.dir}" />		
 		
 		<!-- ****************************** JS BUILD LIBRARY **************************** -->
-		<ant antfile="util/concat-compress.xml">
+		<ant antfile="Util/concat-compress.xml">
 			<property name="compress.description" value="Enlighter" />
 			<property name="compress.type" value="js" />
-			<property name="compress.input" value="notice.txt ${include.JSsources} ${include.languages}" />
+			<property name="compress.input" value="notice.txt ${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />
 			<property name="compress.output" value="EnlighterJS.yui.js" />
 			<property name="uncompress.output" value="EnlighterJS.js" />
 		</ant>
 
 		<!-- ****************************** CSS BUILD *********************************** -->
-		<ant antfile="util/concat-compress.xml">
+		<ant antfile="Util/concat-compress.xml">
 			<property name="compress.description" value="Enlighter" />
 			<property name="compress.type" value="css" />
 			<property name="compress.input" value="notice.txt Source/Themes/Base.css ${include.themes}" />
@@ -61,6 +64,34 @@
 		<replace file="${build.dir}DynamicSourcefileLoader.dev.js" token="{{CSSSOURCES}}" value="Source/Themes/Base.css ${include.themes}" />	
 	</target>
 
+	<target name="webbuild">
+		<!-- Copy files !-->
+		<copy file="CHANGES.md" tofile="${build.dir}CHANGES.md" />
+		<copy file="LICENSE.md" tofile="${build.dir}LICENSE.md" />
+		<copy file="README.md" tofile="${build.dir}README.md" />
+		
+		<!-- ****************************** JS BUILD LIBRARY **************************** -->
+		<ant antfile="Util/concat-compress.xml">
+			<property name="compress.description" value="Enlighter" />
+			<property name="compress.type" value="js" />
+			<property name="compress.input" value="notice.txt ${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />
+			<property name="compress.output" value="EnlighterJS.yui.js" />
+			<property name="uncompress.output" value="EnlighterJS.js" />
+		</ant>
+
+		<!-- ****************************** CSS BUILD *********************************** -->
+		<ant antfile="Util/concat-compress.xml">
+			<property name="compress.description" value="Enlighter" />
+			<property name="compress.type" value="css" />
+			<property name="compress.input" value="notice.txt Source/Themes/Base.css ${include.themes}" />
+			<property name="compress.output" value="EnlighterJS.yui.css" />
+			<property name="uncompress.output" value="EnlighterJS.css" />
+		</ant>
+		
+		<!-- Create Archive !-->
+		<zip destfile="${build.dir}/EnlighterJS.zip" basedir="${build.dir}" />
+	</target>
+	
 	<!-- Generate Examples -->
 	<target name="examples">
 		<!-- Cleanup www Dir -->
@@ -74,7 +105,7 @@
 	</target>
 	
 	<!-- Generate Demo Website !-->
-	<target name="www" depends="build">
+	<target name="www">
 		<!-- Cleanup www Dir -->
 		<delete dir="${www.dir}" />
 		<mkdir dir="${www.dir}"/>	
