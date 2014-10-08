@@ -42,7 +42,7 @@ EnlighterJS.Language.nsis = new Class ({
       'commentMultiline':    { pattern: this.common.multiComments, alias: 'co2' },
       'commentPound':    { pattern: this.common.poundComments, alias: 'co1' },
       'commentSemicolon':  { pattern: /;.*$/gm, alias: 'co1' },
-      'compilerFlags':      { pattern: /(\!(addincludedir|addplugindir|appendfile|cd|define|delfile|echo|else|endif|error|execute|finalize|getdllversionsystem|ifdef|ifmacrodef|ifmacrondef|ifndef|if|include|insertmacro|macroend|macro|packhdr|searchparse|searchreplace|tempfile|undef|verbose|warning))/g,      alias: 'kw2' },
+      'compilerFlags':      { pattern: /(\!(addincludedir|addplugindir|appendfile|cd|define|delfile|echo|else|endif|error|execute|finalize|getdllversionsystem|ifdef|ifmacrodef|ifmacrondef|ifndef|if|include|insertmacro|macroend|macro|makensis|packhdr|searchparse|searchreplace|tempfile|undef|verbose|warning))/g,      alias: 'kw2' },
       'defines':     { pattern: /[\$]\{{1,2}[0-9a-zA-Z_][\w]*[\}]/gim, alias: 'kw4' },
       'jumps':  { pattern: /([(\+|\-)]([0-9]+))/g, alias: 'nu0' },
       'langStrings':     { pattern: /[\$]\({1,2}[0-9a-zA-Z_][\w]*[\)]/gim, alias: 'kw3' },
