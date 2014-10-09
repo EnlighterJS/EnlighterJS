@@ -1,0 +1,114 @@
+<div class="well">
+	You can generate your <strong>customized</strong> EnlighterJS Builds by using the <a title="Promethium" href="http://promethium.andidittrich.de/">Promethium CloudBuilder</a>. Maybe you don't need all Theme/Languages and you want to strip down the package. The Builder always uses the latest EnlighterJS release and automatically compresses the files using the <a href="http://yui.github.io/yuicompressor/">YUI Compressor</a> (both compressed & uncompessed builds are included!).
+</div>
+
+<form method="post" action="http://promethium.andidittrich.de/enlighterjs/" id="builder-form">
+	<div class="panel panel-default">
+		<div class="panel-heading"><strong>Language Support</strong> <small><a class="selectall">select all</a> / <a class="selectnone">select none</a></small></div>
+		<div class="panel-body">
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[Cpp]">"Cpp/C" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[CSharp]">"C#" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[Css]">"Css" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[Diff]">"Diff" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[Java]">"Java" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[Javascript]">"Javascript" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[Markdown]">"Markdown" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[Nsis]">"NSIS" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[Php]">"PHP" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[Python]">"Python" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[RAW]">"RAW" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[Ruby]">"Ruby" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[Shell]">"Shell/Bash" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[Sql]">"SQL" Language</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Language[Xml]">"XML/HTML" Language</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading"><strong>Theme Support</strong> <small><a class="selectall">select all</a> / <a class="selectnone">select none</a></small></div>
+		<div class="panel-body">
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Theme[Enlighter]">"Enlighter" Theme</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Theme[Eclipse]">"Eclipse" Theme</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Theme[Classic]">"Classic" Theme</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Theme[Beyond]">"Beyond" Theme</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Theme[Git]">"Git" Theme</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Theme[MooTools]">"MooTools" Theme</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Theme[Mocha]">"Mocha" Theme</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Theme[Panic]">"Panic" Theme</label>
+			</div>
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Theme[Tutti]">"Tutti" Theme</label>
+			</div>						
+			<div class="checkbox">
+				<label><input value="1" type="checkbox" name="Theme[Twilight]">"Twilight" Theme</label>
+			</div>
+		</div>
+	</div>
+	
+	<div class="panel panel-default">
+		<div class="panel-heading"><strong>Special Features</strong> <small class="text-right"><a class="selectall">select all</a> / <a class="selectnone">select none</a></small></div>
+		<div class="panel-body">
+			<div class="checkbox">
+				<label><input value="1"  type="checkbox" name="Feature[Metainit]">Include the Metainit Utility for easy initialization</label>
+			</div>
+		</div>
+	</div>	
+	
+	<p><button class="btn btn-primary btn-lg" type="submit">Download Custom Package</button></p>
+</form>
+
+<script type="text/javascript">
+	window.addEvent('domready', function(){
+		document.getElements('#builder-form .selectall').addEvent('click', function(){
+			this.getParent().getParent().getParent().getElements('input').set('checked', 'checked');
+		});
+		document.getElements('#builder-form .selectnone').addEvent('click', function(){
+			this.getParent().getParent().getParent().getElements('input').set('checked', false);
+		});
+	});
+</script>

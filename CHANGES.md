@@ -1,3 +1,34 @@
+### Version 2.3 ###
+* Added Theme "Classic"
+* Added Theme "Eclipse"
+* Added Theme "Beyond"
+* Added Language "Diff" for changelogs
+* Added optional "Code Window" button which displays the raw-code in a new window
+* Added optional "Info Button"
+* Added "Toolbar Container" (containing all buttons)
+* Added Metainit options `data-windowbutton` and `data-infobutton`
+* Added `LanguageDevelopment.html` and `ThemeDevelopment.html` for rapid development startup
+* Addded `EnlighterJS.Util.Init` utility function for easy script based initialization of inline+block code
+* Added new Quickstart-page
+* Added new Examples - including the new `EnlighterJS.Util.Init` utility function as well as some advanced examples!
+* Added optional doubleklick event to toggle between highlighted- and raw-code
+* Added new intro page
+* Added new NSIS command as of NSIS 3.0b1 (see [release notes](http://nsis.sourceforge.net/Docs/AppendixF.html#v3.0b1-rl)) by [idleberg](https://github.com/idleberg)
+* Changed XML coloring-scheme: comments are now handled as `co2` (multiline comments)
+* Changed hover and specialline highlighting color of the Enlighter-Theme
+* Chnaged button visibility: all toolbar buttons are visible by default
+* Updated MooTools to the [NEW 1.5 Release](http://mootools.net/blog/2014/05/19/mootools-1-5-is-here/)
+* Updated Bootstrap (used for the Examples) to `v3.2.0`
+* Removed unused attribute `id` from generated container-element
+* Replaced `.firstline` and `.lastLine` css classes with native :first-child/:last-child
+* Replaced the `DynamicSourcefileLoader` (introduced in v2.0) with a PHP based version into `Development.phtml` (this will avoid some strange errors during debugging)´
+* Replaced `div` toolbar-button containers by `a` tags - title attribute supported for buildin tooltips
+* Replaced text-buttons with icons
+* Renamed javascript language "js" to "javascript" - an alias is added for backward compatibility
+* Tested EnlighterJS with MooTools 1.5
+* Some internal changes (Theme CSS; HTML Structure; Toolbar buttons outsourced to `UI/Toolbar.js`)
+* Moved the Documentation to `Docs/` and seperated the sections by file - `README.md` is automatically generated during the build-process
+
 ### Version 2.2.1 ##
 * Added Web-based Build-Service to easily generate custom EnlighterJS packages
 * Added Webbuild Target (used for Promethium CloudBuilder Service)

@@ -24,9 +24,9 @@ styles:
    color: '#717171'
    background-color: '#ffffff'
  hover:
-   background-color: '#ffffe0'
+   background-color: '#fffcd3'
  specialline:
-   background-color: '#fff0f0'
+   background-color: '#fdf5f0'
 ...
 */
 
@@ -65,12 +65,12 @@ ol.enlighterEnlighterJS li{
 
 /* special line highlight color */
 ol.enlighterEnlighterJS li.specialline, ul.enlighterEnlighterJS li.specialline {
-	background-color: #fff0f0;
+	background-color: #fdf5f0;
 }
 
 /* hover effect */
 ol.enlighterEnlighterJS li.hoverEnabled:hover, ul.enlighterEnlighterJS li.hoverEnabled:hover {
-	background-color: #ffffe0;
+	background-color: #fffcd3;
 	border: solid 0px #ffffff;
 	color: #444444;
 }

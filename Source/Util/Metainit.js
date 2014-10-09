@@ -29,6 +29,8 @@ window.addEvent('domready', function(){
 		indent: m.get('data-indent').toInt() || -1,
 		hover: m.get('data-hover') || 'hoverEnabled',
 		rawButton: (m.get('data-rawcodebutton')==='true'),
+		windowButton: (m.get('data-windowbutton')==='true'),
+		infoButton: (m.get('data-infobutton')==='true'),
 		showLinenumbers: (m.get('data-linenumbers')!=='false')
 	};
 

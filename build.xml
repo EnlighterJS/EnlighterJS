@@ -3,10 +3,9 @@
 <!--
 	Simple ANT-based buildscript for EnlighterJS
 	
-	@requires	MooTools.Core > 1.4
 	@author		Andi Dittrich <andi.dittrich@a3non.org>
-	@version	1.3
-	@license	MIT Style X11
+	@version	1.5
+	@license	The MIT License (X11)
 	
 !-->
 <project name="EnlighterJS" default="build" basedir=".">
@@ -15,19 +14,19 @@
 	<property name="yui.jar" value="Util/yuicompressor-2.4.8.jar" />
 	<property name="build.dir" value="Build/" />
 	<property name="www.dir" value="PublicHtml/" />
-	<property name="build.var.version" value="2.2.1" />
+	<property name="build.var.version" value="2.3" />
 	
 	<!-- Themes to include !-->
-	<property name="include.themes" value="Source/Themes/MooTools.css Source/Themes/Enlighter.css Source/Themes/Git.css Source/Themes/Mocha.css Source/Themes/Panic.css Source/Themes/Tutti.css Source/Themes/Twilight.css" />
+	<property name="include.themes" value="Source/Themes/MooTools.css Source/Themes/Enlighter.css Source/Themes/Git.css Source/Themes/Mocha.css Source/Themes/Panic.css Source/Themes/Tutti.css Source/Themes/Twilight.css Source/Themes/Classic.css Source/Themes/Eclipse.css Source/Themes/Beyond.css" />
 
 	<!-- Languages to include !-->
-	<property name="include.languages" value="Source/Language/Cpp.js Source/Language/CSharp.js Source/Language/Xml.js Source/Language/Css.js Source/Language/Java.js Source/Language/Js.js Source/Language/Markdown.js Source/Language/Php.js Source/Language/Python.js Source/Language/Ruby.js Source/Language/Shell.js Source/Language/Sql.js Source/Language/Nsis.js Source/Language/RAW.js" />
+	<property name="include.languages" value="Source/Language/Cpp.js Source/Language/CSharp.js Source/Language/Xml.js Source/Language/Css.js Source/Language/Java.js Source/Language/Javascript.js Source/Language/Markdown.js Source/Language/Php.js Source/Language/Python.js Source/Language/Ruby.js Source/Language/Shell.js Source/Language/Sql.js Source/Language/Nsis.js Source/Language/RAW.js Source/Language/Diff.js" />
 
 	<!-- Base Sourcefiles to include !-->
-	<property name="include.JsBaseSources" value="Source/EnlighterJS.js Source/SpecialLineHighlighter.js Source/Language/Generic.js Source/LanguageManager.js  Source/Tokenizer.js Source/Token.js Source/Renderer/InlineRenderer.js Source/Renderer/BlockRenderer.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js" />
+	<property name="include.JsBaseSources" value="Source/EnlighterJS.js Source/SpecialLineHighlighter.js Source/Language/Generic.js Source/LanguageManager.js Source/Tokenizer.js Source/Token.js Source/Renderer/InlineRenderer.js Source/Renderer/BlockRenderer.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js Source/UI/CodeWindow.js Source/UI/Toolbar.js" />
 
 	<!-- Additional Features to include !-->
-	<property name="include.JsFeatures" value="Source/Native/Element.EnlighterJS.js Source/Util/Helper.js Source/UI/TabPane.js Source/Util/Metainit.js" />	
+	<property name="include.JsFeatures" value="Source/Native/Element.EnlighterJS.js Source/Util/Helper.js Source/UI/TabPane.js Source/Util/Metainit.js Source/Util/Init.js" />	
 		
 	<!-- ANT.contrib package -->
 	<path id="ant.contrib.classpath" location="Util/ant-contrib-1.0b3.jar"></path>
@@ -44,7 +43,7 @@
 		<ant antfile="Util/concat-compress.xml">
 			<property name="compress.description" value="Enlighter" />
 			<property name="compress.type" value="js" />
-			<property name="compress.input" value="notice.txt ${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />
+			<property name="compress.input" value="Resources/notice.txt ${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />
 			<property name="compress.output" value="EnlighterJS.yui.js" />
 			<property name="uncompress.output" value="EnlighterJS.js" />
 		</ant>
@@ -53,15 +52,34 @@
 		<ant antfile="Util/concat-compress.xml">
 			<property name="compress.description" value="Enlighter" />
 			<property name="compress.type" value="css" />
-			<property name="compress.input" value="notice.txt Source/Themes/Base.css ${include.themes}" />
+			<property name="compress.input" value="Resources/notice.txt Source/Themes/Base.css ${include.themes}" />
 			<property name="compress.output" value="EnlighterJS.yui.css" />
 			<property name="uncompress.output" value="EnlighterJS.css" />
 		</ant>
 		
 		<!-- ****************************** JS SOURCEFILE LIST (DEVELOPMENT) ************************** -->
-		<copy file="Resources/DynamicSourcefileLoader.js" tofile="${build.dir}DynamicSourcefileLoader.dev.js" />
-		<replace file="${build.dir}DynamicSourcefileLoader.dev.js" token="{{JSSOURCES}}" value="${include.JSsources} ${include.languages} Source/Language/Template.mylang.js" />		
-		<replace file="${build.dir}DynamicSourcefileLoader.dev.js" token="{{CSSSOURCES}}" value="Source/Themes/Base.css ${include.themes}" />	
+		<copy file="Resources/Sources.json" tofile="${build.dir}Sources.dev.json" />
+		<replace file="${build.dir}Sources.dev.json" token="{{JSSOURCES}}" value="${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />		
+		<replace file="${build.dir}Sources.dev.json" token="{{CSSSOURCES}}" value="Source/Themes/Base.css ${include.themes}" />	
+		
+		<!-- Change Package Versions !-->
+		<replaceregexp byline="true" flags="s">
+			<regexp pattern="current: v(.*)" />
+			<substitution expression="current: v${build.var.version}"/>
+			<fileset file="package.yml" />
+		</replaceregexp>
+		
+		<!-- Merge Readme/Documentation !-->
+		<echo message="Merging Docs" />
+		<concat destfile="README.md" fixlastline="yes">
+			<sort xmlns:rcmp="antlib:org.apache.tools.ant.types.resources.comparators">
+				<fileset dir="Docs" includes="*.md"/>
+				<rcmp:name />
+			</sort>
+		</concat>
+		
+		<!-- Copy CONTRIBUTE.md from docs !-->
+		<copy file="Docs/07-Contribution.md" tofile="CONTRIBUTE.md" />
 	</target>
 
 	<target name="webbuild">
@@ -74,7 +92,7 @@
 		<ant antfile="Util/concat-compress.xml">
 			<property name="compress.description" value="Enlighter" />
 			<property name="compress.type" value="js" />
-			<property name="compress.input" value="notice.txt ${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />
+			<property name="compress.input" value="Resources/notice.txt ${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />
 			<property name="compress.output" value="EnlighterJS.yui.js" />
 			<property name="uncompress.output" value="EnlighterJS.js" />
 		</ant>
@@ -83,7 +101,7 @@
 		<ant antfile="Util/concat-compress.xml">
 			<property name="compress.description" value="Enlighter" />
 			<property name="compress.type" value="css" />
-			<property name="compress.input" value="notice.txt Source/Themes/Base.css ${include.themes}" />
+			<property name="compress.input" value="Resources/notice.txt Source/Themes/Base.css ${include.themes}" />
 			<property name="compress.output" value="EnlighterJS.yui.css" />
 			<property name="uncompress.output" value="EnlighterJS.css" />
 		</ant>
@@ -97,15 +115,15 @@
 		<!-- Cleanup www Dir -->
 		<delete dir="Examples" />
 		<mkdir dir="Examples"/>	
-				
+		
 		<exec executable="php">
 			<arg value="Util/ExampleGenerator.php" />
 			<arg value="Examples/" />
-		</exec>	
+		</exec>
 	</target>
 	
 	<!-- Generate Demo Website !-->
-	<target name="www">
+	<target name="www" depends="build,examples">
 		<!-- Cleanup www Dir -->
 		<delete dir="${www.dir}" />
 		<mkdir dir="${www.dir}"/>	
@@ -121,9 +139,12 @@
 			<fileset dir="Resources"/>
 		</copy>
 		
-		<!-- Copy Quickstarts !-->
-		<copy file="Quickstart.html" tofile="${www.dir}Quickstart.example.html" />
-		<copy file="Quickstart-jsinit.html" tofile="${www.dir}Quickstart-jsinit.example.html" />
+		<!-- Copy Quickstart Examples !-->
+		<copy file="LanguageDevelopment.html" tofile="${www.dir}LanguageDevelopment.html" />
+		<copy file="ThemeDevelopment.html" tofile="${www.dir}ThemeDevelopment.html" />
+		<copy file="Example1.html" tofile="${www.dir}Example1.html" />
+		<copy file="Example2-jsinit.html" tofile="${www.dir}Example2-jsinit.html" />
+		<copy file="Example3-advanced.html" tofile="${www.dir}Example3-advanced.html" />
 		
 		<!-- Copy License and fix linebreaks !-->
 		<copy file="LICENSE.md" tofile="${www.dir}LICENSE.txt" />

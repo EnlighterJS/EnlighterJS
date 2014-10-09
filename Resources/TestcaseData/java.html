@@ -17,7 +17,7 @@ public class Hello{
 // OddEven.java
 import javax.swing.JOptionPane;
  
-public class OddEven {
+public class OddEven<T>{
     /**
      * "input" is the number that the user gives to the computer
      */
@@ -27,7 +27,7 @@ public class OddEven {
      * This is the constructor method. It gets called when an object of the OddEven type
      * is being created.
      */
-    public OddEven() {
+    public T OddEven() {
         /*
          * In most Java programs constructors can initialize objects with default values, or create
          * other objects that this object might use to perform its functions. In some Java programs, the
@@ -36,6 +36,7 @@ public class OddEven {
          * A constructor must exist; however, if the user doesn't put one in then the compiler
          * will create an empty one.
          */
+         return null;
     }
  
     /**
@@ -48,7 +49,7 @@ public class OddEven {
         * Object) and initializes it by calling the constructor. The next line of code calls
         * the "showDialog()" method, which brings up a prompt to ask you for a number
         */
-       OddEven number = new OddEven();
+       OddEven<Number> number = new OddEven()<Number>;
        number.showDialog();
     }
  

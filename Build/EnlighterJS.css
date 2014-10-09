@@ -4,8 +4,8 @@ name: EnlighterJS
 description: Post Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-Style X11 License
-version: 2.2.1
-build: c9d6e6119856a2f256dcf83bd403899f/May 31 2014
+version: 2.3
+build: 6859130cf2364613966c86eea124ae91/October 9 2014
 
 authors:
   - Andi Dittrich (author of EnlighterJS)
@@ -22,7 +22,7 @@ provides: [EnlighterJS]
 ...
 *//*
 ---
-description: EnlighterJS Theme-Base - All Themes are derived from these styles!
+description: EnlighterJS Theme-Base - All Themes are derived from these styles! Don't edit this file if you wan't to change styles! Use a derived theme!
 
 license: MIT-style
 
@@ -43,9 +43,25 @@ authors:
 	padding: 0px;
 }
 
-/* Wrapper/Container - used to display raw button*/
+/* Wrapper/Container - contains all elements of an instance */
 .EnlighterJSWrapper{
 	position: relative;
+}
+
+/* RAW Styles */
+.EnlighterJSWrapper pre{
+	font-family: inherit;
+	background-color: #ffffff;
+	padding: 5px 5px 5px 10px;
+	margin: 0px 0px 20px 0px;
+	line-height: 18px;
+	font-size: 12px;
+	color: #444444;
+	border: none;
+	border-radius: 0px;
+	clear: none;
+	white-space: pre-wrap;
+	word-wrap: break-word;
 }
 
 /* Inline specific styles */
@@ -73,8 +89,7 @@ ol.EnlighterJS, ul.EnlighterJS{
 ol.EnlighterJS li, ul.EnlighterJS li {
 	margin: 0px;
 	background-color: #ffffff;
-	border-top: 1px solid #fff;
-	border-bottom: 1px solid #fff;
+	border: solid 0px #ffffff;
 	padding: 0px 5px 0px 14px;
 	line-height: 14px;
 	color: #939393;
@@ -84,7 +99,6 @@ ol.EnlighterJS li, ul.EnlighterJS li {
 ol.EnlighterJS li{
 	list-style: decimal-leading-zero outside;
 	margin: 0px 0px 0px 40px;
-	border-left: 1px solid #939393;
 }
 
 /* no-linenumber style */
@@ -97,22 +111,15 @@ ul.EnlighterJS li:AFTER{
 }
 
 /* top+bottom offsets */
-ol.EnlighterJS li.firstline, ul.EnlighterJS li.firstline{
+ol.EnlighterJS li:FIRST-CHILD, ul.EnlighterJS li:FIRST-CHILD{
 	padding-top: 5px;
 }
-ol.EnlighterJS li.lastline, ul.EnlighterJS li.lastline{ 
+ol.EnlighterJS li:LAST-CHILD, ul.EnlighterJS li:LAST-CHILD{ 
 	padding-bottom: 5px; 
 }
 
 /* special line highlight color */
 ol.EnlighterJS li.specialline, ul.EnlighterJS li.specialline {
-	background-color: #F4F8FC;
-}
-
-/* hover effect */
-ol.EnlighterJS li.hoverEnabled:hover, ul.EnlighterJS li.hoverEnabled:hover{
-	border-top: 1px solid #eee;
-	border-bottom: 1px solid #eee;
 	background-color: #F4F8FC;
 }
 
@@ -125,7 +132,7 @@ ol.EnlighterJS li.hoverEnabled:hover, ul.EnlighterJS li.hoverEnabled:hover{
 	font-size: 12px;
 }
 
-/* TAB Panel */
+/* TAB Panel - containing "buttons" to switch between multiple codeblocks */
 .EnlighterJSTabPane .controls {
 }
 .EnlighterJSTabPane .controls ul{
@@ -146,13 +153,6 @@ ol.EnlighterJS li.hoverEnabled:hover, ul.EnlighterJS li.hoverEnabled:hover{
 	cursor: pointer;
 }
 
-.EnlighterJSTabPane .controls li:hover {
-	background-color: #e5e5e5;
-}
-
-.EnlighterJSTabPane .controls .selected,.EnlighterJSTabPane .controls .selected:hover{
-	background-color: #ccffcc;
-}
 .EnlighterJSTabPane .controls .clearfixList{
 	clear: left;
 }
@@ -161,43 +161,69 @@ ol.EnlighterJS li.hoverEnabled:hover, ul.EnlighterJS li.hoverEnabled:hover{
 	clear: left;
 }
 
-/* Raw Button - show/hide actions */
-.EnlighterJSRawButton{
-	display: none;
+/* Toolbar - containing buttons */
+.EnlighterJSToolbar{
 	position: absolute;
+	display: none;
+	right: 0px;
+	top: 0px;
+	height: 40px;
+	width: auto;
+	padding: 15px;
+}
+/* Button Container */
+.EnlighterJSToolbar > a{
+	float: right;
+	display: block;
+	border-radius: 3px;
 	z-index: 10;
-	right: 10px;
-	top: 10px;
-	background-color: rgba(255, 255, 255, 0.7);
+	background-color: #fffffff;
 	color: #717171;
 	cursor: pointer;
 	font-size: 12px;
-	padding: 3px 7px 3px 7px;
+	padding: 0px;
 	border: solid 1px #e0e0e0;
+	margin: 0px 0px 0px 15px;
+	text-decoration: none;
+	width: 23px;
+	height: 23px;
+	background-position: 0px 0px;
+	background-size: contain;
+	margin-left: 8px;
 }
-.EnlighterJSRawButton:HOVER{
-	background-color: #f0f0f0;
+.EnlighterJSToolbar > a:HOVER{
+	border-color: #b0b0b0;
 }
-.EnlighterJSRawButton::AFTER{
-	content: 'Toggle RAW Code';
+
+/* Raw Button Identifiers */
+.EnlighterJSRawButton, .EnlighterJSWindowButton{}
+
+/* Show Toolbar on MouseOver */
+.EnlighterJSToolbar > a:HOVER{
+	text-decoration: none;
 }
-.EnlighterJSWrapper:hover .EnlighterJSRawButton{
+
+/* Button Icons */
+.EnlighterJSWindowButton{
+	background-image: url(data:image/png;base64,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);
+}
+.EnlighterJSRawButton{
+	background-image: url(data:image/png;base64,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);
+}
+.EnlighterJSInfoButton{
+	background-image: url(data:image/png;base64,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);
+}
+
+/* Show Toolbar on Mouseover */
+.EnlighterJSWrapper:hover .EnlighterJSToolbar{
 	display: block;
 }
-.EnlighterJSWrapper pre{
-	font-family: inherit;
-	background-color: #ffffff;
-	padding: 5px 5px 5px 10px;
-	margin: 0px 0px 20px 0px;
-	line-height: 18px;
-	font-size: 12px;
-	color: #444444;
-	border: none;
-	border-radius: 0px;
-	clear: none;
-	white-space: pre-wrap;
-	word-wrap: break-word;
-}/*
+.EnlighterJSToolbar .clear{
+	clear: right;
+	content: ' ';
+	display: block;
+}
+/*
 ---
 description: Inspired by MooTools code coloring.
 
@@ -229,6 +255,22 @@ styles:
    background-color: '#F4F8FC'
 ...
 */
+/* line styles */
+ol.mootoolsEnlighterJS li, ul.mootoolsEnlighterJS li {
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+ol.mootoolsEnlighterJS li{
+	border-left: 1px solid #939393;
+}
+
+/* hover effect */
+ol.mootoolsEnlighterJS li.hoverEnabled:hover, ul.mootoolsEnlighterJS li.hoverEnabled:hover{
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	background-color: #F4F8FC;
+}
+
 /* theme symbol styles */
 .mootoolsEnlighterJS .de1 {}
 .mootoolsEnlighterJS .de2 {}
@@ -253,15 +295,16 @@ styles:
 .mootoolsEnlighterJSWrapper pre{
 	line-height: 16px;
 }
-.mootoolsEnlighterJSWrapper .EnlighterJSRawButton{
-	padding: 3px 10px 3px 10px;
-	margin: 0px 5px 0px 5px;
-	background-color: #f2f2f2;
-	border-radius: 5px;
-	border: solid 0px #ffffff;
-	color: #000000;
+
+/* Toolbar */
+.mootoolsEnlighterJSTabPane .controls li{
+	border-radius: 0px;
 }
-.mootoolsEnlighterJSWrapper .EnlighterJSRawButton:hover{
+.mootoolsEnlighterJSTabPane .controls li:hover {
+	background-color: #e5e5e5;
+}
+
+.mootoolsEnlighterJSTabPane .controls li.selected{
 	background-color: #e5e5e5;
 }/*
 ---
@@ -289,9 +332,9 @@ styles:
    color: '#717171'
    background-color: '#ffffff'
  hover:
-   background-color: '#ffffe0'
+   background-color: '#fffcd3'
  specialline:
-   background-color: '#fff0f0'
+   background-color: '#fdf5f0'
 ...
 */
 
@@ -330,12 +373,12 @@ ol.enlighterEnlighterJS li{
 
 /* special line highlight color */
 ol.enlighterEnlighterJS li.specialline, ul.enlighterEnlighterJS li.specialline {
-	background-color: #fff0f0;
+	background-color: #fdf5f0;
 }
 
 /* hover effect */
 ol.enlighterEnlighterJS li.hoverEnabled:hover, ul.enlighterEnlighterJS li.hoverEnabled:hover {
-	background-color: #ffffe0;
+	background-color: #fffcd3;
 	border: solid 0px #ffffff;
 	color: #444444;
 }
@@ -494,20 +537,24 @@ ol.gitEnlighterJS {
 	color: #000000;
 	line-height: 20px;
 }
-.gitEnlighterJSWrapper .EnlighterJSRawButton{
-	color: #0086b3;
-	border: solid 0px #000000;
+.gitEnlighterJSWrapper .EnlighterJSToolbar > a{
+	border-radius: 0px;
 }
 
 /* Tab Styles */
 .gitEnlighterJSTabPane .controls{
 	background-color: #f2f2f2;
+	border: 1px solid #eee;
+	border-bottom-width: 0px;
 }
 .gitEnlighterJSTabPane .controls ul{
 	margin: 0px 0px 0px 35px;
 }
 .gitEnlighterJSTabPane .controls li{
 	border-radius: 0px;
+}
+.gitEnlighterJSTabPane .controls li.selected{
+	background-color: #e0e0e0;
 }
 .gitEnlighterJSTabPane .pane{
 	padding: 0px;
@@ -621,10 +668,14 @@ ol.mochaEnlighterJS li.specialline, ul.mochaEnlighterJS li.specialline {
 	line-height: 14px;
 	border-left: 2px solid #939393;
 }
-.mochaEnlighterJSWrapper .EnlighterJSRawButton{
-	background-color: #BBCCD5;
-	border: solid 0px #BBCCD5;
-	color: #000;
+
+/* Tab Pane */
+.mochaEnlighterJSWrapper .EnlighterJSToolbar > a{
+	border-radius: 0px;
+	opacity: 0.8;
+}
+.mochaEnlighterJSWrapper .EnlighterJSToolbar > a:hover{
+	opacity: 1.0;
 }/*
 ---
 description: Panic Coda inspired theme.
@@ -667,6 +718,23 @@ styles:
 	background-color: #E4F8FC;
 }
 
+/* line styles */
+ol.panicEnlighterJS li, ul.panicEnlighterJS li {
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+ol.panicEnlighterJS li{
+	border-left: 1px solid #939393;
+}
+
+/* hover effect */
+ol.panicEnlighterJS li.hoverEnabled:hover, ul.panicEnlighterJS li.hoverEnabled:hover{
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	background-color: #F4F8FC;
+}
+
+
 /** Symbol styles */
 .panicEnlighterJS .de1 { color: #A00083; }
 .panicEnlighterJS .de2 { color: #A00083; }
@@ -694,12 +762,9 @@ styles:
 	color: #000000;
 	line-height: 16px;
 }
-.panicEnlighterJSWrapper .EnlighterJSRawButton{
-	color: #A00083;
-	border: solid 0px #000000;
-}
-.panicEnlighterJSWrapper .EnlighterJSRawButton:hover{
-	background-color: #F4F8FC;	
+/* Tab Pane */
+.panicEnlighterJSWrapper .EnlighterJSToolbar > a{
+	border-radius: 0px;
 }/*
 ---
 description: MacRabbit Espresso inspired theme.
@@ -750,6 +815,11 @@ ul.tuttiEnlighterJS {
 	background-color: #fbfbfb;
 }
 
+span.tuttiEnlighterJS {
+	background-color: #f9f9f9;
+	border: none;
+}
+
 ol.tuttiEnlighterJS li, ul.tuttiEnlighterJS li{
 	border: none;
 	line-height: 16px;
@@ -792,6 +862,18 @@ ol.tuttiEnlighterJS li.specialline, ul.tuttiEnlighterJS li.specialline  {
 	font-size: 12px;
 	color: #000000;
 	line-height: 16px;
+}
+
+/* Tab Pane */
+.tuttiEnlighterJSWrapper .EnlighterJSToolbar > a{
+	border-radius: 0px;
+	opacity: 0.8;
+	border: none;
+	width: 21px;
+	height: 21px;
+}
+.tuttiEnlighterJSWrapper .EnlighterJSToolbar > a:HOVER{
+	opacity: 1.0;
 }/*
 ---
 description: TextMate twilight inspired theme.
@@ -900,8 +982,457 @@ ol.twilightEnlighterJS li.specialline, ul.twilightEnlighterJS li.specialline {
 	color: #f8f8f8;
 	line-height: 20px;
 }
-.twilightEnlighterJSWrapper .EnlighterJSRawButton{
-	color: #f8f8f8;
-	background-color: #202021;
-	border: solid 0px #202021;
+/* Tab Pane */
+.twilightEnlighterJSWrapper .EnlighterJSToolbar > a{
+	border-radius: 0px;
+	opacity: 0.8;
+}
+.twilightEnlighterJSWrapper .EnlighterJSToolbar > a:hover{
+	opacity: 1.0;
+}
+/*
+---
+description: SyntaxHighlighter inspired theme.
+
+license: MIT Style X11 License
+
+authors:
+  - Andi Dittrich
+  
+styles:
+ base:
+   font-family: Consolas, "Source Code Pro", "Courier New", Monospace
+   font-size: 15px
+   color: '#000000'
+   background-color: '#f8f8f8'
+ line:
+   font-family: Consolas, "Source Code Pro", "Courier New", Monospace
+   font-size: 14px
+   line-height: 20px
+   color: '#505050'
+   odd: '#ffffff'
+   even: '#f8f8f8'
+ raw:
+   font-family: Consolas, "Source Code Pro", "Courier New", Monospace
+   font-size: 15px
+   line-height: 20px
+   color: '#000000'
+   background-color: '#ffffff'   
+ hover:
+   background-color: '#ddf0dd'
+ specialline:
+   background-color: '#edf9ec'
+...
+*/
+
+/* line number background */
+ol.classicEnlighterJS, ul.classicEnlighterJS{
+	background-color: #f8f8f8;
+}
+/* borders on top&botton */
+.classicEnlighterJS, .classicEnlighterJSWrapper pre{
+	border: 1px solid #e8e8e2;
+	font-family: Consolas, "Source Code Pro", "Courier New", Monospace;
+}
+
+ol.classicEnlighterJS li, ul.classicEnlighterJS li{
+	border: none;
+	border-left: solid 4px #52ce52;
+	line-height: 20px;
+	color: #505050;
+	font-size: 14px;
+	background-color: #ffffff;
+}
+ol.classicEnlighterJS li.even, ul.classicEnlighterJS li.even{
+	background-color: #f8f8f8;
+}
+
+/* inlline container style */
+span.classicEnlighterJS{
+	background-color: transparent;
+	border: none;
+}
+
+/* hover color */
+ol.classicEnlighterJS li.hoverEnabled:hover, ul.classicEnlighterJS li.hoverEnabled:hover{
+	border: none;
+	border-left: solid 4px #52ce52;
+	background-color: #ddf0dd;
+}
+
+/* special line highlight color */
+ol.classicEnlighterJS li.specialline, ul.classicEnlighterJS li.specialline {
+	background-color: #edf9ec;
+	border-left-color: #3fa03f;
+}
+
+/* non leading zero */
+ol.classicEnlighterJS {
+	list-style-type: decimal;
+}
+
+.classicEnlighterJS span{
+	font-size: 15px;
+}
+
+/** Symbol styles */
+.classicEnlighterJS .de1 { background-color: #e0e010; font-weight: bold; }
+.classicEnlighterJS .de2 { background-color: #e0e010; font-weight: bold; }
+.classicEnlighterJS .kw1 { color: #066da1; font-weight: bold; }
+.classicEnlighterJS .kw2 { color: #404247; font-weight: bold; }
+.classicEnlighterJS .kw3 { color: #d53aa9; }
+.classicEnlighterJS .kw4 { color: #404247; }
+.classicEnlighterJS .co1 { color: #888888; }
+.classicEnlighterJS .co2 { color: #888888; }
+.classicEnlighterJS .st0 { color: #2d47e6; }
+.classicEnlighterJS .st1 { color: #2d47e6; }
+.classicEnlighterJS .st2 { color: #d53aa9; font-weight: bold; }
+.classicEnlighterJS .nu0 { color: #d53aa9; }
+.classicEnlighterJS .me0 { color: #404247; }
+.classicEnlighterJS .me1 { color: #404247; }
+.classicEnlighterJS .br0 { color: #444444; }
+.classicEnlighterJS .sy0 { color: #444444; }
+.classicEnlighterJS .es0 { color: #444444; }
+.classicEnlighterJS .re0 { color: #009926; }
+
+/* Raw Code Pane */
+.classicEnlighterJSWrapper pre{
+	background-color: #ffffff;
+	font-size: 15px;
+	color: #000000;
+	line-height: 20px;
+}
+
+/* Button Styles  */
+.classicEnlighterJSWrapper .EnlighterJSToolbar > a{
+	border-radius: 0px;
+}
+
+/* Tab Styles */
+.classicEnlighterJSTabPane .controls{
+	background-color: #f8f8f8;
+	height: 31px;
+	border: 1px solid #e8e8e2;
+	border-bottom-width: 0px;
+}
+.classicEnlighterJSTabPane .controls ul{
+	margin: 0px 0px 0px 35px;
+}
+.classicEnlighterJSTabPane .controls li{
+	border-radius: 0px;
+	font-size: 15px;
+	font-family: Consolas, "Source Code Pro", "Courier New", Monospace;
+	background-color: transparent;
+	line-height: 20px;
+	padding: 5px 10px 5px 10px;
+}
+.classicEnlighterJSTabPane .controls li.selected, .classicEnlighterJSTabPane .controls li.selected:hover{
+	background-color: #52ce52;
+	color: #f9f9f9;
+	font-weight: bold;
+}
+.classicEnlighterJSTabPane .pane{
+	padding: 0px;
+}
+.classicEnlighterJSTabPane .classicEnlighterJS{
+	border-top-width: 0px;
+} /*
+---
+description: Eclipse inspired Theme
+
+license: MIT-style X11
+
+authors:
+ - Andi Dittrich
+ 
+styles:
+ base:
+   font-family: "Source Code Pro", "Courier New", Monospace
+   font-size: 13px
+   color: '#000000'
+ line:
+   font-family: "Source Code Pro", "Courier New", Monospace
+   font-size: 13px
+   line-height: 16px
+   color: '#787878'
+   odd: '#ffffff'
+   even: '#ffffff'
+ raw:
+   font-family: "Source Code Pro", "Courier New", Monospace
+   font-size: 12px
+   line-height: 18px
+   color: '#717171'
+   background-color: '#ffffff'
+ hover:
+   background-color: '#e8f2fe'
+ specialline:
+   background-color: '#f9f9f9'
+...
+*/
+
+/* default styles */
+.eclipseEnlighterJS, .eclipseEnlighterJSWrapper {
+	font-family: "Source Code Pro", "Courier New", Monospace;
+}
+
+/* Inline specific styles */
+span.eclipseEnlighterJS{
+	border-radius: 3px;
+	background-color: #f8f8f8;
+	border: solid 0px #ffffff;
+}
+
+/* LIST specific styles */
+ol.eclipseEnlighterJS, ul.eclipseEnlighterJS, .eclipseEnlighterJSWrapper pre{
+	font-size: 11px;
+	color: #939393;
+	border-radius: 5px;
+	border: solid 8px #f3f3f3;
+	background-color: #ffffff;
+}
+
+/* line styles */
+ol.eclipseEnlighterJS li, ul.eclipseEnlighterJS li{
+	padding: 1px 5px 1px 14px;
+	line-height: 16px;
+	color: #787878;
+}
+ol.eclipseEnlighterJS li{
+	list-style: decimal outside;
+	border-left: 2px solid #f8f8f8;
+	padding: 1px 5px 1px 14px;
+}
+
+/* special line highlight color */
+ol.eclipseEnlighterJS li.specialline, ul.eclipseEnlighterJS li.specialline {
+	background-color: #f9f9f9;
+	border-left-color: #f0f0f0;
+}
+
+/* hover effect */
+ol.eclipseEnlighterJS li.hoverEnabled:hover, ul.eclipseEnlighterJS li.hoverEnabled:hover {
+	background-color: #e8f2fe;
+	color: #444444;
+}
+ol.eclipseEnlighterJS li.hoverEnabled:hover{
+	border-left-color: #e0e0e0;
+}
+
+.eclipseEnlighterJS span{
+	font-size: 13px;
+}
+
+/* symbol styles */
+.eclipseEnlighterJS .de1 { color: #3f7f95; }
+.eclipseEnlighterJS .de2 { color: #3f7f95; }
+.eclipseEnlighterJS .kw1 { color: #3f7f95; font-weight: bold; }
+.eclipseEnlighterJS .kw2 { color: #7f007f; font-weight: bold; }
+.eclipseEnlighterJS .kw3 { color: #445588; }
+.eclipseEnlighterJS .kw4 { color: #990073; }
+.eclipseEnlighterJS .co1 { color: #3f7f5f; }
+.eclipseEnlighterJS .co2 { color: #3f5fbf; }
+.eclipseEnlighterJS .st0 { color: #320fe3; }
+.eclipseEnlighterJS .st1 { color: #990073; }
+.eclipseEnlighterJS .st2 { color: #3f7f95; }
+.eclipseEnlighterJS .nu0 { color: #000000; }
+.eclipseEnlighterJS .me0 { color: #000000; }
+.eclipseEnlighterJS .me1 { color: #000000; }
+.eclipseEnlighterJS .br0 { color: #777; }
+.eclipseEnlighterJS .sy0 { color: #777; }
+.eclipseEnlighterJS .es0 { color: #777; }
+.eclipseEnlighterJS .re0 { color: #009926; }
+
+/* Tab Panel */
+.eclipseEnlighterJSTabPane .controls{
+	background-color: #f3f3f3;
+	height: 35px;
+	padding: 8px 0px 0px 20px;
+	border-radius: 5px 5px 0px 0px;
+}
+.eclipseEnlighterJSTabPane .controls li {
+	font-size: 12px;
+	color: #000000;
+	background-color: transparent;
+	font-family: "Source Code Pro", "Courier New", Monospace;
+	cursor: pointer;
+	padding: 5px 10px 5px 10px;
+	border-radius: 5px 5px 0px 0px;
+}
+.eclipseEnlighterJSTabPane .controls li:hover {
+	background-color: transparent;
+}
+.eclipseEnlighterJSTabPane .controls .selected,.eclipseEnlighterJSTabPane .controls .selected:hover{
+	background-color: #ffffff;
+	color: #000000;
+	border-color: #c9c9c9;
+}
+.eclipseEnlighterJSTabPane .eclipseEnlighterJS, .eclipseEnlighterJSTabPane pre{
+	border-top-width: 0px;
+}
+.eclipseEnlighterJSTabPane .pane{
+	padding: 0px;
+}
+.eclipseEnlighterJSTabPane ol.eclipseEnlighterJS, .eclipseEnlighterJSTabPane ul.eclipseEnlighterJS{
+	border-radius: 0px 0px 5px 5px;
+}
+/* Raw Code Pane */
+.eclipseEnlighterJSWrapper pre{
+	background-color: #ffffff;
+	font-size: 13px;
+	color: #717171;
+}
+.eclipseEnlighterJSTabPane .EnlighterJSToolbar{
+	padding: 7px 15px 0px 0px;
+}/*
+---
+description: Beyond-Technology Theme - Inspired by GitHub & Bootstrap colors;
+
+license: MIT-style X11
+
+authors:
+ - Andi Dittrich
+ 
+styles:
+ base:
+   font-family: Consolas, "Source Code Pro", "Courier New", Monospace
+   font-size: 12px
+   color: '#000000'
+ line:
+   font-family: Consolas, "Source Code Pro", "Courier New", Monospace
+   font-size: 10px
+   line-height: 16px
+   color: '#aaaaaa'
+ raw:
+   font-family: Consolas, "Source Code Pro", "Courier New", Monospace
+   font-size: 12px
+   line-height: 18px
+   color: '#717171'
+   background-color: '#ffffff'
+ hover:
+   background-color: '#ffffe0'
+ specialline:
+   background-color: '#fff0f0'
+...
+*/
+
+/* default styles */
+.beyondEnlighterJS, .beyondEnlighterJSWrapper {
+	font-family: Menlo, Monaco, Consolas, "Source Code Pro", "Courier New", Monospace;
+}
+
+/* Inline specific styles */
+span.beyondEnlighterJS{
+	border-radius: 3px;
+	background-color: #f7f7fa;
+	border: dotted 1px #e2e2e8;
+}
+
+/* LIST specific styles */
+ol.beyondEnlighterJS, ul.beyondEnlighterJS, .beyondEnlighterJSWrapper pre{
+	font-size: 11px;
+	color: #333333;
+	background-color: #f7f7fa;
+	border-radius: 5px;
+	border: solid 2px #e2e2e8;	
+	padding: 10px 10px 10px 5px;
+}
+
+/* line styles */
+ol.beyondEnlighterJS li, ul.beyondEnlighterJS li{
+	border: solid 0px #ffffff;
+	padding: 1px 5px 1px 10px;
+	line-height: 18px;
+	color: #aaaaaa;
+	background-color: #f7f7fa;
+	margin-left: 0px;
+}
+ol.beyondEnlighterJS li:FIRST-CHILD, ol.beyondEnlighterJS li:LAST-CHILD{
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+ol.beyondEnlighterJS li{
+	list-style: decimal inside;
+	border-left: 0px solid #e0e0e0;
+	padding: 1px 5px 1px 15px;
+}
+
+
+/* special line highlight color */
+ol.beyondEnlighterJS li.specialline, ul.beyondEnlighterJS li.specialline {
+	background-color: #ffffff;
+}
+
+/* hover effect */
+ol.beyondEnlighterJS li.hoverEnabled:hover, ul.beyondEnlighterJS li.hoverEnabled:hover {
+	background-color: #ffffff;
+	border: solid 0px #ffffff;
+	color: #444444;
+}
+
+.beyondEnlighterJS span{
+	font-size: 13px;
+	color: #2f3235;
+}
+
+/* symbol styles */
+.beyondEnlighterJS .de1 { color: #CF6A4C; }
+.beyondEnlighterJS .de2 { color: #CF6A4C; }
+.beyondEnlighterJS .kw1 { color: #286491; }
+.beyondEnlighterJS .kw2 { color: #4da0d2; }
+.beyondEnlighterJS .kw3 { color: #445588; }
+.beyondEnlighterJS .kw4 { color: #990073; }
+.beyondEnlighterJS .co1 { color: #8181a1; }
+.beyondEnlighterJS .co2 { color: #8181a1; }
+.beyondEnlighterJS .st0 { color: #dd1144; }
+.beyondEnlighterJS .st1 { color: #dd1144; }
+.beyondEnlighterJS .st2 { color: #049595; }
+.beyondEnlighterJS .nu0 { color: #009999; }
+.beyondEnlighterJS .me0 { color: #0086b3; }
+.beyondEnlighterJS .me1 { color: #0086b3; }
+.beyondEnlighterJS .br0 { color: #777; }
+.beyondEnlighterJS .sy0 { color: #777; }
+.beyondEnlighterJS .es0 { color: #777; }
+.beyondEnlighterJS .re0 { color: #009926; }
+
+/* Tab Panel */
+.beyondEnlighterJSTabPane .controls{
+	background-color: transparent;
+	padding: 5px 5px 0px 5px;
+}
+.beyondEnlighterJSTabPane .controls ul{
+	margin-left: 20px;
+}
+.beyondEnlighterJSTabPane .controls li {
+	border-radius: 5px 5px 0px 0px;
+	border: solid 2px #e2e2e8;
+	border-bottom-width: 0px;
+	font-size: 12px;
+	color: #286491;
+	font-weight: bold;
+	background-color: #ffffff;
+	font-family: Consolas, "Source Code Pro", "Courier New", Monospace;
+	cursor: pointer;
+}
+.beyondEnlighterJSTabPane .controls li:hover {
+	background-color: transparent;
+}
+.beyondEnlighterJSTabPane .controls .selected,.beyondEnlighterJSTabPane .controls .selected:hover{
+	background-color: #e2e2e8;
+	border-color: #d8d8dd;
+	color: #505050;
+}
+.beyondEnlighterJSTabPane .beyondEnlighterJS, .beyondEnlighterJSTabPane pre{
+	border-radius: 8px;
+}
+.beyondEnlighterJSTabPane .pane{
+	padding: 0px;
+}
+/* Raw Code Pane */
+.beyondEnlighterJSWrapper pre{
+	background-color: #f7f7fa;
+	font-size: 13px;
+	color: #333333;
+	line-height: 20px;
+	padding: 15px;
 }

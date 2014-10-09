@@ -24,8 +24,11 @@ var EnlighterJS = new Class({
 		renderer: 'Block',
 		indent : -1,
 		forceTheme: false,
-		rawButton: false,
-		ampersandCleanup: true
+		rawButton: true,
+		windowButton: true,
+		infoButton: true,
+		ampersandCleanup: true,
+		rawcodeDoubleclick: false
 	},
 
 	// used renderer instance
@@ -43,6 +46,12 @@ var EnlighterJS = new Class({
 	// language alias manager
 	languageManager: null,
 
+	// toggle raw code
+	rawContentContainer: null,
+	
+	// rendered output span/ou/ul container
+	output: null,
+	
 
 	/**
 	 * @constructs
@@ -112,25 +121,19 @@ var EnlighterJS = new Class({
 			language = new EnlighterJS.Language[languageName](this.getRawCode(true));
 			
 			// compile tokens -> generate output
-			var output = this.renderer.render(language, specialLines, {
+			this.output = this.renderer.render(language, specialLines, {
 				lineOffset: (this.originalCodeblock.get('data-enlighter-lineoffset') || null),
 				lineNumbers: this.originalCodeblock.get('data-enlighter-linenumbers')
 			});
 			
 			// set class and id attributes.
-			output.addClass(themeName.toLowerCase() + 'EnlighterJS').addClass('EnlighterJS');		
-			output.set('id', 'EnlighterJS_' + String.uniqueID());
+			this.output.addClass(themeName.toLowerCase() + 'EnlighterJS').addClass('EnlighterJS');		
 	
-			// show button toolbar ? add wrapper
-			if (this.options.rawButton === true && this.options.renderer == 'Block'){
+			// add wrapper ?
+			if (this.options.renderer == 'Block'){
 				// grab content into specific container or after original code block ?
-				if (this.container) {
-					this.container.grab(output);
-				}else{
+				if (!this.container) {
 					this.container = new Element('div');
-					
-					// add the highlighted code
-					this.container.grab(output);
 					
 					// put the highlighted code wrapper behind the original	
 					this.container.inject(this.originalCodeblock, 'after');
@@ -139,8 +142,11 @@ var EnlighterJS = new Class({
 				// add wrapper class
 				this.container.addClass('EnlighterJSWrapper').addClass(themeName.toLowerCase() + 'EnlighterJSWrapper');
 				
+				// add the highlighted code
+				this.container.grab(this.output);
+				
 				// create raw content container
-				var rawContentContainer = new Element('pre', {
+				this.rawContentContainer = new Element('pre', {
 					text: this.getRawCode(false),
 					styles: {
 						'display': 'none'
@@ -148,39 +154,30 @@ var EnlighterJS = new Class({
 				});
 				
 				// add raw content container
-				this.container.grab(rawContentContainer);
+				this.container.grab(this.rawContentContainer);
 				
-				// visibility flag
-				var highlightedContainerVisible = true;
+				// show raw code on double-click ?
+				if (this.options.rawcodeDoubleclick){
+					this.container.addEvent('dblclick', function(){
+						this.toggleRawCode();
+					}.bind(this));
+				}
 				
-				// create toggle "button"
-				this.container.grab(new Element('div', {
-					'class': 'EnlighterJSRawButton',
-					events: {
-						 click: function(){
-							 // toggle raw/highlighted containers
-							 if (highlightedContainerVisible){
-								 output.setStyle('display', 'none');
-								 rawContentContainer.setStyle('display', 'block');
-								 highlightedContainerVisible = false;
-							 }else{
-								 output.setStyle('display', 'block');
-								 rawContentContainer.setStyle('display', 'none');
-								 highlightedContainerVisible = true;
-							 }
-						 }
-					 }
-				}));
+				// toolbar ?
+				if (this.options.rawButton || this.options.windowButton || this.options.infoButton){
+					this.container.grab(new EnlighterJS.UI.Toolbar(this));
+				}
+				
 			// normal handling
 			}else{
 				// grab content into specific container or after original code block ?
 				if (this.container) {
-					this.container.grab(output);
+					this.container.grab(this.output);
 					
 				// just put the highlighted code behind the original	
 				}else{
-					output.inject(this.originalCodeblock, 'after');
-					this.container = output;
+					this.output.inject(this.originalCodeblock, 'after');
+					this.container = this.output;
 				}
 			}
 			
@@ -252,8 +249,32 @@ var EnlighterJS = new Class({
 				});
 			}
 		}
-
+		
 		return code;
+	},
+	
+	/**
+	 * Hide/Show the RAW Code Container/Toggle Highlighted Code
+	 */
+	toggleRawCode: function(show){
+		// initialization required!
+		if (this.output == null){
+			return;
+		}
+		
+		// argument set ?
+		if (typeof(show)!='boolean'){
+			show = (this.rawContentContainer.getStyle('display') == 'none');
+		}
+		
+		// toggle container visibility
+		if (show){
+			this.output.setStyle('display', 'none');
+			this.rawContentContainer.setStyle('display', 'block');
+		}else{
+			this.output.setStyle('display', 'block');
+			this.rawContentContainer.setStyle('display', 'none');
+		}
 	}
 });
 

@@ -1,0 +1,46 @@
+/*
+---
+description: Theme-Development Startup - your theme prefix has to be lowercase!!
+
+license: MIT-style
+
+authors:
+ - Andi Dittrich
+...
+*/
+
+/* Symbol Styles */
+.mythemeEnlighterJS .de1 {}
+.mythemeEnlighterJS .de2 {}
+.mythemeEnlighterJS .kw1 { color: #ff609a; }
+.mythemeEnlighterJS .kw2 { color: #ff6f1b; }
+.mythemeEnlighterJS .kw3 { color: #ff4e0c; }
+.mythemeEnlighterJS .kw4 { color: #ff6f1b; }
+.mythemeEnlighterJS .co1 { color: #88f888; }
+.mythemeEnlighterJS .co2 { color: #888888; }
+.mythemeEnlighterJS .st0 { color: #489a1b; }
+.mythemeEnlighterJS .st1 { color: #489a1b; }
+.mythemeEnlighterJS .st2 { color: #489a1b; }
+.mythemeEnlighterJS .nu0 { color: #70483d; }
+.mythemeEnlighterJS .me0 { color: #666666; }
+.mythemeEnlighterJS .me1 { color: #666666; }
+.mythemeEnlighterJS .br0 { color: #f44444; }
+.mythemeEnlighterJS .sy0 { color: #444444; }
+.mythemeEnlighterJS .es0 { color: #444444; }
+.mythemeEnlighterJS .re0 { color: #784e0c; }
+
+/* Raw Code Pane */
+.mythemeEnlighterJSWrapper pre{
+	line-height: 16px;
+}
+
+/* Tab Pane */
+.mythemeEnlighterJSTabPane .controls li{
+	border-radius: 0px;
+}
+.mythemeEnlighterJSTabPane .controls li:hover {
+	background-color: #e5e5e5;
+}
+.mythemeEnlighterJSTabPane .controls li.selected{
+	background-color: #e5e5e5;
+}

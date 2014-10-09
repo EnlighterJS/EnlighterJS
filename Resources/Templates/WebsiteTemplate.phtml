@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- 
+		EnlighterJS Documentation
+		
+		Author: Andi Dittrich <http://andidittrich.de>
+		Version: <?php echo ENLIGHTERJS_VERSION ?>
+		License: MIT X11 License
+	 -->
+	 
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Favicon !-->
+	<link rel="icon" href="<?php echo cdnbase('Resources/favicon.png'); ?>" type="image/png">
+	
+	<title><?php echo strip_tags($pageTitle); ?> | EnlighterJS</title>
+	
+	<!-- Bootstrap CSS - just 4 styling - not required for enlighterjs -->
+	<link rel="stylesheet" href="<?php echo cdnbase('Resources/bootstrap-3.2.0-dist/css/bootstrap.min.css'); ?>">
+	<link rel="stylesheet" href="<?php echo cdnbase('Resources/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css'); ?>">
+	<link rel="stylesheet" href="<?php echo cdnbase('Resources/Template.css'); ?>">
+	<link rel="stylesheet" href="<?php echo cdnbase('Resources/GitHubButtons.yui.css'); ?>">
+
+	<!-- Include EnlighterJS Styles -->
+	<link rel="stylesheet" type="text/css" href="<?php echo cdnbase('Build/EnlighterJS.yui.css'); ?>" />
+	
+	<!-- Include MooTools Framework -->
+	<script type="text/javascript" src="<?php echo cdnbase('Resources/mootools-core-1.5.0-full-nocompat-yc.js'); ?>"></script>
+	<script type="text/javascript" src="<?php echo cdnbase('Resources/mootools-more-1.5.0-yc.js'); ?>"></script>
+
+	<!-- Some GitHub related stuff -->
+	<script type="text/javascript" src="<?php echo cdnbase('Resources/GitHubButtons.yui.js'); ?>"></script>
+	
+	<!-- Include EnlighterJS -->
+	<script type="text/javascript" src="<?php echo cdnbase('Build/EnlighterJS.yui.js'); ?>"></script>
+	
+	<!-- Template JS -->
+	<script type="text/javascript" src="<?php echo cdnbase('Resources/Template.js'); ?>"></script>	
+	
+	<!-- EnlighterJS Init -->
+	<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="generic" data-indent="2" data-selector-block="pre" data-selector-inline="code" data-rawcodebutton="true" data-windowbutton="true" data-infobutton="true" />
+</head>
+<body>
+
+	<?php require('Navigation.phtml'); ?>
+
+	<!-- Header/Title -->
+	<div class="page-header">
+		<div class="container">
+			<h1>
+				<?php echo $pageTitle; ?>
+			</h1>
+		</div>
+	</div>
+		
+	<!-- Begin page content -->
+	<div class="container">
+
+		<div id="content">
+			<!-- ############################################################# -->
+			<?php echo $pageContent; ?>
+			<!-- ############################################################# -->
+
+		</div>
+		<!-- // content -->
+
+
+	</div>
+	<!-- // container -->
+
+	<?php require('Footer.phtml'); ?>
+
+</body>
+</html>

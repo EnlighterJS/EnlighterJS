@@ -103,10 +103,6 @@ EnlighterJS.Renderer.BlockRenderer = new Class({
 		// grab last line into container
 		container.grab(currentLine);
 
-		// add line classes to elements
-		container.getFirst().addClass('firstline');
-		container.getLast().addClass('lastline');
-		
 		// add odd/even classes
 		if (this.options.evenClassname){
 			container.getElements('li:even').addClass(this.options.evenClassname);

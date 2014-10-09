@@ -30,6 +30,22 @@ styles:
    background-color: '#F4F8FC'
 ...
 */
+/* line styles */
+ol.mootoolsEnlighterJS li, ul.mootoolsEnlighterJS li {
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+ol.mootoolsEnlighterJS li{
+	border-left: 1px solid #939393;
+}
+
+/* hover effect */
+ol.mootoolsEnlighterJS li.hoverEnabled:hover, ul.mootoolsEnlighterJS li.hoverEnabled:hover{
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	background-color: #F4F8FC;
+}
+
 /* theme symbol styles */
 .mootoolsEnlighterJS .de1 {}
 .mootoolsEnlighterJS .de2 {}
@@ -54,14 +70,15 @@ styles:
 .mootoolsEnlighterJSWrapper pre{
 	line-height: 16px;
 }
-.mootoolsEnlighterJSWrapper .EnlighterJSRawButton{
-	padding: 3px 10px 3px 10px;
-	margin: 0px 5px 0px 5px;
-	background-color: #f2f2f2;
-	border-radius: 5px;
-	border: solid 0px #ffffff;
-	color: #000000;
+
+/* Toolbar */
+.mootoolsEnlighterJSTabPane .controls li{
+	border-radius: 0px;
 }
-.mootoolsEnlighterJSWrapper .EnlighterJSRawButton:hover{
+.mootoolsEnlighterJSTabPane .controls li:hover {
+	background-color: #e5e5e5;
+}
+
+.mootoolsEnlighterJSTabPane .controls li.selected{
 	background-color: #e5e5e5;
 }

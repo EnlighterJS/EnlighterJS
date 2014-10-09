@@ -32,18 +32,18 @@ EnlighterJS.LanguageManager = new Class({
 	// map of language aliases
 	languageAliases: {
 		'standard': 'generic',
-		'javascript': 'js',
+		'js': 'javascript',
 		'md': 'markdown',
 		'c++': 'cpp',
 		'c': 'cpp',
 		'styles': 'css',
 		'bash': 'shell',
-		'json': 'js',
+		'json': 'javascript',
 		'py': 'python',
 		'html': 'xml',
-		'jquery': 'js',
-		'mootools': 'js',
-		'ext.js': 'js',
+		'jquery': 'javascript',
+		'mootools': 'javascript',
+		'ext.js': 'javascript',
 		'c#': 'csharp'
 	},
 	

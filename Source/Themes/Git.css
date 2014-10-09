@@ -86,20 +86,24 @@ ol.gitEnlighterJS {
 	color: #000000;
 	line-height: 20px;
 }
-.gitEnlighterJSWrapper .EnlighterJSRawButton{
-	color: #0086b3;
-	border: solid 0px #000000;
+.gitEnlighterJSWrapper .EnlighterJSToolbar > a{
+	border-radius: 0px;
 }
 
 /* Tab Styles */
 .gitEnlighterJSTabPane .controls{
 	background-color: #f2f2f2;
+	border: 1px solid #eee;
+	border-bottom-width: 0px;
 }
 .gitEnlighterJSTabPane .controls ul{
 	margin: 0px 0px 0px 35px;
 }
 .gitEnlighterJSTabPane .controls li{
 	border-radius: 0px;
+}
+.gitEnlighterJSTabPane .controls li.selected{
+	background-color: #e0e0e0;
 }
 .gitEnlighterJSTabPane .pane{
 	padding: 0px;

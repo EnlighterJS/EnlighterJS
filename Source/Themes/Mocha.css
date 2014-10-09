@@ -105,8 +105,12 @@ ol.mochaEnlighterJS li.specialline, ul.mochaEnlighterJS li.specialline {
 	line-height: 14px;
 	border-left: 2px solid #939393;
 }
-.mochaEnlighterJSWrapper .EnlighterJSRawButton{
-	background-color: #BBCCD5;
-	border: solid 0px #BBCCD5;
-	color: #000;
+
+/* Tab Pane */
+.mochaEnlighterJSWrapper .EnlighterJSToolbar > a{
+	border-radius: 0px;
+	opacity: 0.8;
+}
+.mochaEnlighterJSWrapper .EnlighterJSToolbar > a:hover{
+	opacity: 1.0;
 }

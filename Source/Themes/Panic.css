@@ -40,6 +40,23 @@ styles:
 	background-color: #E4F8FC;
 }
 
+/* line styles */
+ol.panicEnlighterJS li, ul.panicEnlighterJS li {
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+ol.panicEnlighterJS li{
+	border-left: 1px solid #939393;
+}
+
+/* hover effect */
+ol.panicEnlighterJS li.hoverEnabled:hover, ul.panicEnlighterJS li.hoverEnabled:hover{
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	background-color: #F4F8FC;
+}
+
+
 /** Symbol styles */
 .panicEnlighterJS .de1 { color: #A00083; }
 .panicEnlighterJS .de2 { color: #A00083; }
@@ -67,10 +84,7 @@ styles:
 	color: #000000;
 	line-height: 16px;
 }
-.panicEnlighterJSWrapper .EnlighterJSRawButton{
-	color: #A00083;
-	border: solid 0px #000000;
-}
-.panicEnlighterJSWrapper .EnlighterJSRawButton:hover{
-	background-color: #F4F8FC;	
+/* Tab Pane */
+.panicEnlighterJSWrapper .EnlighterJSToolbar > a{
+	border-radius: 0px;
 }

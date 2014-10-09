@@ -1,99 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<!-- Favicon !-->
+	<link rel="icon" href="Resources/favicon.png" type="image/png" />
+	
+	<title>EnlighterJS Playground</title>
+	
+	<!-- Bootstrap CSS - just 4 styling ;)  -->
+	<link rel="stylesheet" href="Resources/bootstrap.min.css" />
+	<link rel="stylesheet" href="Resources/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="Resources/Template.css" />
 
-<!-- Favicon !-->
-<link rel="icon" href="Resources/favicon.png" type="image/png">
+	<!-- EnlighterJS Styles -->
+<?php 
+// load js+css source list
+$sourceList = json_decode(file_get_contents('Build/Sources.dev.json'));
+$jsSources = explode(' ', $sourceList->js);
+$cssSources = explode(' ', $sourceList->css);
 
-<title>EnlighterJS Playground</title>
-
-<!-- Bootstrap CSS - just 4 styling ;)  -->
-<link rel="stylesheet" href="Resources/bootstrap.min.css">
-<link rel="stylesheet" href="Resources/bootstrap-theme.min.css">
-<link rel="stylesheet" href="Resources/Template.css">
-
-<!-- Include MooTools Framework (MooTools.MORE ist only required for development!) -->
-<script type="text/javascript" src="Resources/mootools-core-1.4.5-full-nocompat.js"></script>
-<script type="text/javascript" src="Resources/mootools-more-1.4.0.1.js"></script>
-
-<!-- EnlighterJS Sourcefile Loader -->
-<script type="text/javascript" src="Build/DynamicSourcefileLoader.dev.js"></script>
-
-<script type="text/javascript">
-	// attention: don't use load or domready here! the jsloaded event is triggered by DynamicSourcefileLoader
-	window.addEvent('jsloaded', function(){
-		
-		var options = {
-			language : 'javascript',
-			indent : 4
-		};
-
-		//document.getElements('pre.special').enlight(options);
-
-		//document.id('NoLight').enlight(true).enlight(false);
-
-		EnlighterJS.Util.Helper(document.getElements('pre.special'), {
-			language : 'js',
-			theme: 'git',
-			rawButton: true
+	foreach ($cssSources as $css){
+		echo '<link rel="stylesheet" href="', $css, '" />', "\n";
+	}
+?>	
+	
+	<!-- Include MooTools Framework -->
+	<script type="text/javascript" src="Resources/mootools-core-1.5.0-full-nocompat-yc.js"></script>
+	
+	<!-- EnlighterJS Sourcefiles -->
+	<?php 
+	foreach ($jsSources as $js){
+		echo '<script type="text/javascript" src="', $js, '"></script>', "\n";
+	}
+	?>
+	
+	<script type="text/javascript">
+		// attention: don't use load or domready here! the jsloaded event is triggered by DynamicSourcefileLoader
+		window.addEvent('domready', function(){
+			
+			var options = {
+					language : 'js',
+					theme: 'beyond',
+					rawButton: true,
+					windowButton: true,
+					indent : 2,
+					infoButton: true,
+					showLinenumbers: true
+			};
+	
+			//document.getElements('pre.special').enlight(options);
+	
+			//document.id('NoLight').enlight(true).enlight(false);
+		EnlighterJS.Util.Init('pre.special', 'code.special', options);
+		/*
+			EnlighterJS.Util.Helper(document.getElements('pre.special'), Object.merge(options,{
+				renderer : 'Block',
+			}));
+			
+			EnlighterJS.Util.Helper(document.getElements('code.special'), Object.merge(options,{
+				renderer : 'Inline',
+			}));
+	*/
 		});
-		
-		EnlighterJS.Util.Helper(document.getElements('code.special'), {
-			language : 'js',
-			renderer : 'Inline'
-		});
-
-	});
-</script>
+	</script>
 </head>
 
 <body>
-	<!-- Topnav -->
-	<div id="navbar-wrapper">
-		<div class="container">
-			<div class="navbar navbar-inverse" role="navigation">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="Quickstart.html">EnlighterJS</a>
-				</div>
-				<ul class="nav navbar-nav">
-					<li><a href="Quickstart.html">Quickstart</a></li>
-
-					<li class="dropdown"><a href="#">Examples<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li class="dropdown-header">Languages</li>
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Initialization</li>
-							<li><a href="Metainit.html">Metatag based</a></li>
-						</ul></li>
-					<li><a href="Themes.html">Themes</a></li>
-					
-					<li><a href="http://wordpress.org/plugins/enlighter/">Plugins<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="http://wordpress.org/plugins/enlighter/">Enlighter for WordPress</a></li>
-						</ul>
-					</li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="https://github.com/AndiDittrich/EnlighterJS/archive/master.zip">Get EnlighterJS<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li class="dropdown-header">Get it from GitHub</li>
-							<li><a href="https://github.com/AndiDittrich/EnlighterJS/archive/master.zip">Download (latest)</a></li>
-							<li><a href="https://github.com/AndiDittrich/EnlighterJS">Browse on GitHub</a></li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<!-- // topnav -->
-
-
 	<!-- Begin page content -->
 	<div class="container">
 		<div class="page-header">
@@ -113,48 +87,38 @@
 				consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 			</p>
 
-<pre class="special" data-enlighter-language="javascript">
+<pre class="special" data-enlighter-language="html">
+&lt;!DOCTYPE html&gt;
+&lt;head&gt;
+		&lt;!-- Include EnlighterJS Styles --&gt;
+		&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../Build/EnlighterJS.yui.css&quot; /&gt;
+		
+		&lt;!-- Include MooTools Framework --&gt;
+		&lt;script type=&quot;text/javascript&quot; src=&quot;mootools-core-1.4.5-full-nocompat.js&quot;&gt;&lt;/script&gt;
+		
+		&lt;!-- Include EnlighterJS --&gt;
+		&lt;script type=&quot;text/javascript&quot; src=&quot;../Build/EnlighterJS.yui.js&quot; &gt;&lt;/script&gt;
+		
+		&lt;!-- Initialize EnlighterJS --&gt; 
+		&lt;script type=&quot;text/javascript&quot;&gt;
+		window.addEvent('domready', function() {
+			// highlight all pre tags
+			$$('pre').light({
+				altLines : 'hover',
+				indent : 2,
+				editable: false
+			});
+		});
+		&lt;/script&gt;
 
+&lt;!-- Syntax highlight using Languages/Js.js and default theme --&gt; 
+&lt;pre data-enlighter-language=&quot;css&quot;&gt;var myClass = new Class({})&lt;/pre&gt; 
+ 
+&lt;!-- Syntax highlight using Languages/Php.js and theme from Themes/Twilight.css --&gt; 
+&lt;pre data-enlighter-language=&quot;php&quot; data-enlighter-theme=&quot;twilight&quot;&gt;&lt;?php php_info() ?&gt;&lt;/pre&gt;
 
-
-
-	alert('hello world');
-	new FX.scroll(args);
-	}
-
-// other stuff	
-
-  
-  
-   
 </pre>
 
-			<h2>Single JS Testcode</h2>
-			<pre class="special">
-window.addEvent('domready', function(){
-	// metadata config available ? -> autoinit
-	var m = document.getElement('meta[name="EnlighterJS"]');
-
-	// check instance
-	if (!m){
-		return;
-	}
-
-	// create new options object
-	var options = {
-		language: m.get('data-language') || 'generic',
-		theme: m.get('data-theme') || 'Enlighter',
-		indent: m.get('data-indent').toInt() || -1,
-		hover: m.get('data-hover') || 'hoverEnabled'
-	};
-
-	// selector available ? if not, match all pre-tags
-	var blockSelector = m.get('data-selector-block') || 'pre';
-
-	// selector available ? if not, match all code-tags
-	var inlineSelector = m.get('data-selector-inline') || 'code';
-});
-	</pre>
 	
 			<h2>JS Testcode</h2>
 			<pre class="special" data-enlighter-group="g1" id="Lightit1" data-enlighter-lineoffset="5" data-enlighter-title="Javascript1" data-enlighter-highlight="10,16-19">
@@ -259,7 +223,7 @@ endif
 	<!-- Sticky Footer Message -->
 	<div id="footer">
 		<div class="container">
-			<p class="text-muted">
+			<p class="">
 				<strong>EnlighterJS</strong> is developed by <a href="http://andidittrich.de">Andi Dittrich</a><br /> <a href="https://github.com/AndiDittrich/EnlighterJS/archive/master.zip">Download</a> EnlighterJS on <a href="https://github.com/AndiDittrich/EnlighterJS">GitHub</a> | It's released under the Terms of <a href="../LICENSE.md">MIT X11 License</a> | Demo created with <a href="http://getbootstrap.com">Bootstrap</a>
 			</p>
 		</div>

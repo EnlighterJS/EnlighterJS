@@ -106,8 +106,11 @@ ol.twilightEnlighterJS li.specialline, ul.twilightEnlighterJS li.specialline {
 	color: #f8f8f8;
 	line-height: 20px;
 }
-.twilightEnlighterJSWrapper .EnlighterJSRawButton{
-	color: #f8f8f8;
-	background-color: #202021;
-	border: solid 0px #202021;
+/* Tab Pane */
+.twilightEnlighterJSWrapper .EnlighterJSToolbar > a{
+	border-radius: 0px;
+	opacity: 0.8;
+}
+.twilightEnlighterJSWrapper .EnlighterJSToolbar > a:hover{
+	opacity: 1.0;
 }

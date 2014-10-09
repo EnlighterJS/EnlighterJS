@@ -4,8 +4,8 @@ name: EnlighterJS
 description: Post Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-Style X11 License
-version: 2.2.1
-build: 57f86abaae4b557601cdd55a28e9c912/May 31 2014
+version: 2.3
+build: 17e1d06512ea2b880e7adf7b0af9ce39/October 9 2014
 
 authors:
   - Andi Dittrich (author of EnlighterJS)
@@ -46,8 +46,11 @@ var EnlighterJS = new Class({
 		renderer: 'Block',
 		indent : -1,
 		forceTheme: false,
-		rawButton: false,
-		ampersandCleanup: true
+		rawButton: true,
+		windowButton: true,
+		infoButton: true,
+		ampersandCleanup: true,
+		rawcodeDoubleclick: false
 	},
 
 	// used renderer instance
@@ -65,6 +68,12 @@ var EnlighterJS = new Class({
 	// language alias manager
 	languageManager: null,
 
+	// toggle raw code
+	rawContentContainer: null,
+	
+	// rendered output span/ou/ul container
+	output: null,
+	
 
 	/**
 	 * @constructs
@@ -134,25 +143,19 @@ var EnlighterJS = new Class({
 			language = new EnlighterJS.Language[languageName](this.getRawCode(true));
 			
 			// compile tokens -> generate output
-			var output = this.renderer.render(language, specialLines, {
+			this.output = this.renderer.render(language, specialLines, {
 				lineOffset: (this.originalCodeblock.get('data-enlighter-lineoffset') || null),
 				lineNumbers: this.originalCodeblock.get('data-enlighter-linenumbers')
 			});
 			
 			// set class and id attributes.
-			output.addClass(themeName.toLowerCase() + 'EnlighterJS').addClass('EnlighterJS');		
-			output.set('id', 'EnlighterJS_' + String.uniqueID());
+			this.output.addClass(themeName.toLowerCase() + 'EnlighterJS').addClass('EnlighterJS');		
 	
-			// show button toolbar ? add wrapper
-			if (this.options.rawButton === true && this.options.renderer == 'Block'){
+			// add wrapper ?
+			if (this.options.renderer == 'Block'){
 				// grab content into specific container or after original code block ?
-				if (this.container) {
-					this.container.grab(output);
-				}else{
+				if (!this.container) {
 					this.container = new Element('div');
-					
-					// add the highlighted code
-					this.container.grab(output);
 					
 					// put the highlighted code wrapper behind the original	
 					this.container.inject(this.originalCodeblock, 'after');
@@ -161,8 +164,11 @@ var EnlighterJS = new Class({
 				// add wrapper class
 				this.container.addClass('EnlighterJSWrapper').addClass(themeName.toLowerCase() + 'EnlighterJSWrapper');
 				
+				// add the highlighted code
+				this.container.grab(this.output);
+				
 				// create raw content container
-				var rawContentContainer = new Element('pre', {
+				this.rawContentContainer = new Element('pre', {
 					text: this.getRawCode(false),
 					styles: {
 						'display': 'none'
@@ -170,39 +176,30 @@ var EnlighterJS = new Class({
 				});
 				
 				// add raw content container
-				this.container.grab(rawContentContainer);
+				this.container.grab(this.rawContentContainer);
 				
-				// visibility flag
-				var highlightedContainerVisible = true;
+				// show raw code on double-click ?
+				if (this.options.rawcodeDoubleclick){
+					this.container.addEvent('dblclick', function(){
+						this.toggleRawCode();
+					}.bind(this));
+				}
 				
-				// create toggle "button"
-				this.container.grab(new Element('div', {
-					'class': 'EnlighterJSRawButton',
-					events: {
-						 click: function(){
-							 // toggle raw/highlighted containers
-							 if (highlightedContainerVisible){
-								 output.setStyle('display', 'none');
-								 rawContentContainer.setStyle('display', 'block');
-								 highlightedContainerVisible = false;
-							 }else{
-								 output.setStyle('display', 'block');
-								 rawContentContainer.setStyle('display', 'none');
-								 highlightedContainerVisible = true;
-							 }
-						 }
-					 }
-				}));
+				// toolbar ?
+				if (this.options.rawButton || this.options.windowButton || this.options.infoButton){
+					this.container.grab(new EnlighterJS.UI.Toolbar(this));
+				}
+				
 			// normal handling
 			}else{
 				// grab content into specific container or after original code block ?
 				if (this.container) {
-					this.container.grab(output);
+					this.container.grab(this.output);
 					
 				// just put the highlighted code behind the original	
 				}else{
-					output.inject(this.originalCodeblock, 'after');
-					this.container = output;
+					this.output.inject(this.originalCodeblock, 'after');
+					this.container = this.output;
 				}
 			}
 			
@@ -274,8 +271,32 @@ var EnlighterJS = new Class({
 				});
 			}
 		}
-
+		
 		return code;
+	},
+	
+	/**
+	 * Hide/Show the RAW Code Container/Toggle Highlighted Code
+	 */
+	toggleRawCode: function(show){
+		// initialization required!
+		if (this.output == null){
+			return;
+		}
+		
+		// argument set ?
+		if (typeof(show)!='boolean'){
+			show = (this.rawContentContainer.getStyle('display') == 'none');
+		}
+		
+		// toggle container visibility
+		if (show){
+			this.output.setStyle('display', 'none');
+			this.rawContentContainer.setStyle('display', 'block');
+		}else{
+			this.output.setStyle('display', 'block');
+			this.rawContentContainer.setStyle('display', 'none');
+		}
 	}
 });
 
@@ -563,18 +584,18 @@ EnlighterJS.LanguageManager = new Class({
 	// map of language aliases
 	languageAliases: {
 		'standard': 'generic',
-		'javascript': 'js',
+		'js': 'javascript',
 		'md': 'markdown',
 		'c++': 'cpp',
 		'c': 'cpp',
 		'styles': 'css',
 		'bash': 'shell',
-		'json': 'js',
+		'json': 'javascript',
 		'py': 'python',
 		'html': 'xml',
-		'jquery': 'js',
-		'mootools': 'js',
-		'ext.js': 'js',
+		'jquery': 'javascript',
+		'mootools': 'javascript',
+		'ext.js': 'javascript',
 		'c#': 'csharp'
 	},
 	
@@ -912,10 +933,6 @@ EnlighterJS.Renderer.BlockRenderer = new Class({
 		// grab last line into container
 		container.grab(currentLine);
 
-		// add line classes to elements
-		container.getFirst().addClass('firstline');
-		container.getLast().addClass('lastline');
-		
 		// add odd/even classes
 		if (this.options.evenClassname){
 			container.getElements('li:even').addClass(this.options.evenClassname);
@@ -1108,6 +1125,130 @@ EnlighterJS.Tokenizer.Xml = new Class({
 		}
 		return tokens.clean();
 	}
+});
+/*
+---
+name: CodeWindow
+description: Opens a new Window with the raw-sourcecode within
+
+license: MIT-style X11 License
+
+authors:
+  - Andi Dittrich
+  
+requires:
+  - core/1.4.5
+
+provides: [EnlighterJS.UI.CodeWindow]
+...
+*/
+EnlighterJS.UI.CodeWindow = (function(code){
+	// code "cleanup"
+	code = code.replace(/&/gim, '&amp;').replace(/</gim, '&lt;').replace(/>/gim, '&gt;');
+
+	// open new window
+	var w = window.open('', '', 'width=' + (window.screen.width -200) + ', height=' + (screen.height-300) + ', menubar=no, titlebar=no, toolbar=no, top=100, left=100, scrollbars=yes, status=no');
+	
+	// insert code
+	w.document.body.innerHTML = '<pre>' + code + '</pre>';
+	w.document.title = 'EnlighterJS Sourcecode';
+});
+
+
+
+/*
+---
+name: Toolbar
+description: Container which contains various buttons
+
+license: MIT-style X11 License
+
+authors:
+  - Andi Dittrich
+  
+requires:
+  - core/1.4.5
+
+provides: [EnlighterJS.UI.Toolbar]
+...
+*/
+EnlighterJS.UI.Toolbar = new Class({
+	Implements: Options,
+	
+	options: {
+		toolbar: {
+			rawTitle: 'Toggle RAW Code',
+			windowTitle: 'Open Code in new Window',
+			infoTitle: 'EnlighterJS Syntax Highlighter'
+		}
+	},
+
+	// toolbar container
+	container: null,
+	
+	initialize : function(enlighterInstance){
+		// get options
+		this.setOptions(enlighterInstance.options);
+		
+		// create outer container
+		this.container = new Element('div', {
+			'class': 'EnlighterJSToolbar'
+		});
+		
+		// info button ?
+		if (this.options.infoButton){
+			// create window "button"
+			this.container.grab(new Element('a', {
+				'class': 'EnlighterJSInfoButton',
+				title: this.options.toolbar.infoTitle,
+				events: {
+					// open new window on click
+					click: function(){
+						window.open('http://enlighterjs.andidittrich.de');
+					}.bind(this)
+				 }
+			}));
+		}
+		
+		// toggle button ?
+		if (this.options.rawButton){
+			// create toggle "button"
+			this.container.grab(new Element('a', {
+				'class': 'EnlighterJSRawButton',
+				title: this.options.toolbar.rawTitle,
+				events: {
+					 click: function(){
+						 // trigger toggle
+						 enlighterInstance.toggleRawCode();
+					 }.bind(this)
+				 }
+			}));		
+		}
+		
+		// code window button ?
+		if (this.options.windowButton){
+			// create window "button"
+			this.container.grab(new Element('a', {
+				'class': 'EnlighterJSWindowButton',
+				title: this.options.toolbar.windowTitle,
+				events: {
+					// open new window on click
+					click: function(){
+						EnlighterJS.UI.CodeWindow(enlighterInstance.getRawCode(false));
+					}.bind(this)
+				 }
+			}));
+		}		
+		
+		// clearfix
+		this.container.grab(new Element('span', {
+			'class': 'clear'
+		}));
+	},
+	
+	toElement: function(){
+		return this.container;
+	}	
 });
 /*
 ---
@@ -1418,6 +1559,8 @@ window.addEvent('domready', function(){
 		indent: m.get('data-indent').toInt() || -1,
 		hover: m.get('data-hover') || 'hoverEnabled',
 		rawButton: (m.get('data-rawcodebutton')==='true'),
+		windowButton: (m.get('data-windowbutton')==='true'),
+		infoButton: (m.get('data-infobutton')==='true'),
 		showLinenumbers: (m.get('data-linenumbers')!=='false')
 	};
 
@@ -1440,6 +1583,36 @@ window.addEvent('domready', function(){
 		EnlighterJS.Util.Helper(document.getElements(inlineSelector), options);
 	}
 });/*
+---
+description: Simple global-initialization of inline+block codeblocks
+
+license: MIT-style X11 License
+
+authors:
+  - Andi Dittrich
+
+requires:
+  - core/1.4.5
+
+provides: [EnlighterJS.Util.Init]
+...
+*/
+(function(){
+	EnlighterJS.Util.Init = (function(blockSelector, inlineSelector, options){
+		// highlight all matching block tags
+		if (blockSelector){
+			options.renderer = 'Block';
+			EnlighterJS.Util.Helper(document.getElements(blockSelector), options);
+		}
+		
+		// highlight all matching inline tags
+		if (inlineSelector){
+			options.renderer = 'Inline';
+			options.grouping = false;
+			EnlighterJS.Util.Helper(document.getElements(inlineSelector), options);
+		}
+	});
+})();/*
 ---
 description: Cpp Language.
 
@@ -1566,7 +1739,7 @@ EnlighterJS.Language.xml = new Class({
 		this.patterns = {
 			'comments' : {
 				pattern : /(?:\&lt;|<)!--[\s\S]*?--(?:\&gt;|>)/gim,
-				alias : 'co1'
+				alias : 'co2'
 			},
 			'cdata' : {
 				pattern : /(?:\&lt;|<)!\[CDATA\[[\s\S]*?\]\](?:\&gt;|>)/gim,
@@ -1712,10 +1885,10 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [EnlighterJS.Language.js]
+provides: [EnlighterJS.Language.javascript]
 ...
 */
-EnlighterJS.Language.js = new Class({
+EnlighterJS.Language.javascript = new Class({
     
     Extends: EnlighterJS.Language.generic,
     
@@ -2140,60 +2313,100 @@ EnlighterJS.Language.sql = new Class ({
 });
 /*
 ---
-description: Nullsoft Scriptable Install System (NSIS).
+description: Nullsoft Scriptable Install System (NSIS)
 
 license: MIT-style
 
 authors:
-  - Jan T. Sott
+ - Jan T. Sott
+ - Andi Dittrich
 
 requires:
-  - core/1.4.5
+ - core/1.4.5
 
 provides: [EnlighterJS.Language.nsis]
-...
 */
-EnlighterJS.Language.nsis = new Class ({
-  
-  Extends: EnlighterJS.Language.generic,
-  
-  setupLanguage: function() {
-    // Set of keywords in CSV form. Add multiple keyword hashes for differentiate keyword sets.
+EnlighterJS.Language.nsis = new Class({
 
-    this.keywords = {
-            commands: {
-                csv: "Function, PageEx, Section, SectionGroup, SubSection, Abort, AddBrandingImage, AddSize, AllowRootDirInstall, AllowSkipFiles, AutoCloseWindow, BGFont, BGGradient, BrandingText, BringToFront, Call, CallInstDLL, Caption, ChangeUI, CheckBitmap, ClearErrors, CompletedText, ComponentText, CopyFiles, CRCCheck, CreateDirectory, CreateFont, CreateShortCut, Delete, DeleteINISec, DeleteINIStr, DeleteRegKey, DeleteRegValue, DetailPrint, DetailsButtonText, DirText, DirVar, DirVerify, EnableWindow, EnumRegKey, EnumRegValue, Exch, Exec, ExecShell, ExecWait, ExpandEnvStrings, File, FileBufSize, FileClose, FileErrorText, FileOpen, FileRead, FileReadByte, FileReadUTF16LE, FileReadWord, FileSeek, FileWrite, FileWriteByte, FileWriteUTF16LE, FileWriteWord, FindClose, FindFirst, FindNext, FindWindow, FlushINI, FunctionEnd, GetCurInstType, GetCurrentAddress, GetDlgItem, GetDLLVersion, GetDLLVersionLocal, GetErrorLevel, GetFileTime, GetFileTimeLocal, GetFullPathName, GetFunctionAddress, GetInstDirError, GetLabelAddress, GetTempFileName, Goto, HideWindow, Icon, IfAbort, IfErrors, IfFileExists, IfRebootFlag, IfSilent, InitPluginsDir, InstallButtonText, InstallColors, InstallDir, InstallDirRegKey, InstProgressFlags, InstType, InstTypeGetText, InstTypeSetText, IntCmp, IntCmpU, IntFmt, IntOp, IsWindow, LangString, LicenseBkColor, LicenseData, LicenseForceSelection, LicenseLangString, LicenseText, LoadLanguageFile, LockWindow, LogSet, LogText, ManifestDPIAware, ManifestSupportedOS, MessageBox, MiscButtonText, Name, Nop, OutFile, Page, PageCallbacks, PageExEnd, Pop, Push, Quit, ReadEnvStr, ReadINIStr, ReadRegDWORD, ReadRegStr, Reboot, RegDLL, Rename, RequestExecutionLevel, ReserveFile, Return, RMDir, SearchPath, SectionEnd, SectionGetFlags, SectionGetInstTypes, SectionGetSize, SectionGetText, SectionGroupEnd, SectionIn, SectionSetFlags, SectionSetInstTypes, SectionSetSize, SectionSetText, SendMessage, SetAutoClose, SetBrandingImage, SetCompress, SetCompressor, SetCompressorDictSize, SetCtlColors, SetCurInstType, SetDatablockOptimize, SetDateSave, SetDetailsPrint, SetDetailsView, SetErrorLevel, SetErrors, SetFileAttributes, SetFont, SetOutPath, SetOverwrite, SetPluginUnload, SetRebootFlag, SetRegView, SetShellVarContext, SetSilent, ShowInstDetails, ShowUninstDetails, ShowWindow, SilentInstall, SilentUnInstall, Sleep, SpaceTexts, StrCmp, StrCmpS, StrCpy, StrLen, SubCaption, SubSectionEnd, Unicode, UninstallButtonText, UninstallCaption, UninstallIcon, UninstallSubCaption, UninstallText, UninstPage, UnRegDLL, Var, VIAddVersionKey, VIFileVersion, VIProductVersion, WindowIcon, WriteINIStr, WriteRegBin, WriteRegDWORD, WriteRegExpandStr, WriteRegStr, WriteUninstaller, XPStyle",
-                alias: 'kw1'
-            },
-            states: {
-                csv: "admin, all, auto, both, colored, false, force, hide, highest, lastused, leave, listonly, none, normal, notset, off, on, open, print, show, silent, silentlog, smooth, textonly, true, user",
-                alias: 'kw2'
-            },
-            statics: {
-                csv: "ARCHIVE, FILE_ATTRIBUTE_ARCHIVE, FILE_ATTRIBUTE_NORMAL, FILE_ATTRIBUTE_OFFLINE, FILE_ATTRIBUTE_READONLY, FILE_ATTRIBUTE_SYSTEM, FILE_ATTRIBUTE_TEMPORARY, HKCR, HKCU, HKDD, HKEY_CLASSES_ROOT, HKEY_CURRENT_CONFIG, HKEY_CURRENT_USER, HKEY_DYN_DATA, HKEY_LOCAL_MACHINE, HKEY_PERFORMANCE_DATA, HKEY_USERS, HKLM, HKPD, HKU, IDABORT, IDCANCEL, IDIGNORE, IDNO, IDOK, IDRETRY, IDYES, MB_ABORTRETRYIGNORE, MB_DEFBUTTON1, MB_DEFBUTTON2, MB_DEFBUTTON3, MB_DEFBUTTON4, MB_ICONEXCLAMATION, MB_ICONINFORMATION, MB_ICONQUESTION, MB_ICONSTOP, MB_OK, MB_OKCANCEL, MB_RETRYCANCEL, MB_RIGHT, MB_RTLREADING, MB_SETFOREGROUND, MB_TOPMOST, MB_USERICON, MB_YESNO, NORMAL, OFFLINE, READONLY, SHCTX, SHELL_CONTEXT, SYSTEM, TEMPORARY",
-                alias: 'kw3'
-            }
-        };
-    
-    // Set of RegEx patterns to match
-    this.patterns = {
-      'brackets':   { pattern: this.common.brackets,   alias: 'br0' },
-      'commentMultiline':    { pattern: this.common.multiComments, alias: 'co2' },
-      'commentPound':    { pattern: this.common.poundComments, alias: 'co1' },
-      'commentSemicolon':  { pattern: /;.*$/gm, alias: 'co1' },
-      'compilerFlags':      { pattern: /(\!(addincludedir|addplugindir|appendfile|cd|define|delfile|echo|else|endif|error|execute|finalize|getdllversionsystem|ifdef|ifmacrodef|ifmacrondef|ifndef|if|include|insertmacro|macroend|macro|packhdr|searchparse|searchreplace|tempfile|undef|verbose|warning))/g,      alias: 'kw2' },
-      'defines':     { pattern: /[\$]\{{1,2}[0-9a-zA-Z_][\w]*[\}]/gim, alias: 'kw4' },
-      'jumps':  { pattern: /([(\+|\-)]([0-9]+))/g, alias: 'nu0' },
-      'langStrings':     { pattern: /[\$]\({1,2}[0-9a-zA-Z_][\w]*[\)]/gim, alias: 'kw3' },
-      'escapeChars':     { pattern: /([\$]\\(n|r|t|[\$]))/g, alias: 'kw4' },
-      'numbers':        { pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][\-+]?[0-9]+)?|0x[A-F0-9]+)\b/gi, alias: 'nu0' },
-      'pluginCommands':      { pattern: /(([0-9a-zA-Z_]+)[:{2}]([0-9a-zA-Z_]+))/g,      alias: 'kw2' },
-      'strings':      { pattern: this.common.strings,      alias: 'st0' },
-      'variables':     { pattern: /[\$]{1,2}[0-9a-zA-Z_][\w]*/gim, alias: 'kw4' },
-    };
-    
-  }
-});/*
+	Extends : EnlighterJS.Language.generic,
+
+	setupLanguage : function(){
+		/** Set of keywords in CSV form. Add multiple keyword hashes for differentiate keyword sets. */
+
+		this.keywords = {
+			commands : {
+				csv : "Function, PageEx, Section, SectionGroup, SubSection, Abort, AddBrandingImage, AddSize, AllowRootDirInstall, AllowSkipFiles, AutoCloseWindow, BGFont, BGGradient, BrandingText, BringToFront, Call, CallInstDLL, Caption, ChangeUI, CheckBitmap, ClearErrors, CompletedText, ComponentText, CopyFiles, CRCCheck, CreateDirectory, CreateFont, CreateShortCut, Delete, DeleteINISec, DeleteINIStr, DeleteRegKey, DeleteRegValue, DetailPrint, DetailsButtonText, DirText, DirVar, DirVerify, EnableWindow, EnumRegKey, EnumRegValue, Exch, Exec, ExecShell, ExecWait, ExpandEnvStrings, File, FileBufSize, FileClose, FileErrorText, FileOpen, FileRead, FileReadByte, FileReadUTF16LE, FileReadWord, FileSeek, FileWrite, FileWriteByte, FileWriteUTF16LE, FileWriteWord, FindClose, FindFirst, FindNext, FindWindow, FlushINI, FunctionEnd, GetCurInstType, GetCurrentAddress, GetDlgItem, GetDLLVersion, GetDLLVersionLocal, GetErrorLevel, GetFileTime, GetFileTimeLocal, GetFullPathName, GetFunctionAddress, GetInstDirError, GetLabelAddress, GetTempFileName, Goto, HideWindow, Icon, IfAbort, IfErrors, IfFileExists, IfRebootFlag, IfSilent, InitPluginsDir, InstallButtonText, InstallColors, InstallDir, InstallDirRegKey, InstProgressFlags, InstType, InstTypeGetText, InstTypeSetText, IntCmp, IntCmpU, IntFmt, IntOp, IsWindow, LangString, LicenseBkColor, LicenseData, LicenseForceSelection, LicenseLangString, LicenseText, LoadLanguageFile, LockWindow, LogSet, LogText, ManifestDPIAware, ManifestSupportedOS, MessageBox, MiscButtonText, Name, Nop, OutFile, Page, PageCallbacks, PageExEnd, Pop, Push, Quit, ReadEnvStr, ReadINIStr, ReadRegDWORD, ReadRegStr, Reboot, RegDLL, Rename, RequestExecutionLevel, ReserveFile, Return, RMDir, SearchPath, SectionEnd, SectionGetFlags, SectionGetInstTypes, SectionGetSize, SectionGetText, SectionGroupEnd, SectionIn, SectionSetFlags, SectionSetInstTypes, SectionSetSize, SectionSetText, SendMessage, SetAutoClose, SetBrandingImage, SetCompress, SetCompressor, SetCompressorDictSize, SetCtlColors, SetCurInstType, SetDatablockOptimize, SetDateSave, SetDetailsPrint, SetDetailsView, SetErrorLevel, SetErrors, SetFileAttributes, SetFont, SetOutPath, SetOverwrite, SetPluginUnload, SetRebootFlag, SetRegView, SetShellVarContext, SetSilent, ShowInstDetails, ShowUninstDetails, ShowWindow, SilentInstall, SilentUnInstall, Sleep, SpaceTexts, StrCmp, StrCmpS, StrCpy, StrLen, SubCaption, SubSectionEnd, Unicode, UninstallButtonText, UninstallCaption, UninstallIcon, UninstallSubCaption, UninstallText, UninstPage, UnRegDLL, Var, VIAddVersionKey, VIFileVersion, VIProductVersion, WindowIcon, WriteINIStr, WriteRegBin, WriteRegDWORD, WriteRegExpandStr, WriteRegStr, WriteUninstaller, XPStyle",
+				alias : 'kw1'
+			},
+			states : {
+				csv : "admin, all, auto, both, colored, false, force, hide, highest, lastused, leave, listonly, none, normal, notset, off, on, open, print, show, silent, silentlog, smooth, textonly, true, user",
+				alias : 'kw2'
+			},
+			statics : {
+				csv : "ARCHIVE, FILE_ATTRIBUTE_ARCHIVE, FILE_ATTRIBUTE_NORMAL, FILE_ATTRIBUTE_OFFLINE, FILE_ATTRIBUTE_READONLY, FILE_ATTRIBUTE_SYSTEM, FILE_ATTRIBUTE_TEMPORARY, HKCR, HKCU, HKDD, HKEY_CLASSES_ROOT, HKEY_CURRENT_CONFIG, HKEY_CURRENT_USER, HKEY_DYN_DATA, HKEY_LOCAL_MACHINE, HKEY_PERFORMANCE_DATA, HKEY_USERS, HKLM, HKPD, HKU, IDABORT, IDCANCEL, IDIGNORE, IDNO, IDOK, IDRETRY, IDYES, MB_ABORTRETRYIGNORE, MB_DEFBUTTON1, MB_DEFBUTTON2, MB_DEFBUTTON3, MB_DEFBUTTON4, MB_ICONEXCLAMATION, MB_ICONINFORMATION, MB_ICONQUESTION, MB_ICONSTOP, MB_OK, MB_OKCANCEL, MB_RETRYCANCEL, MB_RIGHT, MB_RTLREADING, MB_SETFOREGROUND, MB_TOPMOST, MB_USERICON, MB_YESNO, NORMAL, OFFLINE, READONLY, SHCTX, SHELL_CONTEXT, SYSTEM, TEMPORARY",
+				alias : 'kw3'
+			}
+		};
+
+		/** Set of RegEx patterns to match */
+		this.patterns = {
+			'brackets' : {
+				pattern : this.common.brackets,
+				alias : 'br0'
+			},
+			'commentMultiline' : {
+				pattern : this.common.multiComments,
+				alias : 'co2'
+			},
+			'commentPound' : {
+				pattern : this.common.poundComments,
+				alias : 'co1'
+			},
+			'commentSemicolon' : {
+				pattern : /;.*$/gm,
+				alias : 'co1'
+			},
+			'compilerFlags' : {
+				pattern : /(\!(addincludedir|addplugindir|appendfile|cd|define|delfile|echo|else|endif|error|execute|finalize|getdllversionsystem|ifdef|ifmacrodef|ifmacrondef|ifndef|if|include|insertmacro|macroend|macro|makensis|packhdr|searchparse|searchreplace|tempfile|undef|verbose|warning))/g,
+				alias : 'kw2'
+			},
+			'defines' : {
+				pattern : /[\$]\{{1,2}[0-9a-zA-Z_][\w]*[\}]/gim,
+				alias : 'kw4'
+			},
+			'jumps' : {
+				pattern : /([(\+|\-)]([0-9]+))/g,
+				alias : 'nu0'
+			},
+			'langStrings' : {
+				pattern : /[\$]\({1,2}[0-9a-zA-Z_][\w]*[\)]/gim,
+				alias : 'kw3'
+			},
+			'escapeChars' : {
+				pattern : /([\$]\\(n|r|t|[\$]))/g,
+				alias : 'kw4'
+			},
+			'numbers' : {
+				pattern : /\b((([0-9]+)?\.)?[0-9_]+([e][\-+]?[0-9]+)?|0x[A-F0-9]+)\b/gi,
+				alias : 'nu0'
+			},
+			'pluginCommands' : {
+				pattern : /(([0-9a-zA-Z_]+)[:{2}]([0-9a-zA-Z_]+))/g,
+				alias : 'kw2'
+			},
+			'strings' : {
+				pattern : this.common.strings,
+				alias : 'st0'
+			},
+			'variables' : {
+				pattern : /[\$]{1,2}[0-9a-zA-Z_][\w]*/gim,
+				alias : 'kw4'
+			},
+		};
+
+	}
+});
+/*
 ---
 description: RAW Language - returns pure raw text
 
@@ -2222,4 +2435,50 @@ EnlighterJS.Language.raw = new Class({
     	        new EnlighterJS.Token(this.code, '', 0)
     	];
     }
+});
+/*
+---
+description: "DIFF" language - usefull for SVN/GIT changes :)
+
+license: MIT-style
+
+authors:
+  - Andi Dittrich
+
+requires:
+  - core/1.4.5
+
+provides: [EnlighterJS.Language.diff]
+...
+*/
+EnlighterJS.Language.diff = new Class({
+	Extends : EnlighterJS.Language.generic,
+
+	setupLanguage: function(){
+		this.keywords = {
+		};
+
+		this.patterns = {
+			
+			'comments' : {
+				pattern : /^((---|\+\+\+) .*)/gm,
+				alias : 'co1'
+			},
+			
+			'stats' : {
+				pattern : /^(@@.*@@\s*)/gm,
+				alias : 'nu0'
+			},
+			
+			'add' : {
+				pattern : /^(\+.*)/gm,
+				alias : 're0'
+			},
+			
+			'del'  : {
+				pattern : /^(-.*)/gm,
+				alias : 'st0'
+			}
+		};
+	}
 });

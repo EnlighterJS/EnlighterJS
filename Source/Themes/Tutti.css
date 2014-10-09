@@ -48,6 +48,11 @@ ul.tuttiEnlighterJS {
 	background-color: #fbfbfb;
 }
 
+span.tuttiEnlighterJS {
+	background-color: #f9f9f9;
+	border: none;
+}
+
 ol.tuttiEnlighterJS li, ul.tuttiEnlighterJS li{
 	border: none;
 	line-height: 16px;
@@ -90,4 +95,16 @@ ol.tuttiEnlighterJS li.specialline, ul.tuttiEnlighterJS li.specialline  {
 	font-size: 12px;
 	color: #000000;
 	line-height: 16px;
+}
+
+/* Tab Pane */
+.tuttiEnlighterJSWrapper .EnlighterJSToolbar > a{
+	border-radius: 0px;
+	opacity: 0.8;
+	border: none;
+	width: 21px;
+	height: 21px;
+}
+.tuttiEnlighterJSWrapper .EnlighterJSToolbar > a:HOVER{
+	opacity: 1.0;
 }

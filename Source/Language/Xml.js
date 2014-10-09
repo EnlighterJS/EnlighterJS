@@ -24,7 +24,7 @@ EnlighterJS.Language.xml = new Class({
 		this.patterns = {
 			'comments' : {
 				pattern : /(?:\&lt;|<)!--[\s\S]*?--(?:\&gt;|>)/gim,
-				alias : 'co1'
+				alias : 'co2'
 			},
 			'cdata' : {
 				pattern : /(?:\&lt;|<)!\[CDATA\[[\s\S]*?\]\](?:\&gt;|>)/gim,

@@ -1,0 +1,65 @@
+<pre data-enlighter-language="diff">
+--- enlighter/trunk/readme.txt	2014-06-06 23:40:41 UTC (rev 928010)
++++ enlighter/trunk/readme.txt	2014-06-06 23:41:44 UTC (rev 928011)
+@@ -4,7 +4,7 @@
+ Donate link: http://andidittrich.de/go/enlighterjs
+ Requires at least: 3.5
+ Tested up to: 3.9.1
+-Stable tag: 2.1
++Stable tag: 2.2
+ License: MIT X11-License
+ License URI: http://opensource.org/licenses/MIT
+ 
+@@ -21,7 +21,7 @@
+ * Support for all common used languages
+ * Theme Customizer
+ * Inline Syntax Highlighting
+-* Visual-Editor (TinyMCE) Integration
++* **Full** Visual-Editor (TinyMCE) Integration
+ * Easy to use Text-Editor mode through the use of Shortcodes
+ * Advanced configuration options (e.g. CDN usage) are available within the options page.
+ * Supports code-groups (displays multiple code-blocks within a tab-pane)
+@@ -198,15 +198,27 @@
+ 
+ 1. CSS highlighting Example (GIT Theme)
+ 2. Visual Editor Integration
+-3. Options Page - Appearance Settings
+-4. Options Page - Advanced Settings
+-5. Theme Customizer - General styles
+-6. Theme Customizer - Language Token styling
+-7. Special options for use with a CDN (Content Delivery Network)
+-8. Tab-Pane Example (multiple languages)
++3. Visual Editor Code Settings
++4. Visual Editor Inline/Block Formats
++5. Options Page - Appearance Settings
++6. Options Page - Advanced Settings
++7. Theme Customizer - General styles
++8. Theme Customizer - Language Token styling
++9. Special options for use with a CDN (Content Delivery Network)
++10. Tab-Pane Example (multiple languages)
+ 
+ == Changelog ==
+ 
++= 2.3 =
++* Added Tab / Tab-Shift keyhandler to re-indent code within an Enlighter-Codeblock (the `tabfocus` plugin will be deactivated! - you can't use the tab key anymore to leave the editor window)
++
++= 2.2 =
++* Added "Code Insert Dialog" to avoid copy-auto-formatting issues - feature requested on [WordPress Forums](http://wordpress.org/support/topic/code-indent-removed-by-wordpress-editor?replies=9#post-5652635)
++* Added "Enlighter Settings Button" to control the Enlighter Settings (highlight, show-linenumbers, ..) directly from the Visual-Editor - just click into a codeblock and the button will appear (requires WordPress >=3.9)
++* Added Enlighter Toolbar Menu-Buttons
++* New Visual-Editor integration style
++* Bugfix: Added missing codeblock-name for "C#"
++
+ = 2.1 =
+ * Added EnlighterJS 2.2
+ * Added language support for C# (csharp) [provided by Joshua Maag](https://github.com/joshmaag)
+@@ -281,6 +293,9 @@
+ 
+ == Upgrade Notice ==
+ 
++= 2.2 =
++Full Visual-Editor (TinyMCE4) Integration including codeblock-settings (WordPress >= 3.9 required)
++
+ = 2.0 =
+ Added Inline-Syntax-Highlighting as well as some other cool feature - please go to the settings page and click "Apply Settings"
+</pre>
