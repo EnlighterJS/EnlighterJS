@@ -5,13 +5,14 @@ description: Nullsoft Scriptable Install System (NSIS)
 license: MIT-style
 
 authors:
- - Jan T. Sott
- - Andi Dittrich
+  - Jan T. Sott
+  - Andi Dittrich
 
 requires:
- - core/1.4.5
+  - core/1.4.5
 
 provides: [EnlighterJS.Language.nsis]
+...
 */
 EnlighterJS.Language.nsis = new Class({
 
