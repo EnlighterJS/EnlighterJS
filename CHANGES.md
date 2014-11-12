@@ -1,3 +1,9 @@
+### Version 2.4 ###
+* Bugfix: Wrong line-font-size in the Enlighter-Theme YAML header
+* Bugfix: Wrong styles within the Beyond-Themes YAML header
+* Bugfix: Wrong line-font-size in the Eclipse-Theme YAML header
+* Bugfix: General fixes within the Documentation
+
 ### Version 2.3 ###
 * Added Theme "Classic"
 * Added Theme "Eclipse"

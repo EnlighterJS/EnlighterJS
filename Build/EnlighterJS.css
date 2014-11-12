@@ -4,8 +4,8 @@ name: EnlighterJS
 description: Post Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-Style X11 License
-version: 2.3
-build: 6859130cf2364613966c86eea124ae91/October 9 2014
+version: 2.4
+build: 44cdbd6b4276afd7d6a6bf8e156281c2/November 13 2014
 
 authors:
   - Andi Dittrich (author of EnlighterJS)
@@ -322,7 +322,7 @@ styles:
    color: '#000000'
  line:
    font-family: Consolas, "Source Code Pro", "Courier New", Monospace
-   font-size: 10px
+   font-size: 11px
    line-height: 16px
    color: '#aaaaaa'
  raw:
@@ -1152,14 +1152,14 @@ styles:
    color: '#000000'
  line:
    font-family: "Source Code Pro", "Courier New", Monospace
-   font-size: 13px
+   font-size: 11px
    line-height: 16px
    color: '#787878'
    odd: '#ffffff'
    even: '#ffffff'
  raw:
    font-family: "Source Code Pro", "Courier New", Monospace
-   font-size: 12px
+   font-size: 13px
    line-height: 18px
    color: '#717171'
    background-color: '#ffffff'
@@ -1294,20 +1294,20 @@ authors:
  
 styles:
  base:
-   font-family: Consolas, "Source Code Pro", "Courier New", Monospace
+   font-family: Menlo, Monaco, Consolas, "Source Code Pro", "Courier New", Monospace
    font-size: 12px
    color: '#000000'
  line:
-   font-family: Consolas, "Source Code Pro", "Courier New", Monospace
-   font-size: 10px
-   line-height: 16px
+   font-family: Menlo, Monaco, Consolas, "Source Code Pro", "Courier New", Monospace
+   font-size: 11px
+   line-height: 18px
    color: '#aaaaaa'
  raw:
-   font-family: Consolas, "Source Code Pro", "Courier New", Monospace
-   font-size: 12px
-   line-height: 18px
-   color: '#717171'
-   background-color: '#ffffff'
+   font-family: Menlo, Monaco, Consolas, "Source Code Pro", "Courier New", Monospace
+   font-size: 13px
+   line-height: 20px
+   color: '#333333'
+   background-color: '#f7f7fa'
  hover:
    background-color: '#ffffe0'
  specialline:

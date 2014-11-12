@@ -4,8 +4,8 @@ name: EnlighterJS
 description: Post Syntax Highlighter for MooTools - based on the famous Lighter.js
 
 license: MIT-Style X11 License
-version: 2.3
-build: 17e1d06512ea2b880e7adf7b0af9ce39/October 9 2014
+version: 2.4
+build: 1793fd3b665e16d572e7710e1864c25e/November 13 2014
 
 authors:
   - Andi Dittrich (author of EnlighterJS)
@@ -2318,13 +2318,14 @@ description: Nullsoft Scriptable Install System (NSIS)
 license: MIT-style
 
 authors:
- - Jan T. Sott
- - Andi Dittrich
+  - Jan T. Sott
+  - Andi Dittrich
 
 requires:
- - core/1.4.5
+  - core/1.4.5
 
 provides: [EnlighterJS.Language.nsis]
+...
 */
 EnlighterJS.Language.nsis = new Class({
 

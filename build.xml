@@ -14,7 +14,7 @@
 	<property name="yui.jar" value="Util/yuicompressor-2.4.8.jar" />
 	<property name="build.dir" value="Build/" />
 	<property name="www.dir" value="PublicHtml/" />
-	<property name="build.var.version" value="2.3" />
+	<property name="build.var.version" value="2.4" />
 	
 	<!-- Themes to include !-->
 	<property name="include.themes" value="Source/Themes/MooTools.css Source/Themes/Enlighter.css Source/Themes/Git.css Source/Themes/Mocha.css Source/Themes/Panic.css Source/Themes/Tutti.css Source/Themes/Twilight.css Source/Themes/Classic.css Source/Themes/Eclipse.css Source/Themes/Beyond.css" />
