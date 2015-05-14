@@ -13,7 +13,7 @@ requires:
 provides: [EnlighterJS.Renderer.BlockRenderer]
 ...
 */
-EnlighterJS.Renderer.BlockRenderer = new Class({
+EJS.Renderer.BlockRenderer = new Class({
 	Implements: Options,
 	
 	options : {
@@ -38,9 +38,9 @@ EnlighterJS.Renderer.BlockRenderer = new Class({
 		// create new outer container element - use ol tag if lineNumbers are enabled. element attribute settings are priorized
 		var container = null;
 		if (localOptions.lineNumbers != null){
-			container = new Element((localOptions.lineNumbers.toLowerCase() === 'true') ? 'ol' : 'ul');
+			container = new EJS.Dom.Element((localOptions.lineNumbers.toLowerCase() === 'true') ? 'ol' : 'ul');
 		}else{
-			container = new Element(this.options.showLinenumbers ? 'ol' : 'ul');
+			container = new EJS.Dom.Element(this.options.showLinenumbers ? 'ol' : 'ul');
 		}
 		
 		// add "start" attribute ?
@@ -52,7 +52,7 @@ EnlighterJS.Renderer.BlockRenderer = new Class({
 		var lineCounter = 1;
 		
 		// current line element
-		var currentLine = new Element('li', {
+		var currentLine = new EJS.Dom.Element('li', {
 			'class': (specialLines.isSpecialLine(lineCounter) ? 'specialline' : '')
 		});
 		
@@ -67,7 +67,7 @@ EnlighterJS.Renderer.BlockRenderer = new Class({
 			// linebreaks found ?
 			if (lines.length > 1){
 				// just add the first line
-				currentLine.grab(new Element('span', {
+				currentLine.grab(new EJS.Dom.Element('span', {
 					'class': className,
 					'text': lines.shift()
 				}));
@@ -81,19 +81,19 @@ EnlighterJS.Renderer.BlockRenderer = new Class({
 					lineCounter++;
 					
 					// create new line, add special line classes
-					currentLine = new Element('li', {
+					currentLine = new EJS.Dom.Element('li', {
 						'class': (specialLines.isSpecialLine(lineCounter) ? 'specialline' : '')
 					});
 										
 					// create new token-element
-					currentLine.grab(new Element('span', {
+					currentLine.grab(new EJS.Dom.Element('span', {
 						'class': className,
 						'text': line
 					}));
 				});				
 			}else{
 				// just add the token
-				currentLine.grab(new Element('span', {
+				currentLine.grab(new EJS.Dom.Element('span', {
 					'class': className,
 					'text': token.text
 				}));	

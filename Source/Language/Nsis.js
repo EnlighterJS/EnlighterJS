@@ -14,9 +14,9 @@ requires:
 provides: [EnlighterJS.Language.nsis]
 ...
 */
-EnlighterJS.Language.nsis = new Class({
+EJS.Language.nsis = new Class({
 
-	Extends : EnlighterJS.Language.generic,
+	Extends : EJS.Language.generic,
 
 	setupLanguage : function(){
 		/** Set of keywords in CSV form. Add multiple keyword hashes for differentiate keyword sets. */

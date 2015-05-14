@@ -13,9 +13,9 @@ requires:
 provides: [EnlighterJS.Language.javascript]
 ...
 */
-EnlighterJS.Language.javascript = new Class({
+EJS.Language.javascript = new Class({
     
-    Extends: EnlighterJS.Language.generic,
+    Extends: EJS.Language.generic,
     
     setupLanguage: function()
     {
@@ -29,7 +29,7 @@ EnlighterJS.Language.javascript = new Class({
                 alias: 'kw2'
             },
             windowKeywords: {
-                csv: "alert, back, blur, close, confirm, focus, forward, home, navigate, onblur, onerror, onfocus, onload, onmove, onresize, onunload, open, print, prompt, scroll, status, stop",
+                csv: "alert, back, blur, close, confirm, focus, forward, home, navigate, open, print, prompt, scroll, status, stop",
                 alias: 'kw3'
             }
         };
@@ -71,7 +71,7 @@ EnlighterJS.Language.javascript = new Class({
         
         this.delimiters = {
             start: this.strictRegExp('<script type="text/javascript">', '<script language="javascript">'),
-            end:   this.strictRegExp('</script>')
+            end:   this.strictRegExp('<\/script>')
         };
         
     }

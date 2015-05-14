@@ -14,7 +14,7 @@ requires:
 provides: [EnlighterJS.UI.TabPane]
 ...
 */
-EnlighterJS.UI.TabPane = new Class({
+EJS.UI.TabPane = new Class({
 		
 	// wrapper container which contains the controls + panes
 	container: null,
@@ -37,7 +37,7 @@ EnlighterJS.UI.TabPane = new Class({
 	 */
 	initialize : function(cssClassname) {
 		// create container
-		this.container = new Element('div', {
+		this.container = new EJS.Dom.Element('div', {
 			'class': 'EnlighterJSTabPane ' + cssClassname.toLowerCase() + 'EnlighterJSTabPane'
 		});
 		
@@ -51,15 +51,15 @@ EnlighterJS.UI.TabPane = new Class({
 		//      <div>Enlighter Tab2</div>
 		//    </div>
 		//  </div>
-		this.controlContainer = new Element('ul');
-		this.paneContainer = new Element('div', {
+		this.controlContainer = new EJS.Dom.Element('ul');
+		this.paneContainer = new EJS.Dom.Element('div', {
 			'class': 'pane'
 		});		
-		var controlWrapper = new Element('div', {
+		var controlWrapper = new EJS.Dom.Element('div', {
 			'class': 'controls'
 		});
 		controlWrapper.grab(this.controlContainer);
-		controlWrapper.grab(new Element('div', {
+		controlWrapper.grab(new EJS.Dom.Element('div', {
 			'class': 'clearfixList'
 		}));
 		
@@ -84,7 +84,7 @@ EnlighterJS.UI.TabPane = new Class({
 	
 	addTab: function(name){
 		// create new control element
-		var ctrl = new Element('li', {
+		var ctrl = new EJS.Dom.Element('li', {
 			text: name
 		});
 		this.controlContainer.grab(ctrl);
@@ -98,7 +98,7 @@ EnlighterJS.UI.TabPane = new Class({
 		}.bind(this));
 		
 		// create new tab element
-		var tab = new Element('div', {
+		var tab = new EJS.Dom.Element('div', {
 			'styles': {
 				'display': 'none'
 			}

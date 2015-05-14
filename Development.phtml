@@ -10,8 +10,8 @@
 	<title>EnlighterJS Playground</title>
 	
 	<!-- Bootstrap CSS - just 4 styling ;)  -->
-	<link rel="stylesheet" href="Resources/bootstrap.min.css" />
-	<link rel="stylesheet" href="Resources/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="Resources/bootstrap-3.2.0-dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="Resources/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css" />
 	<link rel="stylesheet" href="Resources/Template.css" />
 
 	<!-- EnlighterJS Styles -->
@@ -27,15 +27,9 @@ $cssSources = explode(' ', $sourceList->css);
 ?>	
 	
 	<!-- Include MooTools Framework -->
-	<script type="text/javascript" src="Resources/mootools-core-1.5.0-full-nocompat-yc.js"></script>
+	<script type="text/javascript" src="Resources/MooTools-More-1.5.1-compressed.js"></script>
 	
-	<!-- EnlighterJS Sourcefiles -->
-	<?php 
-	foreach ($jsSources as $js){
-		echo '<script type="text/javascript" src="', $js, '"></script>', "\n";
-	}
-	?>
-	
+
 	<script type="text/javascript">
 		// attention: don't use load or domready here! the jsloaded event is triggered by DynamicSourcefileLoader
 		window.addEvent('domready', function(){
@@ -70,15 +64,14 @@ $cssSources = explode(' ', $sourceList->css);
 <body>
 	<!-- Begin page content -->
 	<div class="container">
-		<div class="page-header">
+
 			<h1>
-				<strong>EnlighterJS</strong> <small>Advanced Javascript Syntax Highlighter</small>
+				<strong>EnlighterJS</strong> <small>Development Playground</small>
 			</h1>
-		</div>
+
 		<div id="content">
 			<!-- ############################################################# -->
 
-			<h2>Inline Content</h2>
 			<p>
 				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
 				<code class="special">window.addEvent('domready', function(){});</code>
@@ -87,36 +80,208 @@ $cssSources = explode(' ', $sourceList->css);
 				consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 			</p>
 
-<pre class="special" data-enlighter-language="html">
-&lt;!DOCTYPE html&gt;
-&lt;head&gt;
-		&lt;!-- Include EnlighterJS Styles --&gt;
-		&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../Build/EnlighterJS.yui.css&quot; /&gt;
-		
-		&lt;!-- Include MooTools Framework --&gt;
-		&lt;script type=&quot;text/javascript&quot; src=&quot;mootools-core-1.4.5-full-nocompat.js&quot;&gt;&lt;/script&gt;
-		
-		&lt;!-- Include EnlighterJS --&gt;
-		&lt;script type=&quot;text/javascript&quot; src=&quot;../Build/EnlighterJS.yui.js&quot; &gt;&lt;/script&gt;
-		
-		&lt;!-- Initialize EnlighterJS --&gt; 
-		&lt;script type=&quot;text/javascript&quot;&gt;
-		window.addEvent('domready', function() {
-			// highlight all pre tags
-			$$('pre').light({
-				altLines : 'hover',
-				indent : 2,
-				editable: false
-			});
-		});
-		&lt;/script&gt;
+	<pre class="special" data-enlighter-language="ini">
+;;;;;;;;;;;;;;;;;;;;;
+; FPM Configuration ;
+;;;;;;;;;;;;;;;;;;;;;
 
-&lt;!-- Syntax highlight using Languages/Js.js and default theme --&gt; 
-&lt;pre data-enlighter-language=&quot;css&quot;&gt;var myClass = new Class({})&lt;/pre&gt; 
+; All relative paths in this configuration file are relative to PHP's install
+; prefix (/usr/local). This prefix can be dynamically changed by using the
+; '-p' argument from the command line.
+
+; Include one or more files. If glob(3) exists, it is used to include a bunch of
+; files from a glob(3) pattern. This directive can be used everywhere in the
+; file.
+; Relative path can also be used. They will be prefixed by:
+;  - the global prefix if it's been set (-p argument)
+;  - /usr/local otherwise
+;include=etc/fpm.d/*.conf
+
+;;;;;;;;;;;;;;;;;;
+; Global Options ;
+;;;;;;;;;;;;;;;;;;
+
+[global]
+; Pid file
+; Note: the default prefix is /usr/local/var
+; Default Value: none
+pid = "run/php-fpm.pid"
+
+; Error log file
+; If it's set to "syslog", log is sent to syslogd instead of being written
+; in a local file.
+; Note: the default prefix is /usr/local/var
+; Default Value: log/php-fpm.log
+error_log = log/php-fpm.log
+
+; syslog_facility is used to specify what type of program is logging the
+; message. This lets syslogd specify that messages from different facilities
+; will be handled differently.
+; See syslog(3) for possible values (ex daemon equiv LOG_DAEMON)
+; Default Value: daemon
+syslog.facility = daemon
+
+; syslog_ident is prepended to every message. If you have multiple FPM
+; instances running on the same server, you can change the default value
+; which must suit common needs.
+; Default Value: php-fpm
+syslog.ident = php-fpm
+
+; Log level
+; Possible Values: alert, error, warning, notice, debug
+; Default Value: notice
+log_level = notice
+
+; If this number of child processes exit with SIGSEGV or SIGBUS within the time
+; interval set by emergency_restart_interval then FPM will restart. A value
+; of '0' means 'Off'.
+; Default Value: 0
+emergency_restart_threshold = On
+
+; Interval of time used by emergency_restart_interval to determine when 
+; a graceful restart will be initiated.  This can be useful to work around
+; accidental corruptions in an accelerator's shared memory.
+; Available Units: s(econds), m(inutes), h(ours), or d(ays)
+; Default Unit: seconds
+; Default Value: 0
+emergency_restart_interval = 10s
+
+; Time limit for child processes to wait for a reaction on signals from master.
+; Available units: s(econds), m(inutes), h(ours), or d(ays)
+; Default Unit: seconds
+; Default Value: 0
+process_control_timeout = 0
+
+; The maximum number of processes FPM will fork. This has been design to control
+; the global number of processes when using dynamic PM within a lot of pools.
+; Use it with caution.
+; Note: A value of 0 indicates no limit
+; Default Value: 0
+process.max = 128	
+
+; The ping URI to call the monitoring page of FPM. If this value is not set, no
+; URI will be recognized as a ping page. This could be used to test from outside
+; that FPM is alive and responding, or to
+; - create a graph of FPM availability (rrd or such);
+; - remove a server from a group if it is not responding (load balancing);
+; - trigger alerts for the operating team (24/7).
+; Note: The value must start with a leading slash (/). The value can be
+;       anything, but it may not be a good idea to use the .php extension or it
+;       may conflict with a real PHP file.
+; Default Value: not set
+;ping.path = /ping
+
+; This directive may be used to customize the response of a ping request. The
+; response is formatted as text/plain with a 200 response code.
+; Default Value: pong
+;ping.response = pong
+
+; The access log file
+; Default: not set
+;access.log = log/$pool.access.log
+
+
+[pool-testwww]
+; Limits the extensions of the main script FPM will allow to parse. This can
+; prevent configuration mistakes on the web server side. You should only limit
+; FPM to .php extensions to prevent malicious users to use other extensions to
+; exectute php code.
+; Note: set an empty value to allow all extensions.
+; Default Value: .php
+; Recommended: .php .phtml
+security.limit_extensions = ".php .php3 .php4 .php5 .phtml"
+</pre>			
+			
+<pre class="special" data-enlighter-language="avrasm">
+; ledpwm.asm --- drive a blue LED with PWM                     21/04/2006
+; Copyright (c) 2006 John Honniball
  
-&lt;!-- Syntax highlight using Languages/Php.js and theme from Themes/Twilight.css --&gt; 
-&lt;pre data-enlighter-language=&quot;php&quot; data-enlighter-theme=&quot;twilight&quot;&gt;&lt;?php php_info() ?&gt;&lt;/pre&gt;
-
+.include "m8def.inc"
+ 
+            .org 0x0000
+ 
+; Blue LED on Port B bit 2
+            .equ LEDPORT = PortB
+            .equ LEDBIT = 0
+ 
+; This program drives a single LED connected to the AVR's I/O port.  It
+; is connected so that the cathode of the LED is wired to the AVR pin,
+; and the anode of the LED is wired to the 5V power supply via a
+; resistor.  The value of that resistor depends on the colour of the LED,
+; but is usually a few hundred ohms.
+ 
+; We control the brightness of the LED with Pulse Width Modulation (PWM),
+; for two reasons.  Firstly, we have no analog outputs on the AVR chip,
+; only digital ones.  Secondly, a LED's brightness  does not respond
+; linearly to variations in supply voltage, but it responds much better
+; to PWM.
+ 
+; Pulsating LED looks better if it never quite goes "off", but cycles from
+; full brightness to a dim state, and back again
+            .equ MINBRIGHT = 25
+            .equ MAXBRIGHT = 255
+ 
+; This value controls how fast the LED cycles from bright to dim.  It is
+; the number of PWM cycles that we generate for each step in the brightness
+; ramp, up and down.  Larger numbers will make the pulsation slower.
+            .equ NCYCLES = 1
+ 
+; Start of program execution after a Reset
+            ldi r16,low(RAMEND)                     ; Initialise stack to top of RAM
+            out SPL,r16
+            ldi r16,high(RAMEND)
+            out SPH,r16
+ 
+; Initialise the hardware
+            ldi r16,0xff                            ; Set Port B to all outputs
+            out DDRB,r16
+ 
+            sbi LEDPORT,LEDBIT                      ; Switch off blue LED by setting output pin high
+ 
+; Start with LED at its lowest level, then ramp up to maximum
+dopwm:      ldi r17,MINBRIGHT                       ; R17 holds current brightness level
+l1:         ldi r18,NCYCLES                         ; R18 counts PWM cycles, and hence pulsation speed
+l2:         cbi LEDPORT,LEDBIT                      ; Output pin low, LED on
+            mov r16,r17                             ; R16 controls length of delay (= R17)
+            rcall delayn4us                         ; Call delay subroutine
+            sbi LEDPORT,LEDBIT                      ; Output pin high, LED off
+            ldi r16,255
+            sub r16,r17                             ; R16 controls length of delay (= 255 - R17)
+            rcall delayn4us                         ; Call delay subroutine
+            dec r18                                 ; Decrement PWM cycle counter
+            brne l2
+            inc r17                                 ; Increase brightness by one step
+            brne l1
+ 
+; Now ramp back down to the minimum brightness
+            ldi r17,MAXBRIGHT                       ; R17 holds current brightness level
+l3:         ldi r18,NCYCLES                         ; R18 counts PWM cycles, and hence pulsation speed
+l4:         cbi LEDPORT,LEDBIT                      ; Output pin low, LED on
+            mov r16,r17                             ; R16 controls length of delay (= R17)
+            rcall delayn4us                         ; Call delay subroutine
+            sbi LEDPORT,LEDBIT                      ; Output pin high, LED off
+            ldi r16,255
+            sub r16,r17                             ; R16 controls length of delay (= 255 - R17)
+            rcall delayn4us                         ; Call delay subroutine
+            dec r18                                 ; Decrement PWM cycle counter
+            brne l4
+            dec r17                                 ; Decrease brightness by one step
+            cpi r17,MINBRIGHT                       ; Have we reached the minimum?
+            brne l3
+ 
+            rjmp dopwm                              ; Loop back to start
+ 
+; DELAYN4US
+; Delay for (R16 * 4) microseconds
+delayn4us:  tst r16                                 ; R16 = 0? (no delay)
+            breq dly4
+dly2:       ldi r24,low(16)
+            ldi r25,high(16)
+dly3:       sbiw r24,1                              ; 2 cycles
+            brne dly3                               ; 2 cycles
+            dec r16
+            brne dly2
+dly4:       ret                                     ; Return to caller
 </pre>
 
 	
@@ -229,6 +394,19 @@ endif
 		</div>
 	</div>
 	<!-- // Sticky Footer Message -->
+
+    <!-- EnlighterJS Sourcefiles -->
+    <script type="text/javascript">/* <![CDATA[ */
+        (function(){
+            'use strict';
+        <?php
+       foreach ($jsSources as $js){
+           $x = file_get_contents($js);
+           echo preg_replace('#^/\*[\s\S]+\*/#Ui', '', $x);
+       }
+       ?>
+        })();
+        /* ]]> */</script>
 
 </body>
 </html>

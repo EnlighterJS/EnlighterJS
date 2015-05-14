@@ -1,0 +1,33 @@
+<div class="input-group">
+        <span class="input-group-addon">Select Theme</span>
+<select id="ThemeChooser" class="form-control">
+    <?php
+    foreach ($themes as $t){
+        echo '<option value="', strtolower($t), '">', $t, '</option>';
+    }
+    ?>
+</select>
+</div>
+
+<hr />
+<script type="text/javascript">
+    window.addEvent('domready', function(){
+        var currentThemeBase = 'enlighter';
+
+        document.id('ThemeChooser').addEvent('change', function(){
+            // get container
+            var container = document.getElements('.EnlighterJS');
+            var wrapper = document.getElements('.EnlighterJSWrapper');
+
+            container.removeClass(currentThemeBase);
+            wrapper.removeClass(currentThemeBase + 'Wrapper');
+
+            // generate theme name
+            currentThemeBase = this.value.toLowerCase() + 'EnlighterJS';
+
+            // set new theme
+            container.addClass(currentThemeBase);
+            wrapper.addClass(currentThemeBase + 'Wrapper');
+        });
+    });
+</script>

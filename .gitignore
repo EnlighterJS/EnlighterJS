@@ -1,4 +1,6 @@
 .settings*
+.idea/*
 .project
 gfx/*
 PublicHtml/*
+node_modules*

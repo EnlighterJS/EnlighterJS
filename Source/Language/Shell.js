@@ -13,9 +13,9 @@ requires:
 provides: [EnlighterJS.Language.shell]
 ...
 */
-EnlighterJS.Language.shell = new Class ({
+EJS.Language.shell = new Class ({
     
-    Extends: EnlighterJS.Language.generic,
+    Extends: EJS.Language.generic,
     
     setupLanguage: function()
     {

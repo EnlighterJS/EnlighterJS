@@ -1,26 +1,4 @@
-/*!
----
-name: EnlighterJS
-description: Post Syntax Highlighter for MooTools - based on the famous Lighter.js
-
-license: MIT-Style X11 License
-version: 2.4
-build: 44cdbd6b4276afd7d6a6bf8e156281c2/November 13 2014
-
-authors:
-  - Andi Dittrich (author of EnlighterJS)
-  - Jose Prado (author of original Lighter.js)
-  
-download: https://github.com/AndiDittrich/EnlighterJS
-website: http://enlighterjs.andidittrich.de/
-demo: http://enlighterjs.andidittrich.de/Themes.html
-  
-requires:
-  - Core/1.4.5
-
-provides: [EnlighterJS]
-...
-*//*
+/*! EnlighterJS Syntax Highlighter 2.5 | MIT-Style X11 License | http://enlighterjs.andidittrich.de/ | May 14 2015 *//*
 ---
 description: EnlighterJS Theme-Base - All Themes are derived from these styles! Don't edit this file if you wan't to change styles! Use a derived theme!
 
@@ -177,7 +155,7 @@ ol.EnlighterJS li.specialline, ul.EnlighterJS li.specialline {
 	display: block;
 	border-radius: 3px;
 	z-index: 10;
-	background-color: #fffffff;
+	background-color: #ffffff;
 	color: #717171;
 	cursor: pointer;
 	font-size: 12px;

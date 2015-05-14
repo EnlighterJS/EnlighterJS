@@ -14,9 +14,9 @@ requires:
 provides: [Tokenizer.Lazy]
 ...
 */
-EnlighterJS.Tokenizer.Lazy = new Class({
+EJS.Tokenizer.Lazy = new Class({
 
-	Extends : EnlighterJS.Tokenizer,
+	Extends : EJS.Tokenizer,
 
 	/**
 	 * @constructs
@@ -45,7 +45,7 @@ EnlighterJS.Tokenizer.Lazy = new Class({
 			while (null !== (match = regex.exec(code))){
 				index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
 				text = match[1] || match[0];
-				tokens.push(new EnlighterJS.Token(text, rule, index));
+				tokens.push(new EJS.Token(text, rule, index));
 			}
 		}, this);
 

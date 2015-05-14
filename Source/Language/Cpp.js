@@ -13,9 +13,9 @@ requires:
 provides: [EnlighterJS.Language.cpp]
 ...
 */
-EnlighterJS.Language.cpp = new Class({
+EJS.Language.cpp = new Class({
     
-    Extends: EnlighterJS.Language.generic,
+    Extends: EJS.Language.generic,
         
     setupLanguage: function() {
         this.keywords = {

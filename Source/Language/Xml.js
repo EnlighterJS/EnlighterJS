@@ -14,7 +14,7 @@ requires:
 provides: [EnlighterJS.Language.xml]
 ...
 */
-EnlighterJS.Language.xml = new Class({
+EJS.Language.xml = new Class({
 
 	Extends : EnlighterJS.Language.generic,
 	tokenizerType : 'Xml',
@@ -31,7 +31,7 @@ EnlighterJS.Language.xml = new Class({
 				alias : 'st1'
 			},
 			'closingTags' : {
-				pattern : /(?:\&lt;|<)\/[A-Z][A-Z0-9]*?(?:\&gt;|>)/gi,
+				pattern : /(?:\&lt;|<)\/[A-Z:_][A-Z0-9:.-]*?(?:\&gt;|>)/gi,
 				alias : 'kw1'
 			},
 			'doctype' : {

@@ -1,0 +1,73 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="ini">docref_root = "/phpmanual/"</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<h3>PHP.ini Example</h3>
+<!-- Source: https://github.com/php/php-src/blob/master/php.ini-production -->
+<pre data-enlighter-language="ini">
+; An XML-RPC faultCode
+xmlrpc_error_number = 0
+
+; When PHP displays or logs an error, it has the capability of formatting the
+; error message as HTML for easier reading. This directive controls whether
+; the error message is formatted as HTML or not.
+; Note: This directive is hardcoded to Off for the CLI SAPI
+; Default Value: On
+; Development Value: On
+; Production value: On
+; http://php.net/html-errors
+html_errors = On
+
+docref_root = "/phpmanual/"
+
+; http://php.net/docref-ext
+docref_ext = .html
+
+
+[Session]
+; Handler used to store/retrieve data.
+; http://php.net/session.save-handler
+session.save_handler = files
+
+; Whether to use strict session mode.
+; Strict session mode does not accept uninitialized session ID and regenerate
+; session ID if browser sends uninitialized session ID. Strict mode protects
+; applications from session fixation via session adoption vulnerability. It is
+; disabled by default for maximum compatibility, but enabling it is encouraged.
+; https://wiki.php.net/rfc/strict_sessions
+session.use_strict_mode = 0
+
+; Whether to use cookies.
+; http://php.net/session.use-cookies
+session.use_cookies = 1
+
+; http://php.net/session.cookie-secure
+;session.cookie_secure =
+
+; This option forces PHP to fetch and use a cookie for storing and maintaining
+; the session id. We encourage this operation as it's very helpful in combating
+; session hijacking when not specifying and managing your own session id. It is
+; not the be-all and end-all of session hijacking defense, but it's a good start.
+; http://php.net/session.use-only-cookies
+session.use_only_cookies = 1
+</pre>
+
+<h3>Lighttpd Config</h3>
+<pre data-enlighter-language="ini">
+server.document-root = "/var/www/servers/www.example.org/pages/"
+
+server.port = 80
+
+server.username = "www"
+server.groupname = "www"
+
+mimetype.assign = (
+".html" => "text/html",
+".txt" => "text/plain",
+".jpg" => "image/jpeg",
+".png" => "image/png"
+)
+
+static-file.exclude-extensions = ( ".fcgi", ".php", ".rb", "~", ".inc" )
+index-file.names = ( "index.html" )
+</pre>

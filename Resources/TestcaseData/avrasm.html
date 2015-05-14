@@ -1,0 +1,71 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="avrasm">.include "m8def.inc"</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<!-- Source: http://www.mikrocontroller.net/articles/AVR-Tutorial:_Uhr -->
+<pre data-enlighter-language="avrasm">
+.include "m8def.inc"
+
+.def temp1 = r16
+.def temp2 = r17
+.def temp3 = r18
+.def flag  = r19
+
+.def SubCount = r21
+.def Sekunden = r22
+.def Minuten  = r23
+.def Stunden  = r24
+
+.org 0x0000
+        rjmp    main                ; Reset Handler
+.org OVF0addr
+        rjmp    timer0_overflow     ; Timer Overflow Handler
+
+.include "lcd-routines.asm"
+
+main:
+        ldi     temp1, HIGH(RAMEND)
+        out     SPH, temp1
+        ldi     temp1, LOW(RAMEND)  ; Stackpointer initialisieren
+        out     SPL, temp1
+
+        ldi temp1, 0xFF    ; Port D = Ausgang
+        out DDRD, temp1
+
+        rcall   lcd_init
+        rcall   lcd_clear
+
+
+        ldi     temp1, (1&lt;&lt;CS02) | (1&lt;&lt;CS00)   ; Teiler 1024
+        out     TCCR0, temp1
+
+        ldi     temp1, 1&lt;&lt;TOIE0     ; TOIE0: Interrupt bei Timer Overflow
+        out     TIMSK, temp1
+
+        clr     Minuten             ; Die Uhr auf 0 setzen
+        clr     Sekunden
+        clr     Stunden
+        clr     SubCount
+        clr     Flag                ; Merker löschen
+
+        sei
+
+loop:
+        cpi     flag,0
+        breq    loop                ; Flag im Interrupt gesetzt?
+        ldi     flag,0              ; flag löschen
+
+        rcall   lcd_clear           ; das LCD löschen
+        mov     temp1, Stunden      ; und die Stunden ausgeben
+        rcall   lcd_number
+        ldi     temp1, ':'          ; zwischen Stunden und Minuten einen ':'
+        rcall   lcd_data
+        mov     temp1, Minuten      ; dann die Minuten ausgeben
+        rcall   lcd_number
+        ldi     temp1, ':'          ; und noch ein ':'
+        rcall   lcd_data
+        mov     temp1, Sekunden     ; und die Sekunden
+        rcall   lcd_number
+
+        rjmp    loop
+</pre>

@@ -14,9 +14,9 @@ requires:
 provides: [EnlighterJS.Language.markdown]
 ...
 */
-EnlighterJS.Language.markdown = new Class ({
+EJS.Language.markdown = new Class ({
     
-    Extends: EnlighterJS.Language.generic,
+    Extends: EJS.Language.generic,
     
     setupLanguage: function(code){
         this.patterns = {

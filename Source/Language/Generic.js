@@ -14,7 +14,7 @@ requires:
 provides: [EnlighterJS.Language.generic]
 ...
 */
-EnlighterJS.Language.generic = new Class({
+EJS.Language.generic = new Class({
 
 	tokenizerType : 'Lazy',
 	tokenizer : null,

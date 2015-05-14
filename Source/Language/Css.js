@@ -13,9 +13,9 @@ requires:
 provides: [EnlighterJS.Language.css]
 ...
 */
-EnlighterJS.Language.css = new Class({
+EJS.Language.css = new Class({
     
-    Extends: EnlighterJS.Language.generic,
+    Extends: EJS.Language.generic,
         
     setupLanguage: function() {
         

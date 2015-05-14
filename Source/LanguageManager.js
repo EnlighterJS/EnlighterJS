@@ -13,7 +13,7 @@ requires:
 provides: [EnlighterJS.LanguageManager]
 ...
 */
-EnlighterJS.LanguageManager = new Class({
+EJS.LanguageManager = new Class({
 	
 	Implements : Options,
 	
@@ -58,7 +58,7 @@ EnlighterJS.LanguageManager = new Class({
 		}
 		
 		// default language class available ?
-		if (defaultLanguage.trim() == '' || !EnlighterJS.Language[defaultLanguage]){
+		if (defaultLanguage.trim() == '' || !EJS.Language[defaultLanguage]){
 			defaultLanguage = 'generic';
 		}
 				
@@ -76,7 +76,7 @@ EnlighterJS.LanguageManager = new Class({
 		}
 		
 		// language class available ?
-		if (EnlighterJS.Language[languageName]){
+		if (EJS.Language[languageName]){
 			return languageName;
 		}else{
 			return defaultLanguage;

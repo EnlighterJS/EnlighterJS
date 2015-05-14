@@ -11,52 +11,47 @@
 <project name="EnlighterJS" default="build" basedir=".">
 		
 	<!-- Target Properties ! -->
-	<property name="yui.jar" value="Util/yuicompressor-2.4.8.jar" />
 	<property name="build.dir" value="Build/" />
 	<property name="www.dir" value="PublicHtml/" />
-	<property name="build.var.version" value="2.4" />
+    <property name="example.dir" value="Examples/" />
+	<property name="build.var.version" value="2.5" />
 	
 	<!-- Themes to include !-->
 	<property name="include.themes" value="Source/Themes/MooTools.css Source/Themes/Enlighter.css Source/Themes/Git.css Source/Themes/Mocha.css Source/Themes/Panic.css Source/Themes/Tutti.css Source/Themes/Twilight.css Source/Themes/Classic.css Source/Themes/Eclipse.css Source/Themes/Beyond.css" />
 
 	<!-- Languages to include !-->
-	<property name="include.languages" value="Source/Language/Cpp.js Source/Language/CSharp.js Source/Language/Xml.js Source/Language/Css.js Source/Language/Java.js Source/Language/Javascript.js Source/Language/Markdown.js Source/Language/Php.js Source/Language/Python.js Source/Language/Ruby.js Source/Language/Shell.js Source/Language/Sql.js Source/Language/Nsis.js Source/Language/RAW.js Source/Language/Diff.js" />
+	<property name="include.languages" value="Source/Language/Cpp.js Source/Language/CSharp.js Source/Language/Xml.js Source/Language/Css.js Source/Language/Java.js Source/Language/Javascript.js Source/Language/Markdown.js Source/Language/Php.js Source/Language/Python.js Source/Language/Ruby.js Source/Language/Shell.js Source/Language/Sql.js Source/Language/Nsis.js Source/Language/RAW.js Source/Language/Diff.js Source/Language/AvrAsm.js Source/Language/Ini.js" />
 
 	<!-- Base Sourcefiles to include !-->
-	<property name="include.JsBaseSources" value="Source/EnlighterJS.js Source/SpecialLineHighlighter.js Source/Language/Generic.js Source/LanguageManager.js Source/Tokenizer.js Source/Token.js Source/Renderer/InlineRenderer.js Source/Renderer/BlockRenderer.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js Source/UI/CodeWindow.js Source/UI/Toolbar.js" />
+	<property name="include.JsBaseSources" value="Source/EnlighterJS.js Source/Dom/MooTools/Dom.js Source/Dom/MooTools/Element.js Source/SpecialLineHighlighter.js Source/Language/Generic.js Source/LanguageManager.js Source/Tokenizer.js Source/Token.js Source/Renderer/InlineRenderer.js Source/Renderer/BlockRenderer.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js Source/UI/CodeWindow.js Source/UI/Toolbar.js" />
 
 	<!-- Additional Features to include !-->
-	<property name="include.JsFeatures" value="Source/Native/Element.EnlighterJS.js Source/Util/Helper.js Source/UI/TabPane.js Source/Util/Metainit.js Source/Util/Init.js" />	
-		
-	<!-- ANT.contrib package -->
-	<path id="ant.contrib.classpath" location="Util/ant-contrib-1.0b3.jar"></path>
-	<taskdef resource="net/sf/antcontrib/antlib.xml">
-	    <classpath refid="ant.contrib.classpath" />
-	</taskdef>
+	<property name="include.JsFeatures" value="Source/Native/Element.EnlighterJS.js Source/Util/Helper.js Source/UI/TabPane.js Source/Util/Metainit.js Source/Util/Init.js" />
 
-	<!-- Generate Build -->
+    <!-- set date vars !-->
+    <tstamp/>
+
+    <!-- CP Notice !-->
+    <property name="cpnotice" value="/*! EnlighterJS Syntax Highlighter ${build.var.version} | MIT-Style X11 License | http://enlighterjs.andidittrich.de/ | ${TODAY} */"></property>
+
+    <!-- Generate Build -->
 	<target name="build">
 		<!-- Cleanup Build Dir -->
-		<delete dir="${build.dir}" />		
+		<delete dir="${build.dir}" />
+        <mkdir dir="${build.dir}" />
 		
-		<!-- ****************************** JS BUILD LIBRARY **************************** -->
-		<ant antfile="Util/concat-compress.xml">
-			<property name="compress.description" value="Enlighter" />
-			<property name="compress.type" value="js" />
-			<property name="compress.input" value="Resources/notice.txt ${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />
-			<property name="compress.output" value="EnlighterJS.yui.js" />
+		<!-- ****************************** BUILD LIBRARY **************************** -->
+		<ant antfile="Util/js-concat-compress.xml">
+			<property name="compress.input" value="${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />
+			<property name="compress.output" value="EnlighterJS.min.js" />
 			<property name="uncompress.output" value="EnlighterJS.js" />
 		</ant>
+        <ant antfile="Util/css-concat-compress.xml">
+            <property name="compress.input" value="Source/Themes/Base.css ${include.themes}" />
+            <property name="compress.output" value="EnlighterJS.min.css" />
+            <property name="uncompress.output" value="EnlighterJS.css" />
+        </ant>
 
-		<!-- ****************************** CSS BUILD *********************************** -->
-		<ant antfile="Util/concat-compress.xml">
-			<property name="compress.description" value="Enlighter" />
-			<property name="compress.type" value="css" />
-			<property name="compress.input" value="Resources/notice.txt Source/Themes/Base.css ${include.themes}" />
-			<property name="compress.output" value="EnlighterJS.yui.css" />
-			<property name="uncompress.output" value="EnlighterJS.css" />
-		</ant>
-		
 		<!-- ****************************** JS SOURCEFILE LIST (DEVELOPMENT) ************************** -->
 		<copy file="Resources/Sources.json" tofile="${build.dir}Sources.dev.json" />
 		<replace file="${build.dir}Sources.dev.json" token="{{JSSOURCES}}" value="${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />		
@@ -87,25 +82,18 @@
 		<copy file="CHANGES.md" tofile="${build.dir}CHANGES.md" />
 		<copy file="LICENSE.md" tofile="${build.dir}LICENSE.md" />
 		<copy file="README.md" tofile="${build.dir}README.md" />
-		
-		<!-- ****************************** JS BUILD LIBRARY **************************** -->
-		<ant antfile="Util/concat-compress.xml">
-			<property name="compress.description" value="Enlighter" />
-			<property name="compress.type" value="js" />
-			<property name="compress.input" value="Resources/notice.txt ${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />
-			<property name="compress.output" value="EnlighterJS.yui.js" />
-			<property name="uncompress.output" value="EnlighterJS.js" />
-		</ant>
 
-		<!-- ****************************** CSS BUILD *********************************** -->
-		<ant antfile="Util/concat-compress.xml">
-			<property name="compress.description" value="Enlighter" />
-			<property name="compress.type" value="css" />
-			<property name="compress.input" value="Resources/notice.txt Source/Themes/Base.css ${include.themes}" />
-			<property name="compress.output" value="EnlighterJS.yui.css" />
-			<property name="uncompress.output" value="EnlighterJS.css" />
-		</ant>
-		
+        <ant antfile="Util/js-concat-compress.xml">
+            <property name="compress.input" value="${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />
+            <property name="compress.output" value="EnlighterJS.min.js" />
+            <property name="uncompress.output" value="EnlighterJS.js" />
+        </ant>
+        <ant antfile="Util/css-concat-compress.xml">
+            <property name="compress.input" value="Source/Themes/Base.css ${include.themes}" />
+            <property name="compress.output" value="EnlighterJS.min.css" />
+            <property name="uncompress.output" value="EnlighterJS.css" />
+        </ant>
+
 		<!-- Create Archive !-->
 		<zip destfile="${build.dir}/EnlighterJS.zip" basedir="${build.dir}" />
 	</target>
@@ -113,12 +101,12 @@
 	<!-- Generate Examples -->
 	<target name="examples">
 		<!-- Cleanup www Dir -->
-		<delete dir="Examples" />
-		<mkdir dir="Examples"/>	
+		<delete dir="${example.dir}" />
+		<mkdir dir="${example.dir}"/>
 		
 		<exec executable="php">
 			<arg value="Util/ExampleGenerator.php" />
-			<arg value="Examples/" />
+			<arg value="${example.dir}" />
 		</exec>
 	</target>
 	
@@ -138,14 +126,15 @@
 		<copy todir="${www.dir}Resources">
 			<fileset dir="Resources"/>
 		</copy>
+        <!-- Copy Examples !-->
+        <copy todir="${www.dir}Examples">
+            <fileset dir="Examples"/>
+        </copy>
 		
-		<!-- Copy Quickstart Examples !-->
-		<copy file="LanguageDevelopment.html" tofile="${www.dir}LanguageDevelopment.html" />
-		<copy file="ThemeDevelopment.html" tofile="${www.dir}ThemeDevelopment.html" />
-		<copy file="Example1.html" tofile="${www.dir}Example1.html" />
-		<copy file="Example2-jsinit.html" tofile="${www.dir}Example2-jsinit.html" />
-		<copy file="Example3-advanced.html" tofile="${www.dir}Example3-advanced.html" />
-		
+		<!-- Copy Screenshots -->
+		<copy file="screenshot1.png" tofile="${www.dir}screenshot1.png" />
+		<copy file="screenshot2.png" tofile="${www.dir}screenshot2.png" />
+
 		<!-- Copy License and fix linebreaks !-->
 		<copy file="LICENSE.md" tofile="${www.dir}LICENSE.txt" />
 		<fixcrlf eol="crlf" file="${www.dir}LICENSE.txt" />

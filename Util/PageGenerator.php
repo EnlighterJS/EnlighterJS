@@ -16,6 +16,14 @@ $outputDir = (count($argv)>=2 ? $argv[1] : 'Output/');
 // Get Build Version
 define('ENLIGHTERJS_VERSION', (count($argv)>=3 ? $argv[2] : 'unknown'));
 
+$themes = array(
+    'Enlighter', 'Classic', 'Eclipse', 'Beyond', 'Git', 'Mocha', 'MooTools', 'Panic', 'Tutti', 'Twilight'
+);
+
+$languages = array(
+    'C', 'Cpp', 'CSharp', 'CSS', 'Diff', 'HTML', 'Java', 'Javascript', 'JSON', 'MarkDown', 'NSIS', 'PHP', 'Python', 'Ruby', 'SQL', 'Unit', 'XML', 'RAW', 'NoHighlight', 'AVRASM', 'Ini'
+);
+
 // === README ============================================================
 // create Readme.html
 $readmeContent = renderMarkdownDocument(file_get_contents('README.md'));
@@ -55,21 +63,19 @@ renderTemplate($outputDir.'Builder.html', array(
 
 
 // === Language Examples =================================================
-$languages = array(
-	'C', 'Cpp', 'CSharp', 'CSS', 'Diff', 'HTML', 'Java', 'Javascript', 'JSON', 'MarkDown', 'NSIS', 'PHP', 'Python', 'Ruby', 'SQL', 'Unit', 'XML', 'RAW', 'NoHighlight'
-);
 foreach ($languages as $lang){
-	$langContent = file_get_contents('Resources/TestcaseData/'.strtolower($lang).'.html');
+    $langContent = captureTemplate('Resources/Templates/ThemeSelector.phtml', array(
+        'themes' => $themes
+    )) ;
+	$langContent .= file_get_contents('Resources/TestcaseData/'.strtolower($lang).'.html');
 	renderTemplate($outputDir.strtolower($lang).'.html', array(
 		'pageContent' => $langContent,
-		'pageTitle' => $lang. ' <small>Language Example</small>'
+		'pageTitle' => $lang. ' <small>Language Example</small>',
 	));
 }
 
 // === Theme Demo ========================================================
-$themes = array(
-	'Enlighter', 'Classic', 'Eclipse', 'Beyond', 'Git', 'Mocha', 'MooTools', 'Panic', 'Tutti', 'Twilight'
-);
+
 // output buffer to append
 $themeHtmlData = '';
 foreach ($themes as $theme){

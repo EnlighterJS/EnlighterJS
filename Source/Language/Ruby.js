@@ -13,9 +13,9 @@ requires:
 provides: [EnlighterJS.Language.ruby]
 ...
 */
-EnlighterJS.Language.ruby = new Class ({
+EJS.Language.ruby = new Class ({
     
-    Extends: EnlighterJS.Language.generic,
+    Extends: EJS.Language.generic,
     
     setupLanguage: function()
     {

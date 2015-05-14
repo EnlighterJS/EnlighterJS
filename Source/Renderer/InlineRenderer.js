@@ -13,7 +13,7 @@ requires:
 provides: [EnlighterJS.Renderer.InlineRenderer]
 ...
 */
-EnlighterJS.Renderer.InlineRenderer = new Class({
+EJS.Renderer.InlineRenderer = new Class({
 	Implements: Options,
 	
 	options : {
@@ -33,7 +33,7 @@ EnlighterJS.Renderer.InlineRenderer = new Class({
 	 */
 	render : function(language, specialLines, localOptions){
 		// create output container element
-		var container = new Element(this.options.inlineContainerTag);
+		var container = new EJS.Dom.Element(this.options.inlineContainerTag);
 
 		// generate output based on ordered list of tokens
 		language.getTokens().each(function(token, index){
@@ -41,7 +41,7 @@ EnlighterJS.Renderer.InlineRenderer = new Class({
 			var className = token.type ? (language.aliases[token.type] || token.type) : '';
 			
 			// create new inline element which contains the token - htmlspecialchars get escaped by mootools setText !
-			container.grab(new Element('span', {
+			container.grab(new EJS.Dom.Element('span', {
 				'class': className,
 				'text': token.text
 			}));

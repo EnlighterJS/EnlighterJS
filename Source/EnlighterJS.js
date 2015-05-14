@@ -14,7 +14,7 @@ requires:
 provides: [EnlighterJS]
 ...
  */
-var EnlighterJS = new Class({
+var EJS = window.EnlighterJS = new Class({
 
 	Implements : Options,
 
@@ -63,21 +63,21 @@ var EnlighterJS = new Class({
 		this.setOptions(options);
 		
 		// create new language alias manager instance
-		this.languageManager = new EnlighterJS.LanguageManager(options);
+		this.languageManager = new EJS.LanguageManager(options);
 				
 		// initialize renderer
 		if (this.options.renderer == 'Inline'){
-			this.renderer = new EnlighterJS.Renderer.InlineRenderer(options);
+			this.renderer = new EJS.Renderer.InlineRenderer(options);
 		}else{
-			this.renderer = new EnlighterJS.Renderer.BlockRenderer(options);
+			this.renderer = new EJS.Renderer.BlockRenderer(options);
 		}
 				
 		// store codeblock element
-		this.originalCodeblock = document.id(originalCodeblock);
+		this.originalCodeblock = EJS.Dom.id(originalCodeblock);
 		
 		// store/create container
 		if (container){
-			this.container = document.id(container);
+			this.container = EJS.Dom.id(container);
 		}
 	},
 
@@ -115,10 +115,10 @@ var EnlighterJS = new Class({
 			var themeName = (this.options.forceTheme ? null : this.originalCodeblock.get('data-enlighter-theme')) || this.options.theme || 'Enlighter';
 			
 			// special lines to highlight ?
-			var specialLines = new EnlighterJS.SpecialLineHighlighter(this.originalCodeblock.get('data-enlighter-highlight'), this.originalCodeblock.get('data-enlighter-lineoffset'));
+			var specialLines = new EJS.SpecialLineHighlighter(this.originalCodeblock.get('data-enlighter-highlight'), this.originalCodeblock.get('data-enlighter-lineoffset'));
 			
 			// Load language parser
-			language = new EnlighterJS.Language[languageName](this.getRawCode(true));
+			var language = new EJS.Language[languageName](this.getRawCode(true));
 			
 			// compile tokens -> generate output
 			this.output = this.renderer.render(language, specialLines, {
@@ -133,7 +133,7 @@ var EnlighterJS = new Class({
 			if (this.options.renderer == 'Block'){
 				// grab content into specific container or after original code block ?
 				if (!this.container) {
-					this.container = new Element('div');
+					this.container = new EJS.Dom.Element('div');
 					
 					// put the highlighted code wrapper behind the original	
 					this.container.inject(this.originalCodeblock, 'after');
@@ -146,7 +146,7 @@ var EnlighterJS = new Class({
 				this.container.grab(this.output);
 				
 				// create raw content container
-				this.rawContentContainer = new Element('pre', {
+				this.rawContentContainer = new EJS.Dom.Element('pre', {
 					text: this.getRawCode(false),
 					styles: {
 						'display': 'none'
@@ -165,7 +165,7 @@ var EnlighterJS = new Class({
 				
 				// toolbar ?
 				if (this.options.rawButton || this.options.windowButton || this.options.infoButton){
-					this.container.grab(new EnlighterJS.UI.Toolbar(this));
+					this.container.grab(new EJS.UI.Toolbar(this));
 				}
 				
 			// normal handling
@@ -279,8 +279,8 @@ var EnlighterJS = new Class({
 });
 
 // register namespaces
-EnlighterJS.Language = {};
-EnlighterJS.Renderer = {};
-EnlighterJS.Util = {};
-EnlighterJS.UI = {};
+EJS.Language = {};
+EJS.Renderer = {};
+EJS.Util = {};
+EJS.UI = {};
 

@@ -13,19 +13,20 @@ requires:
 provides: [EnlighterJS.Util.Init]
 ...
 */
-(function(){
-	EnlighterJS.Util.Init = (function(blockSelector, inlineSelector, options){
-		// highlight all matching block tags
-		if (blockSelector){
-			options.renderer = 'Block';
-			EnlighterJS.Util.Helper(document.getElements(blockSelector), options);
-		}
-		
-		// highlight all matching inline tags
-		if (inlineSelector){
-			options.renderer = 'Inline';
-			options.grouping = false;
-			EnlighterJS.Util.Helper(document.getElements(inlineSelector), options);
-		}
-	});
-})();
+EJS.Util.Init = (function(blockSelector, inlineSelector, options){
+    // defaults
+    options = options || {};
+
+    // highlight all matching block tags
+    if (blockSelector){
+        options.renderer = 'Block';
+        EJS.Util.Helper(EJS.Dom.getElements(blockSelector), options);
+    }
+
+    // highlight all matching inline tags
+    if (inlineSelector){
+        options.renderer = 'Inline';
+        options.grouping = false;
+        EJS.Util.Helper(EJS.Dom.getElements(inlineSelector), options);
+    }
+});

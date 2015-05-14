@@ -14,9 +14,9 @@ requires:
 provides: [EnlighterJS.Language.sql]
 ...
 */
-EnlighterJS.Language.sql = new Class ({
+EJS.Language.sql = new Class ({
     
-    Extends: EnlighterJS.Language.generic,
+    Extends: EJS.Language.generic,
     
     setupLanguage: function(){
         this.keywords = {

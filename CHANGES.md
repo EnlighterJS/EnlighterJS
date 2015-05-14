@@ -1,3 +1,20 @@
+### Version 2.5 ###
+* Added DOM abstraction layer
+* Added: Language "AVR Assembler"
+* Added: Language "Ini" (ini, conf, property files)
+* Added: XML Namespace highlighting
+* Added: Theme Switcher to the Language Examples
+* Changed: kw3 with kw4 color of the beyond-theme
+* Changed: The compressed JS/CSS files are now named `Enlighter.min.js` and `Enlighter.min.css`
+* Changed: javascript [Strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) is used within the plugin namespace
+* Changed: All Examples are moved to `Examples/`
+* Bugfix: Screenshots are not available within the `PublicHtml` build
+* Bugfix: Invalid bootstrap css paths within `Development.phtml`
+* Bugfix: Highlighting of multi-line XML/HTML tags failed - thanks to [Suleiman19 on GitHub](https://github.com/AndiDittrich/WordPress.Enlighter/issues/8)
+* Removed: ant-contrib package from utils
+* Updated: MooTools to 1.5.1
+* Replaced YUI Compressor by [UglifyJS2](https://github.com/mishoo/UglifyJS2) and [clean-css](https://github.com/jakubpawlowicz/clean-css)
+
 ### Version 2.4 ###
 * Bugfix: Wrong line-font-size in the Enlighter-Theme YAML header
 * Bugfix: Wrong styles within the Beyond-Themes YAML header

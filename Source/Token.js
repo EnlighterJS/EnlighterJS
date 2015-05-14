@@ -14,7 +14,7 @@ requires:
 provides: [EnlighterJS.Token]
 ...
 */
-EnlighterJS.Token = new Class({
+EJS.Token = new Class({
     
 	text: null,
 	type: null,

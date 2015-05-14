@@ -14,9 +14,9 @@ requires:
 provides: [EnlighterJS.Tokenizer.Xml]
 ...
 */
-EnlighterJS.Tokenizer.Xml = new Class({
+EJS.Tokenizer.Xml = new Class({
 
-	Extends : EnlighterJS.Tokenizer,
+	Extends : EJS.Tokenizer,
 
 	/**
 	 * @constructs
@@ -39,8 +39,8 @@ EnlighterJS.Tokenizer.Xml = new Class({
 	 */
 	parseTokens : function(lang, code){
 		// Tags + attributes matching and preprocessing.
-		var tagPattern = /((?:\&lt;|<)[A-Z][A-Z0-9]*)(.*?)(\/?(?:\&gt;|>))/gi;
-		var attPattern = /\b([\w-]+)([ \t]*)(=)([ \t]*)(['"][^'"]+['"]|[^'" \t]+)/gi;
+		var tagPattern = /((?:\&lt;|<)[A-Z:_][A-Z0-9:.-]*)([\s\S]*?)(\/?(?:\&gt;|>))/gi;
+		var attPattern = /\b([\w:-]+)([ \t]*)(=)([ \t]*)(['"][^'"]+['"]|[^'" \t]+)/gi;
 		
 		// tmp storage
 		var tokens = [];
@@ -50,16 +50,16 @@ EnlighterJS.Tokenizer.Xml = new Class({
 
 		// Create array of matches containing opening tags, attributes, values, and separators.
 		while ((match = tagPattern.exec(code)) != null){
-			tokens.push(new EnlighterJS.Token(match[1], 'kw1', match.index));
+			tokens.push(new EJS.Token(match[1], 'kw1', match.index));
 			while ((attMatch = attPattern.exec(match[2])) != null){
 				index = match.index + match[1].length + attMatch.index;
-				tokens.push(new EnlighterJS.Token(attMatch[1], 'kw2', index)); // Attributes
+				tokens.push(new EJS.Token(attMatch[1], 'kw2', index)); // Attributes
 				index += attMatch[1].length + attMatch[2].length;
-				tokens.push(new EnlighterJS.Token(attMatch[3], 'kw1', index)); // Separators (=)
+				tokens.push(new EJS.Token(attMatch[3], 'kw1', index)); // Separators (=)
 				index += attMatch[3].length + attMatch[4].length;
-				tokens.push(new EnlighterJS.Token(attMatch[5], 'st0', index)); // Values
+				tokens.push(new EJS.Token(attMatch[5], 'st0', index)); // Values
 			}
-			tokens.push(new EnlighterJS.Token(match[3], 'kw1', match.index + match[1].length + match[2].length));
+			tokens.push(new EJS.Token(match[3], 'kw1', match.index + match[1].length + match[2].length));
 		}
 
 		// apply rules
@@ -67,7 +67,7 @@ EnlighterJS.Tokenizer.Xml = new Class({
 			while (null !== (match = regex.exec(code))){
 				index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
 				text = match[1] || match[0];
-				tokens.push(new EnlighterJS.Token(text, rule, index));
+				tokens.push(new EJS.Token(text, rule, index));
 			}
 		}, this);
 

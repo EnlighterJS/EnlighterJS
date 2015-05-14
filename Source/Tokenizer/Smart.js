@@ -14,9 +14,9 @@ requires:
 provides: [EnlighterJS.Tokenizer.Smart]
 ...
 */
-EnlighterJS.Tokenizer.Smart = new Class({
+EJS.Tokenizer.Smart = new Class({
 
-    Extends: EnlighterJS.Tokenizer,
+    Extends: EJS.Tokenizer,
     
     /**
      * @constructs
@@ -82,7 +82,7 @@ EnlighterJS.Tokenizer.Smart = new Class({
                 // If $1 capture group exists, use $1 instead of full match.
                 index = (match[1] && match[0].contains(match[1])) ? match.index + match[0].indexOf(match[1]) : match.index;
                 text  = match[1] || match[0];
-                newToken = new EnlighterJS.Token(text, type, index);
+                newToken = new EJS.Token(text, type, index);
                 tokens.push(newToken);
                 
                 /* Find the next match of current rule and store its index. If not done, the nextIndex

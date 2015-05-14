@@ -11,9 +11,10 @@ It's possible that it may work with earlier/other browsers.
 * Firefox 2+
 * Opera 9+
 
-EnlighterJS requires MooTools.Core/1.4 Tested with:
+EnlighterJS requires MooTools.Core/1.4 (no compat) - tested with:
 * Core/1.4.5
 * Core/1.5.0
+* Core/1.5.1
 
 Screenshots
 -----------
@@ -25,4 +26,4 @@ Screenshots
 License
 -------
 
-EnlighterJS is OpenSource and licensed under the Terms of [The MIT License (X11)](http://opensource.org/licenses/MIT)
+EnlighterJS is OpenSource and licensed under the Terms of [The MIT License (X11)](http://opensource.org/licenses/MIT). You're welcome to [contribute](https://github.com/AndiDittrich/EnlighterJS/blob/master/CONTRIBUTE.md)!

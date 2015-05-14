@@ -14,7 +14,7 @@ requires:
 provides: [EnlighterJS.Tokenizer]
 ...
 */
-EnlighterJS.Tokenizer = new Class({
+EJS.Tokenizer = new Class({
 
 	/**
 	 * @constructs
@@ -43,7 +43,7 @@ EnlighterJS.Tokenizer = new Class({
 		for (var i = 0,pointer = 0; i < tokens.length; i++){
 			if (pointer < tokens[i].index){
 				text = code.substring(pointer, tokens[i].index);
-				token = new EnlighterJS.Token(text, 'unknown', pointer);
+				token = new EJS.Token(text, 'unknown', pointer);
 				tokens.splice(i, 0, token);
 			}
 			pointer = tokens[i].end;
@@ -52,7 +52,7 @@ EnlighterJS.Tokenizer = new Class({
 		// Add the final unmatched piece if it exists.
 		if (pointer < code.length){
 			text = code.substring(pointer, code.length);
-			token = new EnlighterJS.Token(text, 'unknown', pointer);
+			token = new EJS.Token(text, 'unknown', pointer);
 			tokens.push(token);
 		}
 

@@ -14,7 +14,7 @@ requires:
 provides: [EnlighterJS.SpecialLineHighlighter]
 ...
 */
-EnlighterJS.SpecialLineHighlighter = new Class({
+EJS.SpecialLineHighlighter = new Class({
 		
 	// storage of line numbers to highlight
 	specialLines: {},

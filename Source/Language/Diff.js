@@ -13,8 +13,8 @@ requires:
 provides: [EnlighterJS.Language.diff]
 ...
 */
-EnlighterJS.Language.diff = new Class({
-	Extends : EnlighterJS.Language.generic,
+EJS.Language.diff = new Class({
+	Extends : EJS.Language.generic,
 
 	setupLanguage: function(){
 		this.keywords = {

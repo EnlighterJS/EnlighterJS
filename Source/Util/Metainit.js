@@ -15,7 +15,7 @@ provides: [EnlighterJS]
 */
 window.addEvent('domready', function(){
 	// metadata config available ? -> autoinit
-	var m = document.getElement('meta[name="EnlighterJS"]');
+	var m = EJS.Dom.getElement('meta[name="EnlighterJS"]');
 	
 	// check instance
 	if (!m){
@@ -43,13 +43,13 @@ window.addEvent('domready', function(){
 	// highlight all matching block tags
 	if (blockSelector != 'NULL'){
 		options.renderer = 'Block';
-		EnlighterJS.Util.Helper(document.getElements(blockSelector), options);
+        EJS.Util.Helper(EJS.Dom.getElements(blockSelector), options);
 	}
 	
 	// highlight all matching inline tags
 	if (inlineSelector != 'NULL'){
 		options.renderer = 'Inline';
 		options.grouping = false;
-		EnlighterJS.Util.Helper(document.getElements(inlineSelector), options);
+        EJS.Util.Helper(EJS.Dom.getElements(inlineSelector), options);
 	}
 });

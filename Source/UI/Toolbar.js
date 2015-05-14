@@ -14,7 +14,7 @@ requires:
 provides: [EnlighterJS.UI.Toolbar]
 ...
 */
-EnlighterJS.UI.Toolbar = new Class({
+EJS.UI.Toolbar = new Class({
 	Implements: Options,
 	
 	options: {
@@ -33,14 +33,14 @@ EnlighterJS.UI.Toolbar = new Class({
 		this.setOptions(enlighterInstance.options);
 		
 		// create outer container
-		this.container = new Element('div', {
+		this.container = new EJS.Dom.Element('div', {
 			'class': 'EnlighterJSToolbar'
 		});
 		
 		// info button ?
 		if (this.options.infoButton){
 			// create window "button"
-			this.container.grab(new Element('a', {
+			this.container.grab(new EJS.Dom.Element('a', {
 				'class': 'EnlighterJSInfoButton',
 				title: this.options.toolbar.infoTitle,
 				events: {
@@ -55,7 +55,7 @@ EnlighterJS.UI.Toolbar = new Class({
 		// toggle button ?
 		if (this.options.rawButton){
 			// create toggle "button"
-			this.container.grab(new Element('a', {
+			this.container.grab(new EJS.Dom.Element('a', {
 				'class': 'EnlighterJSRawButton',
 				title: this.options.toolbar.rawTitle,
 				events: {
@@ -70,20 +70,20 @@ EnlighterJS.UI.Toolbar = new Class({
 		// code window button ?
 		if (this.options.windowButton){
 			// create window "button"
-			this.container.grab(new Element('a', {
+			this.container.grab(new EJS.Dom.Element('a', {
 				'class': 'EnlighterJSWindowButton',
 				title: this.options.toolbar.windowTitle,
 				events: {
 					// open new window on click
 					click: function(){
-						EnlighterJS.UI.CodeWindow(enlighterInstance.getRawCode(false));
+                        EJS.UI.CodeWindow(enlighterInstance.getRawCode(false));
 					}.bind(this)
 				 }
 			}));
 		}		
 		
 		// clearfix
-		this.container.grab(new Element('span', {
+		this.container.grab(new EJS.Dom.Element('span', {
 			'class': 'clear'
 		}));
 	},

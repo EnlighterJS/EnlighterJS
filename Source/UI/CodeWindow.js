@@ -14,7 +14,7 @@ requires:
 provides: [EnlighterJS.UI.CodeWindow]
 ...
 */
-EnlighterJS.UI.CodeWindow = (function(code){
+EJS.UI.CodeWindow = (function(code){
 	// code "cleanup"
 	code = code.replace(/&/gim, '&amp;').replace(/</gim, '&lt;').replace(/>/gim, '&gt;');
 
