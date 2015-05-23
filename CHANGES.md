@@ -1,3 +1,12 @@
+### Version 2.6.0 ###
+* Added input/output TextFilter
+* Added: Native JSON markup language support
+* Added: Support for the [Cryptex WordPress Plugin](https://wordpress.org/plugins/cryptex)
+* Added: New PHP Language Example
+* Added: Alias `conf` for ini files
+* Some performance improvements (raw code is now cached)
+* Semantic Versioning [semver](http://semver.org/) is used for releases
+
 ### Version 2.5 ###
 * Added DOM abstraction layer
 * Added: Language "AVR Assembler"

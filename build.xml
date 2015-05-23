@@ -14,16 +14,16 @@
 	<property name="build.dir" value="Build/" />
 	<property name="www.dir" value="PublicHtml/" />
     <property name="example.dir" value="Examples/" />
-	<property name="build.var.version" value="2.5" />
+	<property name="build.var.version" value="2.6.0" />
 	
 	<!-- Themes to include !-->
 	<property name="include.themes" value="Source/Themes/MooTools.css Source/Themes/Enlighter.css Source/Themes/Git.css Source/Themes/Mocha.css Source/Themes/Panic.css Source/Themes/Tutti.css Source/Themes/Twilight.css Source/Themes/Classic.css Source/Themes/Eclipse.css Source/Themes/Beyond.css" />
 
 	<!-- Languages to include !-->
-	<property name="include.languages" value="Source/Language/Cpp.js Source/Language/CSharp.js Source/Language/Xml.js Source/Language/Css.js Source/Language/Java.js Source/Language/Javascript.js Source/Language/Markdown.js Source/Language/Php.js Source/Language/Python.js Source/Language/Ruby.js Source/Language/Shell.js Source/Language/Sql.js Source/Language/Nsis.js Source/Language/RAW.js Source/Language/Diff.js Source/Language/AvrAsm.js Source/Language/Ini.js" />
+	<property name="include.languages" value="Source/Language/Cpp.js Source/Language/CSharp.js Source/Language/Xml.js Source/Language/Css.js Source/Language/Java.js Source/Language/Javascript.js Source/Language/Json.js Source/Language/Markdown.js Source/Language/Php.js Source/Language/Python.js Source/Language/Ruby.js Source/Language/Shell.js Source/Language/Sql.js Source/Language/Nsis.js Source/Language/RAW.js Source/Language/Diff.js Source/Language/AvrAsm.js Source/Language/Ini.js" />
 
 	<!-- Base Sourcefiles to include !-->
-	<property name="include.JsBaseSources" value="Source/EnlighterJS.js Source/Dom/MooTools/Dom.js Source/Dom/MooTools/Element.js Source/SpecialLineHighlighter.js Source/Language/Generic.js Source/LanguageManager.js Source/Tokenizer.js Source/Token.js Source/Renderer/InlineRenderer.js Source/Renderer/BlockRenderer.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js Source/UI/CodeWindow.js Source/UI/Toolbar.js" />
+	<property name="include.JsBaseSources" value="Source/EnlighterJS.js Source/TextFilter.js Source/Dom/MooTools/Dom.js Source/Dom/MooTools/Element.js Source/SpecialLineHighlighter.js Source/Language/Generic.js Source/LanguageManager.js Source/Tokenizer.js Source/Token.js Source/Renderer/InlineRenderer.js Source/Renderer/BlockRenderer.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js Source/UI/CodeWindow.js Source/UI/Toolbar.js" />
 
 	<!-- Additional Features to include !-->
 	<property name="include.JsFeatures" value="Source/Native/Element.EnlighterJS.js Source/Util/Helper.js Source/UI/TabPane.js Source/Util/Metainit.js Source/Util/Init.js" />
@@ -144,5 +144,16 @@
 			<fileset dir="Build/"/>
 		</copy>
 	</target>
+
+    <!-- Test the Enlighter Plugin with DEV versions !-->
+    <target name="wptest" depends="build">
+
+        <copy todir="C:\Development\htdocs\wordpress2\wp-content\plugins\enlighter\resources" overwrite="true">
+            <fileset dir="Build/" />
+        </copy>
+        <copy todir="C:\Development\htdocs\wordpress\wp-content\plugins\enlighter\resources" overwrite="true">
+            <fileset dir="Build/" />
+        </copy>
+    </target>
 	
 </project>

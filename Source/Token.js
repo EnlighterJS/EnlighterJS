@@ -9,7 +9,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Token]
 ...

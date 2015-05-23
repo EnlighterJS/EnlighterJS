@@ -8,7 +8,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.LanguageManager]
 ...
@@ -38,13 +38,13 @@ EJS.LanguageManager = new Class({
 		'c': 'cpp',
 		'styles': 'css',
 		'bash': 'shell',
-		'json': 'javascript',
 		'py': 'python',
 		'html': 'xml',
 		'jquery': 'javascript',
 		'mootools': 'javascript',
 		'ext.js': 'javascript',
-		'c#': 'csharp'
+		'c#': 'csharp',
+        'conf': 'ini'
 	},
 	
 	// get language name, process aliases and default languages

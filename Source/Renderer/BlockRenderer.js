@@ -8,7 +8,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Renderer.BlockRenderer]
 ...
@@ -23,8 +23,11 @@ EJS.Renderer.BlockRenderer = new Class({
 		showLinenumbers: true
 	},
 
-	initialize : function(options){
+    textFilter: null,
+
+	initialize : function(options, textFilter){
 		this.setOptions(options);
+        this.textFilter = textFilter;
 	},
 
 	/**
@@ -55,6 +58,11 @@ EJS.Renderer.BlockRenderer = new Class({
 		var currentLine = new EJS.Dom.Element('li', {
 			'class': (specialLines.isSpecialLine(lineCounter) ? 'specialline' : '')
 		});
+
+        // output filter
+        var _F = (function(t){
+            return this.textFilter.filterOutput(t);
+        }.bind(this));
 		
 		// generate output based on ordered list of tokens
 		language.getTokens().each(function(token, index){
@@ -69,7 +77,7 @@ EJS.Renderer.BlockRenderer = new Class({
 				// just add the first line
 				currentLine.grab(new EJS.Dom.Element('span', {
 					'class': className,
-					'text': lines.shift()
+					'text': _F(lines.shift())
 				}));
 				
 				// generate element for each line
@@ -88,14 +96,14 @@ EJS.Renderer.BlockRenderer = new Class({
 					// create new token-element
 					currentLine.grab(new EJS.Dom.Element('span', {
 						'class': className,
-						'text': line
+						'text': _F(line)
 					}));
 				});				
 			}else{
 				// just add the token
 				currentLine.grab(new EJS.Dom.Element('span', {
 					'class': className,
-					'text': token.text
+					'text': _F(token.text)
 				}));	
 			}			
 		});

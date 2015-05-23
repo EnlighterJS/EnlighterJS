@@ -51,7 +51,12 @@ var EJS = window.EnlighterJS = new Class({
 	
 	// rendered output span/ou/ul container
 	output: null,
-	
+
+    // input/output filter
+	textFilter: null,
+
+    // cached code input
+    rawCode: null,
 
 	/**
 	 * @constructs
@@ -59,17 +64,20 @@ var EJS = window.EnlighterJS = new Class({
 	 * @param {Object} options The options object.
 	 * @param {Element} container (optional) The output container - if not defined, the output will be injected after the originalCodeblock
 	 */
-	initialize : function(originalCodeblock, options, container) {
-		this.setOptions(options);
+	initialize : function(originalCodeblock, opt, container) {
+		this.setOptions(opt);
 		
 		// create new language alias manager instance
-		this.languageManager = new EJS.LanguageManager(options);
+		this.languageManager = new EJS.LanguageManager(this.options);
+
+        // create new coe filter instance
+        this.textFilter = new EJS.TextFilter(this.options);
 				
 		// initialize renderer
 		if (this.options.renderer == 'Inline'){
-			this.renderer = new EJS.Renderer.InlineRenderer(options);
+			this.renderer = new EJS.Renderer.InlineRenderer(this.options, this.textFilter);
 		}else{
-			this.renderer = new EJS.Renderer.BlockRenderer(options);
+			this.renderer = new EJS.Renderer.BlockRenderer(this.options, this.textFilter);
 		}
 				
 		// store codeblock element
@@ -197,43 +205,35 @@ var EJS = window.EnlighterJS = new Class({
 	},
 	
 	/**
-	 * Takes a codeblock and highlights the code inside. The original codeblock is set to invisible
-	 * @DEPRECATED since v2.0 - this method will be removed in the future
-	 * 
-	 * @return {EnlighterJS} The current EnlighterJS instance.
-	 */
-	light : function(){
-		return this.enlight(true);
-	},
-		
-	/**
-	 * Unlights a codeblock by hiding the enlighter element if present and re-displaying the original code.
-	 * @DEPRECATED since v2.0 - this method will be removed in the future
-	 * 
-	 * @return {EnlighterJS} The current EnlighterJS instance.
-	 */
-	unlight : function() {
-		return this.enlight(false);
-	},
-
-	/**
 	 * Extracts the raw code from given codeblock
 	 * @return {String} The plain-text code (raw)
 	 */
-	getRawCode: function(reindent) {
-		// get the raw content
-		var code = this.originalCodeblock.get('html');
-		
-		// remove empty lines at the beginning+end of the codeblock
-		code = code.replace(/(^\s*\n|\n\s*$)/gi, '');
-		
-		// cleanup ampersand ?
-		if (this.options.ampersandCleanup===true){
-			code = code.replace(/&amp;/gim, '&');
-		}
-		
-		// replace html escaped chars
-		code = code.replace(/&lt;/gim, '<').replace(/&gt;/gim, '>').replace(/&nbsp;/gim, ' ');
+	getRawCode: function(reindent){
+
+        // cached version available ?
+        var code = this.rawCode;
+
+        if (code==null) {
+            // get the raw content
+            code = this.originalCodeblock.get('html');
+
+            // remove empty lines at the beginning+end of the codeblock
+            code = code.replace(/(^\s*\n|\n\s*$)/gi, '');
+
+            // apply input filter
+            code = this.textFilter.filterInput(code);
+
+            // cleanup ampersand ?
+            if (this.options.ampersandCleanup === true) {
+                code = code.replace(/&amp;/gim, '&');
+            }
+
+            // replace html escaped chars
+            code = code.replace(/&lt;/gim, '<').replace(/&gt;/gim, '>').replace(/&nbsp;/gim, ' ');
+
+            // cache it
+            this.rawCode = code;
+        }
 
 		// replace tabs with spaces ?
 		if (reindent === true){
@@ -275,7 +275,27 @@ var EJS = window.EnlighterJS = new Class({
 			this.output.setStyle('display', 'block');
 			this.rawContentContainer.setStyle('display', 'none');
 		}
-	}
+	},
+
+    /**
+     * Takes a codeblock and highlights the code inside. The original codeblock is set to invisible
+     * @DEPRECATED since v2.0 - this method will be removed in the future
+     *
+     * @return {EnlighterJS} The current EnlighterJS instance.
+     */
+    light : function(){
+        return this.enlight(true);
+    },
+
+    /**
+     * Unlights a codeblock by hiding the enlighter element if present and re-displaying the original code.
+     * @DEPRECATED since v2.0 - this method will be removed in the future
+     *
+     * @return {EnlighterJS} The current EnlighterJS instance.
+     */
+    unlight : function() {
+        return this.enlight(false);
+    }
 });
 
 // register namespaces

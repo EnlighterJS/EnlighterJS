@@ -8,7 +8,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Renderer.InlineRenderer]
 ...
@@ -20,8 +20,11 @@ EJS.Renderer.InlineRenderer = new Class({
 		inlineContainerTag : 'span'
 	},
 
-	initialize : function(options){
+    textFilter: null,
+
+	initialize : function(options, textFilter){
 		this.setOptions(options);
+        this.textFilter = textFilter;
 	},
 
 	/**
@@ -43,9 +46,9 @@ EJS.Renderer.InlineRenderer = new Class({
 			// create new inline element which contains the token - htmlspecialchars get escaped by mootools setText !
 			container.grab(new EJS.Dom.Element('span', {
 				'class': className,
-				'text': token.text
+				'text': this.textFilter.filterOutput(token.text)
 			}));
-		});
+		}, this);
 
 		return container;
 	}

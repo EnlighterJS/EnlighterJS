@@ -28,6 +28,7 @@ The following options can be passed to the following methods to customize the re
 * **inlineContainerTag** - (string) The html tag-name of the container (inline-syntax-highlighting only) where the generated code is wrapped into - default: **"span"**
 * **ampersandCleanup** - (boolean) Should the ampersand escape sequence `&#38;amp;` automatically replaced by the ampersand sign during code cleanup ? Useful to resolve double escaped html code - default: **true**
 * **rawcodeDoubleclick** - (boolean) Toggle RAW/Highlighted code on doubleclick ? - default: **false**
+* **cryptex** - (object) Special options for use with the [Cryptex WordPress Plugin](https://wordpress.org/plugins/cryptex)
 
 #### Example ####
 

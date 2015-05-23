@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.5 | MIT-Style X11 License | http://enlighterjs.andidittrich.de/ | May 14 2015 */
+/*! EnlighterJS Syntax Highlighter 2.6.0 | MIT-Style X11 License | http://enlighterjs.andidittrich.de/ | May 23 2015 */
 (function() {
     /*
 ---
@@ -44,21 +44,27 @@ provides: [EnlighterJS]
         rawContentContainer: null,
         // rendered output span/ou/ul container
         output: null,
+        // input/output filter
+        textFilter: null,
+        // cached code input
+        rawCode: null,
         /**
 	 * @constructs
 	 * @param {Element} originalCodeblock An Element containing code to highlight
 	 * @param {Object} options The options object.
 	 * @param {Element} container (optional) The output container - if not defined, the output will be injected after the originalCodeblock
 	 */
-        initialize: function(originalCodeblock, options, container) {
-            this.setOptions(options);
+        initialize: function(originalCodeblock, opt, container) {
+            this.setOptions(opt);
             // create new language alias manager instance
-            this.languageManager = new EJS.LanguageManager(options);
+            this.languageManager = new EJS.LanguageManager(this.options);
+            // create new coe filter instance
+            this.textFilter = new EJS.TextFilter(this.options);
             // initialize renderer
             if (this.options.renderer == "Inline") {
-                this.renderer = new EJS.Renderer.InlineRenderer(options);
+                this.renderer = new EJS.Renderer.InlineRenderer(this.options, this.textFilter);
             } else {
-                this.renderer = new EJS.Renderer.BlockRenderer(options);
+                this.renderer = new EJS.Renderer.BlockRenderer(this.options, this.textFilter);
             }
             // store codeblock element
             this.originalCodeblock = EJS.Dom.id(originalCodeblock);
@@ -157,38 +163,28 @@ provides: [EnlighterJS]
             return this;
         },
         /**
-	 * Takes a codeblock and highlights the code inside. The original codeblock is set to invisible
-	 * @DEPRECATED since v2.0 - this method will be removed in the future
-	 * 
-	 * @return {EnlighterJS} The current EnlighterJS instance.
-	 */
-        light: function() {
-            return this.enlight(true);
-        },
-        /**
-	 * Unlights a codeblock by hiding the enlighter element if present and re-displaying the original code.
-	 * @DEPRECATED since v2.0 - this method will be removed in the future
-	 * 
-	 * @return {EnlighterJS} The current EnlighterJS instance.
-	 */
-        unlight: function() {
-            return this.enlight(false);
-        },
-        /**
 	 * Extracts the raw code from given codeblock
 	 * @return {String} The plain-text code (raw)
 	 */
         getRawCode: function(reindent) {
-            // get the raw content
-            var code = this.originalCodeblock.get("html");
-            // remove empty lines at the beginning+end of the codeblock
-            code = code.replace(/(^\s*\n|\n\s*$)/gi, "");
-            // cleanup ampersand ?
-            if (this.options.ampersandCleanup === true) {
-                code = code.replace(/&amp;/gim, "&");
+            // cached version available ?
+            var code = this.rawCode;
+            if (code == null) {
+                // get the raw content
+                code = this.originalCodeblock.get("html");
+                // remove empty lines at the beginning+end of the codeblock
+                code = code.replace(/(^\s*\n|\n\s*$)/gi, "");
+                // apply input filter
+                code = this.textFilter.filterInput(code);
+                // cleanup ampersand ?
+                if (this.options.ampersandCleanup === true) {
+                    code = code.replace(/&amp;/gim, "&");
+                }
+                // replace html escaped chars
+                code = code.replace(/&lt;/gim, "<").replace(/&gt;/gim, ">").replace(/&nbsp;/gim, " ");
+                // cache it
+                this.rawCode = code;
             }
-            // replace html escaped chars
-            code = code.replace(/&lt;/gim, "<").replace(/&gt;/gim, ">").replace(/&nbsp;/gim, " ");
             // replace tabs with spaces ?
             if (reindent === true) {
                 // get indent option value
@@ -224,6 +220,24 @@ provides: [EnlighterJS]
                 this.output.setStyle("display", "block");
                 this.rawContentContainer.setStyle("display", "none");
             }
+        },
+        /**
+     * Takes a codeblock and highlights the code inside. The original codeblock is set to invisible
+     * @DEPRECATED since v2.0 - this method will be removed in the future
+     *
+     * @return {EnlighterJS} The current EnlighterJS instance.
+     */
+        light: function() {
+            return this.enlight(true);
+        },
+        /**
+     * Unlights a codeblock by hiding the enlighter element if present and re-displaying the original code.
+     * @DEPRECATED since v2.0 - this method will be removed in the future
+     *
+     * @return {EnlighterJS} The current EnlighterJS instance.
+     */
+        unlight: function() {
+            return this.enlight(false);
         }
     });
     // register namespaces
@@ -231,6 +245,58 @@ provides: [EnlighterJS]
     EJS.Renderer = {};
     EJS.Util = {};
     EJS.UI = {};
+    /*
+ ---
+ description: Filters the RAW Code from given pre tags
+
+ license: MIT-style
+
+ authors:
+ - Andi Dittrich
+
+ requires:
+ - Core/1.4.5
+
+ provides: [EnlighterJS.TextFilter]
+ ...
+ */
+    EJS.TextFilter = new Class({
+        Implements: Options,
+        options: {
+            cryptex: {
+                enabled: false,
+                email: "protected.email@example.tld"
+            }
+        },
+        initialize: function(options) {
+            this.setOptions(options);
+        },
+        /**
+     * Apply Filter to text fragments output)
+     * @param textFragment
+     */
+        filterOutput: function(textFragment) {
+            return textFragment;
+        },
+        /**
+     * Apply filter to the input chain (text block)
+     * @param text
+     * @returns {*}
+     */
+        filterInput: function(text) {
+            // apply cryptex email address filter ?
+            if (this.options.cryptex.enabled === true) {
+                text = text.replace(/<!--CTX!--><span (rel="([a-f0-9]+)")?[\s\S]*?<!--\/CTX!-->/gim, function(match, m1, m2, offset, string) {
+                    if (m2 && m2.length > 2 && typeof window.Cryptex != "undefined") {
+                        return window.Cryptex.decode(m2);
+                    } else {
+                        return this.options.cryptex.email;
+                    }
+                }.bind(this));
+            }
+            return text;
+        }
+    });
     /*
 ---
 description: EnlighterJS DOM Abstraction Layer (MooTools)
@@ -241,7 +307,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Dom]
 ...
@@ -282,7 +348,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Dom.Element]
 ...
@@ -299,7 +365,7 @@ authors:
   - Andi Dittrich
   
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.SpecialLineHighlighter]
 ...
@@ -362,7 +428,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Language.generic]
 ...
@@ -496,7 +562,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.LanguageManager]
 ...
@@ -522,13 +588,13 @@ provides: [EnlighterJS.LanguageManager]
             c: "cpp",
             styles: "css",
             bash: "shell",
-            json: "javascript",
             py: "python",
             html: "xml",
             jquery: "javascript",
             mootools: "javascript",
             "ext.js": "javascript",
-            "c#": "csharp"
+            "c#": "csharp",
+            conf: "ini"
         },
         // get language name, process aliases and default languages
         getLanguage: function(languageName) {
@@ -631,7 +697,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Token]
 ...
@@ -698,7 +764,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Renderer.InlineRenderer]
 ...
@@ -708,8 +774,10 @@ provides: [EnlighterJS.Renderer.InlineRenderer]
         options: {
             inlineContainerTag: "span"
         },
-        initialize: function(options) {
+        textFilter: null,
+        initialize: function(options, textFilter) {
             this.setOptions(options);
+            this.textFilter = textFilter;
         },
         /**
 	 * Renders the generated Tokens
@@ -728,9 +796,9 @@ provides: [EnlighterJS.Renderer.InlineRenderer]
                 // create new inline element which contains the token - htmlspecialchars get escaped by mootools setText !
                 container.grab(new EJS.Dom.Element("span", {
                     "class": className,
-                    text: token.text
+                    text: this.textFilter.filterOutput(token.text)
                 }));
-            });
+            }, this);
             return container;
         }
     });
@@ -744,7 +812,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Renderer.BlockRenderer]
 ...
@@ -757,8 +825,10 @@ provides: [EnlighterJS.Renderer.BlockRenderer]
             evenClassname: "even",
             showLinenumbers: true
         },
-        initialize: function(options) {
+        textFilter: null,
+        initialize: function(options, textFilter) {
             this.setOptions(options);
+            this.textFilter = textFilter;
         },
         /**
 	 * Renders the generated Tokens
@@ -785,6 +855,10 @@ provides: [EnlighterJS.Renderer.BlockRenderer]
             var currentLine = new EJS.Dom.Element("li", {
                 "class": specialLines.isSpecialLine(lineCounter) ? "specialline" : ""
             });
+            // output filter
+            var _F = function(t) {
+                return this.textFilter.filterOutput(t);
+            }.bind(this);
             // generate output based on ordered list of tokens
             language.getTokens().each(function(token, index) {
                 // get classname
@@ -796,7 +870,7 @@ provides: [EnlighterJS.Renderer.BlockRenderer]
                     // just add the first line
                     currentLine.grab(new EJS.Dom.Element("span", {
                         "class": className,
-                        text: lines.shift()
+                        text: _F(lines.shift())
                     }));
                     // generate element for each line
                     lines.each(function(line, lineNumber) {
@@ -811,14 +885,14 @@ provides: [EnlighterJS.Renderer.BlockRenderer]
                         // create new token-element
                         currentLine.grab(new EJS.Dom.Element("span", {
                             "class": className,
-                            text: line
+                            text: _F(line)
                         }));
                     });
                 } else {
                     // just add the token
                     currentLine.grab(new EJS.Dom.Element("span", {
                         "class": className,
-                        text: token.text
+                        text: _F(token.text)
                     }));
                 }
             });
@@ -1006,7 +1080,7 @@ authors:
   - Andi Dittrich
   
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.UI.CodeWindow]
 ...
@@ -1031,7 +1105,7 @@ authors:
   - Andi Dittrich
   
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.UI.Toolbar]
 ...
@@ -1115,7 +1189,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [Element.enlight]
 ...
@@ -1248,7 +1322,7 @@ authors:
   - Andi Dittrich
   
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.UI.TabPane]
 ...
@@ -1350,7 +1424,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS]
 ...
@@ -1399,7 +1473,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Util.Init]
 ...
@@ -1833,6 +1907,55 @@ provides: [EnlighterJS.Language.javascript]
     });
     /*
 ---
+description: JSON
+
+license: MIT-style
+
+authors:
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Language.json]
+...
+*/
+    EJS.Language.json = new Class({
+        Extends: EJS.Language.generic,
+        setupLanguage: function() {
+            this.keywords = {
+                values: {
+                    csv: "true, false, null",
+                    alias: "kw2"
+                }
+            };
+            this.patterns = {
+                keys: {
+                    pattern: /("[^"\\\r\n]+?")\s*?:/gi,
+                    alias: "kw1"
+                },
+                strings: {
+                    pattern: this.common.strings,
+                    alias: "st0"
+                },
+                brackets: {
+                    pattern: this.common.brackets,
+                    alias: "br0"
+                },
+                numbers: {
+                    pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][-+]?[0-9]+)?|0x[A-F0-9]+)\b/gi,
+                    alias: "nu0"
+                },
+                symbols: {
+                    pattern: /,|:/g,
+                    alias: "sy0"
+                }
+            };
+            this.delimiters = {};
+        }
+    });
+    /*
+---
 description: Markdown language
 
 license: MIT-style
@@ -1842,7 +1965,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
   
 provides: [EnlighterJS.Language.markdown]
 ...
@@ -2278,7 +2401,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Language.nsis]
 ...
@@ -2393,7 +2516,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Language.diff]
 ...
@@ -2432,7 +2555,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Language.avrasm]
 ...
@@ -2483,7 +2606,7 @@ authors:
   - Andi Dittrich
 
 requires:
-  - core/1.4.5
+  - Core/1.4.5
 
 provides: [EnlighterJS.Language.ini]
 ...
