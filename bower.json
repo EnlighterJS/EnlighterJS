@@ -1,0 +1,47 @@
+{
+  "name": "enlighterjs",
+  "homepage": "http://enlighterjs.andidittrich.de",
+  "authors": [
+    "Andi Dittrich <andi.dittrich@a3non.org>"
+  ],
+  "description": "MooTools based Syntax Highlighter",
+  "main": [
+      "Build/EnlighterJS.js",
+      "Build/EnlighterJS.css"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "c++",
+    "code",
+    "coding",
+    "cpp",
+    "css",
+    "customizable",
+    "html",
+    "java",
+    "javascript",
+    "mootools",
+    "php",
+    "Python",
+    "Ruby",
+    "shell",
+    "sourcecode",
+    "sql",
+    "syntax",
+    "highlighting",
+    "themes",
+    "visual",
+    "editor",
+    "xml"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "Util",
+    "Docs"
+    ]
+}

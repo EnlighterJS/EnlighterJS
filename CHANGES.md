@@ -1,9 +1,11 @@
 ### Version 2.6.0 ###
 * Added input/output TextFilter
 * Added: Native JSON markup language support
+* Added: Extended JSON language examples
 * Added: Support for the [Cryptex WordPress Plugin](https://wordpress.org/plugins/cryptex)
 * Added: New PHP Language Example
 * Added: Alias `conf` for ini files
+* Registered EnlighterJS within [bower](http://bower.io) package manager
 * Some performance improvements (raw code is now cached)
 * Semantic Versioning [semver](http://semver.org/) is used for releases
 
