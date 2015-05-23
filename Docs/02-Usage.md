@@ -2,11 +2,16 @@
 Basic Usage
 -----------
 
-Download EnlighterJS and extract the files. Copy the prebuild files of the *Build/* directory into a web-accessible directory of your choice. 
+Download EnlighterJS and extract the files or use [bower](http://bower.io). 
 
-Link to the EnlighterJS.yui.js javascript file and the EnlighterJS.yui.css stylesheet in the head section of your document **after** the MooTools file. 
+    #SHELL
+    bower install enlighterjs
+
+Copy the prebuild files of the *Build/* directory into a web-accessible directory of your choice. 
+
+Link to the EnlighterJS.min.js javascript file and the EnlighterJS.min.css stylesheet in the head section of your document **after** the MooTools file. 
 The example below assumes you moved the files into your scripts folder under "js/" and your styles folder under "css/". 
-The extension .yui indicates that these files are compressed with the [Yahoo YUI Compressor](http://yui.github.io/yuicompressor/). **These files are ready for productive use!** 
+The extension .min indicates that these files are already minified. **These files are ready for productive use!** 
 If you want to start developing, you should consider to use the uncompressed versions for easier debugging!
 
 Rendering options can be defined as global option (Metainit attributes or options object) or local option using the `data-enlighter-` attributes on each codeblock. 

@@ -82,6 +82,7 @@ List of languages with their corresponding identifiers and supported aliases (wr
 * **C** (c)
 * **C++** (cpp, c++)
 * **Java** (java)
+* **JSON** (json)
 * **Python** (py, python)
 * **Ruby** (ruby(
 * **Markdown** (md, markdown)
@@ -89,6 +90,8 @@ List of languages with their corresponding identifiers and supported aliases (wr
 * **Shellscript** (shell, bash)
 * **SQL** (sql)
 * **NSIS** (nsis)
+* **Ini** (ini, conf)
+* **AVR Assembler** (avrasm)
 * **Generic** (generic, standard) - default highlighting scheme
 * **RAW** (raw) - raw code without highlighting with EnlighterJS container styles!
 * **No-Highlight** (no-highlight) - disables highlighting and retains your page styles!
