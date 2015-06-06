@@ -1,0 +1,128 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="less">list-style: decimal-leading-zero outside;</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+<pre data-enlighter-language="less">
+@base: #f938ab;
+
+.box-shadow(@style, @c) when (iscolor(@c)) {
+  -webkit-box-shadow: @style @c;
+  box-shadow:         @style @c;
+}
+.box-shadow(@style, @alpha: 50%) when (isnumber(@alpha)) {
+  .box-shadow(@style, rgba(0, 0, 0, @alpha));
+}
+.box {
+  color: saturate(@base, 5%);
+  border-color: lighten(@base, 30%);
+  div { .box-shadow(0 0 5px, 30%) }
+}
+
+#menu a {
+  color: #111;
+  .bordered;
+}
+
+.post a {
+  color: red;
+  .bordered;
+}
+
+.screen-color {
+  @media screen {
+    color: green;
+    @media (min-width: 768px) {
+      color: red;
+    }
+  }
+  @media tv {
+    color: black;
+  }
+}
+
+@base: 5%;
+@filler: @base * 2;
+@other: @base + @filler;
+
+color: #888 / 4;
+background-color: @base-color + #111;
+height: 100% / 2 + @filler;
+
+
+
+.weird-element {
+  content: ~"^//* some horrible but needed css hack";
+}
+
+@base: #f04615;
+@width: 0.5;
+
+.class {
+  width: percentage(@width); // returns `50%`
+  color: saturate(@base, 5%);
+  background-color: spin(lighten(@base, 25%), 8);
+}
+
+
+
+
+/* HEADER
+----------------------------------- */
+header{
+	a{
+		font-size: 13px;
+	}
+
+
+	.navbar-collapse li:hover ul{
+		display: block;
+	}
+
+	.navbar-beyond{
+		height: 70px;
+		.transition(500ms);
+
+		.navbar-brand span{
+			font-size: 11px;
+		}
+	}
+
+	.navbar-beyond-light{
+		height: 45px;
+		border-bottom: solid 1px #e7e7e7;
+		background-color: @color_bluegrey1 !important;
+
+		.navbar-brand{
+			color: #505050 !important;
+
+			&:hover, &:hover span{
+				color: #505050 !important;
+			}
+
+			span{
+				display: none;
+			}
+		}
+	}
+
+	.navbar-beyond-dark{
+		background-color: rgba(0,0,0,0.85);
+		border-bottom: none;
+
+		.navbar-brand{
+			color: #f0f0f0 !important;
+
+			&:hover, &:hover span{
+				color: #f0f0f0 !important;
+			}
+		}
+
+		.nav>li>a {
+			color: #d0d0d0 !important;
+		}
+
+		.navbar-collapse{
+			padding: 10px 0px 0px 0px;
+		}
+	}
+}
+		</pre>

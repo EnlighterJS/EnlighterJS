@@ -9,16 +9,16 @@ authors:
  
 styles:
  base:
-   font-family: Menlo, Monaco, Consolas, "Source Code Pro", "Courier New", Monospace
+   font-family: "Source Code Pro", "Courier New", Courier, monospace
    font-size: 12px
    color: '#000000'
  line:
-   font-family: Menlo, Monaco, Consolas, "Source Code Pro", "Courier New", Monospace
+   font-family: "Source Code Pro", "Courier New", Courier, monospace
    font-size: 11px
    line-height: 18px
    color: '#aaaaaa'
  raw:
-   font-family: Menlo, Monaco, Consolas, "Source Code Pro", "Courier New", Monospace
+   font-family: "Source Code Pro", "Courier New", Courier, monospace
    font-size: 13px
    line-height: 20px
    color: '#333333'
@@ -29,11 +29,6 @@ styles:
    background-color: '#fff0f0'
 ...
 */
-
-/* default styles */
-.beyondEnlighterJS, .beyondEnlighterJSWrapper {
-	font-family: Menlo, Monaco, Consolas, "Source Code Pro", "Courier New", Monospace;
-}
 
 /* Inline specific styles */
 span.beyondEnlighterJS{
@@ -79,7 +74,7 @@ ol.beyondEnlighterJS li.specialline, ul.beyondEnlighterJS li.specialline {
 }
 
 /* hover effect */
-ol.beyondEnlighterJS li.hoverEnabled:hover, ul.beyondEnlighterJS li.hoverEnabled:hover {
+ol.beyondEnlighterJS.hoverEnabled li:hover, ul.beyondEnlighterJS.hoverEnabled li:hover {
 	background-color: #ffffff;
 	border: solid 0px #ffffff;
 	color: #444444;
@@ -126,7 +121,6 @@ ol.beyondEnlighterJS li.hoverEnabled:hover, ul.beyondEnlighterJS li.hoverEnabled
 	color: #286491;
 	font-weight: bold;
 	background-color: #ffffff;
-	font-family: Consolas, "Source Code Pro", "Courier New", Monospace;
 	cursor: pointer;
 }
 .beyondEnlighterJSTabPane .controls li:hover {

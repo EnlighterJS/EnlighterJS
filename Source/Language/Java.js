@@ -1,6 +1,6 @@
 /*
 ---
-description: Java language fuel.
+description: Java language
 
 license: MIT-style
 

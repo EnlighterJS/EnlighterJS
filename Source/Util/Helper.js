@@ -15,6 +15,11 @@ provides: [EnlighterJS.Util.Helper]
 ...
 */
 EJS.Util.Helper = (function(elements, options){
+    // break if no elements are selected/found
+    if (elements == null || (elements.length && elements.length == 0)){
+        return;
+    }
+
     // defaults
     options = options || {};
 

@@ -1,6 +1,6 @@
 /*
 ---
-description: PHP language fuel.
+description: PHP language
 
 license: MIT-style
 

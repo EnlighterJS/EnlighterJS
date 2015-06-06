@@ -1,6 +1,6 @@
 /*
 ---
-description: Ruby language fuel.
+description: Ruby language
 
 license: MIT-style
 

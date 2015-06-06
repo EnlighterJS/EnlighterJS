@@ -1,6 +1,6 @@
 /*
 ---
-description: Ini Files - e.g. php.ini, java properties
+description: Ini/Conf/Property Highlighting
 
 license: MIT-style
 

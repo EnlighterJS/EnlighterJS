@@ -30,6 +30,10 @@ styles:
    background-color: '#423F43'
 ...
 */
+.mochaEnlighterJS, .mochaEnlighterJSWrapper{
+    font-family: Monaco, Courier, monospace;
+}
+
 .mochaEnlighterJSTabPane .controls li{
 	background-color: #e5e5e5;
 	font-size: 12px;
@@ -62,7 +66,7 @@ ol.mochaEnlighterJS li, ul.mochaEnlighterJS li{
 	background-color: #2D2522;
 	color: #000000;
 }
-ol.mochaEnlighterJS li.hoverEnabled:hover, ul.mochaEnlighterJS li.hoverEnabled:hover{
+ol.mochaEnlighterJS.hoverEnabled li:hover, ul.mochaEnlighterJS.hoverEnabled li:hover{
 	background-color: #423F43;
 	border: none;
 	border-left: 2px solid #939393;

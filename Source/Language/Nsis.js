@@ -55,7 +55,7 @@ EJS.Language.nsis = new Class({
 				alias : 'co1'
 			},
 			'compilerFlags' : {
-				pattern : /(\!(addincludedir|addplugindir|appendfile|cd|define|delfile|echo|else|endif|error|execute|finalize|getdllversionsystem|ifdef|ifmacrodef|ifmacrondef|ifndef|if|include|insertmacro|macroend|macro|makensis|packhdr|searchparse|searchreplace|tempfile|undef|verbose|warning))/g,
+				pattern : /(!(addincludedir|addplugindir|appendfile|cd|define|delfile|echo|else|endif|error|execute|finalize|getdllversionsystem|ifdef|ifmacrodef|ifmacrondef|ifndef|if|include|insertmacro|macroend|macro|makensis|packhdr|searchparse|searchreplace|tempfile|undef|verbose|warning))/g,
 				alias : 'kw2'
 			},
 			'defines' : {
@@ -89,7 +89,7 @@ EJS.Language.nsis = new Class({
 			'variables' : {
 				pattern : /[\$]{1,2}[0-9a-zA-Z_][\w]*/gim,
 				alias : 'kw4'
-			},
+			}
 		};
 
 	}

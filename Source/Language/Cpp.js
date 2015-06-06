@@ -1,6 +1,6 @@
 /*
 ---
-description: Cpp Language.
+description: C/C++ Language
 
 license: MIT-style
 

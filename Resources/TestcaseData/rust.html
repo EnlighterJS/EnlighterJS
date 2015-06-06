@@ -1,0 +1,157 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+    <code data-enlighter-language="rust">let y = match *x { 0 => "zero", _ => "some" };</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+
+<pre data-enlighter-language="rust">
+#!Source: Rust Reference https://doc.rust-lang.org/stable/reference.html
+
+/// string literal
+let a = "foobar";
+let b = "foo\
+         bar";
+
+assert_eq!(a,b);
+
+"foo"; r"foo";                     // foo
+"\"foo\""; r#""foo""#;             // "foo"
+
+"foo #\"# bar";
+r##"foo #"# bar"##;                // foo #"# bar
+
+"\x52"; "R"; r"R";                 // R
+"\\x52"; r"\x52";                  // \x52
+b"hello";                          // byte string
+b'H';                              // byte
+
+/// integer literal
+123i32;                            // type i32
+123u32;                            // type u32
+123_u32;                           // type u32
+0xff_u8;                           // type u8
+0o70_i16;                          // type i16
+0b1111_1111_1001_0000_i32;         // type i32
+0usize;                            // type usize
+
+/// Floating-point literals
+123.0f64;        // type f64
+0.1f64;          // type f64
+0.1f32;          // type f32
+12E+99_f64;      // type f64
+1_234.0E+18f64   // type f64
+let x: f64 = 2.; // type f64
+
+
+/// lambda expression
+fn ten_times&lt;F&gt;(f: F) where F: Fn(i32) {
+    let mut i = 0i32;
+    while i < 10 {
+      f(i);
+      i += 1;
+    }
+}
+ten_times(|j| println!("hello, {}", j));
+
+
+/// Directives
+// Specify the crate name.
+#![crate_name = "projx"]
+
+// Specify the type of output artifact.
+#![crate_type = "lib"]
+
+// Turn on a warning.
+// This can be done in any module, not just the anonymous crate module.
+#![warn(non_camel_case_types)]
+
+#![feature(rand, collections, std_misc, duration, duration_span)]
+
+/// Match expressions
+let x = 1;
+
+match x {
+1 => println!("one"),
+2 => println!("two"),
+3 => println!("three"),
+4 => println!("four"),
+5 => println!("five"),
+_ => println!("something else"),
+}
+
+let x = 1;
+
+match x {
+e @ 1 ... 5 => println!("got a range element {}", e),
+_ => println!("anything"),
+}
+
+let y = match *x { 0 => "zero", _ => "some" };
+let z = match x { &0 => "zero", _ => "some" };
+
+assert_eq!(y, z);
+
+/// If let expressions
+let dish = ("Ham", "Eggs");
+
+// this body will be skipped because the pattern is refuted
+if let ("Bacon", b) = dish {
+    println!("Bacon is served with {}", b);
+}
+
+// this body will execute
+if let ("Ham", b) = dish {
+    println!("Ham is served with {}", b);
+}
+
+/// Trait objects
+trait Printable {
+  fn stringify(&self) -> String;
+}
+
+impl Printable for i32 {
+  fn stringify(&self) -> String { self.to_string() }
+}
+
+fn print(a: Box&lt;Printable&gt;) {
+println!("{}", a.stringify());
+}
+
+fn main() {
+    print(Box::new(10) as Box&lt;Printable&gt;);
+}
+
+fn to_vec&lt;A: Clone&gt;(xs: &[A]) -> Vec&lt;A&gt; {
+    if xs.is_empty() {
+       return vec![];
+    }
+    let first: A = xs[0].clone();
+    let mut rest: Vec&lt;A&gt; = to_vec(&xs[1..]);
+    rest.insert(0, first);
+    rest
+}
+
+/// Tuple types
+type Pair&lt;'a&gt; = (i32, &'a str);
+let p: Pair<'static> = (10, "hello");
+let (a, b) = p;
+assert!(b != "world");
+assert!(p.0 == 10);
+
+/// Use declarations
+use std::option::Option::{Some, None};
+use std::collections::hash_map::{self, HashMap};
+
+fn foo&lt;T&gt;(_: T){}
+    fn bar(map1: HashMap&lt;String, usize&gt;, map2: hash_map::HashMap&lt;String, usize&gt;){}
+
+    fn main() {
+    // Equivalent to 'foo(vec![std::option::Option::Some(1.0f64),
+    // std::option::Option::None]);'
+    foo(vec![Some(1.0f64), None]);
+
+    // Both `hash_map` and `HashMap` are in scope.
+    let map1 = HashMap::new();
+    let map2 = hash_map::HashMap::new();
+    bar(map1, map2);
+}
+</pre>

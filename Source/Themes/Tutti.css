@@ -30,6 +30,10 @@ styles:
    background-color: '#F4F8FC'
 ...
 */
+.tuttiEnlighterJS, .tuttiEnlighterJSWrapper{
+    font-family: Monaco, Courier, monospace;
+}
+
 .tuttiEnlighterJSTabPane .controls li{
 	background-color: #ffffff;
 }
@@ -57,11 +61,10 @@ ol.tuttiEnlighterJS li, ul.tuttiEnlighterJS li{
 	border: none;
 	line-height: 16px;
 }
-ol.tuttiEnlighterJS li:hover, ul.tuttiEnlighterJS li:hover{
-	color: #000000;
-}
-ol.tuttiEnlighterJS li.hoverEnabled:hover, ul.tuttiEnlighterJS li.hoverEnabled:hover{
+
+ol.tuttiEnlighterJS.hoverEnabled li:hover, ul.tuttiEnlighterJS.hoverEnabled li:hover{
 	background-color: #F4F8FC;
+    color: #000000;
 	border: none;
 }
 /* special line highlight color */

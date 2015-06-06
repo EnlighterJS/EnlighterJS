@@ -9,18 +9,18 @@ authors:
  
 styles:
  base:
-   font-family: "Source Code Pro", "Courier New", Monospace
+   font-family: "Source Code Pro", "Courier New", Courier, monospace
    font-size: 13px
    color: '#000000'
  line:
-   font-family: "Source Code Pro", "Courier New", Monospace
+   font-family: "Source Code Pro", "Courier New", Courier, monospace
    font-size: 11px
    line-height: 16px
    color: '#787878'
    odd: '#ffffff'
    even: '#ffffff'
  raw:
-   font-family: "Source Code Pro", "Courier New", Monospace
+   font-family: "Source Code Pro", "Courier New", Courier, monospace
    font-size: 13px
    line-height: 18px
    color: '#717171'
@@ -31,11 +31,6 @@ styles:
    background-color: '#f9f9f9'
 ...
 */
-
-/* default styles */
-.eclipseEnlighterJS, .eclipseEnlighterJSWrapper {
-	font-family: "Source Code Pro", "Courier New", Monospace;
-}
 
 /* Inline specific styles */
 span.eclipseEnlighterJS{
@@ -72,11 +67,11 @@ ol.eclipseEnlighterJS li.specialline, ul.eclipseEnlighterJS li.specialline {
 }
 
 /* hover effect */
-ol.eclipseEnlighterJS li.hoverEnabled:hover, ul.eclipseEnlighterJS li.hoverEnabled:hover {
+ol.eclipseEnlighterJS.hoverEnabled li:hover, ul.eclipseEnlighterJS.hoverEnabled li:hover {
 	background-color: #e8f2fe;
 	color: #444444;
 }
-ol.eclipseEnlighterJS li.hoverEnabled:hover{
+ol.eclipseEnlighterJS.hoverEnabled li:hover{
 	border-left-color: #e0e0e0;
 }
 
@@ -115,7 +110,6 @@ ol.eclipseEnlighterJS li.hoverEnabled:hover{
 	font-size: 12px;
 	color: #000000;
 	background-color: transparent;
-	font-family: "Source Code Pro", "Courier New", Monospace;
 	cursor: pointer;
 	padding: 5px 10px 5px 10px;
 	border-radius: 5px 5px 0px 0px;

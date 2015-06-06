@@ -10,16 +10,16 @@ authors:
 
 styles:
  base:
-   font-family: Monaco, Courier, Monospace
+   font-family: Monaco, Courier, monospace
    font-size: 12px
    color: '#f8f8f8'
  line:
-   font-family: Monaco, Courier, Monospace
+   font-family: Monaco, Courier, monospace
    font-size: 10px
    line-height: 16px
    color: '#939393'
  raw:
-   font-family: Monaco, Courier, Monospace
+   font-family: Monaco, Courier, monospace
    font-size: 12px
    line-height: 20px
    color: '#f8f8f8'
@@ -30,6 +30,9 @@ styles:
    background-color: ' #202021'
 ...
 */
+.twilightEnlighterJS, .twilightEnlighterJSWrapper{
+    font-family: Monaco, Courier, monospace;
+}
 .twilightEnlighterJSTabPane .controls li{
 	background-color: #303030;
 	font-size: 12px;
@@ -68,7 +71,7 @@ ol.twilightEnlighterJS li, ul.twilightEnlighterJS li{
 	line-height: 19px;
 	background-color: #141414;
 }
-ol.twilightEnlighterJS li.hoverEnabled:hover, ul.twilightEnlighterJS li.hoverEnabled:hover{
+ol.twilightEnlighterJS.hoverEnabled li:hover, ul.twilightEnlighterJS.hoverEnabled li:hover{
 	background-color: #202021;
 	border: none;
 	border-left: 1px solid #939393;

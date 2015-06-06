@@ -1,6 +1,6 @@
 /*
 ---
-description: Python language fuel.
+description: Python language
 
 license: MIT-style
 

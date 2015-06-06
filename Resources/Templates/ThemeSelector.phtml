@@ -1,5 +1,5 @@
 <div class="input-group">
-        <span class="input-group-addon">Select Theme</span>
+        <span class="input-group-addon"><strong>Select Theme</strong></span>
 <select id="ThemeChooser" class="form-control">
     <?php
     foreach ($themes as $t){
@@ -12,7 +12,7 @@
 <hr />
 <script type="text/javascript">
     window.addEvent('domready', function(){
-        var currentThemeBase = 'enlighter';
+        var currentThemeBase = 'enlighterEnlighterJS';
 
         document.id('ThemeChooser').addEvent('change', function(){
             // get container
@@ -28,6 +28,6 @@
             // set new theme
             container.addClass(currentThemeBase);
             wrapper.addClass(currentThemeBase + 'Wrapper');
-        });
+        }).fireEvent('change');
     });
 </script>

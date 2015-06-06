@@ -1,6 +1,6 @@
 /*
 ---
-description: RAW Language - returns pure raw text
+description: RAW Code
 
 license: MIT-style
 

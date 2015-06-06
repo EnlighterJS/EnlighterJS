@@ -13,33 +13,19 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<!-- Favicon !-->
 	<link rel="icon" href="<?php echo cdnbase('Resources/favicon.png'); ?>" type="image/png">
 	
 	<title><?php echo strip_tags($pageTitle); ?> | EnlighterJS</title>
-	
-	<!-- Bootstrap CSS - just 4 styling - not required for enlighterjs -->
 	<link rel="stylesheet" href="<?php echo cdnbase('Resources/bootstrap-3.2.0-dist/css/bootstrap.min.css'); ?>">
 	<link rel="stylesheet" href="<?php echo cdnbase('Resources/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css'); ?>">
 	<link rel="stylesheet" href="<?php echo cdnbase('Resources/Template.css'); ?>">
 	<link rel="stylesheet" href="<?php echo cdnbase('Resources/GitHubButtons.yui.css'); ?>">
-
-	<!-- Include EnlighterJS Styles -->
 	<link rel="stylesheet" type="text/css" href="<?php echo cdnbase('Build/EnlighterJS.min.css'); ?>" />
-	
-	<!-- Include MooTools Framework -->
 	<script type="text/javascript" src="<?php echo cdnbase('Resources/MooTools-More-1.5.1-compressed.js'); ?>"></script>
-
-	<!-- Some GitHub related stuff -->
 	<script type="text/javascript" src="<?php echo cdnbase('Resources/GitHubButtons.MooTools.yui.js'); ?>"></script>
-	
-	<!-- Include EnlighterJS -->
 	<script type="text/javascript" src="<?php echo cdnbase('Build/EnlighterJS.min.js'); ?>"></script>
+	<script type="text/javascript" src="<?php echo cdnbase('Resources/Template.js'); ?>"></script>
 	
-	<!-- Template JS -->
-	<script type="text/javascript" src="<?php echo cdnbase('Resources/Template.js'); ?>"></script>	
-	
-	<!-- EnlighterJS Init -->
 	<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="generic" data-indent="2" data-selector-block="pre" data-selector-inline="code" data-rawcodebutton="true" data-windowbutton="true" data-infobutton="true" />
 </head>
 <body>
@@ -58,14 +44,15 @@
 	<!-- Begin page content -->
 	<div class="container">
 
-		<div id="content">
-			<!-- ############################################################# -->
-			<?php echo $pageContent; ?>
-			<!-- ############################################################# -->
+        <div class="row">
+            <div class="col-md-10" id="content">
+                <?php echo $pageContent; ?>
+            </div>
 
-		</div>
-		<!-- // content -->
+            <div class="col-md-2 sidebar">
 
+            </div>
+        </div>
 
 	</div>
 	<!-- // container -->

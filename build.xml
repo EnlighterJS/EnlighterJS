@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-	Simple ANT-based buildscript for EnlighterJS
+	ANT-based build script for EnlighterJS
 	
 	@author		Andi Dittrich <andi.dittrich@a3non.org>
-	@version	1.5
+	@version	1.6
 	@license	The MIT License (X11)
 	
 !-->
 <project name="EnlighterJS" default="build" basedir=".">
-		
+    <!-- AN-contrib !-->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
 	<!-- Target Properties ! -->
 	<property name="build.dir" value="Build/" />
+    <property name="tmp.dir" value=".tmp/" />
 	<property name="www.dir" value="PublicHtml/" />
     <property name="example.dir" value="Examples/" />
-	<property name="build.var.version" value="2.6.0" />
+	<property name="build.var.version" value="2.7.0" />
 	
 	<!-- Themes to include !-->
-	<property name="include.themes" value="Source/Themes/MooTools.css Source/Themes/Enlighter.css Source/Themes/Git.css Source/Themes/Mocha.css Source/Themes/Panic.css Source/Themes/Tutti.css Source/Themes/Twilight.css Source/Themes/Classic.css Source/Themes/Eclipse.css Source/Themes/Beyond.css" />
+	<property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide Git Mocha MooTools Panic Tutti Twilight" />
 
 	<!-- Languages to include !-->
-	<property name="include.languages" value="Source/Language/Cpp.js Source/Language/CSharp.js Source/Language/Xml.js Source/Language/Css.js Source/Language/Java.js Source/Language/Javascript.js Source/Language/Json.js Source/Language/Markdown.js Source/Language/Php.js Source/Language/Python.js Source/Language/Ruby.js Source/Language/Shell.js Source/Language/Sql.js Source/Language/Nsis.js Source/Language/RAW.js Source/Language/Diff.js Source/Language/AvrAsm.js Source/Language/Ini.js" />
+	<property name="include.languages" value="AvrAsm Css Cpp CSharp Diff Ini Java Javascript Json Matlab Markdown Nsis Php Python RAW Ruby Rust Shell Sql Vhdl Xml" />
 
-	<!-- Base Sourcefiles to include !-->
-	<property name="include.JsBaseSources" value="Source/EnlighterJS.js Source/TextFilter.js Source/Dom/MooTools/Dom.js Source/Dom/MooTools/Element.js Source/SpecialLineHighlighter.js Source/Language/Generic.js Source/LanguageManager.js Source/Tokenizer.js Source/Token.js Source/Renderer/InlineRenderer.js Source/Renderer/BlockRenderer.js Source/Tokenizer/Lazy.js Source/Tokenizer/Xml.js Source/UI/CodeWindow.js Source/UI/Toolbar.js" />
+	<!-- Sourcefiles to include !-->
+	<property name="include.JsBaseSources" value="EnlighterJS TextFilter Dom/MooTools/Dom Dom/MooTools/Element SpecialLineHighlighter LanguageManager Tokenizer Token Renderer/InlineRenderer Renderer/BlockRenderer Tokenizer/Lazy Tokenizer/Xml UI/CodeWindow UI/Toolbar" />
 
 	<!-- Additional Features to include !-->
-	<property name="include.JsFeatures" value="Source/Native/Element.EnlighterJS.js Source/Util/Helper.js Source/UI/TabPane.js Source/Util/Metainit.js Source/Util/Init.js" />
+	<property name="include.JsFeatures" value="Native/Element.EnlighterJS Util/Helper UI/TabPane Util/Metainit Util/Init" />
 
     <!-- set date vars !-->
     <tstamp/>
@@ -34,29 +37,36 @@
     <!-- CP Notice !-->
     <property name="cpnotice" value="/*! EnlighterJS Syntax Highlighter ${build.var.version} | MIT-Style X11 License | http://enlighterjs.andidittrich.de/ | ${TODAY} */"></property>
 
+    <!-- convert source lists to file lists !-->
+    <propertyregex property="source.css" input="Base ${include.themes}" regexp="(\w+)\b" replace="Source/Themes/\1.css" global="true" />
+    <propertyregex property="source.languages.js" input="Generic ${include.languages}" regexp="([\w/]+)\b" replace="Source/Language/\1.js" global="true" />
+    <propertyregex property="source.core.js" input="${include.JsBaseSources} ${include.JsFeatures}" regexp="([\w/\.]+)\b" replace="Source/\1.js" global="true" />
+
     <!-- Generate Build -->
 	<target name="build">
 		<!-- Cleanup Build Dir -->
 		<delete dir="${build.dir}" />
         <mkdir dir="${build.dir}" />
+        <mkdir dir="${tmp.dir}" />
 		
 		<!-- ****************************** BUILD LIBRARY **************************** -->
 		<ant antfile="Util/js-concat-compress.xml">
-			<property name="compress.input" value="${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />
+			<property name="compress.input" value="${source.core.js} ${source.languages.js}" />
 			<property name="compress.output" value="EnlighterJS.min.js" />
 			<property name="uncompress.output" value="EnlighterJS.js" />
 		</ant>
         <ant antfile="Util/css-concat-compress.xml">
-            <property name="compress.input" value="Source/Themes/Base.css ${include.themes}" />
+            <property name="compress.input" value="${source.css}" />
             <property name="compress.output" value="EnlighterJS.min.css" />
             <property name="uncompress.output" value="EnlighterJS.css" />
         </ant>
 
-		<!-- ****************************** JS SOURCEFILE LIST (DEVELOPMENT) ************************** -->
-		<copy file="Resources/Sources.json" tofile="${build.dir}Sources.dev.json" />
-		<replace file="${build.dir}Sources.dev.json" token="{{JSSOURCES}}" value="${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />		
-		<replace file="${build.dir}Sources.dev.json" token="{{CSSSOURCES}}" value="Source/Themes/Base.css ${include.themes}" />	
-		
+        <!-- Store JS + CSS Files !-->
+        <echo message="${source.css}" file=".tmp/css.txt"></echo>
+        <echo message="${source.core.js} ${source.languages.js}" file=".tmp/js.txt"></echo>
+        <echo message="${include.languages}" file=".tmp/languages.txt"></echo>
+        <echo message="${include.themes}" file=".tmp/themes.txt"></echo>
+
 		<!-- Change Package Versions !-->
 		<replaceregexp byline="true" flags="s">
 			<regexp pattern="current: v(.*)" />
@@ -64,7 +74,7 @@
 			<fileset file="package.yml" />
 		</replaceregexp>
 		
-		<!-- Merge Readme/Documentation !-->
+		<!-- Merge Readme/Documentation - sort by numeric prefix!-->
 		<echo message="Merging Docs" />
 		<concat destfile="README.md" fixlastline="yes">
 			<sort xmlns:rcmp="antlib:org.apache.tools.ant.types.resources.comparators">
@@ -77,22 +87,11 @@
 		<copy file="Docs/07-Contribution.md" tofile="CONTRIBUTE.md" />
 	</target>
 
-	<target name="webbuild">
+	<target name="webbuild" depends="build">
 		<!-- Copy files !-->
 		<copy file="CHANGES.md" tofile="${build.dir}CHANGES.md" />
 		<copy file="LICENSE.md" tofile="${build.dir}LICENSE.md" />
 		<copy file="README.md" tofile="${build.dir}README.md" />
-
-        <ant antfile="Util/js-concat-compress.xml">
-            <property name="compress.input" value="${include.JsBaseSources} ${include.JsFeatures} ${include.languages}" />
-            <property name="compress.output" value="EnlighterJS.min.js" />
-            <property name="uncompress.output" value="EnlighterJS.js" />
-        </ant>
-        <ant antfile="Util/css-concat-compress.xml">
-            <property name="compress.input" value="Source/Themes/Base.css ${include.themes}" />
-            <property name="compress.output" value="EnlighterJS.min.css" />
-            <property name="uncompress.output" value="EnlighterJS.css" />
-        </ant>
 
 		<!-- Create Archive !-->
 		<zip destfile="${build.dir}/EnlighterJS.zip" basedir="${build.dir}" />
@@ -103,15 +102,24 @@
 		<!-- Cleanup www Dir -->
 		<delete dir="${example.dir}" />
 		<mkdir dir="${example.dir}"/>
-		
+
+        <!-- Std Examples !-->
 		<exec executable="php">
 			<arg value="Util/ExampleGenerator.php" />
 			<arg value="${example.dir}" />
 		</exec>
 	</target>
+
+    <!-- Dev Pages !-->
+    <target name="dev">
+        <!-- Development Pages based on Examples template !-->
+        <exec executable="php">
+            <arg value="Util/DevPageGenerator.php" />
+        </exec>
+    </target>
 	
 	<!-- Generate Demo Website !-->
-	<target name="www" depends="build,examples">
+	<target name="full" depends="build,examples">
 		<!-- Cleanup www Dir -->
 		<delete dir="${www.dir}" />
 		<mkdir dir="${www.dir}"/>	

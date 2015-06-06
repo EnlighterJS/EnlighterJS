@@ -9,19 +9,19 @@ authors:
   
 styles:
  base:
-   font-family: Consolas, "Source Code Pro", "Courier New", Monospace
+   font-family: "Source Code Pro", "Courier New", Courier, monospace
    font-size: 15px
    color: '#000000'
    background-color: '#f8f8f8'
  line:
-   font-family: Consolas, "Source Code Pro", "Courier New", Monospace
+   font-family: "Source Code Pro", "Courier New", Courier, monospace
    font-size: 14px
    line-height: 20px
    color: '#505050'
    odd: '#ffffff'
    even: '#f8f8f8'
  raw:
-   font-family: Consolas, "Source Code Pro", "Courier New", Monospace
+   font-family: "Source Code Pro", "Courier New", Courier, monospace
    font-size: 15px
    line-height: 20px
    color: '#000000'
@@ -40,7 +40,6 @@ ol.classicEnlighterJS, ul.classicEnlighterJS{
 /* borders on top&botton */
 .classicEnlighterJS, .classicEnlighterJSWrapper pre{
 	border: 1px solid #e8e8e2;
-	font-family: Consolas, "Source Code Pro", "Courier New", Monospace;
 }
 
 ol.classicEnlighterJS li, ul.classicEnlighterJS li{
@@ -62,7 +61,7 @@ span.classicEnlighterJS{
 }
 
 /* hover color */
-ol.classicEnlighterJS li.hoverEnabled:hover, ul.classicEnlighterJS li.hoverEnabled:hover{
+ol.classicEnlighterJS.hoverEnabled li:hover, ul.classicEnlighterJS.hoverEnabled li:hover{
 	border: none;
 	border-left: solid 4px #52ce52;
 	background-color: #ddf0dd;
@@ -75,21 +74,20 @@ ol.classicEnlighterJS li.specialline, ul.classicEnlighterJS li.specialline {
 }
 
 /* non leading zero */
-ol.classicEnlighterJS {
-	list-style-type: decimal;
+ol.classicEnlighterJS li {
+    color: #000000;
+    list-style-type: decimal;
 }
-
 .classicEnlighterJS span{
 	font-size: 15px;
 }
 
 /** Symbol styles */
-.classicEnlighterJS .de1 { background-color: #e0e010; font-weight: bold; }
 .classicEnlighterJS .de2 { background-color: #e0e010; font-weight: bold; }
 .classicEnlighterJS .kw1 { color: #066da1; font-weight: bold; }
 .classicEnlighterJS .kw2 { color: #404247; font-weight: bold; }
-.classicEnlighterJS .kw3 { color: #d53aa9; }
-.classicEnlighterJS .kw4 { color: #404247; }
+.classicEnlighterJS .kw3 { color: #404247;}
+.classicEnlighterJS .kw4 { color: #d53aa9; }
 .classicEnlighterJS .co1 { color: #888888; }
 .classicEnlighterJS .co2 { color: #888888; }
 .classicEnlighterJS .st0 { color: #2d47e6; }
@@ -129,7 +127,6 @@ ol.classicEnlighterJS {
 .classicEnlighterJSTabPane .controls li{
 	border-radius: 0px;
 	font-size: 15px;
-	font-family: Consolas, "Source Code Pro", "Courier New", Monospace;
 	background-color: transparent;
 	line-height: 20px;
 	padding: 5px 10px 5px 10px;

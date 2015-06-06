@@ -1,0 +1,226 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="matlab">[t,x] = meshgrid(-1:0.2:1, -1:0.2:1);</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<h3>Matlab Script</h3>
+<pre data-enlighter-language="matlab">
+function [X]=fkt1000(t, x)
+
+    lambda=-1000;
+    X = lambda*( x - exp(-t) ) - exp(-t);
+
+end
+
+function fRichtungsfeld(fhandle)
+    % create meshgrid
+    [t,x] = meshgrid(-1:0.2:1, -1:0.2:1);
+
+    % exec function
+    z = feval(fhandle, t, x);
+
+    % draw figure
+    figure;
+    quiver(t, x, ones(size(t)), z);
+    axis([-1,1,-1,1]);
+    xlabel('t');
+    ylabel('x');
+    title('Richtungsfeld, dx=dt=0.2');
+    legend('Richtungsfeld');
+end
+
+classdef Uebung5< handle
+   % Static Methods
+   methods(Static=true)
+
+       %%  Aufgabe 15
+       function Aufgabe15()
+            A = [
+                0.9635, 1.4266;
+                1.4266, 0.0365
+                ];
+
+            x0 = [
+                  0;
+                  1
+                 ];
+
+             p = PowerMethod(A);
+             iter = NumericIterator(p, x0);
+
+             % error < 10^-5
+             iter.addAbortConditionListener(ErrorCalculationListener(10^-5));
+
+             % start iteration
+             iter.start();
+
+             % print result
+             fprintf('Eigenwert: %10.10f\nEigenvektor:\n', p.getEigenwert());
+             Array.print(iter.getResult());
+
+            % Approximation Error < 1.000000e-005 @ 19 Iterations
+            % Eigenwert: 2.0000066033
+            % Eigenvektor:
+            %         0.8090129
+            %         0.5877909
+       end
+
+
+
+       %% Aufgabe 16
+       function Aufgabe16()
+           % referenz f�r tf=0.95
+           ref = fAufgabe16Ref();
+
+           % startwert
+           x0 = 1;
+           t0 = 0;
+           tf = 0.95;
+
+           % output buffer
+           buffer = {};
+           j = 1;
+
+           % schrittzahl, diskrete werte
+           n = [20, 100, 200, 1000, 2000, 10000, 20000, 100000];
+
+           % draw table
+           gui = table('Aufgabe 16');
+
+           % Verfahren anwenden
+           for i=1:1:length(n)
+                % schrittweite
+                h = (tf-t0)/(n(i)-1);
+
+                % set table output
+                buffer{j, 1} = n(i);
+                buffer{j, 2} = sprintf('%d', h);
+
+                duration = 0;
+
+                % euler
+                e = RungeKuttaMethod(@fAufgabe16, @fRKTEuler, t0, tf, h, x0);
+                buffer{j, 3} = sprintf('%d', abs(ref-e.getResult())/ref);
+                duration = duration + e.getDuration();
+
+                % heun
+                e = RungeKuttaMethod(@fAufgabe16, @fRKTHeun, t0, tf, h, x0);
+                buffer{j, 4} = sprintf('%d', abs(ref-e.getResult())/ref);
+                duration = duration + e.getDuration();
+
+                % mod euler
+                e = RungeKuttaMethod(@fAufgabe16, @fRKTMEuler, t0, tf, h, x0);
+                buffer{j, 5} = sprintf('%d', abs(ref-e.getResult())/ref);
+                duration = duration + e.getDuration();
+
+                % klassik RKV, just 4 fun ;)
+                e = RungeKuttaMethod(@fAufgabe16, @fRKTClassicRKM, t0, tf, h, x0);
+                buffer{j, 6} = sprintf('%d', abs(ref-e.getResult())/ref);
+                duration = duration + e.getDuration();
+
+                % set duration
+                buffer{j, 7} = sprintf('%d', duration);
+
+                % increment table row counter
+                j=j+1;
+
+                % tabelle updaten
+                gui.repaint(buffer);
+           end
+
+           % OUTPUT
+           % Result &lt;h=5.000000e-002>: 6.460597267358655100
+           % Result &lt;h=5.000000e-002>: 12.511638996887264000
+           % Result &lt;h=5.000000e-002>: 12.048026035562726000
+           % Result &lt;h=5.000000e-002>: 14.271173509689078000
+           % Result &lt;h=9.595960e-003>: 17.964107899072395000
+           % Result &lt;h=9.595960e-003>: 32.643393403424028000
+           % Result &lt;h=9.595960e-003>: 32.155786064836953000
+           % Result &lt;h=9.595960e-003>: 33.992428065470925000
+           % Result &lt;h=4.773869e-003>: 25.392669207249959000
+           % Result &lt;h=4.773869e-003>: 40.020849205774859000
+           % Result &lt;h=4.773869e-003>: 39.753729672927300000
+           % Result &lt;h=4.773869e-003>: 40.667817564725581000
+           % Result &lt;h=9.509510e-004>: 41.312660057741127000
+           % Result &lt;h=9.509510e-004>: 48.111744657920021000
+           % Result &lt;h=9.509510e-004>: 48.088683279107258000
+           % Result &lt;h=9.509510e-004>: 48.159528454354081000
+           % Result &lt;h=4.752376e-004>: 45.338580595642853000
+           % Result &lt;h=4.752376e-004>: 49.276209783713618000
+           % Result &lt;h=4.752376e-004>: 49.269803171533532000
+           % Result &lt;h=4.752376e-004>: 49.289181554821702000
+           % Result &lt;h=9.500950e-005>: 49.333345578779792000
+           % Result &lt;h=9.500950e-005>: 50.230354244304941000
+           % Result &lt;h=9.500950e-005>: 50.230075076019553000
+           % Result &lt;h=9.500950e-005>: 50.230908884512381000
+           % Result &lt;h=4.750238e-005>: 49.894671915844583000
+           % Result &lt;h=4.750238e-005>: 50.350966085905696000
+           % Result &lt;h=4.750238e-005>: 50.350895538095877000
+           % Result &lt;h=4.750238e-005>: 50.351105912323895000
+           % Result &lt;h=9.500095e-006>: 50.355123772675057000
+           % Result &lt;h=9.500095e-006>: 50.447664014784309000
+           % Result &lt;h=9.500095e-006>: 50.447661168458090000
+           % Result &lt;h=9.500095e-006>: 50.447669645483884000
+       end
+
+       %% Aufgabe 17
+       function Aufgabe17()
+            x0 = [
+                  1;
+                  0
+                 ];
+
+            % startwerte
+            t0 = 0;
+            tf = 50;
+
+            % schrittzahl
+            n = 1000;
+
+            % schrittweite
+            h = (tf-t0)/(n-1);
+
+            % Classic RKM
+            e = RungeKuttaMethod(@fAufgabe17, @fRKTClassicRKM, t0, tf, h, x0);
+
+            % cell array holen
+            result = e.getResults();
+
+            % cell array in 2 lineare double arrays konvertieren
+            x1 = [];
+            x2 = [];
+
+            for i=1:1:length(result)
+                x = result{i};
+                x1(i) = x(1);
+                x2(i) = x(2);
+            end
+
+            % phasenraum zeichnen
+            figure('Name', 'Aufgabe 17 - Phasenraum �ber x1, x2');
+            plot(x1, x2);
+            xlabel('x1');
+            ylabel('x2');
+
+            % x1(t) zeichnen
+            figure('Name', 'Aufgabe 17 - Abh�ngigkeiten von t');
+            subplot(2,1,1);
+            axis([0 50 -1 1]);
+            plot(t0:h:tf, x1);
+            xlabel('t');
+            ylabel('x1');
+
+            % x2(t) zeichnen
+            subplot(2,1,2);
+            axis([0 50 -1 1]);
+            plot(t0:h:tf, x2);
+            xlabel('t');
+            ylabel('x2');
+       end
+
+   % END STATIC METHODS
+   end
+
+% END CLASS
+end
+
+</pre>

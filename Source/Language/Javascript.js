@@ -1,6 +1,6 @@
 /*
 ---
-description: JavaScript language fuel.
+description: JavaScript language
 
 license: MIT-style
 

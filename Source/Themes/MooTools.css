@@ -10,16 +10,16 @@ authors:
  
 styles:
  base:
-   font-family: Monaco, Courier, Monospace
+   font-family: Monaco, Courier, monospace
    font-size: 12px
    color: '#000000'
  line:
-   font-family: Monaco, Courier, Monospace
+   font-family: Monaco, Courier, monospace
    font-size: 10px
    line-height: 16px
    color: '#939393'
  raw:
-   font-family: Monaco, Courier, Monospace
+   font-family: Monaco, Courier, monospace
    font-size: 12px
    line-height: 16px
    color: '#444444'
@@ -30,6 +30,11 @@ styles:
    background-color: '#F4F8FC'
 ...
 */
+
+.mootoolsEnlighterJS, .mootoolsEnlighterJSWrapper{
+    font-family: Monaco, Courier, monospace;
+}
+
 /* line styles */
 ol.mootoolsEnlighterJS li, ul.mootoolsEnlighterJS li {
 	border-top: 1px solid #fff;
@@ -40,7 +45,7 @@ ol.mootoolsEnlighterJS li{
 }
 
 /* hover effect */
-ol.mootoolsEnlighterJS li.hoverEnabled:hover, ul.mootoolsEnlighterJS li.hoverEnabled:hover{
+ol.mootoolsEnlighterJS.hoverEnabled li:hover, ul.mootoolsEnlighterJS.hoverEnabled li:hover{
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
 	background-color: #F4F8FC;

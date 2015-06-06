@@ -44,7 +44,7 @@ ol.gitEnlighterJS li, ul.gitEnlighterJS li{
 }
 
 /* hover color */
-ol.gitEnlighterJS li.hoverEnabled:hover, ul.gitEnlighterJS li.hoverEnabled:hover{
+ol.gitEnlighterJS.hoverEnabled li:hover, ul.gitEnlighterJS.hoverEnabled li:hover{
 	background-color: #ffffcc;
 	border: none;
 }

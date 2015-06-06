@@ -1,18 +1,18 @@
 /*
- ---
- description: Filters the RAW Code from given pre tags
+---
+description: Filters the RAW Code from given pre tags
 
- license: MIT-style
+license: MIT-style
 
- authors:
- - Andi Dittrich
+authors:
+  - Andi Dittrich
 
- requires:
- - Core/1.4.5
+requires:
+  - Core/1.4.5
 
- provides: [EnlighterJS.TextFilter]
- ...
- */
+provides: [EnlighterJS.TextFilter]
+...
+*/
 EJS.TextFilter = new Class({
 
     Implements: Options,

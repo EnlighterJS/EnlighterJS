@@ -1,6 +1,6 @@
 /*
 ---
-description: C Sharp Language patterns.
+description: C# Language
 
 license: MIT-style
 
@@ -35,7 +35,7 @@ EJS.Language.csharp = new Class ({
             	csv:   "System",
             	alias: 'kw4'
             }
-        },
+        };
         
         this.patterns = {
             'slashComments': { pattern: this.common.slashComments, alias: 'co1'},

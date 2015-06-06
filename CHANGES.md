@@ -1,3 +1,26 @@
+### Version 2.7.0 ###
+* Added: [Rust](http://www.rust-lang.org/) language support - feature requested on [GitHub](https://github.com/AndiDittrich/EnlighterJS/issues/7)
+* Added: New Shell/Bash language engine
+* Added: Shell script example
+* Added: [VHDL](http://en.wikipedia.org/wiki/VHDL) language support
+* Added: [Matlab](http://en.wikipedia.org/wiki/MATLAB) language support
+* Added: "MooTwo" theme inspired by the mootools.net website
+* Added: "Godzilla" theme inspired by the MDN
+* Added: "Droide" theme
+* Added: New CSS language engine - some styles have changed!
+* Added: New EnlighterJS Info Button (Toolbar)
+* Moved: `LanguageDevelopment.html` and `ThemeDevelopment.html` back to the project root
+* Removed: Build/Sources.json file - replaced by `.tmp/js.txt` and `.tmp/css.txt` (list of all used source files - required for development only!)
+* Bugfix: The Theme Selector of the language demo pages doesn't remove the default styles
+* Bugfix: Wrong highlighting class used for SQL comments
+* Changed: All Fonts of the modern Themes are replaced by "Source Code Pro" as default
+* Changed: CSS theme sources are converted to [LESS](http://lesscss.org)
+* Changed: Classic Themes `kw3` color switched with `kw4`
+* Changed: The *hover* css-class is now added to the outer `ol,ul` container instead of each `li` line - all themes have been adapted 
+* Changed: Inline gif imaages are used for the button toolbar instead of png images (size optimization)
+* Many performance optimizations
+
+
 ### Version 2.6.0 ###
 * Added input/output TextFilter
 * Added: Native JSON markup language support

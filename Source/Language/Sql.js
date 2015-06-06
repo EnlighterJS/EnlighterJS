@@ -1,6 +1,6 @@
 /*
 ---
-description: SQL language fuel.
+description: SQL Language
 
 license: MIT-style
 
@@ -38,8 +38,8 @@ EJS.Language.sql = new Class ({
         },
         
         this.patterns = {
-            'singleLineComments': {pattern: /--(.*)$/gm, alias: 'co0'},
-            'multiLineComments':  {pattern: this.common.multiComments, alias: 'co1'},
+            'singleLineComments': {pattern: /--(.*)$/gm, alias: 'co1'},
+            'multiLineComments':  {pattern: this.common.multiComments, alias: 'co2'},
             'multiLineStrings':   {pattern: this.common.multiLineStrings, alias: 'st0'},
             'numbers':			  {pattern: this.common.numbers, alias: 'nu0'},
             'columns':			  {pattern: /`[^`\\]*(?:\\.[^`\\]*)*`/gm, alias: 'kw4'}

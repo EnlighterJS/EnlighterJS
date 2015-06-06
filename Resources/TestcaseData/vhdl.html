@@ -1,0 +1,66 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="vhdl">use IEEE.numeric_std.all;    -- for the unsigned type</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<h3>Shell Script</h3>
+<pre data-enlighter-language="vhdl">
+-- Source: http://en.wikipedia.org/wiki/VHDL
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;    -- for the unsigned type
+
+entity COUNTER is
+  generic (
+    WIDTH : in natural := 32);
+  port (
+    RST   : in std_logic;
+    CLK   : in std_logic;
+    LOAD  : in std_logic;
+    DATA  : in std_logic_vector(WIDTH-1 downto 0);
+    Q     : out std_logic_vector(WIDTH-1 downto 0));
+end entity COUNTER;
+
+architecture RTL of COUNTER is
+  signal CNT : unsigned(WIDTH-1 downto 0);
+begin
+  process(RST, CLK) is
+  begin
+    if RST = '1' then
+      CNT <= (others => '0');
+    elsif rising_edge(CLK) then
+      if LOAD = '1' then
+        CNT <= unsigned(DATA); -- type is converted to unsigned
+      else
+        CNT <= CNT + 1;
+      end if;
+    end if;
+  end process;
+
+  Q <= std_logic_vector(CNT); -- type is converted back to std_logic_vector
+end architecture RTL;
+
+process
+begin
+  wait until START = '1'; -- wait until START is high
+
+  for i in 1 to 10 loop -- then wait for a few clock periods...
+    wait until rising_edge(CLK);
+  end loop;
+
+  for i in 1 to 10 loop 	-- write numbers 1 to 10 to DATA, 1 every cycle
+    DATA <= to_unsigned(i, 8);
+    wait until rising_edge(CLK);
+  end loop;
+
+  -- wait until the output changes
+  wait on RESULT;
+
+  -- now raise ACK for clock period
+  ACK <= '1';
+  wait until rising_edge(CLK);
+  ACK <= '0';
+
+  -- and so on...
+end process;
+</pre>

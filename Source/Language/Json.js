@@ -1,6 +1,6 @@
 /*
 ---
-description: JSON
+description: JSON Object Highlighting
 
 license: MIT-style
 

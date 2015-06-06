@@ -1,6 +1,6 @@
 /*
 ---
-description: "DIFF" language - usefull for SVN/GIT changes :)
+description: DIFF Highlighting
 
 license: MIT-style
 

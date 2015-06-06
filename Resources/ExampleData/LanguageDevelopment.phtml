@@ -1,7 +1,7 @@
 <?php require('Resources/Templates/ExampleHeader.phtml'); ?>
 	
 	<!-- Load Custom Language -->
-	<script type="text/javascript" src="../Source/Language/Template.mylang.js"></script>
+	<script type="text/javascript" src="Source/Language/Template.mylang.js"></script>
 	
 	<script type="text/javascript">
 		window.addEvent('domready', function(){
@@ -16,11 +16,11 @@
 					showLinenumbers: true
 			};
 			EnlighterJS.Util.Helper(document.getElements('pre'), Object.merge(options,{
-				renderer : 'Block',
+				renderer : 'Block'
 			}));
 			
 			EnlighterJS.Util.Helper(document.getElements('code'), Object.merge(options,{
-				renderer : 'Inline',
+				renderer : 'Inline'
 			}));
 	
 		});

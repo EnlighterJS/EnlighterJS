@@ -1,0 +1,67 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="shell">chmod 0775 /home/user1</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<h3>Shell Script</h3>
+<pre data-enlighter-language="shell">
+#!/bin/sh
+
+# Bin locations
+# ------------------------------------
+MYSQL_BIN=/usr/bin/mysql
+
+# Config
+# ------------------------------------
+MYSQL_CONF="$HOME/.mysql.cnf"
+
+# Uncompress Backup and run restore
+# ------------------------------------
+$MYSQL_BIN --defaults-extra-file=$MYSQL_CONF $1 < $2
+
+# allow input
+# three arguments: PROTOCOL SRC-IP PORT
+firewall_allow_input() {
+   if [ $# -eq 3 ]; then
+      /sbin/iptables -A INPUT -p $1 -s $2 -d $IP_EXTERNAL --dport $3 -m state --state NEW -j ACCEPT
+      return 0
+   else
+      echo "$0: syntax error for firewall_allow_input $1 $2 $3"
+      echo "$0: arguments: PROTOCOL DST-IP PORT"
+      return 1
+   fi
+}
+
+case "$1" in
+start)
+   firewall_start
+   exit 0
+;;
+
+stop)
+   firewall_stop
+   exit 0
+;;
+
+test)
+   firewall_test
+   exit 0
+;;
+
+restart)
+   firewall_restart
+   exit 0
+;;
+
+status)
+   firewall_status
+   exit 0
+;;
+
+*)
+   echo "$0: Iptables Firewall"
+   echo "$0: { start | stop | restart | status | test }"
+   exit 0
+;;
+esac
+
+</pre>

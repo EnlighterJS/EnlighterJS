@@ -16,12 +16,9 @@
 
 	<!-- EnlighterJS Styles -->
 <?php 
-// load js+css source list
-$sourceList = json_decode(file_get_contents('Build/Sources.dev.json'));
-$jsSources = explode(' ', $sourceList->js);
-$cssSources = explode(' ', $sourceList->css);
+    require('Util/global.php');
 
-	foreach ($cssSources as $css){
+	foreach ($sources->css as $css){
 		echo '<link rel="stylesheet" href="', $css, '" />', "\n";
 	}
 ?>	
@@ -400,7 +397,7 @@ endif
         (function(){
             'use strict';
         <?php
-       foreach ($jsSources as $js){
+       foreach ($sources->js as $js){
            $x = file_get_contents($js);
            echo preg_replace('#^/\*[\s\S]+\*/#Ui', '', $x);
        }

@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.6.0 | MIT-Style X11 License | http://enlighterjs.andidittrich.de/ | May 23 2015 */
+/*! EnlighterJS Syntax Highlighter 2.7.0 | MIT-Style X11 License | http://enlighterjs.andidittrich.de/ | June 6 2015 */
 (function() {
     /*
 ---
@@ -246,20 +246,20 @@ provides: [EnlighterJS]
     EJS.Util = {};
     EJS.UI = {};
     /*
- ---
- description: Filters the RAW Code from given pre tags
+---
+description: Filters the RAW Code from given pre tags
 
- license: MIT-style
+license: MIT-style
 
- authors:
- - Andi Dittrich
+authors:
+  - Andi Dittrich
 
- requires:
- - Core/1.4.5
+requires:
+  - Core/1.4.5
 
- provides: [EnlighterJS.TextFilter]
- ...
- */
+provides: [EnlighterJS.TextFilter]
+...
+*/
     EJS.TextFilter = new Class({
         Implements: Options,
         options: {
@@ -415,141 +415,6 @@ provides: [EnlighterJS.SpecialLineHighlighter]
 	 */
         isSpecialLine: function(lineNumber) {
             return this.specialLines["l" + lineNumber] || false;
-        }
-    });
-    /*
----
-description: Code parsing engine for EnlighterJS
-
-license: MIT-style
-
-authors:
-  - Jose Prado
-  - Andi Dittrich
-
-requires:
-  - Core/1.4.5
-
-provides: [EnlighterJS.Language.generic]
-...
-*/
-    EJS.Language.generic = new Class({
-        tokenizerType: "Lazy",
-        tokenizer: null,
-        code: null,
-        patterns: {},
-        keywords: {},
-        delimiters: {
-            start: null,
-            end: null
-        },
-        // commonly used Regex Patterns
-        common: {
-            // Matches a C style single-line comment.
-            slashComments: /(?:^|[^\\])\/\/.*$/gm,
-            // Matches a Perl style single-line comment.
-            poundComments: /#.*$/gm,
-            // Matches a C style multi-line comment
-            multiComments: /\/\*[\s\S]*?\*\//gm,
-            // Matches a string enclosed by single quotes. Legacy.
-            aposStrings: /'[^'\\]*(?:\\.[^'\\]*)*'/gm,
-            // Matches a string enclosed by double quotes. Legacy.
-            quotedStrings: /"[^"\\]*(?:\\.[^"\\]*)*"/gm,
-            // Matches a string enclosed by single quotes across multiple lines.
-            multiLineSingleQuotedStrings: /'[^'\\]*(?:\\.[^'\\]*)*'/gm,
-            // Matches a string enclosed by double quotes across multiple lines.
-            multiLineDoubleQuotedStrings: /"[^"\\]*(?:\\.[^"\\]*)*"/gm,
-            // Matches both.
-            multiLineStrings: /'[^'\\]*(?:\\.[^'\\]*)*'|"[^"\\]*(?:\\.[^"\\]*)*"/gm,
-            // Matches a string enclosed by single quotes.
-            singleQuotedString: /'[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'/gm,
-            // Matches a string enclosed by double quotes.
-            doubleQuotedString: /"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*"/gm,
-            // Matches both.
-            strings: /'[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'|"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*"/gm,
-            // Matches a property: .property style.
-            properties: /\.([\w]+)\s*/gi,
-            // Matches a method call: .methodName() style.
-            methodCalls: /\.([\w]+)\s*\(/gm,
-            // Matches a function call: functionName() style.
-            functionCalls: /\b([\w]+)\s*\(/gm,
-            // Matches any of the common brackets.
-            brackets: /\{|\}|\(|\)|\[|\]/g,
-            // Matches integers, decimals, hexadecimals.
-            numbers: /\b((?:(\d+)?\.)?[0-9]+|0x[0-9A-F]+)\b/gi
-        },
-        /**
-	 * Constructor.
-	 * 
-	 * @constructs
-	 * @param {Object}
-	 *            options
-	 */
-        initialize: function(code) {
-            // initialize language options
-            this.setupLanguage();
-            this.aliases = {};
-            this.rules = {};
-            this.code = code;
-            // create new tokenizer
-            this.tokenizer = new EnlighterJS.Tokenizer[this.tokenizerType]();
-            // Add delimiter rules.
-            if (this.delimiters.start) {
-                this.addRule("delimBeg", this.delimiters.start, "de1");
-            }
-            if (this.delimiters.end) {
-                this.addRule("delimEnd", this.delimiters.end, "de2");
-            }
-            // Set Keyword Rules from this.keywords object.
-            Object.each(this.keywords, function(keywordSet, ruleName) {
-                // keyword set contains elements ?
-                if (keywordSet.csv != "") {
-                    this.addRule(ruleName, this.csvToRegExp(keywordSet.csv, keywordSet.mod || "g"), keywordSet.alias);
-                }
-            }, this);
-            // Set Rules from this.patterns object.
-            Object.each(this.patterns, function(regex, ruleName) {
-                this.addRule(ruleName, regex.pattern, regex.alias);
-            }, this);
-        },
-        // override this method to setup language params
-        setupLanguage: function() {},
-        getTokens: function() {
-            return this.tokenizer.getTokens(this, this.code);
-        },
-        getRules: function() {
-            return this.rules;
-        },
-        hasDelimiters: function() {
-            return this.delimiters.start && this.delimiters.end;
-        },
-        addRule: function(ruleName, regex, className) {
-            this.rules[ruleName] = regex;
-            this.addAlias(ruleName, className);
-        },
-        addAlias: function(key, alias) {
-            this.aliases[key] = alias || key;
-        },
-        csvToRegExp: function(csv, mod) {
-            return new RegExp("\\b(" + csv.replace(/,\s*/g, "|") + ")\\b", mod);
-        },
-        delimToRegExp: function(beg, esc, end, mod, suffix) {
-            beg = beg.escapeRegExp();
-            if (esc) {
-                esc = esc.escapeRegExp();
-            }
-            end = end ? end.escapeRegExp() : beg;
-            var pat = esc ? beg + "[^" + end + esc + "\\n]*(?:" + esc + ".[^" + end + esc + "\\n]*)*" + end : beg + "[^" + end + "\\n]*" + end;
-            return new RegExp(pat + (suffix || ""), mod || "");
-        },
-        strictRegExp: function() {
-            var regex = "(";
-            for (var i = 0; i < arguments.length; i++) {
-                regex += arguments[i].escapeRegExp();
-                regex += i < arguments.length - 1 ? "|" : "";
-            }
-            regex += ")";
-            return new RegExp(regex, "gim");
         }
     });
     /*
@@ -838,12 +703,14 @@ provides: [EnlighterJS.Renderer.BlockRenderer]
 	 * @return {Element} The renderer output
 	 */
         render: function(language, specialLines, localOptions) {
+            // elememt shortcut
+            var _el = EJS.Dom.Element;
             // create new outer container element - use ol tag if lineNumbers are enabled. element attribute settings are priorized
             var container = null;
             if (localOptions.lineNumbers != null) {
-                container = new EJS.Dom.Element(localOptions.lineNumbers.toLowerCase() === "true" ? "ol" : "ul");
+                container = new _el(localOptions.lineNumbers.toLowerCase() === "true" ? "ol" : "ul");
             } else {
-                container = new EJS.Dom.Element(this.options.showLinenumbers ? "ol" : "ul");
+                container = new _el(this.options.showLinenumbers ? "ol" : "ul");
             }
             // add "start" attribute ?
             if ((localOptions.lineNumbers || this.options.showLinenumbers) && localOptions.lineOffset && localOptions.lineOffset.toInt() > 1) {
@@ -851,16 +718,22 @@ provides: [EnlighterJS.Renderer.BlockRenderer]
             }
             // line number count
             var lineCounter = 1;
+            var tokens = language.getTokens();
+            var odd = " " + this.options.oddClassname || "";
+            var even = " " + this.options.evenClassname || "";
             // current line element
-            var currentLine = new EJS.Dom.Element("li", {
-                "class": specialLines.isSpecialLine(lineCounter) ? "specialline" : ""
+            var currentLine = new _el("li", {
+                "class": (specialLines.isSpecialLine(lineCounter) ? "specialline" : "") + odd
             });
             // output filter
-            var _F = function(t) {
-                return this.textFilter.filterOutput(t);
+            var addFragment = function(className, text) {
+                currentLine.grab(new _el("span", {
+                    "class": className,
+                    text: this.textFilter.filterOutput(text)
+                }));
             }.bind(this);
             // generate output based on ordered list of tokens
-            language.getTokens().each(function(token, index) {
+            Array.each(tokens, function(token) {
                 // get classname
                 var className = token.type ? language.aliases[token.type] || token.type : "";
                 // split the token into lines
@@ -868,47 +741,30 @@ provides: [EnlighterJS.Renderer.BlockRenderer]
                 // linebreaks found ?
                 if (lines.length > 1) {
                     // just add the first line
-                    currentLine.grab(new EJS.Dom.Element("span", {
-                        "class": className,
-                        text: _F(lines.shift())
-                    }));
+                    addFragment(className, lines.shift());
                     // generate element for each line
-                    lines.each(function(line, lineNumber) {
+                    Array.each(lines, function(line, lineNumber) {
                         // grab old line into output container
                         container.grab(currentLine);
                         // new line
                         lineCounter++;
-                        // create new line, add special line classes
-                        currentLine = new EJS.Dom.Element("li", {
-                            "class": specialLines.isSpecialLine(lineCounter) ? "specialline" : ""
+                        // create new line, add special line classes; add odd/even classes
+                        currentLine = new _el("li", {
+                            "class": (specialLines.isSpecialLine(lineCounter) ? "specialline" : "") + (lineCounter % 2 == 0 ? even : odd)
                         });
                         // create new token-element
-                        currentLine.grab(new EJS.Dom.Element("span", {
-                            "class": className,
-                            text: _F(line)
-                        }));
+                        addFragment(className, line);
                     });
                 } else {
-                    // just add the token
-                    currentLine.grab(new EJS.Dom.Element("span", {
-                        "class": className,
-                        text: _F(token.text)
-                    }));
+                    addFragment(className, token.text);
                 }
             });
             // grab last line into container
             container.grab(currentLine);
-            // add odd/even classes
-            if (this.options.evenClassname) {
-                container.getElements("li:even").addClass(this.options.evenClassname);
-            }
-            if (this.options.oddClassname) {
-                container.getElements("li:odd").addClass(this.options.oddClassname);
-            }
             // highlight lines ?
             if (this.options.hover && this.options.hover != "NULL") {
                 // add hover enable class
-                container.getChildren().addClass(this.options.hover);
+                container.addClass(this.options.hover);
             }
             return container;
         }
@@ -1259,6 +1115,10 @@ provides: [EnlighterJS.Util.Helper]
 ...
 */
     EJS.Util.Helper = function(elements, options) {
+        // break if no elements are selected/found
+        if (elements == null || elements.length && elements.length == 0) {
+            return;
+        }
         // defaults
         options = options || {};
         // element grouping disabled?
@@ -1495,7 +1355,261 @@ provides: [EnlighterJS.Util.Init]
     };
     /*
 ---
-description: Cpp Language.
+description: Code parsing engine for EnlighterJS
+
+license: MIT-style
+
+authors:
+  - Jose Prado
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Language.generic]
+...
+*/
+    EJS.Language.generic = new Class({
+        tokenizerType: "Lazy",
+        tokenizer: null,
+        code: null,
+        patterns: {},
+        keywords: {},
+        delimiters: {
+            start: null,
+            end: null
+        },
+        // commonly used Regex Patterns
+        common: {
+            // Matches a C style single-line comment.
+            slashComments: /(?:^|[^\\])\/\/.*$/gm,
+            // Matches a Perl style single-line comment.
+            poundComments: /#.*$/gm,
+            // Matches a C style multi-line comment
+            multiComments: /\/\*[\s\S]*?\*\//gm,
+            // Matches a string enclosed by single quotes. Legacy.
+            aposStrings: /'[^'\\]*(?:\\.[^'\\]*)*'/gm,
+            // Matches a string enclosed by double quotes. Legacy.
+            quotedStrings: /"[^"\\]*(?:\\.[^"\\]*)*"/gm,
+            // Matches a string enclosed by single quotes across multiple lines.
+            multiLineSingleQuotedStrings: /'[^'\\]*(?:\\.[^'\\]*)*'/gm,
+            // Matches a string enclosed by double quotes across multiple lines.
+            multiLineDoubleQuotedStrings: /"[^"\\]*(?:\\.[^"\\]*)*"/gm,
+            // Matches both.
+            multiLineStrings: /'[^'\\]*(?:\\.[^'\\]*)*'|"[^"\\]*(?:\\.[^"\\]*)*"/gm,
+            // Matches a string enclosed by single quotes.
+            singleQuotedString: /'[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'/gm,
+            // Matches a string enclosed by double quotes.
+            doubleQuotedString: /"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*"/gm,
+            // Matches both.
+            strings: /'[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'|"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*"/gm,
+            // Matches a property: .property style.
+            properties: /\.([\w]+)\s*/gi,
+            // Matches a method call: .methodName() style.
+            methodCalls: /\.([\w]+)\s*\(/gm,
+            // Matches a function call: functionName() style.
+            functionCalls: /\b([\w]+)\s*\(/gm,
+            // Matches any of the common brackets.
+            brackets: /\{|\}|\(|\)|\[|\]/g,
+            // Matches integers, decimals, hexadecimals.
+            numbers: /\b((?:(\d+)?\.)?[0-9]+|0x[0-9A-F]+)\b/gi
+        },
+        /**
+	 * Constructor.
+	 * 
+	 * @constructs
+	 * @param {Object}
+	 *            options
+	 */
+        initialize: function(code) {
+            // initialize language options
+            this.setupLanguage();
+            this.aliases = {};
+            this.rules = {};
+            this.code = code;
+            // create new tokenizer
+            this.tokenizer = new EnlighterJS.Tokenizer[this.tokenizerType]();
+            // Add delimiter rules.
+            if (this.delimiters.start) {
+                this.addRule("delimBeg", this.delimiters.start, "de1");
+            }
+            if (this.delimiters.end) {
+                this.addRule("delimEnd", this.delimiters.end, "de2");
+            }
+            // Set Keyword Rules from this.keywords object.
+            Object.each(this.keywords, function(keywordSet, ruleName) {
+                // keyword set contains elements ?
+                if (keywordSet.csv != "") {
+                    this.addRule(ruleName, this.csvToRegExp(keywordSet.csv, keywordSet.mod || "g"), keywordSet.alias);
+                }
+            }, this);
+            // Set Rules from this.patterns object.
+            Object.each(this.patterns, function(regex, ruleName) {
+                this.addRule(ruleName, regex.pattern, regex.alias);
+            }, this);
+        },
+        // override this method to setup language params
+        setupLanguage: function() {},
+        getTokens: function() {
+            return this.tokenizer.getTokens(this, this.code);
+        },
+        getRules: function() {
+            return this.rules;
+        },
+        hasDelimiters: function() {
+            return this.delimiters.start && this.delimiters.end;
+        },
+        addRule: function(ruleName, regex, className) {
+            this.rules[ruleName] = regex;
+            this.addAlias(ruleName, className);
+        },
+        addAlias: function(key, alias) {
+            this.aliases[key] = alias || key;
+        },
+        csvToRegExp: function(csv, mod) {
+            return new RegExp("\\b(" + csv.replace(/,\s*/g, "|") + ")\\b", mod);
+        },
+        delimToRegExp: function(beg, esc, end, mod, suffix) {
+            beg = beg.escapeRegExp();
+            if (esc) {
+                esc = esc.escapeRegExp();
+            }
+            end = end ? end.escapeRegExp() : beg;
+            var pat = esc ? beg + "[^" + end + esc + "\\n]*(?:" + esc + ".[^" + end + esc + "\\n]*)*" + end : beg + "[^" + end + "\\n]*" + end;
+            return new RegExp(pat + (suffix || ""), mod || "");
+        },
+        strictRegExp: function() {
+            var regex = "(";
+            for (var i = 0; i < arguments.length; i++) {
+                regex += arguments[i].escapeRegExp();
+                regex += i < arguments.length - 1 ? "|" : "";
+            }
+            regex += ")";
+            return new RegExp(regex, "gim");
+        }
+    });
+    /*
+---
+description: AVR Assembler
+
+license: MIT-style
+
+authors:
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Language.avrasm]
+...
+*/
+    EJS.Language.avrasm = new Class({
+        Extends: EJS.Language.generic,
+        setupLanguage: function() {
+            this.keywords = {};
+            this.patterns = {
+                singleLineComments: {
+                    pattern: /(;.*)$/gm,
+                    alias: "co1"
+                },
+                definition: {
+                    pattern: /^\s*?\.(\w+)\s+/gm,
+                    alias: "kw1"
+                },
+                register: {
+                    pattern: /(r\d{1,2})/gim,
+                    alias: "kw1"
+                },
+                label: {
+                    pattern: /^\s*?(\w+:)\s*?/gm,
+                    alias: "kw2"
+                },
+                command: {
+                    pattern: /^\s*?(\w+)\s+/gm,
+                    alias: "kw3"
+                },
+                strings: {
+                    pattern: this.common.strings,
+                    alias: "st0"
+                },
+                numbers: {
+                    pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][-+]?[0-9]+)?|0x[A-F0-9]+|0b[0-1_]+)\b/gim,
+                    alias: "nu0"
+                }
+            };
+        }
+    });
+    /*
+---
+description: CSS (Cascading Style Sheets)
+
+license: MIT-style
+
+authors:
+  - Andi Dittrich
+  - Jose Prado
+
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Language.css]
+...
+*/
+    EnlighterJS.Language.css = new Class({
+        Extends: EnlighterJS.Language.generic,
+        setupLanguage: function() {
+            this.keywords = {};
+            this.patterns = {
+                comments2: {
+                    pattern: /\/\*![\s\S]*?\*\//gm,
+                    alias: "co2"
+                },
+                comments: {
+                    pattern: this.common.multiComments,
+                    alias: "co1"
+                },
+                strings: {
+                    pattern: this.common.strings,
+                    alias: "st0"
+                },
+                selectors: {
+                    pattern: /(?:^|}|\/)\s*([^\\/{@]+)\s*\{/gi,
+                    alias: "kw1"
+                },
+                directives: {
+                    pattern: /(@[a-z]+)\s+/gi,
+                    alias: "kw2"
+                },
+                rules: {
+                    pattern: /([\w-]+)\s*:/g,
+                    alias: "kw3"
+                },
+                uri: {
+                    pattern: /url\s*\([^\)]*\)/gi,
+                    alias: "kw4"
+                },
+                units: {
+                    pattern: /\b(\d+[\.\d+-]?\s*(%|[a-z]{1,3})?)/gi,
+                    alias: "nu0"
+                },
+                hexColors: {
+                    pattern: /(#[A-F0-9]{3}([A-F0-9]{3})?)\b/gi,
+                    alias: "nu0"
+                },
+                brackets: {
+                    pattern: this.common.brackets,
+                    alias: "br0"
+                },
+                symbols: {
+                    pattern: /,|\.|;|:|>/g,
+                    alias: "sy0"
+                }
+            };
+        }
+    });
+    /*
+---
+description: C/C++ Language
 
 license: MIT-style
 
@@ -1571,7 +1685,7 @@ provides: [EnlighterJS.Language.cpp]
     });
     /*
 ---
-description: C Sharp Language patterns.
+description: C# Language
 
 license: MIT-style
 
@@ -1604,7 +1718,8 @@ provides: [EnlighterJS.Language.csharp]
                     csv: "System",
                     alias: "kw4"
                 }
-            }, this.patterns = {
+            };
+            this.patterns = {
                 slashComments: {
                     pattern: this.common.slashComments,
                     alias: "co1"
@@ -1642,124 +1757,97 @@ provides: [EnlighterJS.Language.csharp]
     });
     /*
 ---
-description: XML language.
+description: DIFF Highlighting
 
 license: MIT-style
 
 authors:
-  - Jose Prado
   - Andi Dittrich
 
 requires:
   - Core/1.4.5
 
-provides: [EnlighterJS.Language.xml]
+provides: [EnlighterJS.Language.diff]
 ...
 */
-    EJS.Language.xml = new Class({
-        Extends: EnlighterJS.Language.generic,
-        tokenizerType: "Xml",
+    EJS.Language.diff = new Class({
+        Extends: EJS.Language.generic,
         setupLanguage: function() {
-            // Common HTML patterns
+            this.keywords = {};
             this.patterns = {
                 comments: {
-                    pattern: /(?:\&lt;|<)!--[\s\S]*?--(?:\&gt;|>)/gim,
-                    alias: "co2"
+                    pattern: /^((---|\+\+\+) .*)/gm,
+                    alias: "co1"
                 },
-                cdata: {
-                    pattern: /(?:\&lt;|<)!\[CDATA\[[\s\S]*?\]\](?:\&gt;|>)/gim,
-                    alias: "st1"
+                stats: {
+                    pattern: /^(@@.*@@\s*)/gm,
+                    alias: "nu0"
                 },
-                closingTags: {
-                    pattern: /(?:\&lt;|<)\/[A-Z:_][A-Z0-9:.-]*?(?:\&gt;|>)/gi,
-                    alias: "kw1"
+                add: {
+                    pattern: /^(\+.*)/gm,
+                    alias: "re0"
                 },
-                doctype: {
-                    pattern: /(?:\&lt;|<)!DOCTYPE[\s\S]+?(?:\&gt;|>)/gim,
-                    alias: "st2"
-                },
-                version: {
-                    pattern: /(?:\&lt;|<)\?xml[\s\S]+?\?(?:\&gt;|>)/gim,
-                    alias: "kw2"
+                del: {
+                    pattern: /^(-.*)/gm,
+                    alias: "st0"
                 }
             };
         }
     });
     /*
 ---
-description: CSS language fuel.
+description: Ini/Conf/Property Highlighting
 
 license: MIT-style
 
 authors:
-  - Jose Prado
+  - Andi Dittrich
 
 requires:
   - Core/1.4.5
 
-provides: [EnlighterJS.Language.css]
+provides: [EnlighterJS.Language.ini]
 ...
 */
-    EJS.Language.css = new Class({
+    EJS.Language.ini = new Class({
         Extends: EJS.Language.generic,
         setupLanguage: function() {
-            this.keywords = {
-                css1: {
-                    csv: "background-attachment, background-color, background-image, background-position, background-repeat, background, border-bottom, border-bottom-width, border-color, border-left, border-left-width, border-right, border-right-width, border-style, border-top, border-top-width, border-width, border, clear, color, display, float, font-family, font-size, font-style, font-variant, font-weight, font, height, letter-spacing, line-height, list-style-image, list-style-position, list-style-type, list-style, margin-bottom, margin-left, margin-right, margin-top, margin, padding-bottom, padding-left, padding-right, padding-top, padding, text-align, text-decoration, text-indent, text-transform, vertical-align, white-space, width, word-spacing",
-                    alias: "kw1"
-                },
-                css2: {
-                    csv: "azimuth, border-bottom-color, border-bottom-style, border-collapse, border-left-color, border-left-style, border-right-color, border-right-style, border-spacing, border-top-color, border-top-style, bottom, caption-side, clip, content, counter-increment, counter-reset, cue, cue-after, cue-before, cursor, direction, elevation, empty-cells, left, max-height, max-width, min-height, min-width, orphans, outline, outline-color, outline-style, outline-width, overflow, page-break-after, page-break-before, page-break-inside, pause, pause-after, pause-before, pitch, pitch-range, play-during, position, quotes, richness, right, speak, speak-header, speak-numeral, speak-punctuation, speech-rate, stress, table-layout, top, unicode-bidi, visibility, voice-family, volume, widows, z-index",
-                    alias: "kw1"
-                },
-                css3: {
-                    csv: "alignment-adjust, alignment-baseline, appearance, background-break, background-clip, background-origin, background-size, baseline-shift, binding, bookmark-label, bookmark-level, bookmark-target, border-bottom-left-radius, border-bottom-right-radius, border-break, border-image, border-length, border-radius, border-top-left-radius, border-top-right-radius, box-align, box-direction, box-flex, box-flex-group, box-lines, box-orient, box-pack, box-shadow, box-sizing, color-profile, column-break-after, column-break-before, column-count, column-fill, column-gap, column-rule, column-rule-color, column-rule-style, column-rule-width, column-span, column-width, columns, crop, display-model, display-role, dominant-baseline, drop-initial-after-adjust, drop-initial-after-align, drop-initial-before-adjust, drop-initial-before-align, drop-initial-size, drop-initial-value, fit, fit-position, float-offset, font-effect, font-emphasize, font-emphasize-position, font-emphasize-style, font-size-adjust, font-smooth, font-stretch, grid-columns, grid-rows, hanging-punctuation, hyphenate-after, hyphenate-before, hyphenate-character, hyphenate-lines, hyphenate-resource, hyphens, icon, image-orientation, image-resolution, inline-box-align, line-stacking, line-stacking-ruby, line-stacking-shift, line-stacking-strategy, mark, mark-after, mark-before, marker-offset, marks, marquee-direction, marquee-play-count, marquee-speed, marquee-style, move-to, nav-down, nav-index, nav-left, nav-right, nav-up, opacity, outline-offset, overflow-style, overflow-x, overflow-y, page, page-policy, phonemes, presentation-level, punctuation-trim, rendering-intent, resize, rest, rest-after, rest-before, rotation, rotation-point, ruby-align, ruby-overhang, ruby-position, ruby-span, size, string-set, tab-side, target, target-name, target-new, target-position, text-align-last, text-emphasis, text-height, text-justify, text-outline, text-replace, text-shadow, text-wrap, voice-balance, voice-duration, voice-pitch, voice-pitch-range, voice-rate, voice-stress, voice-volume, white-space-collapse, word-break, word-wrap",
-                    alias: "kw2"
-                },
-                values: {
-                    csv: "100, 200, 300, 400, 500, 600, 700, 800, 900, above, absolute, always, aqua, armenian, auto, avoid, baseline, below, bidi-override, black, blink, block, blue, bold, bolder, both, bottom, break-all, break-strict, break-word, break, capitalize, caption, center, circle, cjk-ideographic, close-quote, collapse, compact, condensed, crop, cross, crosshair, dashed, decimal-leading-zero, decimal, default, disc, dotted, double, e-resize, embed, expanded, extra-condensed, extra-expanded, fixed, fuchsia, georgian, gray, green, groove, hand, hebrew, help, hidden, hide, higher, hiragana-iroha, hiragana, icon, inherit, inline-table, inline, inset, inside, invert, italic, justify, katakana-iroha, katakana, keep-all, konq-center, landscape, large, larger, left, level, light, lighter, lime, line-through, list-item, loose, loud, lower-alpha, lower-greek, lower-latin, lower-roman, lowercase, lower, ltr, marker, maroon, medium, menu, message-box, middle, mix, move, n-resize, narrower, navy, ne-resize, never, no-close-quote, no-open-quote, no-repeat, none, normal, nowrap, nw-resize, oblique, olive, open-quote, outset, outside, overline, pointer, portrait, pre-wrap, pre, purple, red, relative, repeat, repeat-x, repeat-y, ridge, right, rtl, run-in, s-resize, scroll, se-resize, semi-condensed, semi-expanded, separate, show, silver, small-caps, small-caption, smaller, small, solid, square, static-position, static, status-bar, sub, super, sw-resize, table-caption, table-cell, table-column-group, table-column, table-footer-group, table-header-group, table-row, table-row-group, table, teal, text-bottom, text-top, text, thick, thin, top, transparent, ultra-condensed, ultra-expanded, underline, upper-alpha, upper-latin, upper-roman, uppercase, visible, w-resize, wait, white, wider, x-large, x-small, xx-large, xx-small, yellow",
-                    alias: "kw3"
-                }
-            };
+            this.keywords = {};
             this.patterns = {
-                multiComments: {
-                    pattern: this.common.multiComments,
+                singleLineComments: {
+                    pattern: /(;.*)$/gm,
                     alias: "co1"
                 },
-                strings: {
-                    pattern: this.common.strings,
-                    alias: "st0"
-                },
-                selectors: {
-                    pattern: /([^\}\n]+)\{/gi,
-                    alias: "se0"
-                },
-                uri: {
-                    pattern: /url\s*\([^\)]*\)/gi,
+                section: {
+                    pattern: /^\s*?(\[.*\])\s*?$/gm,
                     alias: "kw4"
                 },
-                units: {
-                    pattern: /\b(\d+[\.\d+]?\s*(px|pt|em|ex|cm|in|mm|pc|%)?)/gi,
+                directive: {
+                    pattern: /^\s*?[a-z0-9\._-]+\s*?=/gim,
+                    alias: "kw1"
+                },
+                "boolean": {
+                    pattern: /\b(true|false|on|off|yes|no)\b/gim,
+                    alias: "kw2"
+                },
+                strings: {
+                    pattern: this.common.doubleQuotedString,
+                    alias: "st1"
+                },
+                numbers: {
+                    pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][-+]?[0-9]+)?|0x[A-F0-9]+|0b[0-1_]+)[a-z]*?\b/gim,
                     alias: "nu0"
                 },
-                hexColors: {
-                    pattern: /(#[A-F0-9]{3}([A-F0-9]{3})?)\b/gi,
-                    alias: "kw3"
-                },
-                rgbColors: {
-                    pattern: /(rgb\s*\(([1-2]?[0-9]{2}(\,\s*)?){3}\))/g,
-                    alias: "kw3"
+                brackets: {
+                    pattern: this.common.brackets,
+                    alias: "br0"
                 }
-            };
-            this.delimiters = {
-                start: this.strictRegExp('<style type="text/css">'),
-                end: this.strictRegExp("</style>")
             };
         }
     });
     /*
 ---
-description: Java language fuel.
+description: Java language
 
 license: MIT-style
 
@@ -1835,7 +1923,7 @@ provides: [EnlighterJS.Language.java]
     });
     /*
 ---
-description: JavaScript language fuel.
+description: JavaScript language
 
 license: MIT-style
 
@@ -1907,7 +1995,7 @@ provides: [EnlighterJS.Language.javascript]
     });
     /*
 ---
-description: JSON
+description: JSON Object Highlighting
 
 license: MIT-style
 
@@ -1952,6 +2040,85 @@ provides: [EnlighterJS.Language.json]
                 }
             };
             this.delimiters = {};
+        }
+    });
+    /*
+---
+description: Octave/Matlab Language
+
+license: MIT-style
+
+authors:
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Language.matlab]
+...
+*/
+    EJS.Language.matlab = new Class({
+        Extends: EJS.Language.generic,
+        setupLanguage: function() {
+            this.keywords = {
+                // keywords: https://www.gnu.org/software/octave/doc/interpreter/Keywords.html
+                kw: {
+                    csv: "__FILE__,__LINE__,break,case,catch,classdef,continue,do,else,elseif,end,end_try_catch,end_unwind_protect,endclassdef,endenumeration,endevents,endfor,endfunction,endif,endmethods,endparfor,endproperties,endswitch,endwhile,enumeration,events,for,function,global,if,methods,otherwise,parfor,persistent,properties,return,static,switch,try,until,unwind_protect,unwind_protect_cleanup,while",
+                    alias: "kw1",
+                    mod: "gi"
+                },
+                "const": {
+                    csv: "true, false",
+                    alias: "kw3",
+                    mod: "gi"
+                }
+            };
+            this.patterns = {
+                lineComments: {
+                    pattern: /%.*$/gm,
+                    alias: "co1"
+                },
+                blockComments: {
+                    pattern: /%%.*$/gm,
+                    alias: "co2"
+                },
+                fn: {
+                    pattern: this.common.functionCalls,
+                    alias: "me0"
+                },
+                fn2: {
+                    pattern: /\b([\w]+)\s*;/gm,
+                    alias: "me0"
+                },
+                me: {
+                    pattern: this.common.methodCalls,
+                    alias: "me1"
+                },
+                brackets: {
+                    pattern: this.common.brackets,
+                    alias: "br0"
+                },
+                strings: {
+                    pattern: this.common.singleQuotedString,
+                    alias: "st0"
+                },
+                numbers: {
+                    pattern: this.common.numbers,
+                    alias: "nu0"
+                },
+                fhandle: {
+                    pattern: /(@[\w]+)\s*/gm,
+                    alias: "kw3"
+                },
+                symbols: {
+                    pattern: /\+|-|\*|\/|%|!|@|&|\||\^|<|>|=|,|\.|;|\?|:|\[|]/g,
+                    alias: "sy0"
+                },
+                classdef: {
+                    pattern: /classdef\s+(\w+(?:\s*<\s*\w+)?)\s*$/gim,
+                    alias: "kw4"
+                }
+            };
         }
     });
     /*
@@ -2011,7 +2178,98 @@ provides: [EnlighterJS.Language.markdown]
     });
     /*
 ---
-description: PHP language fuel.
+description: Nullsoft Scriptable Install System (NSIS)
+
+license: MIT-style
+
+authors:
+  - Jan T. Sott
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Language.nsis]
+...
+*/
+    EJS.Language.nsis = new Class({
+        Extends: EJS.Language.generic,
+        setupLanguage: function() {
+            /** Set of keywords in CSV form. Add multiple keyword hashes for differentiate keyword sets. */
+            this.keywords = {
+                commands: {
+                    csv: "Function, PageEx, Section, SectionGroup, SubSection, Abort, AddBrandingImage, AddSize, AllowRootDirInstall, AllowSkipFiles, AutoCloseWindow, BGFont, BGGradient, BrandingText, BringToFront, Call, CallInstDLL, Caption, ChangeUI, CheckBitmap, ClearErrors, CompletedText, ComponentText, CopyFiles, CRCCheck, CreateDirectory, CreateFont, CreateShortCut, Delete, DeleteINISec, DeleteINIStr, DeleteRegKey, DeleteRegValue, DetailPrint, DetailsButtonText, DirText, DirVar, DirVerify, EnableWindow, EnumRegKey, EnumRegValue, Exch, Exec, ExecShell, ExecWait, ExpandEnvStrings, File, FileBufSize, FileClose, FileErrorText, FileOpen, FileRead, FileReadByte, FileReadUTF16LE, FileReadWord, FileSeek, FileWrite, FileWriteByte, FileWriteUTF16LE, FileWriteWord, FindClose, FindFirst, FindNext, FindWindow, FlushINI, FunctionEnd, GetCurInstType, GetCurrentAddress, GetDlgItem, GetDLLVersion, GetDLLVersionLocal, GetErrorLevel, GetFileTime, GetFileTimeLocal, GetFullPathName, GetFunctionAddress, GetInstDirError, GetLabelAddress, GetTempFileName, Goto, HideWindow, Icon, IfAbort, IfErrors, IfFileExists, IfRebootFlag, IfSilent, InitPluginsDir, InstallButtonText, InstallColors, InstallDir, InstallDirRegKey, InstProgressFlags, InstType, InstTypeGetText, InstTypeSetText, IntCmp, IntCmpU, IntFmt, IntOp, IsWindow, LangString, LicenseBkColor, LicenseData, LicenseForceSelection, LicenseLangString, LicenseText, LoadLanguageFile, LockWindow, LogSet, LogText, ManifestDPIAware, ManifestSupportedOS, MessageBox, MiscButtonText, Name, Nop, OutFile, Page, PageCallbacks, PageExEnd, Pop, Push, Quit, ReadEnvStr, ReadINIStr, ReadRegDWORD, ReadRegStr, Reboot, RegDLL, Rename, RequestExecutionLevel, ReserveFile, Return, RMDir, SearchPath, SectionEnd, SectionGetFlags, SectionGetInstTypes, SectionGetSize, SectionGetText, SectionGroupEnd, SectionIn, SectionSetFlags, SectionSetInstTypes, SectionSetSize, SectionSetText, SendMessage, SetAutoClose, SetBrandingImage, SetCompress, SetCompressor, SetCompressorDictSize, SetCtlColors, SetCurInstType, SetDatablockOptimize, SetDateSave, SetDetailsPrint, SetDetailsView, SetErrorLevel, SetErrors, SetFileAttributes, SetFont, SetOutPath, SetOverwrite, SetPluginUnload, SetRebootFlag, SetRegView, SetShellVarContext, SetSilent, ShowInstDetails, ShowUninstDetails, ShowWindow, SilentInstall, SilentUnInstall, Sleep, SpaceTexts, StrCmp, StrCmpS, StrCpy, StrLen, SubCaption, SubSectionEnd, Unicode, UninstallButtonText, UninstallCaption, UninstallIcon, UninstallSubCaption, UninstallText, UninstPage, UnRegDLL, Var, VIAddVersionKey, VIFileVersion, VIProductVersion, WindowIcon, WriteINIStr, WriteRegBin, WriteRegDWORD, WriteRegExpandStr, WriteRegStr, WriteUninstaller, XPStyle",
+                    alias: "kw1"
+                },
+                states: {
+                    csv: "admin, all, auto, both, colored, false, force, hide, highest, lastused, leave, listonly, none, normal, notset, off, on, open, print, show, silent, silentlog, smooth, textonly, true, user",
+                    alias: "kw2"
+                },
+                statics: {
+                    csv: "ARCHIVE, FILE_ATTRIBUTE_ARCHIVE, FILE_ATTRIBUTE_NORMAL, FILE_ATTRIBUTE_OFFLINE, FILE_ATTRIBUTE_READONLY, FILE_ATTRIBUTE_SYSTEM, FILE_ATTRIBUTE_TEMPORARY, HKCR, HKCU, HKDD, HKEY_CLASSES_ROOT, HKEY_CURRENT_CONFIG, HKEY_CURRENT_USER, HKEY_DYN_DATA, HKEY_LOCAL_MACHINE, HKEY_PERFORMANCE_DATA, HKEY_USERS, HKLM, HKPD, HKU, IDABORT, IDCANCEL, IDIGNORE, IDNO, IDOK, IDRETRY, IDYES, MB_ABORTRETRYIGNORE, MB_DEFBUTTON1, MB_DEFBUTTON2, MB_DEFBUTTON3, MB_DEFBUTTON4, MB_ICONEXCLAMATION, MB_ICONINFORMATION, MB_ICONQUESTION, MB_ICONSTOP, MB_OK, MB_OKCANCEL, MB_RETRYCANCEL, MB_RIGHT, MB_RTLREADING, MB_SETFOREGROUND, MB_TOPMOST, MB_USERICON, MB_YESNO, NORMAL, OFFLINE, READONLY, SHCTX, SHELL_CONTEXT, SYSTEM, TEMPORARY",
+                    alias: "kw3"
+                }
+            };
+            /** Set of RegEx patterns to match */
+            this.patterns = {
+                brackets: {
+                    pattern: this.common.brackets,
+                    alias: "br0"
+                },
+                commentMultiline: {
+                    pattern: this.common.multiComments,
+                    alias: "co2"
+                },
+                commentPound: {
+                    pattern: this.common.poundComments,
+                    alias: "co1"
+                },
+                commentSemicolon: {
+                    pattern: /;.*$/gm,
+                    alias: "co1"
+                },
+                compilerFlags: {
+                    pattern: /(!(addincludedir|addplugindir|appendfile|cd|define|delfile|echo|else|endif|error|execute|finalize|getdllversionsystem|ifdef|ifmacrodef|ifmacrondef|ifndef|if|include|insertmacro|macroend|macro|makensis|packhdr|searchparse|searchreplace|tempfile|undef|verbose|warning))/g,
+                    alias: "kw2"
+                },
+                defines: {
+                    pattern: /[\$]\{{1,2}[0-9a-zA-Z_][\w]*[\}]/gim,
+                    alias: "kw4"
+                },
+                jumps: {
+                    pattern: /([(\+|\-)]([0-9]+))/g,
+                    alias: "nu0"
+                },
+                langStrings: {
+                    pattern: /[\$]\({1,2}[0-9a-zA-Z_][\w]*[\)]/gim,
+                    alias: "kw3"
+                },
+                escapeChars: {
+                    pattern: /([\$]\\(n|r|t|[\$]))/g,
+                    alias: "kw4"
+                },
+                numbers: {
+                    pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][\-+]?[0-9]+)?|0x[A-F0-9]+)\b/gi,
+                    alias: "nu0"
+                },
+                pluginCommands: {
+                    pattern: /(([0-9a-zA-Z_]+)[:{2}]([0-9a-zA-Z_]+))/g,
+                    alias: "kw2"
+                },
+                strings: {
+                    pattern: this.common.strings,
+                    alias: "st0"
+                },
+                variables: {
+                    pattern: /[\$]{1,2}[0-9a-zA-Z_][\w]*/gim,
+                    alias: "kw4"
+                }
+            };
+        }
+    });
+    /*
+---
+description: PHP language
 
 license: MIT-style
 
@@ -2100,7 +2358,7 @@ provides: [EnlighterJS.Language.php]
     });
     /*
 ---
-description: Python language fuel.
+description: Python language
 
 license: MIT-style
 
@@ -2200,7 +2458,32 @@ provides: [EnlighterJS.Language.python]
     });
     /*
 ---
-description: Ruby language fuel.
+description: RAW Code
+
+license: MIT-style
+
+authors:
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Language.raw]
+...
+*/
+    EJS.Language.raw = new Class({
+        Extends: EJS.Language.generic,
+        initialize: function(code) {
+            this.code = code;
+        },
+        getTokens: function() {
+            // raw means "no-highlight" - return a single, unknown token with the given sourcecode
+            return [ new EJS.Token(this.code, "", 0) ];
+        }
+    });
+    /*
+---
+description: Ruby language
 
 license: MIT-style
 
@@ -2294,12 +2577,107 @@ provides: [EnlighterJS.Language.ruby]
     });
     /*
 ---
-description: Shell language fuel.
+description: Rust Language https://doc.rust-lang.org
 
 license: MIT-style
 
 authors:
-  - Jose Prado
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Language.rust]
+...
+*/
+    EJS.Language.rust = new Class({
+        Extends: EJS.Language.generic,
+        setupLanguage: function() {
+            this.keywords = {
+                // keywords: https://doc.rust-lang.org/syntax/parse/token/keywords/enum.Keyword.html
+                kw: {
+                    csv: "As,Break,Crate,Else,Enum,Extern,False,Fn,For,If,Impl,In,Let,Loop,Match,Mod,Move,Mut,Pub,Ref,Return,Static,SelfValue,SelfType,Struct,Super,True,Trait,Type,Unsafe,Use,Virtual,While,Continue,Box,Const,Where,Proc,Alignof,Become,Offsetof,Priv,Pure,Sizeof,Typeof,Unsized,Yield,Do,Abstract,Final,Override,Macro",
+                    alias: "kw1",
+                    mod: "gi"
+                }
+            };
+            this.patterns = {
+                slashComments: {
+                    pattern: this.common.slashComments,
+                    alias: "co1"
+                },
+                multiComments: {
+                    pattern: this.common.multiComments,
+                    alias: "co1"
+                },
+                slashDocComments: {
+                    pattern: /(?:^|[^\\])\/\/[\/!].*$/gm,
+                    alias: "co2"
+                },
+                multiDocComments: {
+                    pattern: /\/\*[\*!][\s\S]*?\*\//gm,
+                    alias: "co2"
+                },
+                chars: {
+                    pattern: /'.'/gm,
+                    alias: "st0"
+                },
+                rawStrings: {
+                    pattern: /r((#+)".*?"\2)/gm,
+                    alias: "st1"
+                },
+                strings: {
+                    pattern: /("(?:\\.|\\\s*\n|\\s*\r\n|[^\\"])*")/g,
+                    alias: "st1"
+                },
+                directives: {
+                    pattern: /^\s*#.*$/gm,
+                    alias: "sy0"
+                },
+                brackets: {
+                    pattern: this.common.brackets,
+                    alias: "br0"
+                },
+                // https://doc.rust-lang.org/stable/reference.html#integer-literals
+                intLiteral: {
+                    pattern: /\b([0-9_]+|0o[0-9_]+|0x[A-F0-9_]+|0b[0-1_]+)(u8|i8|u16|i16|u32|i32|u64|i64|isize|usize)?\b/gim,
+                    alias: "nu0"
+                },
+                // https://doc.rust-lang.org/stable/reference.html#floating-point-literals
+                floatLiteral: {
+                    pattern: /\b([0-9_]+\.?[0-9_]+?(e\+[0-9_]+)?)(?:f32|f64)?\b/gim,
+                    alias: "nu0"
+                },
+                // method definitions
+                methodDefs: {
+                    pattern: /fn\s+([\w]+)\s*(<\w+\s*>)?\(/gm,
+                    alias: "kw2"
+                },
+                // method/function calls
+                funCalls: {
+                    pattern: /\b\.?([\w]+)\s*(\(|::)/gm,
+                    alias: "kw3"
+                },
+                // macro calls
+                macro: {
+                    pattern: /\b([\w]+)!/gm,
+                    alias: "kw4"
+                },
+                symbols: {
+                    pattern: /\+|-|\*|\/|%|!|@|&|\||\^|<|<<|>>|>|=|,|\.|;|\?|:|self/g,
+                    alias: "sy0"
+                }
+            };
+        }
+    });
+    /*
+---
+description: Shell/Bash Scripting
+
+license: MIT-style
+
+authors:
+  - Andi Dittrich
 
 requires:
   - Core/1.4.5
@@ -2312,28 +2690,45 @@ provides: [EnlighterJS.Language.shell]
         setupLanguage: function() {
             this.keywords = {
                 keywords: {
-                    csv: "if, fi, then, elif, else, for, do, done, until, while, break, continue, case, function, return, in, eq, ne, gt, lt, ge, le",
-                    alias: "kw0"
-                },
-                commands: {
-                    csv: "alias, apropos, awk, bash, bc, bg, builtin, bzip2, cal, cat, cd, cfdisk, chgrp, chmod, chown, chrootcksum, clear, cmp, comm, command, cp, cron, crontab, csplit, cut, date, dc, dd, ddrescue, declare, df, diff, diff3, dig, dir, dircolors, dirname, dirs, du, echo, egrep, eject, enable, env, ethtool, eval, exec, exit, expand, export, expr, false, fdformat, fdisk, fg, fgrep, file, find, fmt, fold, format, free, fsck, ftp, gawk, getopts, grep, groups, gzip, hash, head, history, hostname, id, ifconfig, import, install, join, kill, less, let, ln, local, locate, logname, logout, look, lpc, lpr, lprint, lprintd, lprintq, lprm, ls, lsof, make, man, mkdir, mkfifo, mkisofs, mknod, more, mount, mtools, mv, netstat, nice, nl, nohup, nslookup, open, op, passwd, paste, pathchk, ping, popd, pr, printcap, printenv, printf, ps, pushd, pwd, quota, quotacheck, quotactl, ram, rcp, read, readonly, renice, remsync, rm, rmdir, rsync, screen, scp, sdiff, sed, select, seq, set, sftp, shift, shopt, shutdown, sleep, sort, source, split, ssh, strace, su, sudo, sum, symlink, sync, tail, tar, tee, test, time, times, touch, top, traceroute, trap, tr, true, tsort, tty, type, ulimit, umask, umount, unalias, uname, unexpand, uniq, units, unset, unshar, useradd, usermod, users, uuencode, uudecode, v, vdir, vi, watch, wc, whereis, which, who, whoami, wget, xargs, yes",
+                    csv: "if, fi, then, elif, else, for, do, done, until, while, break, continue, case, esac, return, function, in, eq, ne, gt, lt, ge, le",
                     alias: "kw1"
                 }
-            }, this.patterns = {
-                poundComments: {
-                    pattern: this.common.poundComments,
+            };
+            this.patterns = {
+                comments: {
+                    pattern: /((?:^\s*|\s+)#.*$)/gm,
                     alias: "co1"
                 },
                 strings: {
                     pattern: this.common.strings,
                     alias: "st0"
+                },
+                backticks: {
+                    pattern: /`.*?`/gm,
+                    alias: "st1"
+                },
+                cases: {
+                    pattern: /^\s*\w+\)\s*$/gm,
+                    alias: "kw2"
+                },
+                def: {
+                    pattern: /^(\s*\w+)=/gm,
+                    alias: "kw4"
+                },
+                vars: {
+                    pattern: /(\$\w+)\b/gim,
+                    alias: "kw4"
+                },
+                functions: {
+                    pattern: /^\s*\w+\(\)\s*\{/gm,
+                    alias: "kw3"
                 }
             };
         }
     });
     /*
 ---
-description: SQL language fuel.
+description: SQL Language
 
 license: MIT-style
 
@@ -2369,11 +2764,11 @@ provides: [EnlighterJS.Language.sql]
             }, this.patterns = {
                 singleLineComments: {
                     pattern: /--(.*)$/gm,
-                    alias: "co0"
+                    alias: "co1"
                 },
                 multiLineComments: {
                     pattern: this.common.multiComments,
-                    alias: "co1"
+                    alias: "co2"
                 },
                 multiLineStrings: {
                     pattern: this.common.multiLineStrings,
@@ -2392,257 +2787,106 @@ provides: [EnlighterJS.Language.sql]
     });
     /*
 ---
-description: Nullsoft Scriptable Install System (NSIS)
+description: VHDL Language
 
 license: MIT-style
 
 authors:
-  - Jan T. Sott
   - Andi Dittrich
 
 requires:
   - Core/1.4.5
 
-provides: [EnlighterJS.Language.nsis]
+provides: [EnlighterJS.Language.vhdl]
 ...
 */
-    EJS.Language.nsis = new Class({
+    EJS.Language.vhdl = new Class({
         Extends: EJS.Language.generic,
         setupLanguage: function() {
-            /** Set of keywords in CSV form. Add multiple keyword hashes for differentiate keyword sets. */
             this.keywords = {
-                commands: {
-                    csv: "Function, PageEx, Section, SectionGroup, SubSection, Abort, AddBrandingImage, AddSize, AllowRootDirInstall, AllowSkipFiles, AutoCloseWindow, BGFont, BGGradient, BrandingText, BringToFront, Call, CallInstDLL, Caption, ChangeUI, CheckBitmap, ClearErrors, CompletedText, ComponentText, CopyFiles, CRCCheck, CreateDirectory, CreateFont, CreateShortCut, Delete, DeleteINISec, DeleteINIStr, DeleteRegKey, DeleteRegValue, DetailPrint, DetailsButtonText, DirText, DirVar, DirVerify, EnableWindow, EnumRegKey, EnumRegValue, Exch, Exec, ExecShell, ExecWait, ExpandEnvStrings, File, FileBufSize, FileClose, FileErrorText, FileOpen, FileRead, FileReadByte, FileReadUTF16LE, FileReadWord, FileSeek, FileWrite, FileWriteByte, FileWriteUTF16LE, FileWriteWord, FindClose, FindFirst, FindNext, FindWindow, FlushINI, FunctionEnd, GetCurInstType, GetCurrentAddress, GetDlgItem, GetDLLVersion, GetDLLVersionLocal, GetErrorLevel, GetFileTime, GetFileTimeLocal, GetFullPathName, GetFunctionAddress, GetInstDirError, GetLabelAddress, GetTempFileName, Goto, HideWindow, Icon, IfAbort, IfErrors, IfFileExists, IfRebootFlag, IfSilent, InitPluginsDir, InstallButtonText, InstallColors, InstallDir, InstallDirRegKey, InstProgressFlags, InstType, InstTypeGetText, InstTypeSetText, IntCmp, IntCmpU, IntFmt, IntOp, IsWindow, LangString, LicenseBkColor, LicenseData, LicenseForceSelection, LicenseLangString, LicenseText, LoadLanguageFile, LockWindow, LogSet, LogText, ManifestDPIAware, ManifestSupportedOS, MessageBox, MiscButtonText, Name, Nop, OutFile, Page, PageCallbacks, PageExEnd, Pop, Push, Quit, ReadEnvStr, ReadINIStr, ReadRegDWORD, ReadRegStr, Reboot, RegDLL, Rename, RequestExecutionLevel, ReserveFile, Return, RMDir, SearchPath, SectionEnd, SectionGetFlags, SectionGetInstTypes, SectionGetSize, SectionGetText, SectionGroupEnd, SectionIn, SectionSetFlags, SectionSetInstTypes, SectionSetSize, SectionSetText, SendMessage, SetAutoClose, SetBrandingImage, SetCompress, SetCompressor, SetCompressorDictSize, SetCtlColors, SetCurInstType, SetDatablockOptimize, SetDateSave, SetDetailsPrint, SetDetailsView, SetErrorLevel, SetErrors, SetFileAttributes, SetFont, SetOutPath, SetOverwrite, SetPluginUnload, SetRebootFlag, SetRegView, SetShellVarContext, SetSilent, ShowInstDetails, ShowUninstDetails, ShowWindow, SilentInstall, SilentUnInstall, Sleep, SpaceTexts, StrCmp, StrCmpS, StrCpy, StrLen, SubCaption, SubSectionEnd, Unicode, UninstallButtonText, UninstallCaption, UninstallIcon, UninstallSubCaption, UninstallText, UninstPage, UnRegDLL, Var, VIAddVersionKey, VIFileVersion, VIProductVersion, WindowIcon, WriteINIStr, WriteRegBin, WriteRegDWORD, WriteRegExpandStr, WriteRegStr, WriteUninstaller, XPStyle",
-                    alias: "kw1"
+                keywords: {
+                    csv: "abs,access,after,alias,all,and,architecture,array,assert,attribute,begin,block,body,buffer,bus,case,component,configuration,constant,disconnect,downto,else,elsif,end,entity,exit,file,for,function,generate,generic,group,guarded,if,impure,in,inertial,inout,is,label,library,linkage,literal,loop,map,mod,nand,new,next,nor,not,null,of,on,open,or,others,out,package,port,postponed,procedure,process,pure,range,record,register,reject,rem,report,return,rol,ror,select,severity,signal,shared,sla,sll,sra,srl,subtype,then,to,transport,type,unaffected,units,until,use,variable,wait,when,while,with,xnor,xor",
+                    alias: "kw1",
+                    mod: "gi"
                 },
-                states: {
-                    csv: "admin, all, auto, both, colored, false, force, hide, highest, lastused, leave, listonly, none, normal, notset, off, on, open, print, show, silent, silentlog, smooth, textonly, true, user",
-                    alias: "kw2"
-                },
-                statics: {
-                    csv: "ARCHIVE, FILE_ATTRIBUTE_ARCHIVE, FILE_ATTRIBUTE_NORMAL, FILE_ATTRIBUTE_OFFLINE, FILE_ATTRIBUTE_READONLY, FILE_ATTRIBUTE_SYSTEM, FILE_ATTRIBUTE_TEMPORARY, HKCR, HKCU, HKDD, HKEY_CLASSES_ROOT, HKEY_CURRENT_CONFIG, HKEY_CURRENT_USER, HKEY_DYN_DATA, HKEY_LOCAL_MACHINE, HKEY_PERFORMANCE_DATA, HKEY_USERS, HKLM, HKPD, HKU, IDABORT, IDCANCEL, IDIGNORE, IDNO, IDOK, IDRETRY, IDYES, MB_ABORTRETRYIGNORE, MB_DEFBUTTON1, MB_DEFBUTTON2, MB_DEFBUTTON3, MB_DEFBUTTON4, MB_ICONEXCLAMATION, MB_ICONINFORMATION, MB_ICONQUESTION, MB_ICONSTOP, MB_OK, MB_OKCANCEL, MB_RETRYCANCEL, MB_RIGHT, MB_RTLREADING, MB_SETFOREGROUND, MB_TOPMOST, MB_USERICON, MB_YESNO, NORMAL, OFFLINE, READONLY, SHCTX, SHELL_CONTEXT, SYSTEM, TEMPORARY",
-                    alias: "kw3"
+                operators: {
+                    csv: "abs,not,mod,rem,sll,srl,sla,sra,rol,ror,and,or,nand,nor,xor,xnor",
+                    alias: "sy0"
                 }
             };
-            /** Set of RegEx patterns to match */
-            this.patterns = {
-                brackets: {
-                    pattern: this.common.brackets,
-                    alias: "br0"
-                },
-                commentMultiline: {
-                    pattern: this.common.multiComments,
-                    alias: "co2"
-                },
-                commentPound: {
-                    pattern: this.common.poundComments,
-                    alias: "co1"
-                },
-                commentSemicolon: {
-                    pattern: /;.*$/gm,
-                    alias: "co1"
-                },
-                compilerFlags: {
-                    pattern: /(\!(addincludedir|addplugindir|appendfile|cd|define|delfile|echo|else|endif|error|execute|finalize|getdllversionsystem|ifdef|ifmacrodef|ifmacrondef|ifndef|if|include|insertmacro|macroend|macro|makensis|packhdr|searchparse|searchreplace|tempfile|undef|verbose|warning))/g,
-                    alias: "kw2"
-                },
-                defines: {
-                    pattern: /[\$]\{{1,2}[0-9a-zA-Z_][\w]*[\}]/gim,
-                    alias: "kw4"
-                },
-                jumps: {
-                    pattern: /([(\+|\-)]([0-9]+))/g,
-                    alias: "nu0"
-                },
-                langStrings: {
-                    pattern: /[\$]\({1,2}[0-9a-zA-Z_][\w]*[\)]/gim,
-                    alias: "kw3"
-                },
-                escapeChars: {
-                    pattern: /([\$]\\(n|r|t|[\$]))/g,
-                    alias: "kw4"
-                },
-                numbers: {
-                    pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][\-+]?[0-9]+)?|0x[A-F0-9]+)\b/gi,
-                    alias: "nu0"
-                },
-                pluginCommands: {
-                    pattern: /(([0-9a-zA-Z_]+)[:{2}]([0-9a-zA-Z_]+))/g,
-                    alias: "kw2"
-                },
-                strings: {
-                    pattern: this.common.strings,
-                    alias: "st0"
-                },
-                variables: {
-                    pattern: /[\$]{1,2}[0-9a-zA-Z_][\w]*/gim,
-                    alias: "kw4"
-                }
-            };
-        }
-    });
-    /*
----
-description: RAW Language - returns pure raw text
-
-license: MIT-style
-
-authors:
-  - Andi Dittrich
-
-requires:
-  - Core/1.4.5
-
-provides: [EnlighterJS.Language.raw]
-...
-*/
-    EJS.Language.raw = new Class({
-        Extends: EJS.Language.generic,
-        initialize: function(code) {
-            this.code = code;
-        },
-        getTokens: function() {
-            // raw means "no-highlight" - return a single, unknown token with the given sourcecode
-            return [ new EJS.Token(this.code, "", 0) ];
-        }
-    });
-    /*
----
-description: "DIFF" language - usefull for SVN/GIT changes :)
-
-license: MIT-style
-
-authors:
-  - Andi Dittrich
-
-requires:
-  - Core/1.4.5
-
-provides: [EnlighterJS.Language.diff]
-...
-*/
-    EJS.Language.diff = new Class({
-        Extends: EJS.Language.generic,
-        setupLanguage: function() {
-            this.keywords = {};
             this.patterns = {
                 comments: {
-                    pattern: /^((---|\+\+\+) .*)/gm,
+                    pattern: /((?:^\s*|\s+)--.*$)/gm,
                     alias: "co1"
                 },
-                stats: {
-                    pattern: /^(@@.*@@\s*)/gm,
-                    alias: "nu0"
+                uses: {
+                    pattern: /^\s*(?:use|library)\s*(\S+);/gim,
+                    alias: "kw4"
                 },
-                add: {
-                    pattern: /^(\+.*)/gm,
-                    alias: "re0"
-                },
-                del: {
-                    pattern: /^(-.*)/gm,
-                    alias: "st0"
-                }
-            };
-        }
-    });
-    /*
----
-description: AVR Assembler
-
-license: MIT-style
-
-authors:
-  - Andi Dittrich
-
-requires:
-  - Core/1.4.5
-
-provides: [EnlighterJS.Language.avrasm]
-...
-*/
-    EJS.Language.avrasm = new Class({
-        Extends: EJS.Language.generic,
-        setupLanguage: function() {
-            this.keywords = {};
-            this.patterns = {
-                singleLineComments: {
-                    pattern: /(;.*)$/gm,
-                    alias: "co1"
-                },
-                definition: {
-                    pattern: /^\s*?\.(\w+)\s+/gm,
-                    alias: "kw1"
-                },
-                register: {
-                    pattern: /(r\d{1,2})/gim,
-                    alias: "kw1"
-                },
-                label: {
-                    pattern: /^\s*?(\w+:)\s*?/gm,
+                functions: {
+                    pattern: this.common.functionCalls,
                     alias: "kw2"
                 },
-                command: {
-                    pattern: /^\s*?(\w+)\s+/gm,
-                    alias: "kw3"
+                operators: {
+                    pattern: /\*\*|\*|\/|\+|\-|&|=|\/=|<|<=|>|>=/g,
+                    alias: "sy0"
                 },
                 strings: {
                     pattern: this.common.strings,
-                    alias: "st0"
-                },
-                numbers: {
-                    pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][-+]?[0-9]+)?|0x[A-F0-9]+|0b[0-1_]+)\b/gim,
-                    alias: "nu0"
-                }
-            };
-        }
-    });
-    /*
----
-description: Ini Files - e.g. php.ini, java properties
-
-license: MIT-style
-
-authors:
-  - Andi Dittrich
-
-requires:
-  - Core/1.4.5
-
-provides: [EnlighterJS.Language.ini]
-...
-*/
-    EJS.Language.ini = new Class({
-        Extends: EJS.Language.generic,
-        setupLanguage: function() {
-            this.keywords = {};
-            this.patterns = {
-                singleLineComments: {
-                    pattern: /(;.*)$/gm,
-                    alias: "co1"
-                },
-                section: {
-                    pattern: /^\s*?(\[.*\])\s*?$/gm,
-                    alias: "kw4"
-                },
-                directive: {
-                    pattern: /^\s*?[a-z0-9\._-]+\s*?=/gim,
-                    alias: "kw1"
-                },
-                "boolean": {
-                    pattern: /\b(true|false|on|off|yes|no)\b/gim,
-                    alias: "kw2"
-                },
-                strings: {
-                    pattern: this.common.doubleQuotedString,
                     alias: "st1"
                 },
                 numbers: {
-                    pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][-+]?[0-9]+)?|0x[A-F0-9]+|0b[0-1_]+)[a-z]*?\b/gim,
+                    pattern: this.common.numbers,
                     alias: "nu0"
                 },
                 brackets: {
                     pattern: this.common.brackets,
                     alias: "br0"
+                }
+            };
+        }
+    });
+    /*
+---
+description: XML language.
+
+license: MIT-style
+
+authors:
+  - Jose Prado
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Language.xml]
+...
+*/
+    EJS.Language.xml = new Class({
+        Extends: EnlighterJS.Language.generic,
+        tokenizerType: "Xml",
+        setupLanguage: function() {
+            // Common HTML patterns
+            this.patterns = {
+                comments: {
+                    pattern: /(?:\&lt;|<)!--[\s\S]*?--(?:\&gt;|>)/gim,
+                    alias: "co2"
+                },
+                cdata: {
+                    pattern: /(?:\&lt;|<)!\[CDATA\[[\s\S]*?\]\](?:\&gt;|>)/gim,
+                    alias: "st1"
+                },
+                closingTags: {
+                    pattern: /(?:\&lt;|<)\/[A-Z:_][A-Z0-9:.-]*?(?:\&gt;|>)/gi,
+                    alias: "kw1"
+                },
+                doctype: {
+                    pattern: /(?:\&lt;|<)!DOCTYPE[\s\S]+?(?:\&gt;|>)/gim,
+                    alias: "st2"
+                },
+                version: {
+                    pattern: /(?:\&lt;|<)\?xml[\s\S]+?\?(?:\&gt;|>)/gim,
+                    alias: "kw2"
                 }
             };
         }
