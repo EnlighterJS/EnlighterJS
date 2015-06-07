@@ -57,7 +57,10 @@ EJS.Renderer.BlockRenderer = new Class({
 		// line number count
 		var lineCounter = 1;
 
+        console.time('Tokenizer');
         var tokens = language.getTokens();
+        console.timeEnd('Tokenizer');
+
         var odd = ' ' + this.options.oddClassname || '';
         var even = ' ' + this.options.evenClassname || '';
 
@@ -76,16 +79,13 @@ EJS.Renderer.BlockRenderer = new Class({
 
         // generate output based on ordered list of tokens
         Array.each(tokens, function(token){
-            // get classname
-            var className = token.type ? (language.aliases[token.type] || token.type) : '';
-
             // split the token into lines
             var lines = token.text.split('\n');
 
             // linebreaks found ?
             if (lines.length > 1){
                 // just add the first line
-                addFragment(className, lines.shift());
+                addFragment(token.alias, lines.shift());
 
                 // generate element for each line
                 Array.each(lines, function(line, lineNumber){
@@ -101,10 +101,10 @@ EJS.Renderer.BlockRenderer = new Class({
                     });
 
                     // create new token-element
-                    addFragment(className, line);
+                    addFragment(token.alias, line);
                 });
             }else{
-                addFragment(className, token.text);
+                addFragment(token.alias, token.text);
             }
         });
 

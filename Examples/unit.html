@@ -80,7 +80,23 @@ if (this.options.editable) {
     lighter.set('contenteditable', 'true');
 }
 	</pre>
-	
+
+    <h4>Overlapping Regex Matches</h4>
+    <pre data-enlighter-language="php">
+echo 'You can also have embedded newlines in
+strings this way as it is
+okay to do';
+
+// Outputs: Arnold once said: "I'll be back"
+echo 'Arnold once said: "I\'ll be back"';
+
+// Outputs: You deleted C:\*.*?
+echo 'You deleted C:\\*.*?';
+
+/** String's */
+echo    'this is a simple string';
+</pre>
+
 	<h4>Language Alias "mD" - should rendered as markdown</h4>
 	<pre data-enlighter-language="mD">
 ### Version 1.5.2 ###

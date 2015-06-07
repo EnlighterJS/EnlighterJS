@@ -9,10 +9,13 @@
 * Added: "Droide" theme
 * Added: New CSS language engine - some styles have changed!
 * Added: New EnlighterJS Info Button (Toolbar)
+* Added: New Tokenizer Engine which increases the rendering performance by nearly **700%**
 * Moved: `LanguageDevelopment.html` and `ThemeDevelopment.html` back to the project root
 * Removed: Build/Sources.json file - replaced by `.tmp/js.txt` and `.tmp/css.txt` (list of all used source files - required for development only!)
+* Removed: Old Tokenizer Engines (`Smart`, `Lazy`, `Tokenizer`)
 * Bugfix: The Theme Selector of the language demo pages doesn't remove the default styles
 * Bugfix: Wrong highlighting class used for SQL comments
+* Changed: Smart Tokenizer Engine is used instead of the old Lazy Bruteforce matching
 * Changed: All Fonts of the modern Themes are replaced by "Source Code Pro" as default
 * Changed: CSS theme sources are converted to [LESS](http://lesscss.org)
 * Changed: Classic Themes `kw3` color switched with `kw4`

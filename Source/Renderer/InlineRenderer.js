@@ -40,12 +40,9 @@ EJS.Renderer.InlineRenderer = new Class({
 
 		// generate output based on ordered list of tokens
 		language.getTokens().each(function(token, index){
-			// get classname
-			var className = token.type ? (language.aliases[token.type] || token.type) : '';
-			
 			// create new inline element which contains the token - htmlspecialchars get escaped by mootools setText !
 			container.grab(new EJS.Dom.Element('span', {
-				'class': className,
+				'class': token.alias,
 				'text': this.textFilter.filterOutput(token.text)
 			}));
 		}, this);

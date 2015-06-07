@@ -31,6 +31,8 @@
 
     <!-- Include EnlighterJS -->
     <script type="text/javascript" src="Build/EnlighterJS.js"></script>
+    <script type="text/javascript" src="Source/Tokenizer/Standard.js"></script>
+    <script type="text/javascript" src="Source/Language/Php.js"></script>
 
 	<script type="text/javascript">
 		window.addEvent('domready', function(){
@@ -48,9 +50,9 @@
 				renderer : 'Block'
 			}));
 			
-			EnlighterJS.Util.Helper(document.getElements('code'), Object.merge(options,{
+			/*EnlighterJS.Util.Helper(document.getElements('code'), Object.merge(options,{
 				renderer : 'Inline'
-			}));
+			}));*/
 	
 		});
 	</script>
@@ -71,270 +73,260 @@
             include('Resources/Templates/ThemeSelector.phtml');
             ?>
 			<div class="well">Start your Language-Development by editing the file <strong>Source/Language/Template.mylang.js</strong> - all changes will directly appear into this document without the need of a rebuild!</div>
-<pre data-enlighter-language="css" data-enlighter-highlight="13-22">
-/*!
----
-description: EnlighterJS Theme-Base - All Themes are derived from these styles!
 
-...
-*/
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                <code data-enlighter-language="php">echo 'Arnold once said: "I\'ll be back"';</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+            </p>
+<pre data-enlighter-language="php">
+// Outputs: Arnold once said: "Ill be back"
+echo 'Arnold once said: "I\'ll be back"';
+    </pre>
+            <hr />
+
+ <pre data-enlighter-language="php">
+echo 'You can also have embedded newlines in
+strings this way as it is \'
+okay to do'; // Don't you agree
+
+// Outputs: Arnold once said: "I'll be back"
+echo 'Arnold once said: "I\'ll be back"';
+
+// Double Quoted String
+echo "This is not a testcase";
+
+// Multi Line Double Quoted String
+echo " This is a 'simple'
+    multiline testcase for 'double' \"quoted\" Strings
+    including some single quoted (int)
+    'once'.
+    float keyword ?! ";
+
+// Heredoc
+$str = &lt;&lt;&lt;EOD
+Example of string
+spanning multiple lines
+using heredoc syntax.
+EOD;
+
+// Nowdoc
+$str = &lt;&lt;&lt;'EOD'
+Example of string
+spanning multiple lines
+using nowdoc syntax.
+EOD;
+
+/** Numbers */
+
+$a = 1234; // decimal number
+$a = -123; // a negative number
+$a = 0123; // octal number (equivalent to 83 decimal)
+$a = 0x1A; // hexadecimal number (equivalent to 26 decimal)
+$a = 1.234;
+$b = 1.2e3;
+$c = 7E-10;
 
 
-p {
-    font-family: "Times New Roman";
-    font-size: 20px;
-}
-@media screen {
-    p {
-        font-family: verdana, sans-serif;
-        font-size: 17px;
-    }
-}
+/**
+ * Displays GitHub Style Buttons using GitHub API v3
+ * @url http://github-buttons.andidittrich.de/
+ * @see https://developer.github.com/v3/
+ * @author Andi Dittrich $lt;http://andidittrich.de$gt;
+    * @license Dual-Licensed under "The MIT License (X11)" and "Apache 2.0 License"
+ * @version 1.2
+ *
+ */
+class GitHubButtons{
 
-@media print {
-    p {
-        font-family: georgia, serif;
-        font-size: 14px;
-        color: blue;
-    }
-}
+	// global cache dir
+	private $_cacheDir;
 
-html {
-  font-family: sans-serif;
-  -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-}
+	function __construct($cacheDir = '.'){
+		// store cache dir
+		$this->_cacheDir = $cacheDir;
+	}
 
-input.number,
-select.number,
-input[type="number"]::-webkit-outer-spin-button {
-  height: auto;
-}
+	/**
+	 * Defines the default options -
+	 * @param array $options
+	 * @return multitype:
+	 */
+	private function mergeOptions($options){
+		$defaults = array(
+				// large or small button ?
+				'large' => false,
 
-@media (min-width: 800) {
-  .navbar-right .dropdown-menu {
-    right: 0;
-    left: auto;
-  }
-  .navbar-right .dropdown-menu-left {
-    right: auto;
-    left: 0;
-  }
-}
-.btn-group-vertical > .btn:focus {
-  outline: 0;
-}
+				// GitHub username
+				'owner' => null,
 
-.nav-pills > li.active > a:focus {
-  color: #fff;
-  background-color: #428bca;
-}
+				// GitHub repository name
+				'repo' => null,
 
-/*
----
-description: EnlighterJS Theme-Base - All Themes are derived from these styles! Don't edit this file if you wan't to change styles! Use a derived theme!
+				// Button type (star, fork, watch, follow)
+				'type' => 'star',
 
-license: MIT-style
+				// custom button text
+				'text' => null,
 
-authors:
-  - Andi Dittrich
-...
-*/
+				// enabled/disable counter - manual set the value
+				'count' => true,
 
-/* BASE Styles */
-.EnlighterJS, .EnlighterJSWrapper{
-	font-family: Monaco, Courier, Monospace;
-	font-size: 10px;
-	line-height: 16px;
-	overflow: auto;
-	white-space: pre-wrap;
-	word-wrap: break-word;
-	margin: 0px;
-	padding: 0px;
-}
+				// enable caching by default
+				'cache' => true,
 
-/* Wrapper/Container - contains all elements of an instance */
-.EnlighterJSWrapper{
-	position: relative;
-}
+				// cache lifetime in seconds (2h default)
+				'cacheLifetime' => 7200,
 
-/* RAW Styles */
-.EnlighterJSWrapper pre{
-	font-family: inherit;
-	background-color: #ffffff;
-	padding: 5px 5px 5px 10px;
-	margin: 0px 0px 20px 0px;
-	line-height: 18px;
-	font-size: 12px;
-	color: #444444;
-	border: none;
-	border-radius: 0px;
-	clear: none;
-	white-space: pre-wrap;
-	word-wrap: break-word;
-}
+				// text/count if GitHub API is unavailable
+				'errorText' => 'NA'
+		);
+		return array_merge($defaults, $options);
+	}
 
-/* Inline specific styles */
-span.EnlighterJS {
-	padding: 3px 5px 1px 5px;
-	border: solid 1px #e0e0e0;
-	color: #333333;
-	background-color: #f7f7f7;
-	margin: 0px 2px 0px 2px;
-}
+	/**
+	 * Generate the HTML Output
+	 * @param array $options
+	 */
+	public function button($options){
+		// set default options
+		$options = $this->mergeOptions($options);
 
-/* LIST specific styles */
-ol.EnlighterJS, ul.EnlighterJS{
-	color: #939393;
-	font-size: 10px;
-	background-color: #f2f2f2;
-	color: #939393;
-	margin: 0px 0px 20px 0px;
-	padding: 0px;
-	text-indent: 0px;
-	list-style: decimal-leading-zero outside;
-}
+		// vars
+		$text = '';
+		$count = null;
+		$buttonLink = 'https://github.com/' . $options['owner'] . '/';
+		$counterLink = 'https://github.com/' . $options['owner'] . '/';
+		$apiUrl = '';
+        $responseSelector = '';
 
-/* line styles */
-ol.EnlighterJS li, ul.EnlighterJS li {
-	margin: 0px;
-	background-color: #ffffff;
-	border: solid 0px #ffffff;
-	padding: 0px 5px 0px 14px;
-	line-height: 14px;
-	color: #939393;
-	list-style: none;
-	font-size: inherit;
-}
-ol.EnlighterJS li{
-	list-style: decimal-leading-zero outside;
-	margin: 0px 0px 0px 40px;
-}
+		// star, fork, follow, watch are supported
+		switch ($options['type']){
+			case 'star':
+                $apiUrl = 'repos/' . $options['owner'] . '/' . $options['repo'];
+				$text = 'Star';
+				$buttonLink .= $options['repo'];
+				$counterLink .= $options['repo'] . '/stargazers';
+                $responseSelector = 'stargazers_count';
+				break;
 
-/* no-linenumber style */
-ul.EnlighterJS, ul.EnlighterJS li{
-	list-style: none;
-	display: block;
-}
-ul.EnlighterJS li:AFTER{
-	content: ' ';
-}
+			case 'fork':
+                $apiUrl = 'repos/' . $options['owner'] . '/' . $options['repo'];
+				$text = 'Fork';
+				$buttonLink .= $options['repo'];
+				$counterLink .= $options['repo'] . '/network';
+                $responseSelector = 'forks_count';
+				break;
 
-/* top+bottom offsets */
-ol.EnlighterJS li:FIRST-CHILD, ul.EnlighterJS li:FIRST-CHILD{
-	padding-top: 5px;
-}
-ol.EnlighterJS li:LAST-CHILD, ul.EnlighterJS li:LAST-CHILD{
-	padding-bottom: 5px;
-}
+			case 'watch':
+                $apiUrl = 'repos/' . $options['owner'] . '/' . $options['repo'];
+				$text = 'Watchers';
+				$buttonLink .= $options['repo'];
+				$counterLink .= $options['repo'] . '/watchers';
+                $responseSelector = 'subscribers_count';
+				break;
 
-/* special line highlight color */
-ol.EnlighterJS li.specialline, ul.EnlighterJS li.specialline {
-	background-color: #F4F8FC;
-}
+			case 'follow':
+				$counterLink .= 'followers';
+				$text = 'Follow @' . $options['owner'];
+				$apiUrl = 'users/'.$options['owner'];
+                $responseSelector = 'followers';
+				break;
+		}
 
-/* default symbol style */
-.EnlighterJS span {
-	color: #000000;
-	margin: 0px;
-	padding: 0px;
-	line-height: inherit;
-	font-size: 12px;
-}
+		// user defined text ?
+		if ($options['text']!=null){
+			$text = $options['text'];
+		}
 
-/* TAB Panel - containing "buttons" to switch between multiple codeblocks */
-.EnlighterJSTabPane .controls {
-}
-.EnlighterJSTabPane .controls ul{
-	margin: 0px 0px 0px 40px;
-	padding: 0px;
-}
-.EnlighterJSTabPane .controls li {
-	float: left;
-	display: block;
-	list-style: none;
-	padding: 3px 10px 3px 10px;
-	margin: 0px 5px 0px 5px;
-	background-color: #f2f2f2;
-	border-radius: 5px;
-	font-size: 12px;
-	color: #000000;
-	font-family: Courier, monospace;
-	cursor: pointer;
-}
+		// user defined count ?
+		if (is_numeric($options['count'])){
+			$count = $options['count'];
+		}else{
+			// fetch count
+			$response = $this->doApiRequest($apiUrl, $options['cache'], $options['cacheLifetime'], $responseSelector);
 
-.EnlighterJSTabPane .controls .clearfixList{
-	clear: left;
-}
-.EnlighterJSTabPane .pane {
-	padding: 5px 0px 0px 0px;
-	clear: left;
-}
+			// valid ?
+			if (is_numeric($response)){
+				$count = $response;
+			}else{
+				$count = $options['errorText'];
+			}
+		}
 
-/* Toolbar - containing buttons */
-.EnlighterJSToolbar{
-	position: absolute;
-	display: none;
-	right: 0px;
-	top: 0px;
-	height: 40px;
-	width: auto;
-	padding: 15px;
-}
-/* Button Container */
-.EnlighterJSToolbar > a{
-	float: right;
-	display: block;
-	border-radius: 3px;
-	z-index: 10;
-	background-color: #ffffff;
-	color: #717171;
-	cursor: pointer;
-	font-size: 12px;
-	padding: 0px;
-	border: solid 1px #e0e0e0;
-	margin: 0px 0px 0px 15px;
-	text-decoration: none;
-	width: 23px;
-	height: 23px;
-	background-position: 0px 0px;
-	background-size: contain;
-	margin-left: 8px;
-}
-.EnlighterJSToolbar > a:HOVER{
-	border-color: #b0b0b0;
-}
+		// large button ?
+		$large = ($options['large']===true ? ' github-btn-large' : '');
 
-/* Raw Button Identifiers */
-.EnlighterJSRawButton, .EnlighterJSWindowButton{}
+		return '';
+	}
 
-/* Show Toolbar on MouseOver */
-.EnlighterJSToolbar > a:HOVER{
-	text-decoration: none;
-}
+	/**
+	 * Do Single HTTP GET Request including caching
+	 * @param unknown $url
+	 * @return string
+	 */
+	private function doApiRequest($url, $cacheEnabled, $cacheLifetime, $selector){
+		// cache url
+		$cachefilename = $this->_cacheDir . '/github.'.sha1($url.$selector).'.cache.json';
 
-/* Button Icons */
-.EnlighterJSWindowButton{
-	background-image: url(data:image/png;base64,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);
-}
-.EnlighterJSRawButton{
-	background-image: url(data:image/png;base64,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);
-}
-.EnlighterJSInfoButton{
-	background-image: url(data:image/png;base64,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);
-}
+		// 1h cachetime
+		if ($cacheEnabled && file_exists($cachefilename) && filemtime($cachefilename) > (time()-$cacheLifetime)){
+			return file_get_contents($cachefilename);
+		}
 
-/* Show Toolbar on Mouseover */
-.EnlighterJSWrapper:hover .EnlighterJSToolbar{
-	display: block;
-}
-.EnlighterJSToolbar .clear{
-	clear: right;
-	content: ' ';
-	display: block;
+		$opts = array('http' =>
+				array(
+						'method'  => 'GET',
+						'protocol_version' => '1.1',
+						'user_agent' => 'GitHubButtons/1.1',
+						'header'  => array(
+								'Content-type: application/x-www-form-urlencoded;charset=UTF-8',
+								'Connection: close',
+								'Accept: application/vnd.github.v3+json'
+						)
+				)
+		);
+
+		// send request
+		$data = false;
+		try{
+			$data = @file_get_contents('https://api.github.com/'.$url, false, stream_context_create($opts));
+		}catch(Exception $error){}
+
+		// success ?
+		if ($data===false){
+			return false;
+		}else{
+			// decode data
+			$jdata = json_decode($data, true);
+
+            // extract
+            $cnt = $jdata[$selector];
+
+			if ($cacheEnabled){
+				// cache data
+				file_put_contents($cachefilename, $cnt);
+			}
+
+			// return resposne data
+			return $cnt;
+		}
+	}
+
+	// singleton instance
+	private static $__instance;
+
+	// get singelton instance
+	public static function getInstance($cacheDir=null){
+		// check if singelton instance is avaible
+		if (self::$__instance==null){
+			// create new instance if not
+			self::$__instance = new self($cacheDir);
+		}
+		return self::$__instance;
+	}
 }
 
-		</pre>
+?&gt;
+</pre>
 		
 		<!-- ############################################################# -->
 		</div>

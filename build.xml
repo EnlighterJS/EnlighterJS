@@ -23,10 +23,10 @@
 	<property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide Git Mocha MooTools Panic Tutti Twilight" />
 
 	<!-- Languages to include !-->
-	<property name="include.languages" value="AvrAsm Css Cpp CSharp Diff Ini Java Javascript Json Matlab Markdown Nsis Php Python RAW Ruby Rust Shell Sql Vhdl Xml" />
+	<property name="include.languages" value="AvrAsm Css Cpp CSharp Diff Ini Java Javascript Json Matlab Markdown Nsis Python RAW Ruby Rust Shell Sql Vhdl Xml" />
 
 	<!-- Sourcefiles to include !-->
-	<property name="include.JsBaseSources" value="EnlighterJS TextFilter Dom/MooTools/Dom Dom/MooTools/Element SpecialLineHighlighter LanguageManager Tokenizer Token Renderer/InlineRenderer Renderer/BlockRenderer Tokenizer/Lazy Tokenizer/Xml UI/CodeWindow UI/Toolbar" />
+	<property name="include.JsBaseSources" value="EnlighterJS TextFilter Dom/MooTools/Dom Dom/MooTools/Element SpecialLineHighlighter LanguageManager Renderer/InlineRenderer Renderer/BlockRenderer Tokenizer/Standard Tokenizer/Xml UI/CodeWindow UI/Toolbar" />
 
 	<!-- Additional Features to include !-->
 	<property name="include.JsFeatures" value="Native/Element.EnlighterJS Util/Helper UI/TabPane Util/Metainit Util/Init" />

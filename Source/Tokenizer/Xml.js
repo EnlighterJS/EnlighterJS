@@ -16,7 +16,7 @@ provides: [EnlighterJS.Tokenizer.Xml]
 */
 EJS.Tokenizer.Xml = new Class({
 
-	Extends : EJS.Tokenizer,
+	Extends : EJS.Tokenizer.Standard,
 
 	/**
 	 * @constructs

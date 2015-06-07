@@ -300,6 +300,7 @@ var EJS = window.EnlighterJS = new Class({
 
 // register namespaces
 EJS.Language = {};
+EJS.Tokenizer = {};
 EJS.Renderer = {};
 EJS.Util = {};
 EJS.UI = {};

@@ -16,7 +16,7 @@ provides: [EnlighterJS.Language.generic]
 */
 EJS.Language.generic = new Class({
 
-	tokenizerType : 'Lazy',
+	tokenizerType : 'Standard',
 	tokenizer : null,
 	code : null,
 
@@ -91,7 +91,7 @@ EJS.Language.generic = new Class({
 		this.setupLanguage();
 		
 		this.aliases = {};
-		this.rules = {};
+		this.rules = [];
 		this.code = code;
 
 		// create new tokenizer
@@ -99,24 +99,33 @@ EJS.Language.generic = new Class({
 
 		// Add delimiter rules.
 		if (this.delimiters.start){
-			this.addRule('delimBeg', this.delimiters.start, 'de1');
+            this.rules.push({
+                pattern: this.delimiters.start,
+                alias: 'de1'
+            });
 		}
 
 		if (this.delimiters.end){
-			this.addRule('delimEnd', this.delimiters.end, 'de2');
+            this.rules.push({
+                pattern: this.delimiters.end,
+                alias: 'de2'
+            });
 		}
 
 		// Set Keyword Rules from this.keywords object.
 		Object.each(this.keywords, function(keywordSet, ruleName){
 			// keyword set contains elements ?
 			if (keywordSet.csv != ''){
-				this.addRule(ruleName, this.csvToRegExp(keywordSet.csv, keywordSet.mod || "g"), keywordSet.alias);
+                this.rules.push({
+                    pattern: this.csvToRegExp(keywordSet.csv, keywordSet.mod || "g"),
+                    alias: keywordSet.alias
+                });
 			}
 		}, this);
 
 		// Set Rules from this.patterns object.
 		Object.each(this.patterns, function(regex, ruleName){
-			this.addRule(ruleName, regex.pattern, regex.alias);
+            this.rules.push(regex);
 		}, this);
 	},
 	
@@ -134,15 +143,6 @@ EJS.Language.generic = new Class({
 
 	hasDelimiters : function(){
 		return this.delimiters.start && this.delimiters.end;
-	},
-
-	addRule : function(ruleName, regex, className){
-		this.rules[ruleName] = regex;
-		this.addAlias(ruleName, className);
-	},
-
-	addAlias : function(key, alias){
-		this.aliases[key] = alias || key;
 	},
 
 	csvToRegExp : function(csv, mod){
