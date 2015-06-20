@@ -1,16 +1,16 @@
 {
   "name": "enlighterjs",
-  "homepage": "http://enlighterjs.andidittrich.de",
-  "authors": [
-    "Andi Dittrich <andi.dittrich@a3non.org>"
-  ],
   "description": "MooTools based Syntax Highlighter",
-  "main": [
-      "Build/EnlighterJS.js",
-      "Build/EnlighterJS.css"
-  ],
-  "moduleType": [
-    "globals"
+  "version": "v2.7.0",
+  "homepage": "http://enlighterjs.andidittrich.de",
+  "author": {
+    "name": "Andi Dittrich",
+    "email": "andi.dittrich@a3non.org"
+  },
+  "browser": "./Build/EnlighterJS.js",
+  "files": [
+     "./Build/EnlighterJS.js",
+     "./Build/EnlighterJS.css"
   ],
   "keywords": [
     "c++",
@@ -37,18 +37,19 @@
     "xml"
   ],
   "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "Util",
-    "Docs"
-    ],
+  "bugs": {
+    "url": "https://github.com/AndiDittrich/EnlighterJS/issues"
+  },
   "devDependencies": {
-    "clean-css": "latest",
-    "uglify-js": "latest",
-    "bootstrap": "latest",
-    "less-plugin-autoprefix": "latest",
-    "less": "latest"
-  }
+    "clean-css": "~3.3.1",
+    "uglify-js": "~2.4.23",
+    "bootstrap": "~3.3.4",
+    "less-plugin-autoprefix": "~1.4.2",
+    "less": "~2.5.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AndiDittrich/EnlighterJS.git"
+  },
+  "readmeFilename": "README.md"
 }

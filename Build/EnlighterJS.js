@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.7.0 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | June 14 2015 */
+/*! EnlighterJS Syntax Highlighter 2.7.0 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | June 20 2015 */
 (function() {
     /*
 ---
@@ -1079,9 +1079,6 @@ provides: [EnlighterJS.UI.TabPane]
                 "class": "controls"
             });
             controlWrapper.grab(this.controlContainer);
-            controlWrapper.grab(new EJS.Dom.Element("div", {
-                "class": "clearfixList"
-            }));
             this.container.grab(controlWrapper);
             this.container.grab(this.paneContainer);
         },

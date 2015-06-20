@@ -17,8 +17,7 @@
     <title>LanguageDevelopment | EnlighterJS</title>
 
     <!-- Bootstrap CSS - just 4 styling - not required for enlighterjs -->
-    <link rel="stylesheet" href="Resources/bootstrap-3.2.0-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="Resources/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="Resources/bootstrap/bootstrap.min.css">
 
     <!-- Include EnlighterJS Styles -->
     <link rel="stylesheet" type="text/css" href="Build/EnlighterJS.min.css" />
@@ -31,29 +30,24 @@
 
     <!-- Include EnlighterJS -->
     <script type="text/javascript" src="Build/EnlighterJS.js"></script>
-    <script type="text/javascript" src="Source/Tokenizer/Xml.js"></script>
-    <script type="text/javascript" src="Source/Language/Xml.js"></script>
+
+    <!-- Include Custom Language!-->
+    <script type="text/javascript" src="Source/Language/Template.mylang.js"></script>
 
 	<script type="text/javascript">
 		window.addEvent('domready', function(){
-			
-			var options = {
-					language : 'css',
-					theme: '',
-					rawButton: true,
-					windowButton: true,
-					indent : 2,
-					infoButton: true,
-					showLinenumbers: true
-			};
-			EnlighterJS.Util.Helper(document.getElements('pre'), Object.merge(options,{
-				renderer : 'Block'
-			}));
-			
-			/*EnlighterJS.Util.Helper(document.getElements('code'), Object.merge(options,{
-				renderer : 'Inline'
-			}));*/
-	
+
+            // initialize
+			EnlighterJS.Util.Init('pre', 'code', {
+                language : 'mylang',
+                theme: '',
+                rawButton: true,
+                windowButton: true,
+                indent : 2,
+                infoButton: true,
+                showLinenumbers: true
+            });
+
 		});
 	</script>
 </head>
@@ -68,41 +62,28 @@
 		</div>
 		<div id="content">
 			<!-- ############################################################# -->
-            <?php
-            include('Util/global.php');
-            include('Resources/Templates/ThemeSelector.phtml');
-            ?>
+
 			<div class="well">Start your Language-Development by editing the file <strong>Source/Language/Template.mylang.js</strong> - all changes will directly appear into this document without the need of a rebuild!</div>
 
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                <code data-enlighter-language="php">echo 'Arnold once said: "I\'ll be back"';</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+            <h2>Inline Content</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                <code class="special">if FILE == 123.123 then</code>
+                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br /> Lorem ipsum dolor sit amet,
+                <code>not highlighted</code>
+                consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
             </p>
-<pre data-enlighter-language="xml">
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-    &lt;building name="GlobalDynamics Main Building"
-    core:id="0xFA8A91C6617DFA1B" core:uid="0898213-123123123-1230898123" xmlns:core="http://www.xmlnamespace.tld"&gt;
-	&lt;core:group core:level="2"&gt;
-		&lt;room number="123"&gt;Conference Room A&lt;/room&gt;
-		&lt;room number="124"&gt;Conference Room B&lt;/room&gt;
-		&lt;room number="125"&gt;Conference Room C&lt;/room&gt;
-		&lt;room number="126"&gt;Conference Room D&lt;/room&gt;
-	&lt;/core:group&gt;
-	&lt;core:group core:level="2"&gt;
-		&lt;room number="17"&gt;John's Office&lt;/room&gt;
-		&lt;room number="19"&gt;Eric's Office&lt;/room&gt;
-	&lt;/core:group&gt;
-	&lt;core:group core:level="1"&gt;
-		&lt;room number="091"&gt;Mainframe Housing A&lt;/room&gt;
-		&lt;room number="092"&gt;Mainframe Housing B&lt;/room&gt;
-		&lt;room number="090"&gt;Mainframe Power Supply Station&lt;/room&gt;
-		&lt;room number="089"&gt;Mainframe Backup Power Supply Station&lt;/room&gt;
-	&lt;/core:group&gt;
-	&lt;core:group core:level="8"&gt;
-		&lt;room number="1717" role="cto"&gt;CTO Office&lt;/room&gt;
-		&lt;room number="1819" role="ceo"&gt;CEO Office&lt;/room&gt;
-		&lt;room number="1820" role="cfo"&gt;CFO Office&lt;/room&gt;
-	&lt;/core:group&gt;
-&lt;/building&gt;
+
+            <h2>HTML Content</h2>
+<pre data-enlighter-language="mylang">
+&lt;!##
+# This is a hash-style-comment
+if FILE == 123.123 then
+	echo 'testcase'
+elseif
+	echo "OH NO"
+endif
+##!&gt;
 </pre>
 		
 		<!-- ############################################################# -->

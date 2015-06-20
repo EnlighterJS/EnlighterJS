@@ -1,6 +1,6 @@
 <?php
 // Get output dir
-$outputDir = (count($argv)>=2 ? $argv[1] : 'Output/');
+$outputDir = (isset($argv) && isset($argv[1]) ? $argv[1] : 'Output/');
 
 // get the sourcefile lists of current build
 $sources = new stdClass();

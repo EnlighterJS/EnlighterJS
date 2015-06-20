@@ -13,6 +13,7 @@
 * Added: "Droide" theme
 * Added: New EnlighterJS Info Button (Toolbar)
 * Added: New Tokenizer Engine which increases the rendering performance by nearly **700%**
+* Added: Manifest `package.json` file to load required Node.js dependencies via npm (required for the build process)
 * Moved: `LanguageDevelopment.html` and `ThemeDevelopment.html` back to the project root
 * Removed: Build/Sources.json file - replaced by `.tmp/js.txt` and `.tmp/css.txt` (list of all used source files - required for development only!)
 * Removed: Old Tokenizer Engines (`Smart`, `Lazy`, `Tokenizer`)

@@ -43,5 +43,10 @@
     "bower_components",
     "Util",
     "Docs"
-    ]
+    ],
+  "devDependencies":  {
+  },
+
+  "dependencies": {
+  }
 }

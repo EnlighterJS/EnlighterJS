@@ -4,7 +4,7 @@
 	ANT-based build script for EnlighterJS
 	
 	@author		Andi Dittrich <andi.dittrich@a3non.org>
-	@version	1.6
+	@version	1.8
 	@license	The MIT License (X11)
 	
 !-->
@@ -73,6 +73,11 @@
 			<substitution expression="current: v${build.var.version}"/>
 			<fileset file="package.yml" />
 		</replaceregexp>
+        <replaceregexp byline="true" flags="s">
+            <regexp pattern="&quot;version&quot;: &quot;v(.*)&quot;" />
+            <substitution expression="&quot;version&quot;: &quot;v${build.var.version}&quot;"/>
+            <fileset file="package.json" />
+        </replaceregexp>
 
 	</target>
 
@@ -98,14 +103,6 @@
 			<arg value="${example.dir}" />
 		</exec>
 	</target>
-
-    <!-- Dev Pages !-->
-    <target name="dev">
-        <!-- Development Pages based on Examples template !-->
-        <exec executable="php">
-            <arg value="Util/DevPageGenerator.php" />
-        </exec>
-    </target>
 
     <!-- Markdown Docs => HTML !-->
     <target name="docs">
