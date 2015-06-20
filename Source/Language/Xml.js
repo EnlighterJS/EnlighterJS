@@ -1,6 +1,6 @@
 /*
 ---
-description: XML language.
+description: XML/HTML language
 
 license: MIT-style
 

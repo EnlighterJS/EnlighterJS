@@ -4,3 +4,4 @@
 gfx/*
 PublicHtml/*
 node_modules*
+.tmp*

@@ -163,6 +163,7 @@
             <fileset dir="Resources/img"/>
         </copy>
 
+        <!-- Copy Resources !-->
         <copy todir="${www.dir}">
             <fileset dir="Resources/bootstrap" includes="bootstrap.min.css"/>
             <fileset dir="Resources" includes="MooTools.min.js, EnlighterWeb.min.css"/>
@@ -185,6 +186,9 @@
 		<!-- Copy License and fix linebreaks !-->
 		<copy file="LICENSE.md" tofile="${www.dir}LICENSE.txt" />
 		<fixcrlf eol="crlf" file="${www.dir}LICENSE.txt" />
+
+        <!-- Backward Compatibility !-->
+        <copy file="${www.dir}Theme.Enlighter.html" tofile="${www.dir}Themes.html" />
 	</target>
 
     <target name="full" depends="build,docs,examples,website" />
