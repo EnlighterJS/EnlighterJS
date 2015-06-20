@@ -22,6 +22,7 @@ EJS.Language.generic = new Class({
 
 	patterns : {},
 	keywords : {},
+
 	delimiters : {
 		start: null,
 		end: null
@@ -73,7 +74,7 @@ EJS.Language.generic = new Class({
 		functionCalls : /\b([\w]+)\s*\(/gm,
 
 		// Matches any of the common brackets.
-		brackets : /\{|\}|\(|\)|\[|\]/g,
+		brackets : /\{|}|\(|\)|\[|]/g,
 
 		// Matches integers, decimals, hexadecimals.
 		numbers : /\b((?:(\d+)?\.)?[0-9]+|0x[0-9A-F]+)\b/gi
@@ -89,8 +90,7 @@ EJS.Language.generic = new Class({
 	initialize : function(code){
 		// initialize language options
 		this.setupLanguage();
-		
-		this.aliases = {};
+
 		this.rules = [];
 		this.code = code;
 
@@ -125,9 +125,14 @@ EJS.Language.generic = new Class({
 
 		// Set Rules from this.patterns object.
 		Object.each(this.patterns, function(regex, ruleName){
+            // add new rule entry
             this.rules.push(regex);
 		}, this);
 	},
+
+    getRuleByName: function(name){
+        //return this.rulesN[name];
+    },
 	
 	// override this method to setup language params
 	setupLanguage: function(){
@@ -139,10 +144,6 @@ EJS.Language.generic = new Class({
 
 	getRules : function(){
 		return this.rules;
-	},
-
-	hasDelimiters : function(){
-		return this.delimiters.start && this.delimiters.end;
 	},
 
 	csvToRegExp : function(csv, mod){

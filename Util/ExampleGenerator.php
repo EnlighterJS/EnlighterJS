@@ -4,37 +4,44 @@
  * @author Andi Dittrich
  * @license MIT Style X11
  */
-function cdnbase($file){
-	return '../'.$file;
-}
 
-// Get output dir
-$outputDir = (count($argv)==2 ? $argv[1] : 'Output/');
+function cdnbase($file){
+    global $argv;
+
+    // Local Examples or Webbuild ?
+    if (isset($argv[2]) && trim($argv[2]) == 'www'){
+        return basename($file);
+    }else{
+        return '../'.$file;
+    }
+}
 
 require('global.php');
 
-// === Basic Examples =================================================
-$examples = array(
-    'Example1', 'Example2-jsinit', 'Example3-advanced'
-);
-foreach ($examples as $example){
-    file_put_contents('Examples/'.$example.'.html', captureTemplate('Resources/ExampleData/'.$example.'.phtml', array(
-        'pageTitle' => $example
-    )));
-}
+// setup metainit string
+$metainit = '<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="javascript" data-indent="2" data-selector-block="pre" data-selector-inline="code" />';
 
-// === Language Examples =================================================
-foreach ($languageExamples as $lang){
-	$langContent = file_get_contents('Resources/TestcaseData/'.strtolower($lang).'.html');
-	renderTemplate($outputDir.strtolower($lang).'.html', array(
-		'pageContent' => $langContent,
-		'pageTitle' => $lang
-	));
-}
+// === Basic Examples =================================================
+renderTemplate($outputDir.'Example1.html', array(
+    'page' => 'Resources/ExampleData/Example1.phtml',
+    'pageTitle' => 'Basic EnlighterJS Example',
+    'header' => $metainit
+));
+renderTemplate($outputDir.'Example2-jsinit.html', array(
+    'page' => 'Resources/ExampleData/Example2-jsinit.phtml',
+    'pageTitle' => 'Javascript Initialization Example',
+    'header' => ''
+));
+renderTemplate($outputDir.'Example3-advanced.html', array(
+    'page' => 'Resources/ExampleData/Example3-advanced.phtml',
+    'pageTitle' => 'Advanced Javascript Example',
+    'header' => ''
+));
+
 /**
  * Renders the template file and return HTML
  * @param Array $vars
  */
 function renderTemplate($destination, $vars = array()){
-    file_put_contents($destination, captureTemplate('Resources/Templates/ExampleTemplate.phtml', $vars));
+    file_put_contents($destination, captureTemplate('Resources/ExampleTemplate.phtml', $vars));
 }

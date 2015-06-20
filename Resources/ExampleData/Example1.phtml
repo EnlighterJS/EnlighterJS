@@ -1,26 +1,5 @@
-<?php require('Resources/Templates/ExampleHeader.phtml'); ?>
+<div class="alert alert-success" role="alert">Level: <strong>Beginner</strong></div>
 
-	<!-- Initialize EnlighterJS; set default language+theme as well as some options -->	
-	<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="html" data-theme="enlighter" data-indent="4" data-selector-block="pre" data-selector-inline="code.special" data-rawcodebutton="true" data-windowbutton="true" data-infobutton="true" />
-</head>
-<body>
-	<!-- Begin page content -->
-	<div class="container">
-		<div class="page-header">
-			<h1>
-				<strong>EnlighterJS Quickstart</strong> <small>Metatag based Initialization</small>
-			</h1>
-		</div>
-		<div id="content">
-			<!-- ############################################################# -->
-			<div class="alert alert-success" role="alert">Level: <strong>Beginner</strong></div>
-			<div class="well"><strong>Welcome to EnlighterJS</strong> - this Quickstart-Page provides the most simple and elegant way to use EnlighterJS on your page: just add a simple <strong>HTML-Meta-Tag</strong> and the EnlighterJS Javascript+CSS files - that's it!
-				<br /><br />
-				Please view the page source to see how it's done! - <a href="http://enlighterjs.andidittrich.de/" title="EnlighterJS Documentation">Documentation</a>
-			</div>
-			
-			<hr />
-			
 			<h3>Some Examples</h3>	
 	<h4>jQuery Code (Javascript) - highlighted by EnlighterJS</h4>
 <pre data-enlighter-language="jquery" data-enlighter-highlight="5">
@@ -59,12 +38,3 @@ EnlighterJS.Util.Helper(document.getElements('pre'), {
 
 	<h4>Inline Code</h4>
 	<p>EnlighterJS also supports <code class="special" data-enlighter-language="js">alert('Inline Sourcecode highlighting');</code> (since version 2.0).</p>
-	
-		<!-- ############################################################# -->
-		</div>
-		<!-- // content -->
-
-	</div>
-	<!-- // container -->
-</body>
-</html>

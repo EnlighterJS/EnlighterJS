@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+        EnlighterJS Examples
+
+        Author: Andi Dittrich <http://andidittrich.de>
+        License: MIT X11 License
+     -->
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Favicon !-->
+    <link rel="icon" href="<?php echo cdnbase('Resources/favicon.png'); ?>" type="image/png" />
+
+    <title><?php echo strip_tags($pageTitle); ?> | EnlighterJS</title>
+
+    <!-- Bootstrap CSS - just 4 styling - not required for enlighterjs -->
+    <link rel="stylesheet" href="<?php echo cdnbase('Resources/bootstrap/bootstrap.min.css'); ?>">
+
+    <!-- Include EnlighterJS Styles -->
+    <link rel="stylesheet" type="text/css" href="<?php echo cdnbase('Build/EnlighterJS.min.css'); ?>" />
+
+    <!-- Monospace Fonts on Google Webfonts !-->
+    <link href='http://fonts.googleapis.com/css?family=Cutive+Mono|Roboto+Mono:400,700,400italic,500,500italic,700italic|Ubuntu+Mono:400,700,400italic,700italic|Droid+Sans+Mono|Source+Code+Pro:400,600' rel='stylesheet' type='text/css'>
+
+    <!-- Include MooTools Framework -->
+    <script type="text/javascript" src="<?php echo cdnbase('Resources/MooTools.min.js'); ?>"></script>
+
+    <!-- Include EnlighterJS -->
+    <script type="text/javascript" src="<?php echo cdnbase('Build/EnlighterJS.min.js'); ?>"></script>
+
+    <!-- Special Styles -->
+    <style type="text/css">
+        /* custom hover effect using specific css class */
+        .EnlighterJS.myHoverClass li:hover{
+            background-color: #c0c0c0;
+        }
+    </style>
+
+    <?php echo $header; ?>
+</head>
+<body>
+	<!-- Begin page content -->
+	<div class="container">
+		<div class="page-header">
+			<h1>
+				<?php echo $pageTitle; ?>
+			</h1>
+		</div>
+		<div id="content">
+		<!-- ############################################################# -->
+			<?php include($page); ?>
+		<!-- ############################################################# -->
+		</div>
+		<!-- // content -->
+
+	</div>
+	<!-- // container -->
+</body>
+</html>

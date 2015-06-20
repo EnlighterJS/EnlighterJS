@@ -1,4 +1,7 @@
 <?php
+// Get output dir
+$outputDir = (count($argv)>=2 ? $argv[1] : 'Output/');
+
 // get the sourcefile lists of current build
 $sources = new stdClass();
 $sources->js = explode(' ', file_get_contents('.tmp/js.txt'));
@@ -11,6 +14,7 @@ $themes = explode(' ', file_get_contents('.tmp/themes.txt'));
 $languageExamples = array(
     'C', 'Cpp', 'CSharp', 'CSS', 'LESS', 'Diff', 'HTML', 'Java', 'Javascript', 'JSON', 'MarkDown', 'NSIS', 'PHP', 'Python', 'Ruby', 'SQL', 'Unit', 'XML', 'RAW', 'NoHighlight', 'AVRASM', 'Ini', 'Rust', 'Shell', 'VHDL', 'Matlab'
 );
+asort($languageExamples);
 
 // all languages
 $languageList = explode(' ', file_get_contents('.tmp/languages.txt'));
@@ -46,4 +50,29 @@ function captureTemplate($file, $vars = array()){
     // store captured content
     $_generatedContent = ob_get_clean();
     return $_generatedContent;
+}
+
+/**
+ * Render a Markdown Document using LightUp with Promethium CloudAPI
+ * @param unknown $content
+ */
+function renderMarkdownDocument($filename){
+    $content = file_get_contents($filename);
+
+    $postdata = http_build_query(array(
+        'mddata' => $content,
+        'highlightingMode' => 'enlighterjs',
+        'addAnchors' => 'false'
+    ));
+    $opts = array(
+        'http' => array (
+            'method' => 'POST',
+            'header' => 'Content-type: application/x-www-form-urlencoded',
+            'content' => $postdata
+        )
+    );
+    $htmlContent = file_get_contents('http://promethium.andidittrich.de/lightup/', false, stream_context_create($opts));
+
+    // remove first heading1
+    return preg_replace('/<h1>.*<\/h1>/', '', $htmlContent, 1);
 }

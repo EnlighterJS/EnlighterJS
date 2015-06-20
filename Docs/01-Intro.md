@@ -40,13 +40,13 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
     <head>
     ...
     <!-- Include EnlighterJS Styles -->
-    <link rel="stylesheet" type="text/css" href="EnlighterJS.yui.css" />
+    <link rel="stylesheet" type="text/css" href="EnlighterJS.min.css" />
     
     <!-- Include MooTools Framework -->
     <script type="text/javascript" src="mootools-core-1.5.0-full-nocompat.js"></script>
     
     <!-- Include EnlighterJS -->
-    <script type="text/javascript" src="EnlighterJS.yui.js" ></script>
+    <script type="text/javascript" src="EnlighterJS.min.js" ></script>
     
     <!-- Initialize EnlighterJS -->	
     <meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-indent="4" data-selector-block="pre" data-selector-inline="code.special" />
@@ -99,11 +99,17 @@ List of languages with their corresponding identifiers and supported aliases (wr
 ### Themes ###
 Theme identifiers are always expressed as lowercase!
 
-* **Enlighter** (enlighter, standard) - Enlighter's default Theme
-* **MooTools** (mootools) - MooTools Docs inspired Theme
+#### Modern Themes ####
+* **Enlighter** (enlighter, standard) - Enlighter`s default Theme
 * **Classic** (classic) - SyntaxHighlighter inspired
 * **Eclipse** (eclipse) - Eclipse inspired
-* **Beyond** (beyond) - GitHub/Bootstrap inspired
+* **Beyond** (beyond) - BeyondTechnology Theme
+* **Godzilla** (godzilla) - A MDN inspired Theme
+* **MooTwo** (mootwo) - Inspired by the current MooTools Website
+* **Droide** (droide) - Modern, minimalistic
+
+#### Legacy Themes (Lighter.js) ####
+* **MooTools** (mootools) - MooTools Docs inspired Theme
 * **Git** (git) - GitHub inspired
 * **Mocha** (mocha)
 * **Panic** (panic)

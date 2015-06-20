@@ -40,13 +40,13 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
     <head>
     ...
     <!-- Include EnlighterJS Styles -->
-    <link rel="stylesheet" type="text/css" href="EnlighterJS.yui.css" />
+    <link rel="stylesheet" type="text/css" href="EnlighterJS.min.css" />
     
     <!-- Include MooTools Framework -->
     <script type="text/javascript" src="mootools-core-1.5.0-full-nocompat.js"></script>
     
     <!-- Include EnlighterJS -->
-    <script type="text/javascript" src="EnlighterJS.yui.js" ></script>
+    <script type="text/javascript" src="EnlighterJS.min.js" ></script>
     
     <!-- Initialize EnlighterJS -->	
     <meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-indent="4" data-selector-block="pre" data-selector-inline="code.special" />
@@ -99,11 +99,17 @@ List of languages with their corresponding identifiers and supported aliases (wr
 ### Themes ###
 Theme identifiers are always expressed as lowercase!
 
-* **Enlighter** (enlighter, standard) - Enlighter's default Theme
-* **MooTools** (mootools) - MooTools Docs inspired Theme
+#### Modern Themes ####
+* **Enlighter** (enlighter, standard) - Enlighter`s default Theme
 * **Classic** (classic) - SyntaxHighlighter inspired
 * **Eclipse** (eclipse) - Eclipse inspired
-* **Beyond** (beyond) - GitHub/Bootstrap inspired
+* **Beyond** (beyond) - BeyondTechnology Theme
+* **Godzilla** (godzilla) - A MDN inspired Theme
+* **MooTwo** (mootwo) - Inspired by the current MooTools Website
+* **Droide** (droide) - Modern, minimalistic
+
+#### Legacy Themes (Lighter.js) ####
+* **MooTools** (mootools) - MooTools Docs inspired Theme
 * **Git** (git) - GitHub inspired
 * **Mocha** (mocha)
 * **Panic** (panic)
@@ -440,7 +446,7 @@ The EnlighterJS project is using [Apache ANT](http://ant.apache.org/) as build-s
 [UglifyJS2](https://github.com/mishoo/UglifyJS2) and [clean-css](https://github.com/jakubpawlowicz/clean-css) are used to minify the production-ready javascript and css files.
 To save bandwidth/traffic or include self-defined languages, you can easily customize your EnlighterJS build by editing the *build.xml* file (found in the root directory) and run Apache ANT (target *build*)
 
-You can also use the web-based [EnlighterJS Builder](http://enlighterjs.andidittrich.de/Builder.html) to generate your customized package **without the need of ANT** - everything is done for you serverside!
+You can also use the web-based [EnlighterJS Builder](http://enlighterjs.andidittrich.de/Builder.html) to generate your customized package **without the need of ANT** - everything is done for you server-site!
 
 ### Software Requirements ###
 
@@ -453,24 +459,24 @@ You can also use the web-based [EnlighterJS Builder](http://enlighterjs.andiditt
 ### Include/Exclude Languages and Themes ###
 
 If you want to remove some of the default theme you can edit the *include.themes* property and modify the list of css source files.
-For Example: only include the Git and Mocha themes
+For Example: only include the modern themes
 
     #XML
     <!-- Themes to include !-->
-    <property name="include.themes" value="Source/Themes/Git.css Source/Themes/Mocha.css" />
+    <property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide" />
 
-Or Include only your custom themes
+Or Include only your custom themes (Note: they have to be located into `Source/Themes/`)
 
     #XML
     <!-- Themes to include !-->
-    <property name="include.themes" value="Source/Themes/Custom1.css Source/Themes/Custom2.css" />		
+    <property name="include.themes" value="Custom1 Custom2" />		
 		
 Removing/Adding languages is also easy as this - they are defined by the *include.languages* property.
-For Example: only include html+css+js syntax highlighting (be careful - html is an alias for XML!, you have to include `Xml.js`)
+For Example: only include html+css+js syntax highlighting (be careful - html is an alias for XML!, you have to include `Xml`)
 
     #XML
     <!-- Languages to include !-->
-    <property name="include.languages" value="Source/Languages/Css.js Source/Languages/Xml.js Source/Languages/Js.js" />
+    <property name="include.languages" value="Css Javascript Xml" />
 
 
 Contribution
@@ -506,7 +512,6 @@ Screenshots
 
 ![Screenshot 1](http://enlighterjs.andidittrich.de/screenshot1.png)
 ![Screenshot 2](http://enlighterjs.andidittrich.de/screenshot2.png)    
-
 
 License
 -------

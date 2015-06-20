@@ -64,7 +64,7 @@ EnlighterJS.Language.php = new Class({
             'lconstants':     { pattern: /\b__[A-Z][A-Z0-9_]+__\b/g,                            alias: 're0' },
 
             'brackets':      { pattern: this.common.brackets,                                   alias: 'br0' },
-            'symbols':       { pattern: /!|@|&|<|>|=|-|\+|,|;/g,                alias: 'sy0' }
+            'symbols':       { pattern: /!|@|&|<|>|=|=>|-|\+/g,                                 alias: 'sy0' }
         };
 
         // Delimiters

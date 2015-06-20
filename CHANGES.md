@@ -1,18 +1,22 @@
+## Branch 2.x ##
+
 ### Version 2.7.0 ###
 * Added: [Rust](http://www.rust-lang.org/) language support - feature requested on [GitHub](https://github.com/AndiDittrich/EnlighterJS/issues/7)
-* Added: New Shell/Bash language engine
-* Added: Shell script example
 * Added: [VHDL](http://en.wikipedia.org/wiki/VHDL) language support
 * Added: [Matlab](http://en.wikipedia.org/wiki/MATLAB) language support
+* Added: New Shell/Bash language engine
+* Added: New PHP language engine
+* Added: New CSS language engine - some styles have changed!
+* Added: Shell script example
 * Added: "MooTwo" theme inspired by the mootools.net website
 * Added: "Godzilla" theme inspired by the MDN
 * Added: "Droide" theme
-* Added: New CSS language engine - some styles have changed!
 * Added: New EnlighterJS Info Button (Toolbar)
 * Added: New Tokenizer Engine which increases the rendering performance by nearly **700%**
 * Moved: `LanguageDevelopment.html` and `ThemeDevelopment.html` back to the project root
 * Removed: Build/Sources.json file - replaced by `.tmp/js.txt` and `.tmp/css.txt` (list of all used source files - required for development only!)
 * Removed: Old Tokenizer Engines (`Smart`, `Lazy`, `Tokenizer`)
+* Removed: CSS Class `unknown` from un-highlighted tokens (text)
 * Bugfix: The Theme Selector of the language demo pages doesn't remove the default styles
 * Bugfix: Wrong highlighting class used for SQL comments
 * Changed: Smart Tokenizer Engine is used instead of the old Lazy Bruteforce matching
@@ -21,7 +25,9 @@
 * Changed: Classic Themes `kw3` color switched with `kw4`
 * Changed: The *hover* css-class is now added to the outer `ol,ul` container instead of each `li` line - all themes have been adapted 
 * Changed: Inline gif imaages are used for the button toolbar instead of png images (size optimization)
-* Many performance optimizations
+* Many performance improvements
+* Reduced the CSS and JS file-size by massive sourcecode optimizations (43kB JS; 28KB CSS; including all Themes and Languages!)
+* New EnlighterJS Project Website
 
 
 ### Version 2.6.0 ###
@@ -89,14 +95,14 @@
 * Some internal changes (Theme CSS; HTML Structure; Toolbar buttons outsourced to `UI/Toolbar.js`)
 * Moved the Documentation to `Docs/` and seperated the sections by file - `README.md` is automatically generated during the build-process
 
-### Version 2.2.1 ##
+### Version 2.2.1 ###
 * Added Web-based Build-Service to easily generate custom EnlighterJS packages
 * Added Webbuild Target (used for Promethium CloudBuilder Service)
 * Improved Build-File
 * Removed "Util/human-readable-filter.xml" - formattings moved into the "concat-compress" task
 * Bugfix: Invalid directory names within buildfile
 
-### Version 2.2 ##
+### Version 2.2 ###
 * Added language support for C# (csharp) [provided by Joshua Maag](https://github.com/joshmaag)
 * Added C# language example
 * Added language alias "c#" for language csharp
@@ -176,6 +182,8 @@
 * Bugfix: Missing fallback when passing "null" as theme option
 * Bugfix: Code cleaning for Ampersand `&amp;` was processed as last - to handle chains like `&amp;lt;` => `&lt;` => `<` it is now processed first
 * Bugfix: Added missing right+left borders to git theme
+
+## Branch 1.x ##
 
 ### Version 1.8 ###
 * Added highlighting for special-lines, just add the attribute `data-enlighter-highlight="1,2,8-10"` to highlight the lines 1,2,8,9,10

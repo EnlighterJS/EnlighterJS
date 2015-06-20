@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.7.0 | MIT-Style X11 License | http://enlighterjs.andidittrich.de/ | June 7 2015 *//*
+/*! EnlighterJS Syntax Highlighter 2.7.0 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | June 14 2015 *//*
 ---
 description: EnlighterJS Theme-Base - All Themes are derived from these styles! Don't edit this file if you wan't to change styles! Use a derived theme!
 
@@ -67,7 +67,7 @@ ul.EnlighterJS {
   font-size: 10px;
   background-color: #f2f2f2;
   color: #939393;
-  margin: 0px;
+  margin: 0px 0px 20px 0px;
   padding: 0px;
   text-indent: 0px;
   list-style: none;
@@ -125,8 +125,7 @@ ol.EnlighterJS li {
   padding: 0px;
 }
 .EnlighterJSTabPane .controls li {
-  float: left;
-  display: block;
+  display: inline-block;
   list-style: none;
   padding: 3px 10px 3px 10px;
   margin: 0px 5px 0px 5px;
@@ -136,9 +135,6 @@ ol.EnlighterJS li {
   color: #000000;
   font-family: inherit;
   cursor: pointer;
-}
-.EnlighterJSTabPane .controls .clearfixList {
-  clear: left;
 }
 .EnlighterJSTabPane .controls .pane {
   padding: 5px 0px 0px 0px;

@@ -1,0 +1,222 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-sm-12">
+                <article>
+                    <h2>Getting Started</h2>
+
+                    <p>EnlighterJS is a free, easy-to-use, syntax highlighting plugin developed for MooTools. Using it can be as simple as adding a single script and style to your website, choosing the elements you wish to highlight, and EnlighterJS takes care of the rest!</p>
+                    <br />
+                    <div class="bordered">
+                    <h3 class="text-center">Prepare your sourecode</h3>
+                    <p class="text-center">Just add the <code data-enlighter-language="no-highlight">data-enlighter-language</code> attribute to specify the programming language.</p>
+                <pre data-enlighter-language="no-highlight" class="raw">
+&lt;pre data-enlighter-language="js"&gt;
+Element.implement({
+...some js code..
+});
+&lt;/pre&gt;</pre>
+                    </div>
+                    <div class="icon">
+                        Roll the Drums..it will be magically transformed into<br />
+                        <span class="glyphicon glyphicon-chevron-down"></span><br />
+                    </div>
+
+                    <div class="bordered">
+                <h3 class="text-center">Highlighted Code</h3>
+                <pre data-enlighter-language="js">
+Element.implement({
+    /**
+     * Highlights an element/Removes Element highlighting
+     *
+     * @param {Object, Boolean} [options] EnlighterJS options Object or Boolean value to enable/disable highlighting
+     * @returns {Element} The current Element instance.
+     */
+    enlight: function(options){
+        // mixed input check - options available ?
+        options = (typeof(options) == "undefined") ? {} : options;
+
+        // convert "true" to empty Object!
+        options = (options===true) ? {} : options;
+
+        // enlighter instance already available ?
+        var enlighter = this.retrieve('EnlighterInstance');
+
+        // hide highlighted sourcecode ?
+        if (options === false){
+            if (enlighter !== null) {
+                enlighter.enlight(false);
+            }
+        // highlight sourcecode and use options
+        }else{
+            // create new enlighter instance
+            if (enlighter === null) {
+                enlighter = new EJS(this, options, null);
+                this.store('EnlighterInstance', enlighter);
+            }
+            enlighter.enlight(options);
+        }
+
+        // element instance
+        return this;
+    },
+});
+                </pre>
+                    </div>
+                    <h2>Get It!</h2>
+                    <p>EnlighterJS is available as source download including pre-build css + js files.</p>
+
+                    <h3>Install with Bower</h3>
+                    <p>You can also use <a href="http://bower.io">Bower</a> (linked to the GitHub repository) to get the wanted version.</p>
+                    <code data-enlighter-language="shell">$ bower install enlighterjs</code>
+
+                    <hr />
+                    <h3>Manual Installation</h3>
+                    <p>Or download the latest Release from GitHub and extract the files to your workspace.</p>
+
+                    <p>
+                        <a class="btn btn-lg btn-primary" href="<?php echo EJS_PACKAGE_ZIP; ?>" role="button"><span class="glyphicon glyphicon-download-alt"></span> EnlighterJS.zip</a>
+                        <a class="btn btn-lg btn-primary" href="<?php echo EJS_PACKAGE_TGZ; ?>" role="button"><span class="glyphicon glyphicon-download-alt"></span> EnlighterJS.tar.gz</a>
+                        <a class="btn btn-lg btn-primary" href="Builder.html" role="button"><span class="glyphicon glyphicon-download-alt"></span> Custom Package</a>
+                    </p>
+
+                    <h2>Integration</h2>
+                    <p>Three steps to success. EnlighterJS requires <a href="http://mootools.net/core/builder">MooTools.Core >= 1.4.5</a>.</p>
+
+                    <h3>1. Link the CSS + JS Files</h3>
+                    <p>Modify the paths to match your project settings.</p>
+<pre class="EnlighterJS" data-enlighter-language="HTML">&lt;head&gt;
+...
+&lt;!-- Include EnlighterJS Styles --&gt;
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/EnlighterJS.min.css&quot; /&gt;
+
+&lt;!-- Include MooTools Framework --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/MooTools-More-1.5.1-compressed.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- Include EnlighterJS --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/EnlighterJS.min.js&quot; &gt;&lt;/script&gt;
+...
+&lt;/head&gt;
+</pre>
+                    <h3>2. Prepare your sourcecode</h3>
+                    <p>Starting with just a small piece of javascript code you wish to highlight. Prepare your sourcecode by giving the element (containing the code) an optional <code data-enlighter-language="no-highlight">data-enlighter-language</code> attribute with the language of the snippet.</p>
+<pre data-enlighter-language="html">
+&lt;pre data-enlighter-language=&quot;js&quot;&gt;
+$('#loading-example-btn').click(function () {
+	var btn = $(this)
+	btn.button('loading')
+	$.ajax(...).always(function () {
+		btn.button('reset')
+	});
+});
+&lt;/pre&gt;
+</pre>
+
+                    <h3>3. Initialize it!</h3>
+                    <p>The most simple and elegant way to use EnlighterJS on your page: just add a simple <strong>HTML-Meta-Tag</strong> to your page with the desired global config </p>
+<pre class="EnlighterJS" data-enlighter-language="HTML">&lt;!-- Initialize EnlighterJS --&gt;
+&lt;meta name=&quot;EnlighterJS&quot; content=&quot;Advanced javascript based syntax highlighting&quot; data-indent=&quot;4&quot; data-selector-block=&quot;pre&quot; data-selector-inline=&quot;code&quot; data-language=&quot;javascript&quot; /&gt;
+</pre>
+
+                    <h2>Ready to use Examples</h2>
+                    <p>Your instantaneous launch into the world of EnlighterJS. For further information, please refer to the <a href="Documentation.html">Documentation</a>.</p>
+
+                    <div class="bordered">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3><span class="glyphicon glyphicon-education"></span> Example1 <small><a href="Example1.html">View file</a></small></h3>
+                                <p><strong>Minimal</strong>
+                                    <p>A minimalistic example how to use EnlighterJS on your page, using the <strong>Metainit</strong> initialization method. This will be the best choice for most users.</p>
+                            </div>
+
+                            <div class="col-md-4">
+                                <h3><span class="glyphicon glyphicon-education"></span> Example2 <small><a href="Example2-jsinit.html">View file</a></small></h3>
+                                <p><strong>Javascript based Initialization.</strong></p>
+                                <p>In some cases, it can be more effective using a javascript based initialization - e.g. use different configs for inline+block code.</p>
+
+                            </div>
+
+                            <div class="col-md-4">
+                                <h3><span class="glyphicon glyphicon-education"></span> Example3 <small><a href="Example3-advanced.html">View file</a></small></h3>
+                                <p><strong>Advanced Usage</strong></p>
+                                <p>Some examples for special use-cases. Requires some deeper javascript knowledge.</p>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <h2>WordPress Plugin</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="lead">Enlighter - The most simple way to use EnlighterJS. <br />
+                                Full Visual-Editor-Integration. Build-in Theme Customizer. <br />
+                                Ready-to-use, Ready-to-post!
+                            </p>
+                            <a class="btn btn-lg btn-primary" href="http://wordpress.org/plugins/enlighter/" role="button">Enlighter WordPress Plugin</a>
+                        </div>
+                        <div class="col-md-6">
+                            <img class="featurette-image img-responsive" src="img/screenshot-2.jpg" alt="WordPress Visual Editor Integration" />
+                        </div>
+                    </div>
+
+
+                    <h2>License FAQ</h2>
+                    <p class="lead">EnlighterJS is released under the Terms of <a href="http://opensource.org/licenses/MIT">The MIT License (X11)</a>. Copyright (c) 2009 Jose Prado, 2013-2015 Andi Dittrich and Contributors</p>
+
+                    <h3>Simplification <small>not legally binding</small></h3>
+                    <div class="bordered">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4><span class="glyphicon glyphicon-warning-sign"></span> It requires you to</h4>
+                                <ul>
+                                    <li>Keep the license and copyright notice included in the CSS and JavaScript files when you use them in your works</li>
+                                    <li>Included the FULL License in all copies or substantial portions of the Software</li>
+                                </ul>
+
+                                <h4><span class="glyphicon glyphicon-remove"></span> It forbids you to</h4>
+                                <ul>
+                                    <li>Redistribute any piece of EnlighterJS without proper attribution</li>
+                                    <li>Hold the authors liable for damages as the Software is provided as is without warranty of any kind</li>
+                                    <li>Remove Copyright/License information's</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h4><span class="glyphicon glyphicon-ok"></span> It permits you to</h4>
+                                <ul>
+                                    <li>Use EnlighterJS in personal/private projects</li>
+                                    <li>Use EnlighterJS in commercial projects</li>
+                                    <li>Use EnlighterJS in internal/closed source projects</li>
+                                    <li>Modify the source code</li>
+                                </ul>
+
+                                <h4><span class="glyphicon glyphicon-pushpin"></span> It does not require you to</h4>
+                                <ul>
+                                    <li>Push changes you've made back to the project</li>
+                                    <li>Add attribution notices/credits to your website</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Full License</h3>
+                    <blockquote>
+                        <?php echo nl2br(file_get_contents('LICENSE.md')); ?>
+                    </blockquote>
+                </article>
+
+            </div>
+
+            <div class="col-md-2 hidden-xs hidden-sm">
+                <ul id="content-nav" data-autogen="true"></ul>
+
+                <div id="ToTop">
+                    <a href="#" class="glyphicon glyphicon-upload" title="Scroll To Top"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

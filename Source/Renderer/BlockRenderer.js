@@ -57,9 +57,7 @@ EJS.Renderer.BlockRenderer = new Class({
 		// line number count
 		var lineCounter = 1;
 
-        console.time('Tokenizer');
         var tokens = language.getTokens();
-        console.timeEnd('Tokenizer');
 
         var odd = ' ' + this.options.oddClassname || '';
         var even = ' ' + this.options.evenClassname || '';

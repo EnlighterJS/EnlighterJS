@@ -13,15 +13,12 @@ requires:
 provides: [Tokenizer.Standard]
 ...
 */
-EnlighterJS.Tokenizer.Standard = new Class({
+EJS.Tokenizer.Standard = new Class({
 
 	initialize : function(){
 	},
 
     getTokens : function(language, code){
-        // token list
-		var rawTokens = [];
-
         // create token object
         var token = (function(text, alias, index){
             return {
@@ -33,10 +30,11 @@ EnlighterJS.Tokenizer.Standard = new Class({
             }
         });
 
+        // token list
+		var rawTokens = this.getPreprocessedTokens(token);
+
         // apply each rule to given sourcecode string
 		Array.each(language.getRules(), function(rule){
-            var text = null;
-            var index = null;
             var match = null;
 
             // find ALL possible matches (also overlapping ones!)
@@ -44,14 +42,14 @@ EnlighterJS.Tokenizer.Standard = new Class({
                 // overrides the usual regex behaviour of not matching results that overlap
                 rule.pattern.lastIndex = match.index+1;
 
-                // extract index - add offset when matching group is used
-                index = match[1] ? match.index + match[0].indexOf(match[1]) : match.index;
+                // matching group used ?
+                if (match[1]){
+                    rawTokens.push(token(match[1], rule.alias, match.index + match[0].indexOf(match[1])));
 
-                // inner match defined or use the full matched pattern ?
-                text = match[1] || match[0];
-
-                // add new token
-                rawTokens.push(token(text, rule.alias, index));
+                // use full pattern
+                }else{
+                    rawTokens.push(token(match[0], rule.alias, match.index));
+                }
             }
 		});
 
@@ -71,7 +69,7 @@ EnlighterJS.Tokenizer.Standard = new Class({
             // unmatched text between tokens ?
             if (lastTokenEnd < rawTokens[i].index ){
                 // create new start text token
-                tokens.push(token(code.substring(lastTokenEnd, rawTokens[i].index), 'unknown', lastTokenEnd));
+                tokens.push(token(code.substring(lastTokenEnd, rawTokens[i].index), '', lastTokenEnd));
             }
 
             // push current token to list
@@ -91,9 +89,14 @@ EnlighterJS.Tokenizer.Standard = new Class({
 
         // text fragments complete ? or is the final one missing ?
         if (lastTokenEnd < code.length -1){
-            tokens.push(token(code.substring(lastTokenEnd), 'unknown', lastTokenEnd));
+            tokens.push(token(code.substring(lastTokenEnd), '', lastTokenEnd));
         }
 
 		return tokens;
-	}
+	},
+
+    // token pre-processing; can be overloaded by extending class
+    getPreprocessedTokens: function(token){
+        return [];
+    }
 });

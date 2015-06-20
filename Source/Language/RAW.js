@@ -22,9 +22,20 @@ EJS.Language.raw = new Class({
     },
     
     getTokens: function(){
+        // create token object
+        var token = (function(text, alias, index){
+            return {
+                text: text,
+                alias: alias,
+                index: index,
+                length: text.length,
+                end: text.length + index
+            }
+        });
+
     	// raw means "no-highlight" - return a single, unknown token with the given sourcecode
     	return [
-    	        new EJS.Token(this.code, '', 0)
+    	        token(this.code, '', 0)
     	];
     }
 });

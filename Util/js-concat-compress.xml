@@ -28,7 +28,7 @@
             <arg line="--enclose"></arg>
             <arg line="--preamble"></arg>
             <arg value="${cpnotice}"></arg>
-            <arg line="--output ${build.dir}${uncompress.output}"></arg>
+            <arg line="--output ${uncompress.output}"></arg>
             <arg line="--"></arg>
             <arg line="${compress.input}"></arg>
         </exec>
@@ -41,7 +41,7 @@
             <arg line="--enclose"></arg>
             <arg line="--preamble"></arg>
             <arg value="${cpnotice}"></arg>
-            <arg line="--output ${build.dir}${compress.output}"></arg>
+            <arg line="--output ${compress.output}"></arg>
             <arg line="--"></arg>
             <arg line="${compress.input}"></arg>
         </exec>

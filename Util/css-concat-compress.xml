@@ -22,7 +22,7 @@
 
         <!-- Concatenating Files ! -->
         <echo message="Concatenating CSS Files.." />
-        <concat destfile="${build.dir}/${uncompress.output}">
+        <concat destfile="${uncompress.output}">
             <header trim="yes">${cpnotice}</header>
             <filelist files="${compress.input}" />
         </concat>
@@ -30,8 +30,8 @@
         <!-- Compressing Files -->
         <echo message="Compressing CSS Files.." />
         <exec executable="${cleancss}">
-            <arg line="-o ${build.dir}${compress.output}"></arg>
-            <arg line="${build.dir}/${uncompress.output}"></arg>
+            <arg line="-o ${compress.output}"></arg>
+            <arg line="${uncompress.output}"></arg>
         </exec>
 	</target>
 </project>

@@ -1,5 +1,3 @@
-<?php require('Resources/Templates/ExampleHeader.phtml'); ?>
-
 	<!-- Initialize EnlighterJS using the Helper Utility -->
 	<script type="text/javascript">
 		window.addEvent('domready', function(){
@@ -32,34 +30,10 @@
 			});
 		});
 	</script>
-	
-	<!-- Special Styles -->
-	<style type="text/css">
-		/* custom hover effect using specific css class */
-		.EnlighterJS li.myHoverClass:hover{
-			background-color: #c0c0c0;
-		}
-	</style>	
-</head>
-<body>
-	<!-- Begin page content -->
-	<div class="container">
-		<div class="page-header">
-			<h1>
-				<strong>EnlighterJS Quickstart</strong> <small>Javascript based Initialization</small>
-			</h1>
-		</div>
-		<div id="content">
-			<!-- ############################################################# -->
-			<div class="alert alert-success" role="alert">Level: <strong>Beginner/Intermediate</strong></div>
-			<div class="well"><strong>Welcome to EnlighterJS</strong> - in some cases it's required to initialize EnlighterJS with some javascript code. This give you access to all available configuration options. It's recommended to use the <code>EnlighterJS.Util.Init()</code> utility - it handles inline+block initialization simultaneously!
-				<br /><br />
-				Please view the page source to see how it's done! - <a href="http://enlighterjs.andidittrich.de/" title="EnlighterJS Documentation">Documentation</a>
-			</div>
-			
-			<hr />
-			
-			<h3>Some Examples</h3>	
+
+    <div class="alert alert-success" role="alert">Level: <strong>Beginner</strong></div>
+
+	<h3>Some Examples</h3>
 	<h4>jQuery Code (Javascript) - highlighted by EnlighterJS</h4>
 <pre data-enlighter-language="jquery" data-enlighter-highlight="5">
 $('#loading-example-btn').click(function () {
@@ -73,11 +47,3 @@ $('#loading-example-btn').click(function () {
 	<h4>Inline Code</h4>
 	<p>EnlighterJS also supports <code class="special" >$content = print_r(array(1,2,3), true);</code> (since version 2.0).</p>
 	
-		<!-- ############################################################# -->
-		</div>
-		<!-- // content -->
-
-	</div>
-	<!-- // container -->
-</body>
-</html>

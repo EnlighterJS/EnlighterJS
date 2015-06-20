@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.7.0 | MIT-Style X11 License | http://enlighterjs.andidittrich.de/ | June 7 2015 */
+/*! EnlighterJS Syntax Highlighter 2.7.0 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | June 14 2015 */
 (function() {
     /*
 ---
@@ -589,9 +589,7 @@ provides: [EnlighterJS.Renderer.BlockRenderer]
             }
             // line number count
             var lineCounter = 1;
-            console.time("Tokenizer");
             var tokens = language.getTokens();
-            console.timeEnd("Tokenizer");
             var odd = " " + this.options.oddClassname || "";
             var even = " " + this.options.evenClassname || "";
             // current line element
@@ -655,11 +653,9 @@ requires:
 provides: [Tokenizer.Standard]
 ...
 */
-    EnlighterJS.Tokenizer.Standard = new Class({
+    EJS.Tokenizer.Standard = new Class({
         initialize: function() {},
         getTokens: function(language, code) {
-            // token list
-            var rawTokens = [];
             // create token object
             var token = function(text, alias, index) {
                 return {
@@ -670,21 +666,21 @@ provides: [Tokenizer.Standard]
                     end: text.length + index
                 };
             };
+            // token list
+            var rawTokens = this.getPreprocessedTokens(token);
             // apply each rule to given sourcecode string
             Array.each(language.getRules(), function(rule) {
-                var text = null;
-                var index = null;
                 var match = null;
                 // find ALL possible matches (also overlapping ones!)
                 while (match = rule.pattern.exec(code)) {
                     // overrides the usual regex behaviour of not matching results that overlap
                     rule.pattern.lastIndex = match.index + 1;
-                    // extract index - add offset when matching group is used
-                    index = match[1] ? match.index + match[0].indexOf(match[1]) : match.index;
-                    // inner match defined or use the full matched pattern ?
-                    text = match[1] || match[0];
-                    // add new token
-                    rawTokens.push(token(text, rule.alias, index));
+                    // matching group used ?
+                    if (match[1]) {
+                        rawTokens.push(token(match[1], rule.alias, match.index + match[0].indexOf(match[1])));
+                    } else {
+                        rawTokens.push(token(match[0], rule.alias, match.index));
+                    }
                 }
             });
             // sort tokens by index (first occurrence)
@@ -700,7 +696,7 @@ provides: [Tokenizer.Standard]
                 // unmatched text between tokens ?
                 if (lastTokenEnd < rawTokens[i].index) {
                     // create new start text token
-                    tokens.push(token(code.substring(lastTokenEnd, rawTokens[i].index), "unknown", lastTokenEnd));
+                    tokens.push(token(code.substring(lastTokenEnd, rawTokens[i].index), "", lastTokenEnd));
                 }
                 // push current token to list
                 tokens.push(rawTokens[i]);
@@ -716,9 +712,13 @@ provides: [Tokenizer.Standard]
             }
             // text fragments complete ? or is the final one missing ?
             if (lastTokenEnd < code.length - 1) {
-                tokens.push(token(code.substring(lastTokenEnd), "unknown", lastTokenEnd));
+                tokens.push(token(code.substring(lastTokenEnd), "", lastTokenEnd));
             }
             return tokens;
+        },
+        // token pre-processing; can be overloaded by extending class
+        getPreprocessedTokens: function(token) {
+            return [];
         }
     });
     /*
@@ -737,78 +737,46 @@ requires:
 provides: [EnlighterJS.Tokenizer.Xml]
 ...
 */
-    EJS.Tokenizer.Xml = new Class({
-        Extends: EJS.Tokenizer.Standard,
+    EnlighterJS.Tokenizer.Xml = new Class({
+        Extends: EnlighterJS.Tokenizer.Standard,
+        code: null,
         /**
-	 * @constructs
-	 */
-        initialize: function() {},
+     * Store code to pre-process XML
+     */
+        getTokens: function(language, code) {
+            this.code = code;
+            return this.parent(language, code);
+        },
         /**
-	 * Xml Tokenizer
-	 * 
-	 * @author Jose Prado, Andi Dittrich
-	 * 
-	 * @param {Language}
-	 *            lang The language to use for parsing.
-	 * @param {String}
-	 *            code The code to parse.
-	 * @param {Number}
-	 *            [offset] Optional offset to add to the match index.
-	 * @return {Array} The array of tokens found.
-	 */
-        parseTokens: function(lang, code) {
+     * XML Syntax is preprocessed
+     */
+        getPreprocessedTokens: function(token) {
+            // token list
+            var rawTokens = [];
             // Tags + attributes matching and preprocessing.
             var tagPattern = /((?:\&lt;|<)[A-Z:_][A-Z0-9:.-]*)([\s\S]*?)(\/?(?:\&gt;|>))/gi;
             var attPattern = /\b([\w:-]+)([ \t]*)(=)([ \t]*)(['"][^'"]+['"]|[^'" \t]+)/gi;
             // tmp storage
-            var tokens = [];
             var match = null;
             var attMatch = null;
             var index = 0;
             // Create array of matches containing opening tags, attributes, values, and separators.
-            while ((match = tagPattern.exec(code)) != null) {
-                tokens.push(new EJS.Token(match[1], "kw1", match.index));
+            while ((match = tagPattern.exec(this.code)) != null) {
+                rawTokens.push(token(match[1], "kw1", match.index));
                 while ((attMatch = attPattern.exec(match[2])) != null) {
-                    index = match.index + match[1].length + attMatch.index;
-                    tokens.push(new EJS.Token(attMatch[1], "kw2", index));
                     // Attributes
-                    index += attMatch[1].length + attMatch[2].length;
-                    tokens.push(new EJS.Token(attMatch[3], "kw1", index));
+                    index = match.index + match[1].length + attMatch.index;
+                    rawTokens.push(token(attMatch[1], "kw2", index));
                     // Separators (=)
+                    index += attMatch[1].length + attMatch[2].length;
+                    rawTokens.push(token(attMatch[3], "kw1", index));
+                    // Values
                     index += attMatch[3].length + attMatch[4].length;
-                    tokens.push(new EJS.Token(attMatch[5], "st0", index));
+                    rawTokens.push(token(attMatch[5], "st0", index));
                 }
-                tokens.push(new EJS.Token(match[3], "kw1", match.index + match[1].length + match[2].length));
+                rawTokens.push(token(match[3], "kw1", match.index + match[1].length + match[2].length));
             }
-            // apply rules
-            Object.each(lang.getRules(), function(regex, rule) {
-                while (null !== (match = regex.exec(code))) {
-                    index = match[1] && match[0].contains(match[1]) ? match.index + match[0].indexOf(match[1]) : match.index;
-                    text = match[1] || match[0];
-                    tokens.push(new EJS.Token(text, rule, index));
-                }
-            }, this);
-            // sort tokens
-            tokens = tokens.sort(function(token1, token2) {
-                return token1.index - token2.index;
-            });
-            for (var i = 0, j = 0; i < tokens.length; i++) {
-                if (tokens[i] === null) {
-                    continue;
-                }
-                for (j = i + 1; j < tokens.length && tokens[i] !== null; j++) {
-                    if (tokens[j] === null) {
-                        continue;
-                    } else if (tokens[j].isBeyond(tokens[i])) {
-                        break;
-                    } else if (tokens[j].overlaps(tokens[i])) {
-                        tokens[i] = null;
-                    } else if (tokens[i].contains(tokens[j])) {
-                        tokens[j] = null;
-                    }
-                }
-            }
-            return tokens.clean();
+            return rawTokens;
         }
     });
     /*
@@ -1296,7 +1264,7 @@ provides: [EnlighterJS.Language.generic]
             // Matches a function call: functionName() style.
             functionCalls: /\b([\w]+)\s*\(/gm,
             // Matches any of the common brackets.
-            brackets: /\{|\}|\(|\)|\[|\]/g,
+            brackets: /\{|}|\(|\)|\[|]/g,
             // Matches integers, decimals, hexadecimals.
             numbers: /\b((?:(\d+)?\.)?[0-9]+|0x[0-9A-F]+)\b/gi
         },
@@ -1310,7 +1278,6 @@ provides: [EnlighterJS.Language.generic]
         initialize: function(code) {
             // initialize language options
             this.setupLanguage();
-            this.aliases = {};
             this.rules = [];
             this.code = code;
             // create new tokenizer
@@ -1340,9 +1307,11 @@ provides: [EnlighterJS.Language.generic]
             }, this);
             // Set Rules from this.patterns object.
             Object.each(this.patterns, function(regex, ruleName) {
+                // add new rule entry
                 this.rules.push(regex);
             }, this);
         },
+        getRuleByName: function(name) {},
         // override this method to setup language params
         setupLanguage: function() {},
         getTokens: function() {
@@ -1350,9 +1319,6 @@ provides: [EnlighterJS.Language.generic]
         },
         getRules: function() {
             return this.rules;
-        },
-        hasDelimiters: function() {
-            return this.delimiters.start && this.delimiters.end;
         },
         csvToRegExp: function(csv, mod) {
             return new RegExp("\\b(" + csv.replace(/,\s*/g, "|") + ")\\b", mod);
@@ -2157,6 +2123,107 @@ provides: [EnlighterJS.Language.nsis]
     });
     /*
 ---
+description: PHP language
+
+license: MIT-style
+
+authors:
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Language.php]
+...
+*/
+    EnlighterJS.Language.php = new Class({
+        Extends: EnlighterJS.Language.generic,
+        tokenizerType: "Standard",
+        setupLanguage: function() {
+            this.keywords = {
+                // http://php.net/manual/en/reserved.keywords.php
+                keywords: {
+                    csv: "__halt_compiler,abstract,and,as,break,callable,case,catch,class,clone,const,continue,declare,default,do,else,elseif,enddeclare,endfor,endforeach,endif,endswitch,endwhile,extends,final,finally,function,global,goto,implements,instanceof,insteadof,interface,namespace,new,or,private,protected,public,static,throw,trait,try,use,var,xor,yield",
+                    alias: "kw1"
+                },
+                // http://php.net/manual/en/reserved.other-reserved-words.php
+                reserved: {
+                    csv: "int,float,bool,string,true,false,null,resource,object,mixed,numeric",
+                    alias: "kw4",
+                    mod: "gi"
+                }
+            };
+            this.patterns = {
+                keywordsFn: {
+                    pattern: /(require_once|include_once|array|die|exit|echo|print|empty|eval|include|isset|list|require|unset|if|switch|while|foreach|for|return)(?:\s*\(|\s+)?/gi,
+                    alias: "kw1"
+                },
+                inherit: {
+                    pattern: /(self|parent|\$this)/gi,
+                    alias: "kw4"
+                },
+                slashComments: {
+                    pattern: this.common.slashComments,
+                    alias: "co1"
+                },
+                multiComments: {
+                    pattern: this.common.multiComments,
+                    alias: "co2"
+                },
+                dqStrings: {
+                    pattern: this.common.multiLineDoubleQuotedStrings,
+                    alias: "st0"
+                },
+                sqStrings: {
+                    pattern: this.common.multiLineSingleQuotedStrings,
+                    alias: "st1"
+                },
+                heredocs: {
+                    pattern: /(<<<\s*?('?)([A-Z0-9]+)\2[^\n]*?\n[\s\S]*?\n\3(?![A-Z0-9\s]))/gim,
+                    alias: "st1"
+                },
+                numbers: {
+                    pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][\-+]?[0-9]+)?|0x[A-F0-9]+)\b/gi,
+                    alias: "nu0"
+                },
+                variables: {
+                    pattern: /\$[A-Z_][\w]*/gim,
+                    alias: "kw3"
+                },
+                functions: {
+                    pattern: this.common.functionCalls,
+                    alias: "me0"
+                },
+                methods: {
+                    pattern: /(?:->|::)([\w]+)/gim,
+                    alias: "me1"
+                },
+                constants: {
+                    pattern: /\b[A-Z][A-Z0-9_]+[A-Z]\b/g,
+                    alias: "kw4"
+                },
+                lconstants: {
+                    pattern: /\b__[A-Z][A-Z0-9_]+__\b/g,
+                    alias: "re0"
+                },
+                brackets: {
+                    pattern: this.common.brackets,
+                    alias: "br0"
+                },
+                symbols: {
+                    pattern: /!|@|&|<|>|=|=>|-|\+/g,
+                    alias: "sy0"
+                }
+            };
+            // Delimiters
+            this.delimiters = {
+                start: this.strictRegExp("<?php"),
+                end: this.strictRegExp("?>")
+            };
+        }
+    });
+    /*
+---
 description: Python language
 
 license: MIT-style
@@ -2276,8 +2343,18 @@ provides: [EnlighterJS.Language.raw]
             this.code = code;
         },
         getTokens: function() {
+            // create token object
+            var token = function(text, alias, index) {
+                return {
+                    text: text,
+                    alias: alias,
+                    index: index,
+                    length: text.length,
+                    end: text.length + index
+                };
+            };
             // raw means "no-highlight" - return a single, unknown token with the given sourcecode
-            return [ new EJS.Token(this.code, "", 0) ];
+            return [ token(this.code, "", 0) ];
         }
     });
     /*
@@ -2661,30 +2738,30 @@ requires:
 provides: [EnlighterJS.Language.xml]
 ...
 */
-    EJS.Language.xml = new Class({
+    EnlighterJS.Language.xml = new Class({
         Extends: EnlighterJS.Language.generic,
         tokenizerType: "Xml",
         setupLanguage: function() {
             // Common HTML patterns
             this.patterns = {
                 comments: {
-                    pattern: /(?:\&lt;|<)!--[\s\S]*?--(?:\&gt;|>)/gim,
+                    pattern: /(?:&lt;|<)!--[\s\S]*?--(?:&gt;|>)/gim,
                     alias: "co2"
                 },
                 cdata: {
-                    pattern: /(?:\&lt;|<)!\[CDATA\[[\s\S]*?\]\](?:\&gt;|>)/gim,
+                    pattern: /(?:&lt;|<)!\[CDATA\[[\s\S]*?]](?:&gt;|>)/gim,
                     alias: "st1"
                 },
                 closingTags: {
-                    pattern: /(?:\&lt;|<)\/[A-Z:_][A-Z0-9:.-]*?(?:\&gt;|>)/gi,
+                    pattern: /(?:&lt;|<)\/[A-Z:_][A-Z0-9:.-]*?(?:&gt;|>)/gi,
                     alias: "kw1"
                 },
                 doctype: {
-                    pattern: /(?:\&lt;|<)!DOCTYPE[\s\S]+?(?:\&gt;|>)/gim,
+                    pattern: /(?:&lt;|<)!DOCTYPE[\s\S]+?(?:&gt;|>)/gim,
                     alias: "st2"
                 },
                 version: {
-                    pattern: /(?:\&lt;|<)\?xml[\s\S]+?\?(?:\&gt;|>)/gim,
+                    pattern: /(?:&lt;|<)\?xml[\s\S]+?\?(?:&gt;|>)/gim,
                     alias: "kw2"
                 }
             };

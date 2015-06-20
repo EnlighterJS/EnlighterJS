@@ -14,22 +14,42 @@
     <!-- Favicon !-->
     <link rel="icon" href="../Resources/favicon.png" type="image/png" />
 
-    <title>Example2-jsinit | EnlighterJS</title>
+    <title>Javascript Initialization Example | EnlighterJS</title>
 
     <!-- Bootstrap CSS - just 4 styling - not required for enlighterjs -->
-    <link rel="stylesheet" href="../Resources/bootstrap-3.2.0-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../Resources/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../Resources/bootstrap/bootstrap.min.css">
 
     <!-- Include EnlighterJS Styles -->
     <link rel="stylesheet" type="text/css" href="../Build/EnlighterJS.min.css" />
 
+    <!-- Monospace Fonts on Google Webfonts !-->
+    <link href='http://fonts.googleapis.com/css?family=Cutive+Mono|Roboto+Mono:400,700,400italic,500,500italic,700italic|Ubuntu+Mono:400,700,400italic,700italic|Droid+Sans+Mono|Source+Code+Pro:400,600' rel='stylesheet' type='text/css'>
+
     <!-- Include MooTools Framework -->
-    <script type="text/javascript" src="../Resources/MooTools-More-1.5.1-compressed.js"></script>
+    <script type="text/javascript" src="../Resources/MooTools.min.js"></script>
 
     <!-- Include EnlighterJS -->
     <script type="text/javascript" src="../Build/EnlighterJS.min.js"></script>
 
-	<!-- Initialize EnlighterJS using the Helper Utility -->
+    <!-- Special Styles -->
+    <style type="text/css">
+        /* custom hover effect using specific css class */
+        .EnlighterJS.myHoverClass li:hover{
+            background-color: #c0c0c0;
+        }
+    </style>
+
+    </head>
+<body>
+	<!-- Begin page content -->
+	<div class="container">
+		<div class="page-header">
+			<h1>
+				Javascript Initialization Example			</h1>
+		</div>
+		<div id="content">
+		<!-- ############################################################# -->
+				<!-- Initialize EnlighterJS using the Helper Utility -->
 	<script type="text/javascript">
 		window.addEvent('domready', function(){
 			// Global EnlighterJS initialization for block code (selector: pre) and inline code (selector: code.special) with some options
@@ -61,34 +81,10 @@
 			});
 		});
 	</script>
-	
-	<!-- Special Styles -->
-	<style type="text/css">
-		/* custom hover effect using specific css class */
-		.EnlighterJS li.myHoverClass:hover{
-			background-color: #c0c0c0;
-		}
-	</style>	
-</head>
-<body>
-	<!-- Begin page content -->
-	<div class="container">
-		<div class="page-header">
-			<h1>
-				<strong>EnlighterJS Quickstart</strong> <small>Javascript based Initialization</small>
-			</h1>
-		</div>
-		<div id="content">
-			<!-- ############################################################# -->
-			<div class="alert alert-success" role="alert">Level: <strong>Beginner/Intermediate</strong></div>
-			<div class="well"><strong>Welcome to EnlighterJS</strong> - in some cases it's required to initialize EnlighterJS with some javascript code. This give you access to all available configuration options. It's recommended to use the <code>EnlighterJS.Util.Init()</code> utility - it handles inline+block initialization simultaneously!
-				<br /><br />
-				Please view the page source to see how it's done! - <a href="http://enlighterjs.andidittrich.de/" title="EnlighterJS Documentation">Documentation</a>
-			</div>
-			
-			<hr />
-			
-			<h3>Some Examples</h3>	
+
+    <div class="alert alert-success" role="alert">Level: <strong>Beginner</strong></div>
+
+	<h3>Some Examples</h3>
 	<h4>jQuery Code (Javascript) - highlighted by EnlighterJS</h4>
 <pre data-enlighter-language="jquery" data-enlighter-highlight="5">
 $('#loading-example-btn').click(function () {

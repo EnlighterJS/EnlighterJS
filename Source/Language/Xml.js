@@ -14,7 +14,7 @@ requires:
 provides: [EnlighterJS.Language.xml]
 ...
 */
-EJS.Language.xml = new Class({
+EnlighterJS.Language.xml = new Class({
 
 	Extends : EnlighterJS.Language.generic,
 	tokenizerType : 'Xml',
@@ -23,23 +23,23 @@ EJS.Language.xml = new Class({
 		// Common HTML patterns
 		this.patterns = {
 			'comments' : {
-				pattern : /(?:\&lt;|<)!--[\s\S]*?--(?:\&gt;|>)/gim,
+				pattern : /(?:&lt;|<)!--[\s\S]*?--(?:&gt;|>)/gim,
 				alias : 'co2'
 			},
 			'cdata' : {
-				pattern : /(?:\&lt;|<)!\[CDATA\[[\s\S]*?\]\](?:\&gt;|>)/gim,
+				pattern : /(?:&lt;|<)!\[CDATA\[[\s\S]*?]](?:&gt;|>)/gim,
 				alias : 'st1'
 			},
 			'closingTags' : {
-				pattern : /(?:\&lt;|<)\/[A-Z:_][A-Z0-9:.-]*?(?:\&gt;|>)/gi,
+				pattern : /(?:&lt;|<)\/[A-Z:_][A-Z0-9:.-]*?(?:&gt;|>)/gi,
 				alias : 'kw1'
 			},
 			'doctype' : {
-				pattern : /(?:\&lt;|<)!DOCTYPE[\s\S]+?(?:\&gt;|>)/gim,
+				pattern : /(?:&lt;|<)!DOCTYPE[\s\S]+?(?:&gt;|>)/gim,
 				alias : 'st2'
 			},
 			'version' : {
-				pattern : /(?:\&lt;|<)\?xml[\s\S]+?\?(?:\&gt;|>)/gim,
+				pattern : /(?:&lt;|<)\?xml[\s\S]+?\?(?:&gt;|>)/gim,
 				alias : 'kw2'
 			}
 		};

@@ -6,126 +6,73 @@
  * @license MIT Style X11
  */
 
-function cdnbase($file){
-	return $file;
-}
-
-// Get output dir
-$outputDir = (count($argv)>=2 ? $argv[1] : 'Output/');
-
 // Get Build Version
-define('ENLIGHTERJS_VERSION', (count($argv)>=3 ? $argv[2] : 'unknown'));
+define('EJS_VERSION', (count($argv)>=3 ? $argv[2] : 'unknown'));
+define('EJS_PACKAGE_ZIP', 'https://github.com/AndiDittrich/EnlighterJS/archive/v' . EJS_VERSION.'.zip');
+define('EJS_PACKAGE_TGZ', 'https://github.com/AndiDittrich/EnlighterJS/archive/v' . EJS_VERSION.'.tar.gz');
 
 require('global.php');
 
-// === README ============================================================
-// create Readme.html
-$readmeContent = renderMarkdownDocument(file_get_contents('README.md'));
-$readmeContent = str_replace('<h2>', '<hr /><h2>', $readmeContent);
-$readmeContent .= '<blockquote>'. nl2br(file_get_contents('LICENSE.md')).'</blockquote>';
-renderTemplate($outputDir.'Documentation.html', array(
-	'pageContent' => $readmeContent,
-	'pageTitle' => 'Documentation <small>Advanced Javascript based Syntax Highlighter for MooTools</small>'
+// === GETTING STARTED ============================================================
+renderTemplate($outputDir.'index.html', array(
+    'PAGE' => 'Resources/Pages/GettingStarted.phtml',
+    'title' => 'EnlighterJS',
+    'subtitle' => 'An OpenSource Syntax Highlighter',
 ));
 
 // === Changelog ============================================================
-// create Changelog.html
-$changelogContent = renderMarkdownDocument(file_get_contents('CHANGES.md'));
-$changelogContent = str_replace('<h3>', '<hr /><h3>', $changelogContent);
 renderTemplate($outputDir.'Changelog.html', array(
-'pageContent' => $changelogContent,
-'pageTitle' => 'Changelog <small>EnlighterJS` History</small>'
-));
-
-// === QUICKSTART ========================================================
-$quickstartContent = captureTemplate('Resources/Templates/Quickstart.phtml') ;
-renderTemplate($outputDir.'Quickstart.html', array(
-	'pageContent' => $quickstartContent,
-	'pageTitle' => 'Quickstart <small>First Steps with EnlighterJS</small>'
-));
-
-// === FRONTPAGE ========================================================
-$frontpageContent = captureTemplate('Resources/Templates/Frontpage.phtml');
-file_put_contents($outputDir.'index.html', $frontpageContent);
-
-// === Builder ========================================================
-$builderContent = captureTemplate('Resources/Templates/Builder.phtml', array(
-    'languages' => $languageDescriptions,
-    'themes' => $themes
-));
-renderTemplate($outputDir.'Builder.html', array(
-'pageContent' => $builderContent,
-'pageTitle' => 'Builder <small>Generate your custom EnlighterJS package</small>'
+    'PAGE' => 'Resources/Pages/Changelog.phtml',
+    'title' => 'Changelog',
+    'subtitle' => 'The History of EnlighterJS',
 ));
 
 
-// === Language Examples =================================================
-foreach ($languageList as $lang){
-    $langContent = captureTemplate('Resources/Templates/ThemeSelector.phtml', array(
+// === Documentation ============================================================
+renderTemplate($outputDir.'Documentation.html', array(
+    'PAGE' => 'Resources/Pages/Documentation.phtml',
+    'title' => 'Documentation',
+    'subtitle' => 'Feature Reference',
+));
+
+// === Languages ============================================================
+foreach ($languageExamples as $currentLanguage) {
+    renderTemplate($outputDir . 'Language.'.$currentLanguage.'.html', array(
+        'PAGE' => 'Resources/Pages/Languages.phtml',
+        'title' => 'Languages',
+        'subtitle' => 'Build-In Support',
+        'currentLanguage' => $currentLanguage,
+        'languageExamples' => $languageExamples,
         'themes' => $themes
-    )) ;
-	$langContent .= file_get_contents('Resources/TestcaseData/'.strtolower($lang).'.html');
-	renderTemplate($outputDir.strtolower($lang).'.html', array(
-		'pageContent' => $langContent,
-		'pageTitle' => $lang. ' <small>Language Example</small>',
-	));
+    ));
 }
 
-// === Theme Demo ========================================================
-
-// output buffer to append
-$themeHtmlData = '';
-foreach ($themes as $theme){
-	$themeHtmlData .= captureTemplate('Resources/Templates/Theme.phtml', array(
-		'theme' => strtolower($theme),
-		'title' => $theme	
-	));
+// === Themes ============================================================
+foreach ($themes as $theme) {
+    renderTemplate($outputDir . 'Theme.'.$theme.'.html', array(
+        'PAGE' => 'Resources/Pages/Themes.phtml',
+        'title' => 'Themes',
+        'subtitle' => 'Enlighter`s Appearance',
+        'theme' => $theme,
+        'themes' => $themes
+    ));
 }
-renderTemplate($outputDir.'Themes.html', array(
-	'pageContent' => $themeHtmlData,
-	'pageTitle' => 'Theme Browser'
+
+// === Builder ============================================================
+renderTemplate($outputDir.'Builder.html', array(
+    'PAGE' => 'Resources/Pages/Builder.phtml',
+    'title' => 'Builder',
+    'subtitle' => 'Customized EnlighterJS Packages',
+    'languages' => $languageDescriptions
 ));
 
+// === Plugins ============================================================
+renderTemplate($outputDir.'Plugins.html', array(
+    'PAGE' => 'Resources/Pages/Plugins.phtml',
+    'title' => 'Plugins',
+    'subtitle' => 'Extend, Integrate'
+));
 
-function extractContent($filename, $start=0, $stop=99999){
-    $content = file_get_contents($filename);
-    $lines = explode("\n", $content);
-    $buffer = '';
-
-    for ($i=$start;$i<min($stop, count($lines)-1);$i++){
-        $buffer .= $lines[$i]. "\n";
-    }
-
-    return $buffer;
-}
-
-/**
- * Renders the template file and return HTML
- * @param Array $vars
- */
 function renderTemplate($destination, $vars = array()){
-    file_put_contents($destination, captureTemplate('Resources/Templates/WebsiteTemplate.phtml', $vars));
-}
-
-/**
- * Render a Markdown Document using LightUp with Promethium CloudAPI
- * @param unknown $content
- */
-function renderMarkdownDocument($content) {
-    $postdata = http_build_query(array(
-            'mddata' => $content,
-            'highlightingMode' => 'enlighterjs',
-            'addAnchors' => 'true'
-    ));
-    $opts = array(
-            'http' => array (
-                    'method' => 'POST',
-                    'header' => 'Content-type: application/x-www-form-urlencoded',
-                    'content' => $postdata
-            )
-    );
-    $htmlContent = file_get_contents('http://promethium.andidittrich.de/lightup/', false, stream_context_create($opts));
-
-    // remove first heading1
-    return preg_replace('/<h1>.*<\/h1>/', '', $htmlContent, 1);
+    file_put_contents($destination, captureTemplate('Resources/Web.phtml', $vars));
 }

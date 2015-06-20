@@ -27,12 +27,12 @@
     <link href='http://fonts.googleapis.com/css?family=Cutive+Mono|Roboto+Mono:400,700,400italic,500,500italic,700italic|Ubuntu+Mono:400,700,400italic,700italic|Droid+Sans+Mono|Source+Code+Pro:400,600' rel='stylesheet' type='text/css'>
 
     <!-- Include MooTools Framework -->
-    <script type="text/javascript" src="Resources/MooTools-More-1.5.1-compressed.js"></script>
+    <script type="text/javascript" src="Resources/MooTools.min.js"></script>
 
     <!-- Include EnlighterJS -->
     <script type="text/javascript" src="Build/EnlighterJS.js"></script>
-    <script type="text/javascript" src="Source/Tokenizer/Standard.js"></script>
-    <script type="text/javascript" src="Source/Language/Php.js"></script>
+    <script type="text/javascript" src="Source/Tokenizer/Xml.js"></script>
+    <script type="text/javascript" src="Source/Language/Xml.js"></script>
 
 	<script type="text/javascript">
 		window.addEvent('domready', function(){
@@ -77,255 +77,32 @@
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
                 <code data-enlighter-language="php">echo 'Arnold once said: "I\'ll be back"';</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
             </p>
-<pre data-enlighter-language="php">
-// Outputs: Arnold once said: "Ill be back"
-echo 'Arnold once said: "I\'ll be back"';
-    </pre>
-            <hr />
-
- <pre data-enlighter-language="php">
-echo 'You can also have embedded newlines in
-strings this way as it is \'
-okay to do'; // Don't you agree
-
-// Outputs: Arnold once said: "I'll be back"
-echo 'Arnold once said: "I\'ll be back"';
-
-// Double Quoted String
-echo "This is not a testcase";
-
-// Multi Line Double Quoted String
-echo " This is a 'simple'
-    multiline testcase for 'double' \"quoted\" Strings
-    including some single quoted (int)
-    'once'.
-    float keyword ?! ";
-
-// Heredoc
-$str = &lt;&lt;&lt;EOD
-Example of string
-spanning multiple lines
-using heredoc syntax.
-EOD;
-
-// Nowdoc
-$str = &lt;&lt;&lt;'EOD'
-Example of string
-spanning multiple lines
-using nowdoc syntax.
-EOD;
-
-/** Numbers */
-
-$a = 1234; // decimal number
-$a = -123; // a negative number
-$a = 0123; // octal number (equivalent to 83 decimal)
-$a = 0x1A; // hexadecimal number (equivalent to 26 decimal)
-$a = 1.234;
-$b = 1.2e3;
-$c = 7E-10;
-
-
-/**
- * Displays GitHub Style Buttons using GitHub API v3
- * @url http://github-buttons.andidittrich.de/
- * @see https://developer.github.com/v3/
- * @author Andi Dittrich $lt;http://andidittrich.de$gt;
-    * @license Dual-Licensed under "The MIT License (X11)" and "Apache 2.0 License"
- * @version 1.2
- *
- */
-class GitHubButtons{
-
-	// global cache dir
-	private $_cacheDir;
-
-	function __construct($cacheDir = '.'){
-		// store cache dir
-		$this->_cacheDir = $cacheDir;
-	}
-
-	/**
-	 * Defines the default options -
-	 * @param array $options
-	 * @return multitype:
-	 */
-	private function mergeOptions($options){
-		$defaults = array(
-				// large or small button ?
-				'large' => false,
-
-				// GitHub username
-				'owner' => null,
-
-				// GitHub repository name
-				'repo' => null,
-
-				// Button type (star, fork, watch, follow)
-				'type' => 'star',
-
-				// custom button text
-				'text' => null,
-
-				// enabled/disable counter - manual set the value
-				'count' => true,
-
-				// enable caching by default
-				'cache' => true,
-
-				// cache lifetime in seconds (2h default)
-				'cacheLifetime' => 7200,
-
-				// text/count if GitHub API is unavailable
-				'errorText' => 'NA'
-		);
-		return array_merge($defaults, $options);
-	}
-
-	/**
-	 * Generate the HTML Output
-	 * @param array $options
-	 */
-	public function button($options){
-		// set default options
-		$options = $this->mergeOptions($options);
-
-		// vars
-		$text = '';
-		$count = null;
-		$buttonLink = 'https://github.com/' . $options['owner'] . '/';
-		$counterLink = 'https://github.com/' . $options['owner'] . '/';
-		$apiUrl = '';
-        $responseSelector = '';
-
-		// star, fork, follow, watch are supported
-		switch ($options['type']){
-			case 'star':
-                $apiUrl = 'repos/' . $options['owner'] . '/' . $options['repo'];
-				$text = 'Star';
-				$buttonLink .= $options['repo'];
-				$counterLink .= $options['repo'] . '/stargazers';
-                $responseSelector = 'stargazers_count';
-				break;
-
-			case 'fork':
-                $apiUrl = 'repos/' . $options['owner'] . '/' . $options['repo'];
-				$text = 'Fork';
-				$buttonLink .= $options['repo'];
-				$counterLink .= $options['repo'] . '/network';
-                $responseSelector = 'forks_count';
-				break;
-
-			case 'watch':
-                $apiUrl = 'repos/' . $options['owner'] . '/' . $options['repo'];
-				$text = 'Watchers';
-				$buttonLink .= $options['repo'];
-				$counterLink .= $options['repo'] . '/watchers';
-                $responseSelector = 'subscribers_count';
-				break;
-
-			case 'follow':
-				$counterLink .= 'followers';
-				$text = 'Follow @' . $options['owner'];
-				$apiUrl = 'users/'.$options['owner'];
-                $responseSelector = 'followers';
-				break;
-		}
-
-		// user defined text ?
-		if ($options['text']!=null){
-			$text = $options['text'];
-		}
-
-		// user defined count ?
-		if (is_numeric($options['count'])){
-			$count = $options['count'];
-		}else{
-			// fetch count
-			$response = $this->doApiRequest($apiUrl, $options['cache'], $options['cacheLifetime'], $responseSelector);
-
-			// valid ?
-			if (is_numeric($response)){
-				$count = $response;
-			}else{
-				$count = $options['errorText'];
-			}
-		}
-
-		// large button ?
-		$large = ($options['large']===true ? ' github-btn-large' : '');
-
-		return '';
-	}
-
-	/**
-	 * Do Single HTTP GET Request including caching
-	 * @param unknown $url
-	 * @return string
-	 */
-	private function doApiRequest($url, $cacheEnabled, $cacheLifetime, $selector){
-		// cache url
-		$cachefilename = $this->_cacheDir . '/github.'.sha1($url.$selector).'.cache.json';
-
-		// 1h cachetime
-		if ($cacheEnabled && file_exists($cachefilename) && filemtime($cachefilename) > (time()-$cacheLifetime)){
-			return file_get_contents($cachefilename);
-		}
-
-		$opts = array('http' =>
-				array(
-						'method'  => 'GET',
-						'protocol_version' => '1.1',
-						'user_agent' => 'GitHubButtons/1.1',
-						'header'  => array(
-								'Content-type: application/x-www-form-urlencoded;charset=UTF-8',
-								'Connection: close',
-								'Accept: application/vnd.github.v3+json'
-						)
-				)
-		);
-
-		// send request
-		$data = false;
-		try{
-			$data = @file_get_contents('https://api.github.com/'.$url, false, stream_context_create($opts));
-		}catch(Exception $error){}
-
-		// success ?
-		if ($data===false){
-			return false;
-		}else{
-			// decode data
-			$jdata = json_decode($data, true);
-
-            // extract
-            $cnt = $jdata[$selector];
-
-			if ($cacheEnabled){
-				// cache data
-				file_put_contents($cachefilename, $cnt);
-			}
-
-			// return resposne data
-			return $cnt;
-		}
-	}
-
-	// singleton instance
-	private static $__instance;
-
-	// get singelton instance
-	public static function getInstance($cacheDir=null){
-		// check if singelton instance is avaible
-		if (self::$__instance==null){
-			// create new instance if not
-			self::$__instance = new self($cacheDir);
-		}
-		return self::$__instance;
-	}
-}
-
-?&gt;
+<pre data-enlighter-language="xml">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+    &lt;building name="GlobalDynamics Main Building"
+    core:id="0xFA8A91C6617DFA1B" core:uid="0898213-123123123-1230898123" xmlns:core="http://www.xmlnamespace.tld"&gt;
+	&lt;core:group core:level="2"&gt;
+		&lt;room number="123"&gt;Conference Room A&lt;/room&gt;
+		&lt;room number="124"&gt;Conference Room B&lt;/room&gt;
+		&lt;room number="125"&gt;Conference Room C&lt;/room&gt;
+		&lt;room number="126"&gt;Conference Room D&lt;/room&gt;
+	&lt;/core:group&gt;
+	&lt;core:group core:level="2"&gt;
+		&lt;room number="17"&gt;John's Office&lt;/room&gt;
+		&lt;room number="19"&gt;Eric's Office&lt;/room&gt;
+	&lt;/core:group&gt;
+	&lt;core:group core:level="1"&gt;
+		&lt;room number="091"&gt;Mainframe Housing A&lt;/room&gt;
+		&lt;room number="092"&gt;Mainframe Housing B&lt;/room&gt;
+		&lt;room number="090"&gt;Mainframe Power Supply Station&lt;/room&gt;
+		&lt;room number="089"&gt;Mainframe Backup Power Supply Station&lt;/room&gt;
+	&lt;/core:group&gt;
+	&lt;core:group core:level="8"&gt;
+		&lt;room number="1717" role="cto"&gt;CTO Office&lt;/room&gt;
+		&lt;room number="1819" role="ceo"&gt;CEO Office&lt;/room&gt;
+		&lt;room number="1820" role="cfo"&gt;CFO Office&lt;/room&gt;
+	&lt;/core:group&gt;
+&lt;/building&gt;
 </pre>
 		
 		<!-- ############################################################# -->

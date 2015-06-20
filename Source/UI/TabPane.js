@@ -59,10 +59,7 @@ EJS.UI.TabPane = new Class({
 			'class': 'controls'
 		});
 		controlWrapper.grab(this.controlContainer);
-		controlWrapper.grab(new EJS.Dom.Element('div', {
-			'class': 'clearfixList'
-		}));
-		
+
 		this.container.grab(controlWrapper);
 		this.container.grab(this.paneContainer);
 	},

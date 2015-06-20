@@ -23,7 +23,7 @@
 	<property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide Git Mocha MooTools Panic Tutti Twilight" />
 
 	<!-- Languages to include !-->
-	<property name="include.languages" value="AvrAsm Css Cpp CSharp Diff Ini Java Javascript Json Matlab Markdown Nsis Python RAW Ruby Rust Shell Sql Vhdl Xml" />
+	<property name="include.languages" value="AvrAsm Css Cpp CSharp Diff Ini Java Javascript Json Matlab Markdown Nsis Php Python RAW Ruby Rust Shell Sql Vhdl Xml" />
 
 	<!-- Sourcefiles to include !-->
 	<property name="include.JsBaseSources" value="EnlighterJS TextFilter Dom/MooTools/Dom Dom/MooTools/Element SpecialLineHighlighter LanguageManager Renderer/InlineRenderer Renderer/BlockRenderer Tokenizer/Standard Tokenizer/Xml UI/CodeWindow UI/Toolbar" />
@@ -35,7 +35,7 @@
     <tstamp/>
 
     <!-- CP Notice !-->
-    <property name="cpnotice" value="/*! EnlighterJS Syntax Highlighter ${build.var.version} | MIT-Style X11 License | http://enlighterjs.andidittrich.de/ | ${TODAY} */"></property>
+    <property name="cpnotice" value="/*! EnlighterJS Syntax Highlighter ${build.var.version} | MIT License (X11) | http://enlighterjs.andidittrich.de/ | ${TODAY} */"></property>
 
     <!-- convert source lists to file lists !-->
     <propertyregex property="source.css" input="Base ${include.themes}" regexp="(\w+)\b" replace="Source/Themes/\1.css" global="true" />
@@ -52,13 +52,13 @@
 		<!-- ****************************** BUILD LIBRARY **************************** -->
 		<ant antfile="Util/js-concat-compress.xml">
 			<property name="compress.input" value="${source.core.js} ${source.languages.js}" />
-			<property name="compress.output" value="EnlighterJS.min.js" />
-			<property name="uncompress.output" value="EnlighterJS.js" />
+			<property name="compress.output" value="${build.dir}EnlighterJS.min.js" />
+			<property name="uncompress.output" value="${build.dir}EnlighterJS.js" />
 		</ant>
         <ant antfile="Util/css-concat-compress.xml">
             <property name="compress.input" value="${source.css}" />
-            <property name="compress.output" value="EnlighterJS.min.css" />
-            <property name="uncompress.output" value="EnlighterJS.css" />
+            <property name="compress.output" value="${build.dir}EnlighterJS.min.css" />
+            <property name="uncompress.output" value="${build.dir}EnlighterJS.css" />
         </ant>
 
         <!-- Store JS + CSS Files !-->
@@ -73,18 +73,7 @@
 			<substitution expression="current: v${build.var.version}"/>
 			<fileset file="package.yml" />
 		</replaceregexp>
-		
-		<!-- Merge Readme/Documentation - sort by numeric prefix!-->
-		<echo message="Merging Docs" />
-		<concat destfile="README.md" fixlastline="yes">
-			<sort xmlns:rcmp="antlib:org.apache.tools.ant.types.resources.comparators">
-				<fileset dir="Docs" includes="*.md"/>
-				<rcmp:name />
-			</sort>
-		</concat>
-		
-		<!-- Copy CONTRIBUTE.md from docs !-->
-		<copy file="Docs/07-Contribution.md" tofile="CONTRIBUTE.md" />
+
 	</target>
 
 	<target name="webbuild" depends="build">
@@ -117,41 +106,91 @@
             <arg value="Util/DevPageGenerator.php" />
         </exec>
     </target>
+
+    <!-- Markdown Docs => HTML !-->
+    <target name="docs">
+        <!-- Merge Readme - sort by numeric prefix!-->
+        <echo message="Merging Readme" />
+        <concat destfile="README.md" fixlastline="yes">
+            <sort xmlns:rcmp="antlib:org.apache.tools.ant.types.resources.comparators">
+                <fileset dir="Docs" includes="*.md"/>
+                <rcmp:name />
+            </sort>
+        </concat>
+
+        <!-- Copy CONTRIBUTE.md from docs !-->
+        <copy file="Docs/70-Contribution.md" tofile="CONTRIBUTE.md" />
+
+        <!-- Merge Documentation - sort by numeric prefix!-->
+        <echo message="Merging Docs" />
+        <concat destfile="${tmp.dir}/Documentation.md" fixlastline="yes">
+            <fileset dir="Docs/" includes="20*.md, 30*.md, 40*.md, 50*.md, 60*.md, 70*.md, 80*.md" />
+        </concat>
+
+        <!-- Convert Docs to HTML !-->
+        <echo message="Rendering Markdown Documents" />
+        <exec executable="php">
+            <arg line="Util/cli.php markdown ${tmp.dir}/Documentation.md ${tmp.dir}/Documentation.html"></arg>
+        </exec>
+
+        <exec executable="php">
+            <arg line="Util/cli.php markdown CHANGES.md ${tmp.dir}/Changelog.html"></arg>
+        </exec>
+    </target>
 	
 	<!-- Generate Demo Website !-->
-	<target name="full" depends="build,examples">
+	<target name="website">
 		<!-- Cleanup www Dir -->
 		<delete dir="${www.dir}" />
-		<mkdir dir="${www.dir}"/>	
-				
+		<mkdir dir="${www.dir}"/>
+
+        <!-- Generate Pages !-->
 		<exec executable="php">
 			<arg value="Util/PageGenerator.php" />
 			<arg value="${www.dir}" />
-			<arg value="v${build.var.version}" />
-		</exec>		
-		
-		<!-- Copy resources !-->
-		<copy todir="${www.dir}Resources">
-			<fileset dir="Resources"/>
+			<arg value="${build.var.version}" />
+		</exec>
+
+        <!-- Generate Examples !-->
+        <exec executable="php">
+            <arg value="Util/ExampleGenerator.php" />
+            <arg value="${www.dir}" />
+            <arg value="www" />
+        </exec>
+
+        <!-- Copy fonts !-->
+		<copy todir="${www.dir}/fonts">
+			<fileset dir="Resources/bootstrap/fonts"/>
 		</copy>
-        <!-- Copy Examples !-->
-        <copy todir="${www.dir}Examples">
-            <fileset dir="Examples"/>
+        <copy todir="${www.dir}/img">
+            <fileset dir="Resources/img"/>
         </copy>
-		
+
+        <copy todir="${www.dir}">
+            <fileset dir="Resources/bootstrap" includes="bootstrap.min.css"/>
+            <fileset dir="Resources" includes="MooTools.min.js, EnlighterWeb.min.css"/>
+            <fileset dir="Build" includes="EnlighterJS.min.js,EnlighterJS.min.css"/>
+        </copy>
+
+        <ant antfile="Util/js-concat-compress.xml">
+            <property name="compress.input" value="Resources/github-buttons/GitHubButtons.MooTools.js Resources/EnlighterWeb.js" />
+            <property name="compress.output" value="${www.dir}EnlighterWeb.min.js" />
+            <property name="uncompress.output" value="${tmp.dir}_null" />
+        </ant>
+
 		<!-- Copy Screenshots -->
 		<copy file="screenshot1.png" tofile="${www.dir}screenshot1.png" />
 		<copy file="screenshot2.png" tofile="${www.dir}screenshot2.png" />
 
+        <!-- Copy Favicon !-->
+        <copy file="Resources/favicon.png" tofile="${www.dir}favicon.png" />
+
 		<!-- Copy License and fix linebreaks !-->
 		<copy file="LICENSE.md" tofile="${www.dir}LICENSE.txt" />
 		<fixcrlf eol="crlf" file="${www.dir}LICENSE.txt" />
-
-		<!-- Copy EnlighterJS Files !-->
-		<copy todir="${www.dir}Build">
-			<fileset dir="Build/"/>
-		</copy>
 	</target>
+
+    <target name="full" depends="build,docs,examples,website" />
 
     <!-- Test the Enlighter Plugin with DEV versions !-->
     <target name="wptest" depends="build">
