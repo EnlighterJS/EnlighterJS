@@ -17,7 +17,7 @@
     <property name="tmp.dir" value=".tmp/" />
 	<property name="www.dir" value="PublicHtml/" />
     <property name="example.dir" value="Examples/" />
-	<property name="build.var.version" value="2.7.0" />
+	<property name="build.var.version" value="2.8.0" />
 	
 	<!-- Themes to include !-->
 	<property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide Git Mocha MooTools Panic Tutti Twilight" />

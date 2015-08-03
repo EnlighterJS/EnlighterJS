@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.7.0 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | June 20 2015 */
+/*! EnlighterJS Syntax Highlighter 2.8.0 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | August 3 2015 */
 (function() {
     /*
 ---
@@ -691,7 +691,7 @@ provides: [Tokenizer.Standard]
             var tokens = [];
             // last token position
             var lastTokenEnd = 0;
-            // iterate over raw token list
+            // iterate over raw token list and retain the first match - drop overlaps
             for (var i = 0; i < rawTokens.length; i++) {
                 // unmatched text between tokens ?
                 if (lastTokenEnd < rawTokens[i].index) {
@@ -703,11 +703,18 @@ provides: [Tokenizer.Standard]
                 // store last token position
                 lastTokenEnd = rawTokens[i].end;
                 // find next, non overlapping token
+                var nextTokenFound = false;
                 for (var j = i + 1; j < rawTokens.length; j++) {
-                    if (rawTokens[i].end <= rawTokens[j].index) {
+                    if (rawTokens[j].index >= lastTokenEnd) {
+                        // the "current" token -> i will be incremented in the next loop => j-1
                         i = j - 1;
+                        nextTokenFound = true;
                         break;
                     }
+                }
+                // final position reached ?
+                if (nextTokenFound === false) {
+                    break;
                 }
             }
             // text fragments complete ? or is the final one missing ?
@@ -2721,7 +2728,7 @@ provides: [EnlighterJS.Language.vhdl]
     });
     /*
 ---
-description: XML language.
+description: XML/HTML language
 
 license: MIT-style
 

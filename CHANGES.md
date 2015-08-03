@@ -1,5 +1,9 @@
 ## Branch 2.x ##
 
+### Version 2.8.0 ###
+* Bugfix: Under some special conditions the tokenizer repeats the last sequence of a codeblock - thanks to [Kalydon](https://github.com/AndiDittrich/EnlighterJS/issues/8) and [dan-j on GitHub](https://github.com/AndiDittrich/WordPress.Enlighter/issues/13)
+* Bugfix: Wrong CSS Meta Data within the new Themes
+
 ### Version 2.7.0 ###
 * Added: [Rust](http://www.rust-lang.org/) language support - feature requested on [GitHub](https://github.com/AndiDittrich/EnlighterJS/issues/7)
 * Added: [VHDL](http://en.wikipedia.org/wiki/VHDL) language support

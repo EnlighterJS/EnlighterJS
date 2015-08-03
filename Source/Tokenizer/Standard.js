@@ -64,7 +64,7 @@ EJS.Tokenizer.Standard = new Class({
         // last token position
         var lastTokenEnd = 0;
 
-        // iterate over raw token list
+        // iterate over raw token list and retain the first match - drop overlaps
         for (var i=0; i<rawTokens.length; i++){
             // unmatched text between tokens ?
             if (lastTokenEnd < rawTokens[i].index ){
@@ -79,11 +79,19 @@ EJS.Tokenizer.Standard = new Class({
             lastTokenEnd = rawTokens[i].end;
 
             // find next, non overlapping token
+            var nextTokenFound = false;
             for (var j = i + 1; j < rawTokens.length; j++){
-                if (rawTokens[i].end <= rawTokens[j].index){
+                if (rawTokens[j].index >= lastTokenEnd){
+                    // the "current" token -> i will be incremented in the next loop => j-1
                     i = j-1;
+                    nextTokenFound = true;
                     break;
                 }
+            }
+
+            // final position reached ?
+            if (nextTokenFound===false){
+                break;
             }
         }
 

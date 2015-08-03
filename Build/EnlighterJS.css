@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.7.0 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | June 20 2015 *//*
+/*! EnlighterJS Syntax Highlighter 2.8.0 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | August 3 2015 *//*
 ---
 description: EnlighterJS Theme-Base - All Themes are derived from these styles! Don't edit this file if you wan't to change styles! Use a derived theme!
 
@@ -341,11 +341,11 @@ authors:
 styles:
  base:
    font-family: "Source Code Pro", "Courier New", Courier, monospace
-   font-size: 11px
+   font-size: 14px
    color: '#2b333a'
  line:
    font-family: "Source Code Pro", "Courier New", Courier, monospace
-   font-size: 14px
+   font-size: 11px
    line-height: 19px
    color: '#f7f7f7'
  raw:
@@ -771,11 +771,11 @@ authors:
 styles:
  base:
    font-family: "Source Code Pro", "Courier New", Courier, monospace
-   font-size: 11px
+   font-size: 14px
    color: '#000000'
  line:
    font-family: "Source Code Pro", "Courier New", Courier, monospace
-   font-size: 14px
+   font-size: 11px
    line-height: 18px
    color: '#313437'
  raw:
@@ -1050,11 +1050,11 @@ authors:
 styles:
  base:
    font-family: Consolas, "Source Code Pro", "Liberation Mono", "Courier New", Courier, monospace
-   font-size: 11px
+   font-size: 13px
    color: '#404141'
  line:
    font-family: Consolas, "Source Code Pro", "Liberation Mono", "Courier New", Courier, monospace
-   font-size: 13px
+   font-size: 11px
    line-height: 18px
    color: '#707070'
  raw:

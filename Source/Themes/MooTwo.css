@@ -10,11 +10,11 @@ authors:
 styles:
  base:
    font-family: "Source Code Pro", "Courier New", Courier, monospace
-   font-size: 11px
+   font-size: 14px
    color: '#000000'
  line:
    font-family: "Source Code Pro", "Courier New", Courier, monospace
-   font-size: 14px
+   font-size: 11px
    line-height: 18px
    color: '#313437'
  raw:

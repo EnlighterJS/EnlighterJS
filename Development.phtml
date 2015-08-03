@@ -44,7 +44,7 @@ $theme = 'eclipse';
 			//document.getElements('pre.special').enlight(options);
 	
 			//document.id('NoLight').enlight(true).enlight(false);
-		EnlighterJS.Util.Init('pre', 'code', options);
+		EnlighterJS.Util.Init('pre', '', options);
 		/*
 			EnlighterJS.Util.Helper(document.getElements('pre.special'), Object.merge(options,{
 				renderer : 'Block',
@@ -83,95 +83,31 @@ $theme = 'eclipse';
             </p>
 
             <h3>Block</h3>
-                        <pre data-enlighter-language="html" data-enlighter-theme="<?php echo $theme; ?>">
-&lt;head&gt;
-		&lt;!-- Include EnlighterJS Styles --&gt;
-		&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;../Build/EnlighterJS.yui.css&quot; /&gt;
-
-		&lt;!-- Include MooTools Framework --&gt;
-		&lt;script type=&quot;text/javascript&quot; src=&quot;mootools-core-1.4.5-full-nocompat.js&quot;&gt;&lt;/script&gt;
-
-		&lt;!-- Include EnlighterJS --&gt;
-		&lt;script type=&quot;text/javascript&quot; src=&quot;../Build/EnlighterJS.yui.js&quot; &gt;&lt;/script&gt;
-
-		&lt;!-- Initialize EnlighterJS --&gt;
-		&lt;script type=&quot;text/javascript&quot;&gt;
-		window.addEvent('domready', function() {
-			// highlight all pre tags
-			document.getElements('pre').enlight({
-				indent : 2
-			});
-		});
-		&lt;/script&gt;
-&lt;/head&gt;
+                        <pre data-enlighter-language="js" data-enlighter-theme="<?php echo $theme; ?>">
+&lt;script type="text/javascript"&gt;
+    window.addEvent('domready', function() {
+        // highlight all pre tags
+        $('pre').light({
+            altLines : 'hover',
+            indent : 2,
+            editable: false
+        });
+    });
+&lt;/script&gt;
 </pre>
 
-            <h3>With Tabs</h3>
-                        <pre data-enlighter-language="js" data-enlighter-group="group_<?php echo $theme; ?>" data-enlighter-title="Enlighter-Javascript" data-enlighter-theme="<?php echo $theme; ?>">
-// Load language parser
-language = new EnlighterJS.Language[languageName](this.getRawCode(true));
-
-// compile tokens -> generate output
-var output = this.renderer.render(language, specialLines, {
-	lineOffset: (this.rawCodeblock.get('data-enlighter-lineoffset') || null),
-	lineNumbers: (this.rawCodeblock.get('data-enlighter-linenums') !== 'false')
-});
-
-// set class and id attributes.
-output.addClass(themeName.toLowerCase() + 'EnlighterJS');
-output.addClass('EnlighterJS');
-output.set('id', 'EnlighterJS_' + String.uniqueID());
+                                   <pre data-enlighter-language="js" data-enlighter-theme="<?php echo $theme; ?>">
+        // highlight all pre tags
+        $('pre').light({
+            altLines : 'hover',
+            indent : 2,
+            editable: false
+        });// :)
+                                       last token
 </pre>
-                        <pre data-enlighter-language="java" data-enlighter-group="group_<?php echo $theme; ?>" data-enlighter-title="pure Java">
-// Source:  http://en.wikipedia.org/wiki/Java_%28programming_language%29
-// OddEven.java
-import javax.swing.JOptionPane;
 
-public class OddEven {
-    /**
-     * "input" is the number that the user gives to the computer
-     */
-    private int input; // a whole number("int" means integer)
+            <pre data-enlighter-language="java">String str = "A String";</pre>
 
-    /**
-     * This is the constructor method. It gets called when an object of the OddEven type
-     * is being created.
-     */
-    public OddEven() {
-        /*
-         * In most Java programs constructors can initialize objects with default values, or create
-         * other objects that this object might use to perform its functions. In some Java programs, the
-         * constructor may simply be an empty function if nothing needs to be initialized prior to the
-         * functioning of the object. In this program's case, an empty constructor would suffice.
-         * A constructor must exist; however, if the user doesn't put one in then the compiler
-         * will create an empty one.
-         */
-    }
-}
-</pre>
-                        <pre data-enlighter-language="php" data-enlighter-group="group_<?php echo $theme; ?>" data-enlighter-title="Awesome PHP Script">
-/** Test Snippet */
-$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
-
-/* check connection */
-if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
-    exit();
-}
-
-/* Create table doesn't return a resultset */
-if ($mysqli->query("CREATE TEMPORARY TABLE myCity LIKE City") === TRUE) {
-    printf("Table myCity successfully created.\n");
-}
-
-/* Select queries return a resultset */
-if ($result = $mysqli->query("SELECT Name FROM City LIMIT 10")) {
-    printf("Select returned %d rows.\n", $result->num_rows);
-
-    /* free result set */
-    $result->close();
-}
-</pre>
 		<!-- ############################################################# -->
 		</div>
 		<!-- // content -->
