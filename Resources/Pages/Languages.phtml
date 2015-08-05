@@ -60,7 +60,7 @@
 
             <div class="col-md-2 hidden-xs hidden-sm">
                 <h4>Build-in Languages</h4>
-                <ul id="content-nav">
+                <ul id="content-nav" data-nav-static="true">
                     <?php
                     foreach ($languageExamples as $l){
                         echo '<li class="', ($l == $currentLanguage) ? 'spyActive': '', '"><a href="Language.', $l, '.html">', $l, '</a></li>';

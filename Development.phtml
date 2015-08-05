@@ -44,7 +44,7 @@ $theme = 'eclipse';
 			//document.getElements('pre.special').enlight(options);
 	
 			//document.id('NoLight').enlight(true).enlight(false);
-		EnlighterJS.Util.Init('pre', '', options);
+		EnlighterJS.Util.Init('pre', 'code', options);
 		/*
 			EnlighterJS.Util.Helper(document.getElements('pre.special'), Object.merge(options,{
 				renderer : 'Block',
@@ -71,16 +71,9 @@ $theme = 'eclipse';
 
 			<p>
 				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-				<code class="special">window.addEvent('domready', function(){});</code>
+				Jvascript: <code class="special">window.addEvent('domready', function(){});</code> - PHP: <code class="special" data-enlighter-language="php">$i=5;</code> - Java: <code class="special" data-enlighter-language="java">String k = "test";</code>
 				invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br /> Lorem ipsum dolor sit amet,
-				<code>not highlighted</code>
-				consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 			</p>
-            <h3>Inline</h3>
-            <p>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-                <code data-enlighter-language="js" data-enlighter-theme="<?php echo $theme; ?>">window.addEvent('domready', function(){});</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-            </p>
 
             <h3>Block</h3>
                         <pre data-enlighter-language="js" data-enlighter-theme="<?php echo $theme; ?>">

@@ -145,7 +145,7 @@ function StickyNavigation(navContainerSelector){
     var naviContainer = document.getElement(navContainerSelector);
 
     // container available ?
-    if (!naviContainer){
+    if (!naviContainer || naviContainer.get('data-nav-static')){
         return;
     }
 

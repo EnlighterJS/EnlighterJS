@@ -96,9 +96,11 @@ EJS.Tokenizer.Standard = new Class({
         }
 
         // text fragments complete ? or is the final one missing ?
-        if (lastTokenEnd < code.length -1){
+        if (lastTokenEnd < code.length){
             tokens.push(token(code.substring(lastTokenEnd), '', lastTokenEnd));
         }
+
+        console.log(lastTokenEnd, code.length);
 
 		return tokens;
 	},

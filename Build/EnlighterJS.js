@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.8.0 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | August 3 2015 */
+/*! EnlighterJS Syntax Highlighter 2.9.0 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | August 5 2015 */
 (function() {
     /*
 ---
@@ -718,9 +718,10 @@ provides: [Tokenizer.Standard]
                 }
             }
             // text fragments complete ? or is the final one missing ?
-            if (lastTokenEnd < code.length - 1) {
+            if (lastTokenEnd < code.length) {
                 tokens.push(token(code.substring(lastTokenEnd), "", lastTokenEnd));
             }
+            console.log(lastTokenEnd, code.length);
             return tokens;
         },
         // token pre-processing; can be overloaded by extending class
@@ -1317,7 +1318,43 @@ provides: [EnlighterJS.Language.generic]
         },
         getRuleByName: function(name) {},
         // override this method to setup language params
-        setupLanguage: function() {},
+        setupLanguage: function() {
+            // generic highlighting
+            this.patterns = {
+                strings: {
+                    pattern: this.common.strings,
+                    alias: "st0"
+                },
+                fn: {
+                    pattern: this.common.functionCalls,
+                    alias: "kw1"
+                },
+                me: {
+                    pattern: this.common.methodCalls,
+                    alias: "kw2"
+                },
+                brackets: {
+                    pattern: this.common.brackets,
+                    alias: "br0"
+                },
+                numbers: {
+                    pattern: this.common.numbers,
+                    alias: "nu0"
+                },
+                comment0: {
+                    pattern: this.common.slashComments,
+                    alias: "co1"
+                },
+                comment1: {
+                    pattern: this.common.poundComments,
+                    alias: "co1"
+                },
+                comment3: {
+                    pattern: this.common.multiComments,
+                    alias: "co2"
+                }
+            };
+        },
         getTokens: function() {
             return this.tokenizer.getTokens(this, this.code);
         },

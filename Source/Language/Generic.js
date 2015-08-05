@@ -136,6 +136,17 @@ EJS.Language.generic = new Class({
 	
 	// override this method to setup language params
 	setupLanguage: function(){
+        // generic highlighting
+        this.patterns = {
+            strings: { pattern: this.common.strings, alias: 'st0'},
+            fn : { pattern: this.common.functionCalls, alias: 'kw1'},
+            me : { pattern: this.common.methodCalls, alias: 'kw2'},
+            brackets: { pattern: this.common.brackets, alias: 'br0' },
+            numbers: { pattern: this.common.numbers, alias: 'nu0'},
+            comment0: { pattern: this.common.slashComments, alias: 'co1'},
+            comment1: { pattern: this.common.poundComments, alias: 'co1'},
+            comment3: { pattern: this.common.multiComments, alias: 'co2'},
+        };
 	},
 
 	getTokens : function(){

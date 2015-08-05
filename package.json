@@ -1,7 +1,7 @@
 {
   "name": "enlighterjs",
   "description": "MooTools based Syntax Highlighter",
-  "version": "v2.8.0",
+  "version": "v2.9.0",
   "homepage": "http://enlighterjs.andidittrich.de",
   "author": {
     "name": "Andi Dittrich",

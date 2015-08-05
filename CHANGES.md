@@ -1,5 +1,9 @@
 ## Branch 2.x ##
 
+### Version 2.9 ###
+* Bugfix: the final character of highlighted code got removed by the tokenizer engine in case it's a text token with length=1 - thanks to [dan-j on GitHub](https://github.com/AndiDittrich/WordPress.Enlighter/issues/15)
+* Bugfix: Generic highlighting was accidentally removed from EnlighterJS 
+
 ### Version 2.8.0 ###
 * Bugfix: Under some special conditions the tokenizer repeats the last sequence of a codeblock - thanks to [Kalydon](https://github.com/AndiDittrich/EnlighterJS/issues/8) and [dan-j on GitHub](https://github.com/AndiDittrich/WordPress.Enlighter/issues/13)
 * Bugfix: Wrong CSS Meta Data within the new Themes

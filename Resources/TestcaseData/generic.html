@@ -1,0 +1,25 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="generic">Object.notify([3.141, "Test"]);</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<h3>Generic Highlighting</h3>
+<pre data-enlighter-language="generic">
+// R Language Example using Generic Highlighting
+// Source: https://en.wikipedia.org/wiki/R_%28programming_language%29
+
+
+library(caTools)         # external package providing write.gif function
+jet.colors <- colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan", "#7FFF7F",
+                                 "yellow", "#FF7F00", "red", "#7F0000"))
+m <- 1000                # define size
+C <- complex( real=rep(seq(-1.8,0.6, length.out=m), each=m ),
+              imag=rep(seq(-1.2,1.2, length.out=m), m ) )
+C <- matrix(C,m,m)       # reshape as square matrix of complex numbers
+Z <- 0                   # initialize Z to zero
+X <- array(0, c(m,m,20)) # initialize output 3D array
+for (k in 1:20) {        # loop with 20 iterations
+  Z <- Z^2+C             # the central difference equation
+  X[,,k] <- exp(-abs(Z)) # capture results
+}
+write.gif(X, "Mandelbrot.gif", col=jet.colors, delay=800)
+</pre>
