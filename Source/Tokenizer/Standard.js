@@ -42,10 +42,15 @@ EJS.Tokenizer.Standard = new Class({
                 // overrides the usual regex behaviour of not matching results that overlap
                 rule.pattern.lastIndex = match.index+1;
 
-                // matching group used ?
-                if (match[1]){
-                    rawTokens.push(token(match[1], rule.alias, match.index + match[0].indexOf(match[1])));
-
+                // matching groups used ?
+                if (match.length > 1) {
+                    // get first matched group
+                    for (var i = 1; i < match.length; i++) {
+                        if (match[i]) {
+                            rawTokens.push(token(match[i], rule.alias, match.index + match[0].indexOf(match[i])));
+                            break;
+                        }
+                    }
                 // use full pattern
                 }else{
                     rawTokens.push(token(match[0], rule.alias, match.index));
