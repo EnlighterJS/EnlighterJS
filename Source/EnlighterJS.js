@@ -175,7 +175,7 @@ var EJS = window.EnlighterJS = new Class({
 				if (this.options.rawButton || this.options.windowButton || this.options.infoButton){
 					this.container.grab(new EJS.UI.Toolbar(this));
 				}
-				
+
 			// normal handling
 			}else{
 				// grab content into specific container or after original code block ?

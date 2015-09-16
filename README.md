@@ -1,3 +1,14 @@
+FEATURE FREEZE STATUS
+=====================
+
+Dear Contributors,
+i am currently working on a new major version of EnlighterJS with some new cool features and an isomorphic architecture.
+Therefore i will not add any new features to the **2.x** branch. But critical bugs will be fixed!
+
+Thank you for your understanding & best regards
+Andi
+
+
 EnlighterJS
 ===========
 
