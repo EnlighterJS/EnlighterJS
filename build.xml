@@ -166,12 +166,20 @@
         <!-- Copy Resources !-->
         <copy todir="${www.dir}">
             <fileset dir="Resources/bootstrap" includes="bootstrap.min.css"/>
-            <fileset dir="Resources" includes="MooTools.min.js, EnlighterWeb.min.css"/>
+            <fileset dir="Resources" includes="MooTools.min.js"/>
             <fileset dir="Build" includes="EnlighterJS.min.js,EnlighterJS.min.css"/>
         </copy>
 
+        <!-- Less CSS build (WEB CSS) !-->
+        <echo message="Building LESS Files.." />
+        <exec executable="lessc">
+            <arg line="Resources/EnlighterWeb.less" />
+            <arg line="${www.dir}EnlighterWeb.min.css" />
+            <arg line="--clean-css" />
+        </exec>
+
         <ant antfile="Util/js-concat-compress.xml">
-            <property name="compress.input" value="Resources/github-buttons/GitHubButtons.MooTools.js Resources/EnlighterWeb.js" />
+            <property name="compress.input" value="Resources/social-buttons/social-buttons.js Resources/EnlighterWeb.js" />
             <property name="compress.output" value="${www.dir}EnlighterWeb.min.js" />
             <property name="uncompress.output" value="${tmp.dir}_null" />
         </ant>

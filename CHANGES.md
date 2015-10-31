@@ -1,5 +1,10 @@
 ## Branch 2.x ##
 
+### Version 2.10 BETA ###
+* Added: new social buttons to the website
+* Added: some contribution guidelines
+* Bugfix: removed `console.log` debugging outut from tokenizer
+
 ### Version 2.9 ###
 * Bugfix: the final character of highlighted code got removed by the tokenizer engine in case it's a text token with length=1 - thanks to [dan-j on GitHub](https://github.com/AndiDittrich/WordPress.Enlighter/issues/15)
 * Bugfix: Generic highlighting was accidentally removed from EnlighterJS 

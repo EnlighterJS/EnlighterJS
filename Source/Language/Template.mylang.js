@@ -17,13 +17,14 @@ provides: [EnlighterJS.Language.mylang]
 // you can try out this example using Development.html - it is not included in regular builds!
 EnlighterJS.Language.mylang = new Class({
 
-	// every language have to extend the generic language
+	// every language have to extend the generic language or in case it's a superset the origin language
 	Extends : EnlighterJS.Language.generic,
 
 	// override the setupLanguage() method to configure your language-patterns
 	setupLanguage: function(){
 		// a set of keywords-groups to highlight
 		// you can define multiple keyword-groups within, each containg a list of comma seperated keywords ("csv") and an alias with the matching css-class to highlight
+        // keep these lists AS SMALL AS POSSIBLE - use regex if possible
 		this.keywords = {
 			langElements : {
 				csv : 'if, else, endif, elseif, then',
@@ -38,6 +39,7 @@ EnlighterJS.Language.mylang = new Class({
 		// a set of patterns used to match your language
 		// some generic patterns are already defined into EnlighterJS.Language.generic - you can access them with this.common
 		// like keywords, each pattern requires an alias with the matching css-class
+        // the tokenizer will take respect to the list ordering (priority)
 		this.patterns = {
 			// mylang uses slash-style-comments
 			'slashComments' : {

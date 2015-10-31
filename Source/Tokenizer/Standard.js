@@ -100,8 +100,6 @@ EJS.Tokenizer.Standard = new Class({
             tokens.push(token(code.substring(lastTokenEnd), '', lastTokenEnd));
         }
 
-        console.log(lastTokenEnd, code.length);
-
 		return tokens;
 	},
 

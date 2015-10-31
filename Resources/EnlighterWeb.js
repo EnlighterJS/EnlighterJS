@@ -1,8 +1,4 @@
 
-var HyperCoreJS = {
-    Modules: {}
-};
-
 function ContentNavigation(contentContainerSelector, navContainerSelector){
     // content navi
     var nav = document.getElement(navContainerSelector);
@@ -169,23 +165,78 @@ function StickyNavigation(navContainerSelector){
 };
 
 window.addEvent('domready', function(){
-	// create github buttons
+    /*
+    var repo = window._github_profile.repos.EnlighterJS;
+    var user = window._github_profile.user;
+
+    // create github buttons
 	document.id('ghb').grab(new GitHubButton({
 		owner : 'AndiDittrich',
 		repo : 'EnlighterJS',
 		large : false,
-		type : 'star'
+		type : 'star',
+        cache: false,
+        count: repo.stargazers
 	})).grab(new GitHubButton({
 		owner : 'AndiDittrich',
 		repo : 'EnlighterJS',
 		large : false,
-		type : 'fork'
+		type : 'fork',
+        cache: false,
+        count: repo.forks
 	})).grab(new GitHubButton({
         owner : 'AndiDittrich',
         repo : 'EnlighterJS',
         large : false,
-        type : 'follow'
-    }));
+        type : 'follow',
+        cache: false,
+        count: user.followers
+    }));*/
+
+    // social buttons
+    var out = document.id('ghb');
+
+    SocialButton(out, {
+        type: 'github-star',
+        username: 'AndiDittrich',
+        repo: 'EnlighterJS',
+        large: false,
+        text: 'Star'
+    });
+
+    SocialButton(out, {
+        type: 'github-fork',
+        username: 'AndiDittrich',
+        repo: 'EnlighterJS',
+        large: false,
+        text: 'Fork'
+    });
+
+    SocialButton(out, {
+        type: 'github-followers',
+        username: 'AndiDittrich',
+        large: false
+    });
+
+    SocialButton(out, {
+        type: 'github-opensource',
+        username: 'AndiDittrich',
+        large: false
+    });
+
+    SocialButton(out, {
+        type: 'twitter-followers',
+        username: 'andidittrich',
+        large: false
+    });
+
+    SocialButton(out, {
+        type: 'wordpress-plugin',
+        username: 'Andi Dittrich',
+        plugin: 'Enlighter',
+        large: false
+    });
+
 
     // initialize content navigation
     ContentNavigation('article', '#content-nav');
