@@ -35,7 +35,7 @@ EJS.Tokenizer.Standard = new Class({
 
         // apply each rule to given sourcecode string
 		Array.each(language.getRules(), function(rule){
-            var match = null;
+            var match;
 
             // find ALL possible matches (also overlapping ones!)
             while (match = rule.pattern.exec(code)){
