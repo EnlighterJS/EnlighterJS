@@ -1,0 +1,83 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="cython">links  = [element for element in liste if element &lt; pivotelement]</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<pre data-enlighter-language="cython">
+# Hello World
+def say_hello():
+    print "Hello World!"
+
+'''
+Multiline String Comment Style1
+Hello
+'''        
+
+import pyximport; pyximport.install()
+
+# compile-time constant
+DEF _LIST = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+
+# preprocessor conditional statements
+IF UNAME_SYSNAME == "Windows":
+    include "windows.pxi"
+ELIF UNAME_SYSNAME == "Linux":
+    include "linux.pxi"
+ELSE:
+    include "misc.pxi"
+
+"""
+Multiline String Comment Style2
+Hello, again
+"""
+
+def primes(int kmax):
+    """Function documentation comment
+    SOURCE: http://docs.cython.org/src/tutorial/cython_tutorial.html
+    """
+    cdef int n, k, i
+    cdef int p[1000]
+    result = []
+    if kmax > 1000:
+        kmax = 1000
+    k = 0
+    n = 2
+    while k < kmax:
+        i = 0
+        while i < k and n % p[i] != 0:
+            i = i + 1
+        if i == k:
+            p[k] = n
+            k = k + 1
+            result.append(n)
+        n = n + 1
+    return result
+
+# cdef examples
+cdef int i, j, k
+cdef float f, g[42], *h
+
+# struct, union, and enum data-types
+cdef struct Car:
+    int age
+    float mileage
+
+cdef union Country:
+    char *name
+    int *population
+
+cdef enum Planets:
+    Earth, Mars,
+    Saturn
+
+cdef enum PlanetType:
+    dwarf = 1
+    giant = 2
+    regular = 3
+
+# raise example
+# SOURCE: http://docs.cython.org/src/userguide/language_basics.html#checking-return-values-of-non-cython-functions
+cdef FILE* p
+p = fopen('spam.txt', 'r')
+if p == NULL:
+    raise SpamError('Couldn\'t open the spam file')
+</pre>
