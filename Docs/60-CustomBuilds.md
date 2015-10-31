@@ -5,7 +5,9 @@ The EnlighterJS project is using [Apache ANT](http://ant.apache.org/) as build-s
 [UglifyJS2](https://github.com/mishoo/UglifyJS2) and [clean-css](https://github.com/jakubpawlowicz/clean-css) are used to minify the production-ready javascript and css files.
 To save bandwidth/traffic or include self-defined languages, you can easily customize your EnlighterJS build by editing the *build.xml* file (found in the root directory) and run Apache ANT (target *build*)
 
-You can also use the web-based [EnlighterJS Builder](http://enlighterjs.andidittrich.de/Builder.html) to generate your customized package **without the need of ANT** - everything is done for you server-site!
+### Cloud/Web based builder ###
+
+You can also use the web-based [EnlighterJS Builder](http://enlighterjs.andidittrich.de/Builder.html) to generate your customized package **without the need of ANT/development environment** - everything is done for you server-site!
 
 ### Software Requirements ###
 
@@ -20,19 +22,22 @@ You can also use the web-based [EnlighterJS Builder](http://enlighterjs.andiditt
 If you want to remove some of the default theme you can edit the *include.themes* property and modify the list of css source files.
 For Example: only include the modern themes
 
-    #XML
-    <!-- Themes to include !-->
-    <property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide" />
+```xml
+<!-- Themes to include !-->
+<property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide" />
+```
 
 Or Include only your custom themes (Note: they have to be located into `Source/Themes/`)
 
-    #XML
-    <!-- Themes to include !-->
-    <property name="include.themes" value="Custom1 Custom2" />		
-		
+```xml
+<!-- Themes to include !-->
+<property name="include.themes" value="Custom1 Custom2" />		
+```xml
+			
 Removing/Adding languages is also easy as this - they are defined by the *include.languages* property.
 For Example: only include html+css+js syntax highlighting (be careful - html is an alias for XML!, you have to include `Xml`)
 
-    #XML
-    <!-- Languages to include !-->
-    <property name="include.languages" value="Css Javascript Xml" />
+```xml
+<!-- Languages to include !-->
+<property name="include.languages" value="Css Javascript Xml" />
+```

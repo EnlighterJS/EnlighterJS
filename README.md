@@ -36,8 +36,8 @@ How to use
 ----------
 This is a minimalistic example how to highlight sourcecode with EnlighterJS. The working example (correct js+css paths) is available within the EnlighterJS package (Example1.html).
 
-    #HTML
-    <head>
+```HTML
+<head>
     ...
     <!-- Include EnlighterJS Styles -->
     <link rel="stylesheet" type="text/css" href="EnlighterJS.min.css" />
@@ -51,8 +51,8 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
     <!-- Initialize EnlighterJS -->	
     <meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-indent="4" data-selector-block="pre" data-selector-inline="code.special" />
     ...
-    </head>
-    <body>
+</head>
+<body>
     ...
     <!-- This code will be highlighted as Javascript !-->
     <pre data-enlighter-language="js">
@@ -66,7 +66,8 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
     </pre>
     ...
     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, <code class="special">window.addEvent('domready', function(){});</code> labore et dolore magna aliquyam erat.</p>
-    </body>
+</body>
+```
 
 Build-in Languages & Themes
 ---------------------------
@@ -121,8 +122,9 @@ Basic Usage
 
 Download EnlighterJS and extract the files or use [bower](http://bower.io). 
 
-    #SHELL
-    bower install enlighterjs
+```shell
+$bower install enlighterjs
+```
 
 Copy the prebuild files of the *Build/* directory into a web-accessible directory of your choice. 
 
@@ -143,8 +145,8 @@ The integration of EnlighterJS requires the following 3 steps:
 
 Link to the EnlighterJS.yui.js javascript file and the EnlighterJS.yui.css stylesheet
 
-    #HTML
-    <head>
+```html
+<head>
     ...
     <!-- Include EnlighterJS Styles -->
     <link rel="stylesheet" type="text/css" href="css/EnlighterJS.yui.css" />
@@ -155,69 +157,76 @@ Link to the EnlighterJS.yui.js javascript file and the EnlighterJS.yui.css style
     <!-- Include EnlighterJS -->
     <script type="text/javascript" src="js/EnlighterJS.yui.js" ></script>
     ...
-    </head>
+</head>
+```
 
 Prepare your source code by giving the element (containing the code) an optional *data-enlighter-language* attribute with the language of the code. 
 **Notice**: Instead of Lighter.js *fuel:flame' syntax combo within the css classname, EnlighterJS will use HTML5 `data-` attributes!
 
-    #HTML
-    <!-- Syntax highlight using Javascript and default theme -->
-    <pre data-enlighter-language="js">var myClass = new Class({})</pre>
-    
-    <!-- Syntax highlight using the Git Theme with default language-->
-    <pre data-enlighter-theme="git">php_info();</pre>
+```html
+<!-- Syntax highlight using Javascript and default theme -->
+<pre data-enlighter-language="js">var myClass = new Class({})</pre>
+
+<!-- Syntax highlight using the Git Theme with default language-->
+<pre data-enlighter-theme="git">php_info();</pre>
+```
 
 Finally, use the following JavaScript code examples inside of a 'domready' or 'onload' callback to create the highlighted elements - this process is called *initialization*.
 Be sure to check out the Options section to see the various options you can use. The Example pages have various examples you can use.
 Further informations as well as some advanced examples are available within the [Initialization Section](#initialization).
 
-    #JS
-    // Use the Init utility function to highlight all pre elements - this is the recommended way and required to use the Code-Group feature
-    EnlighterJS.Util.Init('pre', null, {
-    	language: 'php',
-    	theme: 'Classic'
-    });
+```js
+// Use the Init utility function to highlight all pre elements - this is the recommended way and required to use the Code-Group feature
+EnlighterJS.Util.Init('pre', null, {
+    language: 'php',
+    theme: 'Classic'
+});
+```
 
 Instead of initializing EnlighterJS manually, since version 1.1 it is possible to use a simple html-metatag (called *EnlighterJS Metainit*) to run Enlighter on your page (with basic config options).
 
-    #HTML
-    <!-- Initialize EnlighterJS -->	
-    <meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="php" data-theme="Enlighter" data-indent="2" />
+```html
+<!-- Initialize EnlighterJS -->	
+<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-language="php" data-theme="Enlighter" data-indent="2" />
+```
 
 ### Some Examples ###
 Since version 1.8, it's possible to highlight special lines of code. Just add the attribute `data-enlighter-highlight` to your codeblock and provide a set of lines to mark (ranges supported).
 
-    #HTML
-    <!-- just highlight line number 2 !-->
-    <pre data-enlighter-language="js" data-enlighter-highlight="2">
-    this.tokens = tokens || [];
-    options = this.options;
-    </pre>
-    
-    <!-- highlight line 2,3,4 !-->
-    <pre data-enlighter-language="js" data-enlighter-highlight="2-4">
-    EnlighterJS.Util.Init('pre', null, {
-       indent : 2,
-       grouping: false
-	});
-	</pre>
+```html
+<!-- just highlight line number 2 !-->
+<pre data-enlighter-language="js" data-enlighter-highlight="2">
+this.tokens = tokens || [];
+options = this.options;
+</pre>
+
+<!-- highlight line 2,3,4 !-->
+<pre data-enlighter-language="js" data-enlighter-highlight="2-4">
+EnlighterJS.Util.Init('pre', null, {
+   indent : 2,
+   grouping: false
+});
+</pre>
+```
 
 Version 2.0 introduces some amazing features like Inline-Syntax-Highlighting. The [Metainit](#metainit_initialization) tool performs this action automatically.
 
-    #JS
-    // Highlight all pre(block) + code(inline) tags and use Javascript as default language
-    EnlighterJS.Util.Init('pre', 'code', {
-    	language: 'javascript'
-    });
+```js
+// Highlight all pre(block) + code(inline) tags and use Javascript as default language
+EnlighterJS.Util.Init('pre', 'code', {
+    language: 'javascript'
+});
+```
 
 In some cases it might be usefull to start the linnumber counting with another value than 1 (maybe an excerpt). In this case you can add the `data-enlighter-lineoffset` attribute to your codeblock.
 
-    #HTML
-    <!-- start linenumber counting with line 15 !-->
-    <pre data-enlighter-language="js" data-enlighter-lineoffset="15">
-    this.tokens = tokens || [];
-    options = this.options;
-    </pre>
+```html
+<!-- start linenumber counting with line 15 !-->
+<pre data-enlighter-language="js" data-enlighter-lineoffset="15">
+this.tokens = tokens || [];
+options = this.options;
+</pre>
+```
 
 Initialization
 --------------
@@ -232,9 +241,10 @@ This will take all the work for you by adding a single line to the head section 
 #### Example ####
 Description: It enables block highlighting for all `pre` elements on the page as well as inline highlighting for all `code` elements. Javascript is set as default language used for highlighting. Each tab is replaced by four spaces to avoid rendering issues. Additionally the "raw code button" is enabled which allows the user to toggle between highlighted and unhighlighted code (e.g. to copy code).
 
-    #HTML
-    <!-- Initialize EnlighterJS -->	
-    <meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-indent="4" data-selector-block="pre" data-selector-inline="code" data-rawcodebutton="true" data-language="javascript" />
+```html
+<!-- Initialize EnlighterJS -->	
+<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-indent="4" data-selector-block="pre" data-selector-inline="code" data-rawcodebutton="true" data-language="javascript" />
+```
 
 #### Attributes ####
 Following attributes are available (optional) and will be converted to the required options object to trigger `EnlighterJS.Util.Helper`. Take a look into the Metainit.js sources to see how it is working.
@@ -266,47 +276,46 @@ EnlighterJS provides 4 ways to get manually initialized:
 
 #### Option 1 - Native Element extension ####
 
-    #JS
-    // get element by it's ID and activate highlighting using markdown as language
-    document.id('myCustomCode').enlight({
-      language: 'ruby', 
-      indent: 2
-    });
-    
-    // disable highlighting
-    document.id('myCustomCode').enlight(false);
+```js
+// get element by it's ID and activate highlighting using markdown as language
+document.id('myCustomCode').enlight({
+  language: 'ruby', 
+  indent: 2
+});
+
+// disable highlighting
+document.id('myCustomCode').enlight(false);
+```
 
 #### Option 2 - Use an EnlighterJS instance (OOP Style) ####
 
-    #JS
-    // create a new EnlighterJS instance
-    var myEnlighter = new EnlighterJS(document.id('myCustomCode'), {
-      language: 'php',
-      showLinenumbers: false
-    });
-    
-    // enable highlighting
-    myEnlighter.enlight(true);
+```js
+// create a new EnlighterJS instance
+var myEnlighter = new EnlighterJS(document.id('myCustomCode'), {
+  language: 'php',
+  showLinenumbers: false
+});
+
+// enable highlighting
+myEnlighter.enlight(true);
+```
 
 #### Option 3 - Use an EnlighterJS.Util.Helper utility function ####
 
-    #JS
-    // Highlight all code tags (inline code) and use Javascript as default language
-    EnlighterJS.Util.Helper(document.getElements('code'), {
-    	language: 'javascript',
-    	renderer: 'Inline'
-    });
+```js
+// Highlight all code tags (inline code) and use Javascript as default language
+EnlighterJS.Util.Helper(document.getElements('code'), {
+    language: 'javascript',
+    renderer: 'Inline'
+});
+
+// OPTION1 - Element style syntax - get element by it's ID
+document.id('myJsCode').enlight(true);
     
-    
-    
-    
-    
-    // OPTION1 - Element style syntax - get element by it's ID
-    document.id('myJsCode').enlight(true);
-    	
-    // OPTION2 - Element style syntax - highlight all pre elements with the class *myPhp*
-    // an EnlighterJS instance is automatically created
-    document.getElements('pre.myPhp').enlight({language: php});    
+// OPTION2 - Element style syntax - highlight all pre elements with the class *myPhp*
+// an EnlighterJS instance is automatically created
+document.getElements('pre.myPhp').enlight({language: php});    
+```
 
 Options
 -------
@@ -341,19 +350,20 @@ The following options can be passed to the following methods to customize the re
 
 #### Example ####
 
-    #JS
-    var options = {
-    	language : 'javascript',
-    	theme : 'Eclipse',
-    	indent : 2,
-    	forceTheme: false,
-    	rawButton: false,
-    	showLinenumbers: false,
-    	renderer: 'Inline'
-    };
-    
-    // Initialize EnlighterJS - use inline-highlighting only
-    EnlighterJS.Util.Init(null, 'code', options);
+```js
+var options = {
+    language : 'javascript',
+    theme : 'Eclipse',
+    indent : 2,
+    forceTheme: false,
+    rawButton: false,
+    showLinenumbers: false,
+    renderer: 'Inline'
+};
+
+// Initialize EnlighterJS - use inline-highlighting only
+EnlighterJS.Util.Init(null, 'code', options);
+```
 
 ### Element Options ###
 
@@ -369,17 +379,19 @@ Some options need to be applied directly to the container elements which holds t
 
 #### Example 1 ####
 
-    #HTML
-    <pre data-enlighter-language="js" data-enlighter-linenumbers="false" data-enlighter-lineoffset="5">
-    ...
-    </pre>
+```html
+<pre data-enlighter-language="js" data-enlighter-linenumbers="false" data-enlighter-lineoffset="5">
+...
+</pre>
+```
 
 #### Example 2 ####
 
-    #HTML
-    <p>
-    EnlighterJS also supports <code class="special" data-enlighter-language="js">alert('Inline Sourcecode highlighting');</code> (since version 2.0).
-    </p>
+```html
+<p>
+EnlighterJS also supports <code class="special" data-enlighter-language="js">alert('Inline Sourcecode highlighting');</code> (since version 2.0).
+</p>
+```
 
 Code-Groups
 -----------
@@ -389,35 +401,36 @@ The name/title of the tab is defined by a `data-enlighter-title` attribute. To u
 
 ### Define a Code-Group ###
 
-    #HTML
-    <!-- the following 3 code-blocks will be grouped togehter - the theme will be "enlighter" (global theme definition of the group-leader) !-->
-    <pre data-enlighter-language="js" data-enlighter-group="group0001" data-enlighter-title="Javascript">
-    this.tokens = tokens || [];
-    options = this.options;
-    </pre>
-    
-    <!-- Theme definition will be ignored !-->
-    <pre data-enlighter-language="java" data-enlighter-theme="panic" data-enlighter-group="group0001" data-enlighter-title="pure Java">
-    import javax.swing.JOptionPane;
-    
-    public class OddEven {
-    /**
-     * "input" is the number that the user gives to the computer
-     */
-    private int input; // a whole number("int" means integer)
-    </pre>
-    
-    <!-- Theme definition will be ignored !-->
-    <pre data-enlighter-language="php" data-enlighter-theme="twilight" data-enlighter-group="group0001" data-enlighter-title="PHP Script">
-    /** Test Snippet */
-    $mysqli = new mysqli("localhost", "my_user", "my_password", "world");
-       
-    /* check connection */
-    if (mysqli_connect_errno()) {
-        printf("Connect failed: %s\n", mysqli_connect_error());
-        exit();
-    }
-    </pre>
+```html
+<!-- the following 3 code-blocks will be grouped togehter - the theme will be "enlighter" (global theme definition of the group-leader) !-->
+<pre data-enlighter-language="js" data-enlighter-group="group0001" data-enlighter-title="Javascript">
+this.tokens = tokens || [];
+options = this.options;
+</pre>
+
+<!-- Theme definition will be ignored !-->
+<pre data-enlighter-language="java" data-enlighter-theme="panic" data-enlighter-group="group0001" data-enlighter-title="pure Java">
+import javax.swing.JOptionPane;
+
+public class OddEven {
+/**
+ * "input" is the number that the user gives to the computer
+ */
+private int input; // a whole number("int" means integer)
+</pre>
+
+<!-- Theme definition will be ignored !-->
+<pre data-enlighter-language="php" data-enlighter-theme="twilight" data-enlighter-group="group0001" data-enlighter-title="PHP Script">
+/** Test Snippet */
+$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
+   
+/* check connection */
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
+</pre>
+```
 	
 ### Initialize Code-Groups ###
 The initialization of code-groups differs from the standard. You have to use the `EnlighterJS.Util.Helper` utility function (triggered by Metainit and EnlighterJS.Util.Init) - it does the complete initialization and grouping for you!
@@ -429,15 +442,16 @@ Check out the options section to see the various options you can use.
 
 **Notice:** `grouping` has to set to `true` when using the javascript based initialization
 
-    #JS
-    // highlight all pre tags; no inline-highlighting
-    EnlighterJS.Util.Init('pre', null, {
-        indent: 4,
-        language: 'js',
-        theme: 'enlighter',
-        grouping: true,
-        rawButton: true
-    });
+```js
+// highlight all pre tags; no inline-highlighting
+EnlighterJS.Util.Init('pre', null, {
+    indent: 4,
+    language: 'js',
+    theme: 'enlighter',
+    grouping: true,
+    rawButton: true
+});
+```
 
 Custom Builds
 -------------
@@ -445,7 +459,9 @@ The EnlighterJS project is using [Apache ANT](http://ant.apache.org/) as build-s
 [UglifyJS2](https://github.com/mishoo/UglifyJS2) and [clean-css](https://github.com/jakubpawlowicz/clean-css) are used to minify the production-ready javascript and css files.
 To save bandwidth/traffic or include self-defined languages, you can easily customize your EnlighterJS build by editing the *build.xml* file (found in the root directory) and run Apache ANT (target *build*)
 
-You can also use the web-based [EnlighterJS Builder](http://enlighterjs.andidittrich.de/Builder.html) to generate your customized package **without the need of ANT** - everything is done for you server-site!
+### Cloud/Web based builder ###
+
+You can also use the web-based [EnlighterJS Builder](http://enlighterjs.andidittrich.de/Builder.html) to generate your customized package **without the need of ANT/development environment** - everything is done for you server-site!
 
 ### Software Requirements ###
 
@@ -460,22 +476,25 @@ You can also use the web-based [EnlighterJS Builder](http://enlighterjs.andiditt
 If you want to remove some of the default theme you can edit the *include.themes* property and modify the list of css source files.
 For Example: only include the modern themes
 
-    #XML
-    <!-- Themes to include !-->
-    <property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide" />
+```xml
+<!-- Themes to include !-->
+<property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide" />
+```
 
 Or Include only your custom themes (Note: they have to be located into `Source/Themes/`)
 
-    #XML
-    <!-- Themes to include !-->
-    <property name="include.themes" value="Custom1 Custom2" />		
-		
+```xml
+<!-- Themes to include !-->
+<property name="include.themes" value="Custom1 Custom2" />		
+```xml
+			
 Removing/Adding languages is also easy as this - they are defined by the *include.languages* property.
 For Example: only include html+css+js syntax highlighting (be careful - html is an alias for XML!, you have to include `Xml`)
 
-    #XML
-    <!-- Languages to include !-->
-    <property name="include.languages" value="Css Javascript Xml" />
+```xml
+<!-- Languages to include !-->
+<property name="include.languages" value="Css Javascript Xml" />
+```
 
 Contribution
 ------------
@@ -483,9 +502,24 @@ Contribution
 EnlighterJS is OpenSource and managed on [GitHub](https://github.com/AndiDittrich/EnlighterJS) - if you like, you're welcome to contribute!
 To simplify the release and quality control process, please follow these remarks:
 
+### Notices ###
 * Your commits/pull-request should only contain changes of the `Source/`, `Resources/TestcaseData` directories or the Examples located into the root directory - otherwise i have to merge the request manually
 * **Do not change** the files located into the `Examples/` or `Build/` directory - they are automatically generated during the build-process using data from `Resources/TestcaseData`
 * Related software packages like MooTools, Bootstrap, ANT-contrib are updated by the maintainer
+* If you form a concept of larger project changes, please [discuss](https://github.com/AndiDittrich/EnlighterJS/issues) them with the contributors **before** implementing
+
+### Documentation ###
+* To change contents of the `README.md` file please edit the split files in `Docs/` - the readme file is automatically generated by merging these files during the build process
+
+### Adding a new Language ###
+* First of all: take a look on other languages which are already available to learn about functions and coding styles
+* To start with a new language please use the `LanguageDevelopment.phtml` workspace. It will automatically load `Source/Language/Template.mylang.js` (the startup file for your language development).
+* Rename your language file `Template.mylang.js` to the **camel-cased** real language name - e.g. `Vhdl.js`
+* Add detailed comments to each language rule!
+* Keep the code as small as possible: e.g. use regex instead of long keyword lists
+* In case your language is a superset of another one, please **extend** the origin language - do not copy the origin file
+* Add an language testcase/demo to the `Resouces/TestcaseData` directory
+* Finally create a [Pull Request on GitHub](https://help.github.com/articles/creating-a-pull-request/) - your changes will be reviewed and commonly added to the project
 
 Compatibility
 -------------

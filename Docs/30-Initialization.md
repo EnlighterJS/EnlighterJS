@@ -12,9 +12,10 @@ This will take all the work for you by adding a single line to the head section 
 #### Example ####
 Description: It enables block highlighting for all `pre` elements on the page as well as inline highlighting for all `code` elements. Javascript is set as default language used for highlighting. Each tab is replaced by four spaces to avoid rendering issues. Additionally the "raw code button" is enabled which allows the user to toggle between highlighted and unhighlighted code (e.g. to copy code).
 
-    #HTML
-    <!-- Initialize EnlighterJS -->	
-    <meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-indent="4" data-selector-block="pre" data-selector-inline="code" data-rawcodebutton="true" data-language="javascript" />
+```html
+<!-- Initialize EnlighterJS -->	
+<meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-indent="4" data-selector-block="pre" data-selector-inline="code" data-rawcodebutton="true" data-language="javascript" />
+```
 
 #### Attributes ####
 Following attributes are available (optional) and will be converted to the required options object to trigger `EnlighterJS.Util.Helper`. Take a look into the Metainit.js sources to see how it is working.
@@ -46,44 +47,43 @@ EnlighterJS provides 4 ways to get manually initialized:
 
 #### Option 1 - Native Element extension ####
 
-    #JS
-    // get element by it's ID and activate highlighting using markdown as language
-    document.id('myCustomCode').enlight({
-      language: 'ruby', 
-      indent: 2
-    });
-    
-    // disable highlighting
-    document.id('myCustomCode').enlight(false);
+```js
+// get element by it's ID and activate highlighting using markdown as language
+document.id('myCustomCode').enlight({
+  language: 'ruby', 
+  indent: 2
+});
+
+// disable highlighting
+document.id('myCustomCode').enlight(false);
+```
 
 #### Option 2 - Use an EnlighterJS instance (OOP Style) ####
 
-    #JS
-    // create a new EnlighterJS instance
-    var myEnlighter = new EnlighterJS(document.id('myCustomCode'), {
-      language: 'php',
-      showLinenumbers: false
-    });
-    
-    // enable highlighting
-    myEnlighter.enlight(true);
+```js
+// create a new EnlighterJS instance
+var myEnlighter = new EnlighterJS(document.id('myCustomCode'), {
+  language: 'php',
+  showLinenumbers: false
+});
+
+// enable highlighting
+myEnlighter.enlight(true);
+```
 
 #### Option 3 - Use an EnlighterJS.Util.Helper utility function ####
 
-    #JS
-    // Highlight all code tags (inline code) and use Javascript as default language
-    EnlighterJS.Util.Helper(document.getElements('code'), {
-    	language: 'javascript',
-    	renderer: 'Inline'
-    });
+```js
+// Highlight all code tags (inline code) and use Javascript as default language
+EnlighterJS.Util.Helper(document.getElements('code'), {
+    language: 'javascript',
+    renderer: 'Inline'
+});
+
+// OPTION1 - Element style syntax - get element by it's ID
+document.id('myJsCode').enlight(true);
     
-    
-    
-    
-    
-    // OPTION1 - Element style syntax - get element by it's ID
-    document.id('myJsCode').enlight(true);
-    	
-    // OPTION2 - Element style syntax - highlight all pre elements with the class *myPhp*
-    // an EnlighterJS instance is automatically created
-    document.getElements('pre.myPhp').enlight({language: php});    
+// OPTION2 - Element style syntax - highlight all pre elements with the class *myPhp*
+// an EnlighterJS instance is automatically created
+document.getElements('pre.myPhp').enlight({language: php});    
+```

@@ -7,35 +7,36 @@ The name/title of the tab is defined by a `data-enlighter-title` attribute. To u
 
 ### Define a Code-Group ###
 
-    #HTML
-    <!-- the following 3 code-blocks will be grouped togehter - the theme will be "enlighter" (global theme definition of the group-leader) !-->
-    <pre data-enlighter-language="js" data-enlighter-group="group0001" data-enlighter-title="Javascript">
-    this.tokens = tokens || [];
-    options = this.options;
-    </pre>
-    
-    <!-- Theme definition will be ignored !-->
-    <pre data-enlighter-language="java" data-enlighter-theme="panic" data-enlighter-group="group0001" data-enlighter-title="pure Java">
-    import javax.swing.JOptionPane;
-    
-    public class OddEven {
-    /**
-     * "input" is the number that the user gives to the computer
-     */
-    private int input; // a whole number("int" means integer)
-    </pre>
-    
-    <!-- Theme definition will be ignored !-->
-    <pre data-enlighter-language="php" data-enlighter-theme="twilight" data-enlighter-group="group0001" data-enlighter-title="PHP Script">
-    /** Test Snippet */
-    $mysqli = new mysqli("localhost", "my_user", "my_password", "world");
-       
-    /* check connection */
-    if (mysqli_connect_errno()) {
-        printf("Connect failed: %s\n", mysqli_connect_error());
-        exit();
-    }
-    </pre>
+```html
+<!-- the following 3 code-blocks will be grouped togehter - the theme will be "enlighter" (global theme definition of the group-leader) !-->
+<pre data-enlighter-language="js" data-enlighter-group="group0001" data-enlighter-title="Javascript">
+this.tokens = tokens || [];
+options = this.options;
+</pre>
+
+<!-- Theme definition will be ignored !-->
+<pre data-enlighter-language="java" data-enlighter-theme="panic" data-enlighter-group="group0001" data-enlighter-title="pure Java">
+import javax.swing.JOptionPane;
+
+public class OddEven {
+/**
+ * "input" is the number that the user gives to the computer
+ */
+private int input; // a whole number("int" means integer)
+</pre>
+
+<!-- Theme definition will be ignored !-->
+<pre data-enlighter-language="php" data-enlighter-theme="twilight" data-enlighter-group="group0001" data-enlighter-title="PHP Script">
+/** Test Snippet */
+$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
+   
+/* check connection */
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
+</pre>
+```
 	
 ### Initialize Code-Groups ###
 The initialization of code-groups differs from the standard. You have to use the `EnlighterJS.Util.Helper` utility function (triggered by Metainit and EnlighterJS.Util.Init) - it does the complete initialization and grouping for you!
@@ -47,12 +48,13 @@ Check out the options section to see the various options you can use.
 
 **Notice:** `grouping` has to set to `true` when using the javascript based initialization
 
-    #JS
-    // highlight all pre tags; no inline-highlighting
-    EnlighterJS.Util.Init('pre', null, {
-        indent: 4,
-        language: 'js',
-        theme: 'enlighter',
-        grouping: true,
-        rawButton: true
-    });
+```js
+// highlight all pre tags; no inline-highlighting
+EnlighterJS.Util.Init('pre', null, {
+    indent: 4,
+    language: 'js',
+    theme: 'enlighter',
+    grouping: true,
+    rawButton: true
+});
+```

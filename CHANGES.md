@@ -3,6 +3,7 @@
 ### Version 2.10 BETA ###
 * Added: new social buttons to the website
 * Added: some contribution guidelines
+* Changed: used GFM style for the documentation (will break outdated MooTools-Forge markdown parser)
 * Bugfix: removed `console.log` debugging outut from tokenizer
 
 ### Version 2.9 ###

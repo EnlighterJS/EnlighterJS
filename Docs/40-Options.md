@@ -32,19 +32,20 @@ The following options can be passed to the following methods to customize the re
 
 #### Example ####
 
-    #JS
-    var options = {
-    	language : 'javascript',
-    	theme : 'Eclipse',
-    	indent : 2,
-    	forceTheme: false,
-    	rawButton: false,
-    	showLinenumbers: false,
-    	renderer: 'Inline'
-    };
-    
-    // Initialize EnlighterJS - use inline-highlighting only
-    EnlighterJS.Util.Init(null, 'code', options);
+```js
+var options = {
+    language : 'javascript',
+    theme : 'Eclipse',
+    indent : 2,
+    forceTheme: false,
+    rawButton: false,
+    showLinenumbers: false,
+    renderer: 'Inline'
+};
+
+// Initialize EnlighterJS - use inline-highlighting only
+EnlighterJS.Util.Init(null, 'code', options);
+```
 
 ### Element Options ###
 
@@ -60,14 +61,16 @@ Some options need to be applied directly to the container elements which holds t
 
 #### Example 1 ####
 
-    #HTML
-    <pre data-enlighter-language="js" data-enlighter-linenumbers="false" data-enlighter-lineoffset="5">
-    ...
-    </pre>
+```html
+<pre data-enlighter-language="js" data-enlighter-linenumbers="false" data-enlighter-lineoffset="5">
+...
+</pre>
+```
 
 #### Example 2 ####
 
-    #HTML
-    <p>
-    EnlighterJS also supports <code class="special" data-enlighter-language="js">alert('Inline Sourcecode highlighting');</code> (since version 2.0).
-    </p>
+```html
+<p>
+EnlighterJS also supports <code class="special" data-enlighter-language="js">alert('Inline Sourcecode highlighting');</code> (since version 2.0).
+</p>
+```

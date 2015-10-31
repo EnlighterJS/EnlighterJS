@@ -36,8 +36,8 @@ How to use
 ----------
 This is a minimalistic example how to highlight sourcecode with EnlighterJS. The working example (correct js+css paths) is available within the EnlighterJS package (Example1.html).
 
-    #HTML
-    <head>
+```HTML
+<head>
     ...
     <!-- Include EnlighterJS Styles -->
     <link rel="stylesheet" type="text/css" href="EnlighterJS.min.css" />
@@ -51,8 +51,8 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
     <!-- Initialize EnlighterJS -->	
     <meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-indent="4" data-selector-block="pre" data-selector-inline="code.special" />
     ...
-    </head>
-    <body>
+</head>
+<body>
     ...
     <!-- This code will be highlighted as Javascript !-->
     <pre data-enlighter-language="js">
@@ -66,7 +66,8 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
     </pre>
     ...
     <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, <code class="special">window.addEvent('domready', function(){});</code> labore et dolore magna aliquyam erat.</p>
-    </body>
+</body>
+```
 
 Build-in Languages & Themes
 ---------------------------
