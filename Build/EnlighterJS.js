@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.9.0 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | August 5 2015 */
+/*! EnlighterJS Syntax Highlighter 2.9.0 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | October 31 2015 */
 (function() {
     /*
 ---
@@ -721,7 +721,6 @@ provides: [Tokenizer.Standard]
             if (lastTokenEnd < code.length) {
                 tokens.push(token(code.substring(lastTokenEnd), "", lastTokenEnd));
             }
-            console.log(lastTokenEnd, code.length);
             return tokens;
         },
         // token pre-processing; can be overloaded by extending class

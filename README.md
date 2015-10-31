@@ -1,14 +1,3 @@
-FEATURE FREEZE STATUS
-=====================
-
-Dear Contributors,
-i am currently working on a new major version of EnlighterJS with some new cool features and an isomorphic architecture.
-Therefore i will not add any new features to the **2.x** branch. But critical bugs will be fixed!
-
-Thank you for your understanding & best regards
-Andi
-
-
 EnlighterJS
 ===========
 
@@ -392,7 +381,6 @@ Some options need to be applied directly to the container elements which holds t
     EnlighterJS also supports <code class="special" data-enlighter-language="js">alert('Inline Sourcecode highlighting');</code> (since version 2.0).
     </p>
 
-
 Code-Groups
 -----------
 
@@ -489,7 +477,6 @@ For Example: only include html+css+js syntax highlighting (be careful - html is 
     <!-- Languages to include !-->
     <property name="include.languages" value="Css Javascript Xml" />
 
-
 Contribution
 ------------
 
@@ -499,7 +486,6 @@ To simplify the release and quality control process, please follow these remarks
 * Your commits/pull-request should only contain changes of the `Source/`, `Resources/TestcaseData` directories or the Examples located into the root directory - otherwise i have to merge the request manually
 * **Do not change** the files located into the `Examples/` or `Build/` directory - they are automatically generated during the build-process using data from `Resources/TestcaseData`
 * Related software packages like MooTools, Bootstrap, ANT-contrib are updated by the maintainer
-
 
 Compatibility
 -------------
@@ -523,9 +509,7 @@ Screenshots
 
 ![Screenshot 1](http://enlighterjs.andidittrich.de/screenshot1.png)
 ![Screenshot 2](http://enlighterjs.andidittrich.de/screenshot2.png)    
-
 License
 -------
 
 EnlighterJS is OpenSource and licensed under the Terms of [The MIT License (X11)](http://opensource.org/licenses/MIT). You're welcome to [contribute](https://github.com/AndiDittrich/EnlighterJS/blob/master/CONTRIBUTE.md)!
-
