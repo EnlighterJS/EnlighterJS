@@ -1,6 +1,6 @@
 /*
 ---
-description: ATMEL AVR Assembly Language -  Reference: AVR Assembler User Guide [DOC1022]
+description: General Assembly Language
 
 license: MIT-style
 
@@ -10,15 +10,16 @@ authors:
 requires:
   - Core/1.4.5
 
-provides: [EnlighterJS.Language.avrasm]
+provides: [EnlighterJS.Language.asm]
 ...
 */
-EJS.Language.avrasm = new Class({
+EJS.Language.asm = new Class({
 	Extends : EJS.Language.generic,
 
 	setupLanguage: function(){
 
 		this.patterns = {
+            // comments start with a semicolon (only single line comments available)
 			'singleLineComments': {
 				pattern: /(;.*)$/gm,
 				alias: 'co1'
