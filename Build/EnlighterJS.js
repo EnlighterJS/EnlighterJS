@@ -163,6 +163,27 @@ provides: [EnlighterJS]
             return this;
         },
         /**
+     * Disable highlighting and remove generated DOM
+     */
+        dispose: function() {
+            // already highlighted ?
+            if (!this.isRendered) {
+                return;
+            }
+            // restore original codeblock
+            this.originalCodeblock.setStyle("display", null);
+            // hide highlighted code
+            this.container.setStyle("display", "none");
+            this.rawContentContainer.setStyle("display", "none");
+            // drop dom
+            this.container.dispose();
+            this.rawContentContainer.dispose();
+            this.container = null;
+            this.rawContentContainer = null;
+            // reset flag
+            this.isRendered = false;
+        },
+        /**
 	 * Extracts the raw code from given codeblock
 	 * @return {String} The plain-text code (raw)
 	 */
@@ -930,6 +951,12 @@ provides: [Element.enlight]
             options = options === true ? {} : options;
             // enlighter instance already available ?
             var enlighter = this.retrieve("EnlighterInstance");
+            // dispose element ?
+            if (options === "dispose" && enlighter) {
+                enlighter.dispose();
+                this.eliminate("EnligterInstance");
+                return this;
+            }
             // hide highlighted sourcecode ?
             if (options === false) {
                 if (enlighter !== null) {
@@ -1409,10 +1436,6 @@ provides: [EnlighterJS.Language.avrasm]
                 singleLineComments: {
                     pattern: /(;.*)$/gm,
                     alias: "co1"
-                },
-                test: {
-                    pattern: /(.)?(BYTE|CSEG|DEF)/gim,
-                    alias: "kw4"
                 },
                 // available directives: BYTE,CSEG,DB,DEF,DEVICE,DSEG,DW,ENDMACRO,EQU,ESEG,EXIT,INCLUDE,LIST,LISTMAC,MACRO,NOLIST,ORG,SET
                 directives: {

@@ -203,6 +203,32 @@ var EJS = window.EnlighterJS = new Class({
 
 		return this;
 	},
+
+    /**
+     * Disable highlighting and remove generated DOM
+     */
+    dispose: function(){
+        // already highlighted ?
+        if (!this.isRendered) {
+            return;
+        }
+
+        // restore original codeblock
+        this.originalCodeblock.setStyle('display', null);
+
+        // hide highlighted code
+        this.container.setStyle('display', 'none');
+        this.rawContentContainer.setStyle('display', 'none');
+
+        // drop dom
+        this.container.dispose();
+        this.rawContentContainer.dispose();
+        this.container = null;
+        this.rawContentContainer = null;
+
+        // reset flag
+        this.isRendered = false;
+    },
 	
 	/**
 	 * Extracts the raw code from given codeblock

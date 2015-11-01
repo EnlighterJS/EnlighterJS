@@ -41,10 +41,6 @@ EnlighterJS provides 4 ways to get manually initialized:
 
 **Notice:** You can pass any of the [Global Options](#global_options) with each method. Every method will invoke the `EnlighterJS` constructor.
 
-#### Option 1 - Init Utility Function (recommended) ####
-
-
-
 #### Option 1 - Native Element extension ####
 
 ```js
@@ -56,6 +52,9 @@ document.id('myCustomCode').enlight({
 
 // disable highlighting
 document.id('myCustomCode').enlight(false);
+
+// remove highlighting (drop generated HTML from DOM)
+document.id('myHighlightedCode').enlight('dispose');
 ```
 
 #### Option 2 - Use an EnlighterJS instance (OOP Style) ####
@@ -69,6 +68,9 @@ var myEnlighter = new EnlighterJS(document.id('myCustomCode'), {
 
 // enable highlighting
 myEnlighter.enlight(true);
+
+// remove highlighting (drop generated HTML from DOM)
+myEnlighter.dispose();
 ```
 
 #### Option 3 - Use an EnlighterJS.Util.Helper utility function ####

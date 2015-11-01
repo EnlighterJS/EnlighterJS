@@ -31,6 +31,13 @@ Element.implement({
         // enlighter instance already available ?
         var enlighter = this.retrieve('EnlighterInstance');
 
+        // dispose element ?
+        if (options === 'dispose' && enlighter){
+            enlighter.dispose();
+            this.eliminate('EnligterInstance');
+            return this;
+        }
+
         // hide highlighted sourcecode ?
         if (options === false){
             if (enlighter !== null) {
