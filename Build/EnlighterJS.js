@@ -675,11 +675,16 @@ provides: [Tokenizer.Standard]
                 while (match = rule.pattern.exec(code)) {
                     // overrides the usual regex behaviour of not matching results that overlap
                     rule.pattern.lastIndex = match.index + 1;
-                    // matching group used ?
-                    if (match[1]) {
-                        rawTokens.push(token(match[1], rule.alias, match.index + match[0].indexOf(match[1])));
-                    } else {
+                    // matching groups used ?
+                    if (match.length == 1) {
                         rawTokens.push(token(match[0], rule.alias, match.index));
+                    } else {
+                        // get first matched group
+                        for (var i = 1; i < match.length; i++) {
+                            if (match[i] && match[i].length > 0) {
+                                rawTokens.push(token(match[i], rule.alias, match.index + match[0].indexOf(match[i])));
+                            }
+                        }
                     }
                 }
             });
@@ -1400,18 +1405,13 @@ provides: [EnlighterJS.Language.avrasm]
     EJS.Language.avrasm = new Class({
         Extends: EJS.Language.generic,
         setupLanguage: function() {
-            this.keywords = {
-                directives: {
-                    csv: "BYTE,CSEG,DB,DEF,DEVICE,DSEG,DW,ENDMACRO,EQU,ESEG,EXIT,INCLUDE,LIST,LISTMAC,MACRO,NOLIST,ORG,SET",
-                    alias: "kw4"
-                }
-            };
             this.patterns = {
                 singleLineComments: {
                     pattern: /(;.*)$/gm,
                     alias: "co1"
                 },
-                definition: {
+                // available directives: BYTE,CSEG,DB,DEF,DEVICE,DSEG,DW,ENDMACRO,EQU,ESEG,EXIT,INCLUDE,LIST,LISTMAC,MACRO,NOLIST,ORG,SET
+                directives: {
                     pattern: /^\s*?\.(\w+)\s+/gm,
                     alias: "kw1"
                 },
@@ -1455,7 +1455,7 @@ provides: [EnlighterJS.Language.avrasm]
                     pattern: this.common.functionCalls,
                     alias: "me0"
                 },
-                // register alias
+                // io register alias e.g. DDRA, PORTB, TIMSK
                 ioregister: {
                     pattern: /\b[A-Z]{2,}[0-9]?[0-9]?\b/g,
                     alias: "kw4"

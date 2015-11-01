@@ -43,17 +43,16 @@ EJS.Tokenizer.Standard = new Class({
                 rule.pattern.lastIndex = match.index+1;
 
                 // matching groups used ?
-                if (match.length > 1) {
-                    // get first matched group
-                    for (var i = 1; i < match.length; i++) {
-                        if (match[i]) {
-                            rawTokens.push(token(match[i], rule.alias, match.index + match[0].indexOf(match[i])));
-                            break;
-                        }
-                    }
+                if (match.length == 1) {
+                    rawTokens.push(token(match[0], rule.alias, match.index));
                 // use full pattern
                 }else{
-                    rawTokens.push(token(match[0], rule.alias, match.index));
+                    // get first matched group
+                    for (var i = 1; i < match.length; i++) {
+                        if (match[i] && match[i].length > 0){
+                            rawTokens.push(token(match[i], rule.alias, match.index + match[0].indexOf(match[i])));
+                        }
+                    }
                 }
             }
 		});

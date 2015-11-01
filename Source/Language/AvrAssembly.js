@@ -17,12 +17,6 @@ EJS.Language.avrasm = new Class({
 	Extends : EJS.Language.generic,
 
 	setupLanguage: function(){
-		this.keywords = {
-            'directives': {
-                csv: 'BYTE,CSEG,DB,DEF,DEVICE,DSEG,DW,ENDMACRO,EQU,ESEG,EXIT,INCLUDE,LIST,LISTMAC,MACRO,NOLIST,ORG,SET',
-                alias: 'kw4'
-            }
-		};
 
 		this.patterns = {
 			'singleLineComments': {
@@ -30,7 +24,8 @@ EJS.Language.avrasm = new Class({
 				alias: 'co1'
 			},
 
-			'definition': {
+            // available directives: BYTE,CSEG,DB,DEF,DEVICE,DSEG,DW,ENDMACRO,EQU,ESEG,EXIT,INCLUDE,LIST,LISTMAC,MACRO,NOLIST,ORG,SET
+			'directives': {
 				pattern: /^\s*?\.(\w+)\s+/gm,
 				alias: 'kw1'
 			},
@@ -65,6 +60,7 @@ EJS.Language.avrasm = new Class({
                 pattern: /(0x[A-F0-9]+|\$[A-F0-9]+)/gi,
                 alias: 'nu0'
             },
+
             // Binary: 0b00001010, 0b11111111
             'binary': {
                 pattern: /(0b[01]+)/g,
@@ -83,7 +79,7 @@ EJS.Language.avrasm = new Class({
                 alias: 'me0'
             },
 
-            // register alias
+            // io register alias e.g. DDRA, PORTB, TIMSK
             'ioregister': {
                 pattern: /\b[A-Z]{2,}[0-9]?[0-9]?\b/g,
                 alias: 'kw4'
