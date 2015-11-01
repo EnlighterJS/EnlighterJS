@@ -7,7 +7,7 @@ It also supports Inline-Syntax-Highlighting as well as the automatic creation of
 Take a look into the [Documentation](http://enlighterjs.andidittrich.de/Documentation.html) or view the [Theme Demo](http://enlighterjs.andidittrich.de/Themes.html)
 
 ### Download ###
-* [Download Full-Package](https://github.com/AndiDittrich/EnlighterJS/archive/master.zip)
+* [Download Latest Release](https://github.com/AndiDittrich/EnlighterJS/releases/latest) 
 * [Custom-Builds](http://enlighterjs.andidittrich.de/Builder.html)
 
 ![Screenshot](http://enlighterjs.andidittrich.de/screenshot1.png)
