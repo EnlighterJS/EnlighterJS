@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.10.0-BETA | MIT License (X11) | http://enlighterjs.andidittrich.de/ | October 31 2015 */
+/*! EnlighterJS Syntax Highlighter 2.10.0-BETA | MIT License (X11) | http://enlighterjs.andidittrich.de/ | November 1 2015 */
 (function() {
     /*
 ---
@@ -1384,7 +1384,7 @@ provides: [EnlighterJS.Language.generic]
     });
     /*
 ---
-description: AVR Assembler
+description: General Assembly Language -  Reference: AVR Assembler User Guide [DOC1022]
 
 license: MIT-style
 
@@ -1400,7 +1400,12 @@ provides: [EnlighterJS.Language.avrasm]
     EJS.Language.avrasm = new Class({
         Extends: EJS.Language.generic,
         setupLanguage: function() {
-            this.keywords = {};
+            this.keywords = {
+                directives: {
+                    csv: "BYTE,CSEG,DB,DEF,DEVICE,DSEG,DW,ENDMACRO,EQU,ESEG,EXIT,INCLUDE,LIST,LISTMAC,MACRO,NOLIST,ORG,SET",
+                    alias: "kw4"
+                }
+            };
             this.patterns = {
                 singleLineComments: {
                     pattern: /(;.*)$/gm,
@@ -1411,14 +1416,18 @@ provides: [EnlighterJS.Language.avrasm]
                     alias: "kw1"
                 },
                 register: {
-                    pattern: /(r\d{1,2})/gim,
+                    pattern: /\b(r\d{1,2})/gi,
                     alias: "kw1"
+                },
+                macroparam: {
+                    pattern: /(@[0-9])/gi,
+                    alias: "kw4"
                 },
                 label: {
                     pattern: /^\s*?(\w+:)\s*?/gm,
-                    alias: "kw2"
+                    alias: "kw3"
                 },
-                command: {
+                instruction: {
                     pattern: /^\s*?(\w+)\s+/gm,
                     alias: "kw3"
                 },
@@ -1426,9 +1435,30 @@ provides: [EnlighterJS.Language.avrasm]
                     pattern: this.common.strings,
                     alias: "st0"
                 },
-                numbers: {
-                    pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][-+]?[0-9]+)?|0x[A-F0-9]+|0b[0-1_]+)\b/gim,
+                // Hexadecimal (two notations): 0x0a, $0a, 0xff, $ff
+                hex: {
+                    pattern: /(0x[A-F0-9]+|\$[A-F0-9]+)/gi,
                     alias: "nu0"
+                },
+                // Binary: 0b00001010, 0b11111111
+                binary: {
+                    pattern: /(0b[01]+)/g,
+                    alias: "nu0"
+                },
+                // Decimal: \d+
+                integer: {
+                    pattern: /\b(\d+)/g,
+                    alias: "nu0"
+                },
+                // e.g. LOW(), HIGH() ..
+                functions: {
+                    pattern: this.common.functionCalls,
+                    alias: "me0"
+                },
+                // register alias
+                ioregister: {
+                    pattern: /\b[A-Z]{2,}[0-9]?[0-9]?\b/g,
+                    alias: "kw4"
                 }
             };
         }

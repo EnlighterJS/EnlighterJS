@@ -1,0 +1,113 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="avrasm">.include "m8def.inc"</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<pre data-enlighter-language="avrasm">
+; SOURCE: AVR Assembler User Guide [DOC1022] www.atmel.com/Images/doc1022.pdf
+
+; COMMENTS
+; -----------------------------------------------------
+; Single Line Comment
+    ;Single Line Comment leading Whitespaces
+
+; NO
+; Multi
+; line
+; Comments
+
+; NUMBERS
+; -----------------------------------------------------
+.SET io_offset = 0x23
+.SET io_offset = $23
+.SET PORTA = io_offset + 2
+.SET PORTX = 0b11011101 efwefew
+
+.CSEG ; Start code segment
+    clr r2 ; Clear register 2
+    out porta,r2 ; Write to Port A
+
+; DIRECTIVES
+; -----------------------------------------------------
+.include "m8def.inc"
+.include "lcd.asm"
+
+.def PI = 3141
+.def BOLTZMANN = 13806
+.def temp1 = r16
+.def temp2 = r17
+.def temp3 = r18
+.def flag  = r22
+
+; OPERATORS
+; -----------------------------------------------------
+ldi r16,!0xf0 ; Load r16 with 0x00
+ldi r16,~0xf0 ; Load r16 with 0x0f
+ldi r16,-2 ; Load -2(0xfe) in r16
+ldi r30,label*2 ; Load r30 with label*2
+ldi r30,label/2 ; Load r30 with label/2
+ldi r30,c1+c2 ; Load r30 with c1+c2
+ldi r18,High(c1&c2) ;Load r18 with an expression
+ldi r18,Low(c1|c2) ;Load r18 with an expression
+ldi r18,Low(c1||c2) ;Load r18 with an expression
+
+
+
+
+; EXAMPLES
+; -----------------------------------------------------
+.DEF temp=R16
+.DEF ior=R0
+.CSEG
+
+ldi temp,0xf0 ; Load 0xf0 into temp register
+in ior,0x3f ; Read SREG into ior register
+eor temp,ior ; Exclusive or temp and ior
+
+init:
+
+.DSEG                   ; Start data segment
+    vartab: .BYTE 4     ; Reserve 4 bytes in SRAM
+.ESEG
+    eevar: .DW 0xff0f   ; Initialize one word in
+                        ; EEPROM
+.CSEG                   ; Start code segment
+    const: .DW 2        ; Write 0x0002 in prog.mem.
+    mov r1,r0           ; Do something
+
+
+.NOLIST                 ; Disable listfile generation
+.INCLUDE "macro.inc"     ; The included files will not
+.INCLUDE "const.def"     ; be shown in the listfile
+.LIST                   ; Reenable listfile generation
+
+.MACRO MACX             ; Define an example macro
+    add r0,@0           ; Do something
+    eor r1,@1           ; Do something
+.ENDMACRO               ; End macro definition
+.LISTMAC                ; Enable macro expansion
+    MACX r2,r1          ; Call macro, show expansion
+
+
+
+.CSEG
+    varlist:.DW 0,0xffff,0b1001110001010101,-32768,65535
+.ESEG
+    eevar: .DW 0xffff
+
+
+.DEF temp=R16
+.DEF ior=R0
+.CSEG
+    ldi temp,0xf0       ; Load 0xf0 into temp register
+    in ior,0x3f         ; Read SREG into ior register
+    eor temp,ior        ; Exclusive or temp and ior
+
+
+.DSEG
+    var1: .BYTE 1       ; reserve 1 byte to var1
+    table: .BYTE tab_size ; reserve tab_size bytes
+.CSEG
+    ldi r30,low(var1) ; Load Z register low
+    ldi r31,high(var1) ; Load Z register high
+    ld r1,Z ; Load VAR1 into register 1
+</pre>

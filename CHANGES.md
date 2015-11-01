@@ -1,8 +1,11 @@
 ## Branch 2.x ##
 
 ### Version 2.10 BETA ###
+* Added: [Cython](http://cython.org/) Language support - thanks to [DevynCJohnson on GitHub](https://github.com/AndiDittrich/EnlighterJS/pull/14)
 * Added: new social buttons to the website
-* Added: some contribution guidelines
+* Added: contribution guidelines
+* Added: missing AVR Assembly features (used [AVR-1022](www.atmel.com/Images/doc1022.pdf) reference) 
+* Added: new AVR Assembly testcase/example
 * Changed: used GFM style for the documentation (will break outdated MooTools-Forge markdown parser)
 * Bugfix: removed `console.log` debugging output from tokenizer
 
