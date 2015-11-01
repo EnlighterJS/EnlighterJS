@@ -1410,6 +1410,10 @@ provides: [EnlighterJS.Language.avrasm]
                     pattern: /(;.*)$/gm,
                     alias: "co1"
                 },
+                test: {
+                    pattern: /(.)?(BYTE|CSEG|DEF)/gim,
+                    alias: "kw4"
+                },
                 // available directives: BYTE,CSEG,DB,DEF,DEVICE,DSEG,DW,ENDMACRO,EQU,ESEG,EXIT,INCLUDE,LIST,LISTMAC,MACRO,NOLIST,ORG,SET
                 directives: {
                     pattern: /^\s*?\.(\w+)\s+/gm,

@@ -6,6 +6,7 @@
 * Added: contribution guidelines
 * Added: missing AVR Assembly features (used [AVR-1022](www.atmel.com/Images/doc1022.pdf) reference) 
 * Added: new AVR Assembly testcase/example
+* Added: support for multiple matching groups within patterns - thanks to [Krusen on GitHub](https://github.com/AndiDittrich/EnlighterJS/pull/11)
 * Changed: used GFM style for the documentation (will break outdated MooTools-Forge markdown parser)
 * Bugfix: removed `console.log` debugging output from tokenizer
 
