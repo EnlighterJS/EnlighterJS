@@ -46,7 +46,7 @@ EJS.Language.avrasm = new Class({
 			},
 
             'instruction':{
-                pattern: /^\s*?(\w+)\s+/gm,
+                pattern: /(^|:)\s*?(\w+)\s+/gm,
                 alias: 'kw3'
             },
 

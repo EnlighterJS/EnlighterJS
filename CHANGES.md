@@ -2,6 +2,7 @@
 
 ### Version 2.10 BETA ###
 * Added: [Cython](http://cython.org/) Language support - thanks to [DevynCJohnson on GitHub](https://github.com/AndiDittrich/EnlighterJS/pull/14)
+* Added: General Assembly Language support - feature requested on [GitHub](https://github.com/AndiDittrich/EnlighterJS/issues/12)
 * Added: new social buttons to the website
 * Added: contribution guidelines
 * Added: missing AVR Assembly features (used [AVR-1022](www.atmel.com/Images/doc1022.pdf) reference) 

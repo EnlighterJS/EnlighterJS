@@ -1,0 +1,101 @@
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+<code data-enlighter-language="asm">MOV PSW,#107H ; register bank N</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+</p>
+
+<pre data-enlighter-language="asm">
+; COMMENTS
+; -----------------------------------------------------
+; Single Line Comment
+    ;Single Line Comment leading Whitespaces
+
+; NO
+; Multi
+; line
+; Comments
+
+
+; CONTROL STATEMENTS
+; -----------------------------------------------------
+$TITLE Assembly Testdata
+$TARGET mcu8051
+$ASSEMBLER keiluv01 /opt/keil/asm8051 -k -h -of=/dev/usbTTY1
+$INCLUDE (REG8051.INC)
+
+; NUMBERS
+; -----------------------------------------------------
+MOV edx,101001011010101b            ; binary number
+MOV edc, 101001011010101B           ; binary number
+MOV eda, 101$0010$1101$0101b        ; binary number with spacer
+MOV edx,101$0010$1101$0101B         ; binary number with spacer
+
+data_array0: DS 50H                 ; reserve 80 Bytes for data_array0
+data_array0: DS 0$50H               ; reserve 80 Bytes for data_array0 with spacer
+data_array0: DS 5050h               ; reserve 20.560 Bytes for data_array0
+data_array0: DS 50$5$0H             ; reserve 20.560 Bytes for data_array0 with spacer
+
+MOV edx,208781D                     ; decimal number
+MOV edc, 208781d                    ; decimal number
+MOV eda, 87$8171$2101D              ; decimal number with spacer
+MOV edx,87$8171$2101D               ; decimal number with spacer
+
+MOV edx,70q                         ; octal number
+MOV edc, 70O                        ; octal number
+MOV eda, 7$121q                     ; octal number with spacer
+MOV edx,104$4321$77Q                ; octal number with spacer
+
+
+; STRINGS
+; -----------------------------------------------------
+
+LDI R30, 'A'
+DB 18H, 'SDATA'
+
+
+; INSTRUCTIONS
+; -----------------------------------------------------
+
+LDI R30, 0x30               ; instruction start of line
+    LDI R30, 0x30           ; instruction start of line with whitespaces
+test: LDI R30, 0x30         ; instruction after label
+JMP test
+    MOV SP,#STACK - 1
+
+
+; FUNCTIONS
+; -----------------------------------------------------
+
+LDI R30, HIGH(temp0)
+DB 18H, SLS(tmp)
+
+
+; EXAMPLES
+; -----------------------------------------------------
+section .text
+   global _s_start
+
+_init:
+    MOV R4,@DR8       ; indirect access
+    MOV @DR8+50H,R4   ; access with constant offset
+    MOV K8,#WX        ; load addr
+
+start:
+    MOV	edx,10H  	  ; message length
+    MOV	ecx,xy        ; message
+    MOV	ebx,1
+    INT	0x80		  ; kernel call
+    ADD R1,R2
+    MOV VAR3,R1
+
+    MOV	eax,1		  ; system call
+    LDI R1,10H
+
+
+section .data
+
+section .eeprom
+
+section .flash
+
+
+END ; end of file (required)
+</pre>
