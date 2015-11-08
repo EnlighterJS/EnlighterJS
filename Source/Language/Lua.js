@@ -25,12 +25,54 @@ EJS.Language.lua = new Class({
 		};
 
 		this.patterns = {
-			'singleLineComments': {
-				pattern: /(--.*)$/gm,
-				alias: 'co1'
-			},
-			
 
-		};
+            'multiLineComments': {
+                pattern: /--\[\[[\s\S]*?]]/g,
+                alias: 'co1'
+            },
+
+            'singleLineComments': {
+                pattern: /(--.*)$/gm,
+                alias: 'co1'
+            },
+
+            'specialComments': {
+                pattern: /---\[\[[\s\S]*?(]])/g,
+                alias: 'co1'
+            },
+
+            // single and double quoted strings
+            'strings': {
+                pattern: this.common.strings,
+                alias: 'st0'
+            },
+
+            // multi line strings
+            'mlstring': {
+                pattern: /(\[(=*)\[[\S\s]*?]\2])/g,
+                alias: 'st1'
+            },
+
+            'brackets': {
+                pattern: this.common.brackets,
+                alias:   'br0'
+            },
+
+            'numbers': {
+                pattern: /\b((([0-9]+)?\.)?[0-9_]+([e][-+]?[0-9]+)?)/gim,
+                alias: 'nu0'
+            },
+
+            'functionCalls': {
+                pattern: this.common.functionCalls,
+                alias: 'me0'
+            },
+
+            'methodCalls': {
+                pattern: this.common.methodCalls,
+                alias: 'me1'
+            }
+
+        };
 	}
 });

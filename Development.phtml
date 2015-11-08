@@ -71,20 +71,21 @@ $theme = 'eclipse';
 			<!-- ############################################################# -->
 
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                <code data-enlighter-language="asm">MOV PSW,#107H ; register bank N</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+                <code data-enlighter-language="lua">local a = "Double Quoted\nString"</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
             </p>
 
 <pre data-enlighter-language="lua">
+-- SOURCE: http://www.lua.org/manual/5.3/manual.html
 
+-- COMMENTS
+-- --------------------------------------------------
 
--- This is a comment
+-- This is a single line comment
 print "Hello World!"
-
 
 --[[Comments can be spread
 across several lines ]]
 print "Hello World!"
-
 
 ---[[The long handled doubleshovel means that this code will run
 print "This will print because it is not a comment!"
@@ -92,49 +93,108 @@ print "This will print because it is not a comment!"
 -- print "This will not print because it is commented out"
 ]]
 
-t = {} -- Erzeugt eine leere Tabelle und weist sie der Variablen mit dem Namen t zu.
-t = {"yes", "no", "?"} -- Eine Tabelle mit 3 Elementen wobei t[1] = "yes".
-t = { [1] = "yes", [2] = "no", [3] = "?" } -- Wie Zeile vorher,
--- nur mit expliziter Indizierung.
-t = {[-900] = 3, [900] = 4} -- Tabelle mit 2 Elementen aber unregelmäßigen Indizes.
-t = {x=5, y=10} -- Typisches assoziatives Datenfeld mit t["x"], t["y"] (oder t.x, t.y)
-t = {x=5, y=10; "yes", "no"} -- Gemischte Tabelle mit t.x, t.y, t[1], t[2]
-t = {msg = "choice", {"yes", "no", "?"}} -- Tabellen können ebenfalls Tabellen enthalten.
+-- STRINGS
+-- --------------------------------------------------
+local a = "Double Quoted\nString"
+local b = 'Double Quoted\nString'
+local c = [[Multi
+Line String
+    ]]
 
+a = 'alo\n123"'
+a = "alo\n123\""
+a = '\97lo\10\04923"'
+a = [[alo
+123"]]
+a = [==[
+alo
+123"]==]
 
-                            a = 5
-b = "hi"
-local a = a
--- Einfache Zuweisungen. Variablen sind nicht typisiert und können verschiedene Datentypen haben.
--- Lokale Variablen (definiert mit "local") sind auf den aktuellen Namensbereich beschränkt.
-a, b, c = 1, 2, 3 -- Mehrfachzuweisungen sind erlaubt.
-a, b = b, a -- Wertetausch: Anweisungen werden von rechts nach links ausgewertet.
-a, b = 4, 5, "6" -- Überflüssige Werte (Bsp: "6") werden ausgewertet, aber verworfen.
-a, b = "there" -- Fehlende Werte auf der rechten Seite werden mit "nil" ersetzt.
-a = nil -- Zerstört a. Der Speicherbereich von a wird vom Garbage-Collector freigegeben.
-a = z -- Falls z nicht definiert ist, wird "nil" zugewiesen und somit a freigegeben.
-a = "3" + "2" -- Der Operator + erwartet Zahlen, die Zeichenketten werden also
-              -- in Zahlen konvertiert, also erfolgt hier die Zuweisung a = 5.
-a = 3 .. 2 -- Der Verbindungsoperator erwartet Zeichenketten, die Zahlen werden
-           -- konvertiert - a = "32".
+-- NUMBERS
+-- --------------------------------------------------
+a = 4
+b = 0.4
+c = 4.57e-3
+D = 0.3e12
+e = 5e+20
 
+-- TABLES
+-- --------------------------------------------------
+a = {}     -- create a table and store its reference in `a'
+k = "x"
+a[k] = 10        -- new entry, with key="x" and value=10
+a[20] = "great"  -- new entry, with key=20 and value="great"
+print(a["x"])    --> 10
+k = 20
+print(a[k])      --> "great"
+a["x"] = a["x"] + 1     -- increments entry "x"
+print(a["x"])    --> 11
 
-                            function probe(zahl1, zahl2, text, tabelle)
-   zahl3 = zahl1+zahl2
-   zahl4 = zahl1-zahl2
+days = {"Sunday", "Monday", "Tuesday", "Wednesday",
+            "Thursday", "Friday", "Saturday"}
 
-   print(text)
-
-   if tabelle ~= nil then
-      print(tabelle.eintrag)
-   end
-
-   return zahl3,zahl4
+-- EXAMPLE
+-- --------------------------------------------------
+line = io.read()     -- read a line
+n = tonumber(line)   -- try to convert it to a number
+if n == nil then
+  error(line .. " is not a valid number")
+else
+  print(n*2)
 end
 
-probe(10, 20, "Hallo ", {eintrag = "Welt"} ) -- erlaubter Funktionsaufruf
+function foo (a)
+print("foo", a)
+return coroutine.yield(2*a)
+end
 
-x,y = probe(10,20) -- ebenfalls erlaubter Aufruf, text und tabelle sind nil.
+co = coroutine.create(function (a,b)
+   print("co-body", a, b)
+   local r = foo(a+1)
+   print("co-body", r)
+   local r, s = coroutine.yield(a+b, a-b)
+   print("co-body", r, s)
+   return b, "end"
+end)
+
+print("main", coroutine.resume(co, 1, 10))
+print("main", coroutine.resume(co, "r"))
+print("main", coroutine.resume(co, "x", "y"))
+print("main", coroutine.resume(co, "x", "y"))
+
+list = nil
+    for line in io.lines() do
+      list = {next=list, value=line}
+    end
+
+x = 10
+local i = 1        -- local to the chunk
+
+while i<=x do
+  local x = i*2    -- local to the while body
+  print(x)         --> 2, 4, 6, 8, ...
+  i = i + 1
+end
+
+if i > 20 then
+  local x          -- local to the "then" body
+  x = 20
+  print(x + 2)
+else
+  print(x)         --> 10  (the global one)
+end
+
+print(x)           --> 10  (the global one)
+
+
+
+do
+  local a2 = 2*a
+  local d = sqrt(b^2 - 4*a*c)
+  x1 = (-b + d)/a2
+  x2 = (-b - d)/a2
+end          -- scope of `a2' and `d' ends here
+print(x1, x2)
 </pre>
 
 
