@@ -21,6 +21,8 @@ local d = 'w'; //char code
 // Floats
 local a=1.0;
 local b=0.234;
+local c=1.521E-21
+local d=9891.214e32
 
 // Array
 local a=["I","am","an","array"];
@@ -48,5 +50,62 @@ do
 local a=[10,23,33,41,589,56]
 foreach(val in a)
     print("value="+val+"\n");
+
+// SOURCE: http://www.squirrel-lang.org/
+local table = {
+	a = "10"
+	subtable = {
+		array = [1,2,3]
+	},
+	[10 + 123] = "expression index"
+}
+
+local array=[ 1, 2, 3, { a = 10, b = "string" } ];
+
+foreach (i,val in array)
+{
+	::print("the type of val is"+typeof val);
+}
+
+/////////////////////////////////////////////
+
+class Entity
+{
+	constructor(etype,entityname)
+	{
+		name = entityname;
+		type = etype;
+	}
+
+	x = 0;
+	y = 0;
+	z = 0;
+	name = null;
+	type = null;
+}
+
+function Entity::MoveTo(newx,newy,newz)
+{
+	x = newx;
+	y = newy;
+	z = newz;
+}
+
+class Player extends Entity {
+	constructor(entityname)
+	{
+		base.constructor("Player",entityname)
+	}
+	function DoDomething()
+	{
+		::print("something");
+	}
+
+}
+
+local newplayer = Player("da playar");
+
+newplayer.MoveTo(100,200,300);
+print(newplayer.x + 1);
 
 </pre>

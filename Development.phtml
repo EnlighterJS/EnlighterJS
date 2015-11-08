@@ -55,15 +55,6 @@ $theme = 'eclipse';
 			}));
 	*/
 
-
-            (function(){
-                // get instance from element
-                var instance = document.id('codeblock0');
-
-                // remove highligtimg
-                instance.enlight('dispose');
-
-            }).delay(1000);
 		});
 	</script>
 </head>
@@ -83,205 +74,71 @@ $theme = 'eclipse';
                 <code data-enlighter-language="asm">MOV PSW,#107H ; register bank N</code> invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
             </p>
 
-<pre data-enlighter-language="asm">
-; COMMENTS
-; -----------------------------------------------------
-; Single Line Comment
-    ;Single Line Comment leading Whitespaces
-
-; NO
-; Multi
-; line
-; Comments
+<pre data-enlighter-language="lua">
 
 
-; CONTROL STATEMENTS
-; -----------------------------------------------------
-$TITLE Assembly Testdata
-$TARGET mcu8051
-$ASSEMBLER keiluv01 /opt/keil/asm8051 -k -h -of=/dev/usbTTY1
-$INCLUDE (REG8051.INC)
-
-; NUMBERS
-; -----------------------------------------------------
-MOV edx,101001011010101b            ; binary number
-MOV edc, 101001011010101B           ; binary number
-MOV eda, 101$0010$1101$0101b        ; binary number with spacer
-MOV edx,101$0010$1101$0101B         ; binary number with spacer
-
-data_array0: DS 50H                 ; reserve 80 Bytes for data_array0
-data_array0: DS 0$50H               ; reserve 80 Bytes for data_array0 with spacer
-data_array0: DS 5050h               ; reserve 20.560 Bytes for data_array0
-data_array0: DS 50$5$0H             ; reserve 20.560 Bytes for data_array0 with spacer
-
-MOV edx,208781D                     ; decimal number
-MOV edc, 208781d                    ; decimal number
-MOV eda, 87$8171$2101D              ; decimal number with spacer
-MOV edx,87$8171$2101D               ; decimal number with spacer
-
-MOV edx,70q                         ; octal number
-MOV edc, 70O                        ; octal number
-MOV eda, 7$121q                     ; octal number with spacer
-MOV edx,104$4321$77Q                ; octal number with spacer
+-- This is a comment
+print "Hello World!"
 
 
-; STRINGS
-; -----------------------------------------------------
-
-LDI R30, 'A'
-DB 18H, 'SDATA'
+--[[Comments can be spread
+across several lines ]]
+print "Hello World!"
 
 
-; INSTRUCTIONS
-; -----------------------------------------------------
+---[[The long handled doubleshovel means that this code will run
+print "This will print because it is not a comment!"
+-- We can still include comments by prefixing them with a doubledash
+-- print "This will not print because it is commented out"
+]]
 
-LDI R30, 0x30               ; instruction start of line
-    LDI R30, 0x30           ; instruction start of line with whitespaces
-test: LDI R30, 0x30         ; instruction after label
-JMP test
-    MOV SP,#STACK - 1
-
-
-; FUNCTIONS
-; -----------------------------------------------------
-
-LDI R30, HIGH(temp0)
-DB 18H, SLS(tmp)
-
-
-; EXAMPLES
-; -----------------------------------------------------
-section .text
-   global _s_start
-
-_init:
-    MOV R4,@DR8       ; indirect access
-    MOV @DR8+50H,R4   ; access with constant offset
-    MOV K8,#WX        ; load addr
-
-start:
-    MOV	edx,10H  	  ; message length
-    MOV	ecx,xy        ; message
-    MOV	ebx,1
-    INT	0x80		  ; kernel call
-    ADD R1,R2
-    MOV VAR3,R1
-
-    MOV	eax,1		  ; system call
-    LDI R1,10H
+t = {} -- Erzeugt eine leere Tabelle und weist sie der Variablen mit dem Namen t zu.
+t = {"yes", "no", "?"} -- Eine Tabelle mit 3 Elementen wobei t[1] = "yes".
+t = { [1] = "yes", [2] = "no", [3] = "?" } -- Wie Zeile vorher,
+-- nur mit expliziter Indizierung.
+t = {[-900] = 3, [900] = 4} -- Tabelle mit 2 Elementen aber unregelmäßigen Indizes.
+t = {x=5, y=10} -- Typisches assoziatives Datenfeld mit t["x"], t["y"] (oder t.x, t.y)
+t = {x=5, y=10; "yes", "no"} -- Gemischte Tabelle mit t.x, t.y, t[1], t[2]
+t = {msg = "choice", {"yes", "no", "?"}} -- Tabellen können ebenfalls Tabellen enthalten.
 
 
-section .data
+                            a = 5
+b = "hi"
+local a = a
+-- Einfache Zuweisungen. Variablen sind nicht typisiert und können verschiedene Datentypen haben.
+-- Lokale Variablen (definiert mit "local") sind auf den aktuellen Namensbereich beschränkt.
+a, b, c = 1, 2, 3 -- Mehrfachzuweisungen sind erlaubt.
+a, b = b, a -- Wertetausch: Anweisungen werden von rechts nach links ausgewertet.
+a, b = 4, 5, "6" -- Überflüssige Werte (Bsp: "6") werden ausgewertet, aber verworfen.
+a, b = "there" -- Fehlende Werte auf der rechten Seite werden mit "nil" ersetzt.
+a = nil -- Zerstört a. Der Speicherbereich von a wird vom Garbage-Collector freigegeben.
+a = z -- Falls z nicht definiert ist, wird "nil" zugewiesen und somit a freigegeben.
+a = "3" + "2" -- Der Operator + erwartet Zahlen, die Zeichenketten werden also
+              -- in Zahlen konvertiert, also erfolgt hier die Zuweisung a = 5.
+a = 3 .. 2 -- Der Verbindungsoperator erwartet Zeichenketten, die Zahlen werden
+           -- konvertiert - a = "32".
 
-section .eeprom
 
-section .flash
+                            function probe(zahl1, zahl2, text, tabelle)
+   zahl3 = zahl1+zahl2
+   zahl4 = zahl1-zahl2
 
+   print(text)
 
-END ; end of file (required)
+   if tabelle ~= nil then
+      print(tabelle.eintrag)
+   end
+
+   return zahl3,zahl4
+end
+
+probe(10, 20, "Hallo ", {eintrag = "Welt"} ) -- erlaubter Funktionsaufruf
+
+x,y = probe(10,20) -- ebenfalls erlaubter Aufruf, text und tabelle sind nil.
 </pre>
 
 
-			<p>
-				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-				Jvascript: <code class="special">window.addEvent('domready', function(){});</code> - PHP: <code class="special" data-enlighter-language="php">$i=5;</code> - Java: <code class="special" data-enlighter-language="java">String k = "test";</code>
-				invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br /> Lorem ipsum dolor sit amet,
-			</p>
 
-            <h3>Block</h3>
-                        <pre id="codeblock0" data-enlighter-language="js" data-enlighter-theme="<?php echo $theme; ?>">
- code = this.originalCodeblock.get('html');
-
-// remove empty lines at the beginning+end of the codeblock
-code = code.replace(/(^\s*\n|\n\s*$)/gi, '');
-
-// apply input filter
-code = this.textFilter.filterInput(code);
-
-// cleanup ampersand ?
-if (this.options.ampersandCleanup === true) {
-    code = code.replace(/&amp;/gim, '&');
-}
-</pre>
-
-                                   <pre data-enlighter-language="js" data-enlighter-theme="<?php echo $theme; ?>">
-        // highlight all pre tags
-        $('pre').light({
-            altLines : 'hover',
-            indent : 2,
-            editable: false
-        });// :)
-                                       last token
-</pre>
-
-            <pre data-enlighter-language="java">String str = "A String";</pre>
-
-            <h3>With Tabs</h3>
-                        <pre id="codetab0" data-enlighter-language="js" data-enlighter-group="group_Enlighter" data-enlighter-title="Enlighter-Javascript" data-enlighter-theme="Enlighter">
-// Load language parser
-language = new EnlighterJS.Language[languageName](this.getRawCode(true));
-
-// compile tokens -> generate output
-var output = this.renderer.render(language, specialLines, {
-	lineOffset: (this.rawCodeblock.get('data-enlighter-lineoffset') || null),
-	lineNumbers: (this.rawCodeblock.get('data-enlighter-linenums') !== 'false')
-});
-
-// set class and id attributes.
-output.addClass(themeName.toLowerCase() + 'EnlighterJS');
-output.addClass('EnlighterJS');
-output.set('id', 'EnlighterJS_' + String.uniqueID());
-</pre>
-                        <pre data-enlighter-language="java" data-enlighter-group="group_Enlighter" data-enlighter-title="pure Java">
-// Source:  http://en.wikipedia.org/wiki/Java_%28programming_language%29
-// OddEven.java
-import javax.swing.JOptionPane;
-
-public class OddEven {
-    /**
-     * "input" is the number that the user gives to the computer
-     */
-    private int input; // a whole number("int" means integer)
-
-    /**
-     * This is the constructor method. It gets called when an object of the OddEven type
-     * is being created.
-     */
-    public OddEven() {
-        /*
-         * In most Java programs constructors can initialize objects with default values, or create
-         * other objects that this object might use to perform its functions. In some Java programs, the
-         * constructor may simply be an empty function if nothing needs to be initialized prior to the
-         * functioning of the object. In this program's case, an empty constructor would suffice.
-         * A constructor must exist; however, if the user doesn't put one in then the compiler
-         * will create an empty one.
-         */
-    }
-}
-</pre>
-                        <pre data-enlighter-language="php" data-enlighter-group="group_Enlighter" data-enlighter-title="Awesome PHP Script">
-/** Test Snippet */
-$mysqli = new mysqli("localhost", "my_user", "my_password", "world");
-
-/* check connection */
-if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
-    exit();
-}
-
-/* Create table doesn't return a resultset */
-if ($mysqli->query("CREATE TEMPORARY TABLE myCity LIKE City") === TRUE) {
-    printf("Table myCity successfully created.\n");
-}
-
-/* Select queries return a resultset */
-if ($result = $mysqli->query("SELECT Name FROM City LIMIT 10")) {
-    printf("Select returned %d rows.\n", $result->num_rows);
-
-    /* free result set */
-    $result->close();
-}
-</pre>
 
 		<!-- ############################################################# -->
 		</div>
