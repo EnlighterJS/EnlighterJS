@@ -30,7 +30,7 @@ EJS.Language.lua = new Class({
 				alias: 'co1'
 			},
 			
-		
+
 		};
 	}
 });

@@ -12,6 +12,7 @@
 * Added: support for multiple matching groups within patterns - thanks to [Krusen on GitHub](https://github.com/AndiDittrich/EnlighterJS/pull/11)
 * Added: dispose() function to remove generated HTML from DOM - may required for high dynamic sites - feature requested on [GitHub](https://github.com/AndiDittrich/EnlighterJS/issues/9)
 * Changed: used GFM style for the documentation (will break outdated MooTools-Forge markdown parser)
+* Changed: the file extensions of `ThemeDevelopment` and `LanguageDevelopment` are changed to `.html` because PHP is not needed anymore during language/theme development
 * Bugfix: removed `console.log` debugging output from tokenizer
 
 ### Version 2.9 ###
