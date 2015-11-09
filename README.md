@@ -1,7 +1,7 @@
 EnlighterJS
 ===========
 
-EnlighterJS is a free, easy-to-use, syntax highlighting class developed for [MooTools](http://mootools.net "MooTools.net"). It is based on the famous [Lighter.js](https://github.com/pradador/Lighter "Ligher.js").
+EnlighterJS is a free, easy-to-use, syntax highlighting class developed for [MooTools](http://mootools.net "MooTools.net").
 Using it can be as simple as adding a single script and style to your website, choosing the elements you wish to highlight, and EnlighterJS takes care of the rest.
 It also supports Inline-Syntax-Highlighting as well as the automatic creation of tab-panes to display groups of code together (useful for multi-language examples - e.g. html+css+js)
 Take a look into the [Documentation](http://enlighterjs.andidittrich.de/Documentation.html) or view the [Theme Demo](http://enlighterjs.andidittrich.de/Themes.html)
@@ -43,7 +43,7 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
     <link rel="stylesheet" type="text/css" href="EnlighterJS.min.css" />
     
     <!-- Include MooTools Framework -->
-    <script type="text/javascript" src="mootools-core-1.5.0-full-nocompat.js"></script>
+    <script type="text/javascript" src="mootools-core-nocompat.min.js"></script>
     
     <!-- Include EnlighterJS -->
     <script type="text/javascript" src="EnlighterJS.min.js" ></script>
@@ -76,7 +76,6 @@ The following Themes and Languages are included into the EnlighterJS standard pa
 ### Languages ###
 List of languages with their corresponding identifiers and supported aliases (wrapped into brackets behind the names)
 
-* **HTML** (html)
 * **Assembly** (asm)
 * **AVR Assembly** (avrasm)
 * **CSS** (css)
@@ -84,6 +83,7 @@ List of languages with their corresponding identifiers and supported aliases (wr
 * **C++** (cpp, c++)
 * **C#** (csharp)
 * **Cython** (cython)
+* **HTML** (html)
 * **Ini** (ini, conf)
 * **Java** (java)
 * **Javascript** (js, javascript, jquery, mootools, ext.js)
@@ -115,6 +115,7 @@ Theme identifiers are always expressed as lowercase!
 * **MooTwo** (mootwo) - Inspired by the current MooTools Website
 * **Droide** (droide) - Modern, minimalistic
 * **Minimal** (minimal) - Bright, High contrast
+* **Atomic** (atomic) - Dark, Colorful
 
 #### Legacy Themes (Lighter.js) ####
 * **MooTools** (mootools) - MooTools Docs inspired Theme
@@ -156,13 +157,13 @@ Link to the EnlighterJS.yui.js javascript file and the EnlighterJS.yui.css style
 <head>
     ...
     <!-- Include EnlighterJS Styles -->
-    <link rel="stylesheet" type="text/css" href="css/EnlighterJS.yui.css" />
+    <link rel="stylesheet" type="text/css" href="css/EnlighterJS.min.css" />
     	 
     <!-- Include MooTools Framework -->
     <script type="text/javascript" src="js/mootools-core-1.5.0-full-nocompat.js"></script>
     
     <!-- Include EnlighterJS -->
-    <script type="text/javascript" src="js/EnlighterJS.yui.js" ></script>
+    <script type="text/javascript" src="js/EnlighterJS.min.js" ></script>
     ...
 </head>
 ```

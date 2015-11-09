@@ -31,13 +31,13 @@ Link to the EnlighterJS.yui.js javascript file and the EnlighterJS.yui.css style
 <head>
     ...
     <!-- Include EnlighterJS Styles -->
-    <link rel="stylesheet" type="text/css" href="css/EnlighterJS.yui.css" />
+    <link rel="stylesheet" type="text/css" href="css/EnlighterJS.min.css" />
     	 
     <!-- Include MooTools Framework -->
     <script type="text/javascript" src="js/mootools-core-1.5.0-full-nocompat.js"></script>
     
     <!-- Include EnlighterJS -->
-    <script type="text/javascript" src="js/EnlighterJS.yui.js" ></script>
+    <script type="text/javascript" src="js/EnlighterJS.min.js" ></script>
     ...
 </head>
 ```
