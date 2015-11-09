@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.10.0-BETA | MIT License (X11) | http://enlighterjs.andidittrich.de/ | November 9 2015 */
+/*! EnlighterJS Syntax Highlighter 2.10.0-BETA2 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | November 9 2015 */
 (function() {
     /*
 ---

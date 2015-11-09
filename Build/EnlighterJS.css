@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.10.0-BETA | MIT License (X11) | http://enlighterjs.andidittrich.de/ | November 9 2015 *//*
+/*! EnlighterJS Syntax Highlighter 2.10.0-BETA2 | MIT License (X11) | http://enlighterjs.andidittrich.de/ | November 9 2015 *//*
 ---
 description: EnlighterJS Theme-Base - All Themes are derived from these styles! Don't edit this file if you wan't to change styles! Use a derived theme!
 
@@ -1331,24 +1331,24 @@ authors:
 
 styles:
  base:
-   font-family: "Source Code Pro", "Courier New", Courier, monospace
-   font-size: 14px
-   color: '#2b333a'
+   font-family: "Inconsolata", "Consolas", "Source Code Pro", "Courier New", Courier, monospace;
+   font-size: 17px
+   color: '#cfd5e0'
  line:
-   font-family: "Source Code Pro", "Courier New", Courier, monospace
-   font-size: 11px
+   font-family: "Inconsolata", "Consolas", "Source Code Pro", "Courier New", Courier, monospace;
+   font-size: 12px
    line-height: 19px
-   color: '#f7f7f7'
+   color: '#cfd5e0'
  raw:
-   font-family: "Source Code Pro", "Courier New", Courier, monospace
-   font-size: 14px
-   line-height: 21px
-   color: '#2b333a'
-   background-color: '#f7f7f7'
+   font-family: "Inconsolata", "Consolas", "Source Code Pro", "Courier New", Courier, monospace;
+   font-size: 17px
+   line-height: 22px
+   color: '#cfd5e0'
+   background-color: '#272b33'
  hover:
-   background-color: '#f0f0f1'
+   background-color: '#2e353e'
  specialline:
-   background-color: 'transparent'
+   background-color: '#282e36'
 ...
 */
 
@@ -1368,9 +1368,9 @@ ol.atomicEnlighterJS, ul.atomicEnlighterJS, .atomicEnlighterJSWrapper pre{
     background-color: #272b33;
 }
 .atomicEnlighterJSWrapper pre{
-    font-size: 14px;
-    line-height: 21px;
-    color: #272b33;
+    font-size: 17px;
+    line-height: 22px;
+    color: #cfd5e0;
 }
 
 /* line styles */
