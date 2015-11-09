@@ -37,7 +37,7 @@ styles:
 /* Inline specific styles */
 span.atomicEnlighterJS{
     background-color: #272b32;
-    border: dotted 1px #e0e0e1;
+    padding: 3px 5px 3px 5px;
 }
 
 /* LIST specific styles (BLOCK) */
