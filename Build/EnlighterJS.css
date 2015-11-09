@@ -1269,9 +1269,9 @@ ol.minimalEnlighterJS.hoverEnabled li:hover{
 .minimalEnlighterJS .kw3 { color: #445588; }
 .minimalEnlighterJS .kw4 { color: #990073; }
 .minimalEnlighterJS .co1 { color: #a0a0a0; }
-.minimalEnlighterJS .co2 { color: #505050; }
+.minimalEnlighterJS .co2 { color: #a0a0a0; }
 .minimalEnlighterJS .st0 { color: #387905; border-bottom: dotted 1px #387905; }
-.minimalEnlighterJS .st1 { color: #217908; }
+.minimalEnlighterJS .st1 { color: #217908; border-bottom: dotted 1px #387905; }
 .minimalEnlighterJS .st2 { color: #217908; }
 .minimalEnlighterJS .nu0 { color: #a61d1b; font-weight:bold; }
 .minimalEnlighterJS .me0 { color: #12217c; background-color: #e0e0e0;}
