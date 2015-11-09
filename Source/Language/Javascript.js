@@ -21,7 +21,7 @@ EJS.Language.javascript = new Class({
     {
         this.keywords = {
             commonKeywords: {
-                csv: "as, break, case, catch, continue, delete, do, else, eval, finally, for, if, in, is, item, instanceof, return, switch, this, throw, try, typeof, void, while, write, with",
+                csv: "as, break, case, catch, continue, delete, do, else, eval, finally, for, if, in, is, instanceof, return, switch, this, throw, try, typeof, void, while, write, with",
                 alias: 'kw1'
             },
             langKeywords: {
@@ -29,7 +29,7 @@ EJS.Language.javascript = new Class({
                 alias: 'kw2'
             },
             windowKeywords: {
-                csv: "alert, back, blur, close, confirm, focus, forward, home, navigate, open, print, prompt, scroll, status, stop",
+                csv: "alert, confirm, open, print, prompt",
                 alias: 'kw3'
             }
         };

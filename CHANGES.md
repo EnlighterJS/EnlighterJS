@@ -6,6 +6,7 @@
 * Added: [General Assembly Language support](https://en.wikipedia.org/wiki/Assembly_language) - feature requested on [GitHub](https://github.com/AndiDittrich/EnlighterJS/issues/12)
 * Added: [LUA](http://www.lua.org/) Language support
 * Added: Minimal Theme (bright, high contrast)
+* Added: Atomic Theme (dark, colorful)
 * Added: new social buttons to the website
 * Added: contribution guidelines
 * Added: missing AVR Assembly features (used [AVR-1022](www.atmel.com/Images/doc1022.pdf) reference) 
@@ -14,6 +15,7 @@
 * Added: dispose() function to remove generated HTML from DOM - may required for high dynamic sites - feature requested on [GitHub](https://github.com/AndiDittrich/EnlighterJS/issues/9)
 * Changed: used GFM style for the documentation (will break outdated MooTools-Forge markdown parser)
 * Changed: the file extensions of `ThemeDevelopment` and `LanguageDevelopment` are changed to `.html` because PHP is not needed anymore during language/theme development
+* Changed: removed some javascript keywords like `stop`, `close`
 * Bugfix: removed `console.log` debugging output from tokenizer
 
 ### Version 2.9 ###

@@ -13,7 +13,7 @@ $themes = explode(' ', file_get_contents('.tmp/themes.txt'));
 // Language Example List
 $languageExamples = array(
     'C', 'Cpp', 'CSharp', 'CSS', 'Cython', 'Diff', 'HTML', 'Java', 'Javascript', 'JSON', 'MarkDown', 'NSIS', 'PHP', 'Python', 'Ruby', 'SQL',
-    'Unit', 'XML', 'RAW', 'NoHighlight', 'AVR-Assembly', 'Ini', 'Rust', 'Shell', 'VHDL', 'Matlab', 'Generic', 'Squirrel', 'LUA'
+    'Unit', 'XML', 'RAW', 'NoHighlight', 'AVR-Assembly', 'Ini', 'Rust', 'Shell', 'VHDL', 'Matlab', 'Generic', 'Squirrel', 'LUA', 'Assembly'
 );
 asort($languageExamples);
 
