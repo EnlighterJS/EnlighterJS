@@ -1,6 +1,6 @@
 /*
 ---
-description: General Assembly Language - ASM syntax strongly depends on the platform & assembler - may not all feature are supported
+description: ASM General Assembly Language
 
 license: MIT-style
 

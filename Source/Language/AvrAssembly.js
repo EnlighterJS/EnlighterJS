@@ -1,6 +1,6 @@
 /*
 ---
-description: ATMEL AVR Assembly Language -  Reference: AVR Assembler User Guide [DOC1022]
+description: ATMEL AVR Assembly Language
 
 license: MIT-style
 

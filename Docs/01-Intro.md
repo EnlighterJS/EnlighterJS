@@ -77,22 +77,28 @@ The following Themes and Languages are included into the EnlighterJS standard pa
 List of languages with their corresponding identifiers and supported aliases (wrapped into brackets behind the names)
 
 * **HTML** (html)
-* **XML** (xml)
-* **Javascript** (js, javascript, jquery, mootools, ext.js)
+* **Assembly** (asm)
+* **AVR Assembly** (avrasm)
 * **CSS** (css)
 * **C** (c)
 * **C++** (cpp, c++)
+* **C#** (csharp)
+* **Cython** (cython)
+* **Ini** (ini, conf)
 * **Java** (java)
+* **Javascript** (js, javascript, jquery, mootools, ext.js)
 * **JSON** (json)
+* **LUA** (lua)
+* **NSIS** (nsis)
+* **Markdown** (md, markdown)
+* **Matlab/Octave** (octave, matlab)
+* **PHP** (php)
 * **Python** (py, python)
 * **Ruby** (ruby(
-* **Markdown** (md, markdown)
-* **PHP** (php)
 * **Shellscript** (shell, bash)
 * **SQL** (sql)
-* **NSIS** (nsis)
-* **Ini** (ini, conf)
-* **AVR Assembler** (avrasm)
+* **Squirrel** (squirrel)
+* **XML** (xml)
 * **Generic** (generic, standard) - default highlighting scheme
 * **RAW** (raw) - raw code without highlighting with EnlighterJS container styles!
 * **No-Highlight** (no-highlight) - disables highlighting and retains your page styles!
@@ -108,6 +114,7 @@ Theme identifiers are always expressed as lowercase!
 * **Godzilla** (godzilla) - A MDN inspired Theme
 * **MooTwo** (mootwo) - Inspired by the current MooTools Website
 * **Droide** (droide) - Modern, minimalistic
+* **Minimal** (minimal) - Bright, High contrast
 
 #### Legacy Themes (Lighter.js) ####
 * **MooTools** (mootools) - MooTools Docs inspired Theme

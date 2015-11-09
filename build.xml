@@ -20,7 +20,7 @@
 	<property name="build.var.version" value="2.10.0-BETA" />
 	
 	<!-- Themes to include !-->
-	<property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide Git Mocha MooTools Panic Tutti Twilight" />
+	<property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide Minimal Git Mocha MooTools Panic Tutti Twilight" />
 
 	<!-- Languages to include !-->
 	<property name="include.languages" value="Assembly AvrAssembly Css Cpp CSharp Diff Ini Java Javascript Json Lua Matlab Markdown Nsis Php Python Cython RAW Ruby Rust Shell Squirrel Sql Vhdl Xml" />

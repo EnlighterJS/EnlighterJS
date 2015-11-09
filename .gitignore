@@ -5,3 +5,4 @@ gfx/*
 PublicHtml/*
 node_modules*
 .tmp*
+intern_*

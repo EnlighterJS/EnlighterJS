@@ -5,6 +5,7 @@
 * Added: [Squirrel](http://www.squirrel-lang.org/) Language support - thanks to [DevynCJohnson on GitHub](https://github.com/AndiDittrich/EnlighterJS/pull/16)
 * Added: [General Assembly Language support](https://en.wikipedia.org/wiki/Assembly_language) - feature requested on [GitHub](https://github.com/AndiDittrich/EnlighterJS/issues/12)
 * Added: [LUA](http://www.lua.org/) Language support
+* Added: Minimal Theme (bright, high contrast)
 * Added: new social buttons to the website
 * Added: contribution guidelines
 * Added: missing AVR Assembly features (used [AVR-1022](www.atmel.com/Images/doc1022.pdf) reference) 

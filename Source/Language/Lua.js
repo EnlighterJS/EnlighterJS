@@ -19,8 +19,12 @@ EJS.Language.lua = new Class({
 	setupLanguage: function(){
 		this.keywords = {
             'reserved': {
-                'csv': 'and,break,do,else,elseif,end,false,for,function,if,in,local,nil,not,or,repeat,return,then,true,until,while',
+                'csv': 'and,break,do,else,elseif,end,for,function,if,in,local,or,repeat,return,not,then,until,while',
                 'alias': 'kw1'
+            },
+            'values': {
+                'csv': 'false,nil,true',
+                'alias': 'kw2'
             }
 		};
 

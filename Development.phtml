@@ -11,6 +11,8 @@
 	
 	<!-- Bootstrap CSS - just 4 styling ;)  -->
 	<link rel="stylesheet" href="Resources/bootstrap/bootstrap.min.css" />
+    <link href='https://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+
 
 	<!-- EnlighterJS Styles -->
 <?php 
@@ -21,8 +23,8 @@ $theme = 'eclipse';
 	foreach ($sources->css as $css){
 		echo '<link rel="stylesheet" href="', $css, '" />', "\n";
 	}
-?>	
-	
+?>
+    <link rel="stylesheet" href="Source/Themes/Minimal.css?<?php echo time() ?>" />
 	<!-- Include MooTools Framework -->
 	<script type="text/javascript" src="Resources/MooTools.min.js"></script>
 	
@@ -33,7 +35,7 @@ $theme = 'eclipse';
 			
 			var options = {
 					language : 'js',
-					theme: 'godzilla',
+					theme: 'minimal',
 					rawButton: true,
 					windowButton: true,
 					indent : 2,
@@ -57,6 +59,13 @@ $theme = 'eclipse';
 
 		});
 	</script>
+
+    <script type="text/css">
+
+
+
+
+    </script>
 </head>
 
 <body>

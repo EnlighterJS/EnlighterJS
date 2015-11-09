@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.10.0-BETA | MIT License (X11) | http://enlighterjs.andidittrich.de/ | November 8 2015 */
+/*! EnlighterJS Syntax Highlighter 2.10.0-BETA | MIT License (X11) | http://enlighterjs.andidittrich.de/ | November 9 2015 */
 (function() {
     /*
 ---
@@ -1416,7 +1416,7 @@ provides: [EnlighterJS.Language.generic]
     });
     /*
 ---
-description: General Assembly Language - ASM syntax strongly depends on the platform & assembler - may not all feature are supported
+description: ASM General Assembly Language
 
 license: MIT-style
 
@@ -1513,7 +1513,7 @@ provides: [EnlighterJS.Language.asm]
     });
     /*
 ---
-description: ATMEL AVR Assembly Language -  Reference: AVR Assembler User Guide [DOC1022]
+description: ATMEL AVR Assembly Language
 
 license: MIT-style
 
@@ -2110,8 +2110,12 @@ provides: [EnlighterJS.Language.lua]
         setupLanguage: function() {
             this.keywords = {
                 reserved: {
-                    csv: "and,break,do,else,elseif,end,false,for,function,if,in,local,nil,not,or,repeat,return,then,true,until,while",
+                    csv: "and,break,do,else,elseif,end,for,function,if,in,local,or,repeat,return,not,then,until,while",
                     alias: "kw1"
+                },
+                values: {
+                    csv: "false,nil,true",
+                    alias: "kw2"
                 }
             };
             this.patterns = {
