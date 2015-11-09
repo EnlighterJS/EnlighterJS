@@ -33,7 +33,7 @@ EJS.Language.squirrel = new Class({
 
             'multiComments': { pattern: this.common.multiComments, alias: 'co2'},
 
-            'strings':       { pattern: this.common.doubleQuotedString, alias: 'st1' },
+            'strings':       { pattern: this.common.doubleQuotedString, alias: 'st0' },
 
             //'annotation':    { pattern: /@[\W\w_][\w\d_]+/gm, alias: 'st1' },
 

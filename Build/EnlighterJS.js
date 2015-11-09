@@ -2933,7 +2933,7 @@ provides: [EnlighterJS.Language.squirrel]
                 },
                 strings: {
                     pattern: this.common.doubleQuotedString,
-                    alias: "st1"
+                    alias: "st0"
                 },
                 //'annotation':    { pattern: /@[\W\w_][\w\d_]+/gm, alias: 'st1' },
                 // int, float, octals, hex
