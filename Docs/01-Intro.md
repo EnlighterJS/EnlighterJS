@@ -116,6 +116,7 @@ Theme identifiers are always expressed as lowercase!
 * **Droide** (droide) - Modern, minimalistic
 * **Minimal** (minimal) - Bright, High contrast
 * **Atomic** (atomic) - Dark, Colorful
+* **Rowhammer** (rowhammer) - Light, Transparent, divided rows
 
 #### Legacy Themes (Lighter.js) ####
 * **MooTools** (mootools) - MooTools Docs inspired Theme

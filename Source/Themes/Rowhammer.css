@@ -1,0 +1,165 @@
+/*
+---
+description: Rowhammer Theme
+
+license: MIT-style X11
+
+authors:
+ - Andi Dittrich
+ 
+styles:
+ base:
+   font-family: "Ubuntu Mono", "Source Code Pro", "Courier New", Courier, monospace;
+   font-size: 15px
+   color: '#121212'
+ line:
+   font-family: "Ubuntu Mono", "Source Code Pro", "Courier New", Courier, monospace;
+   font-size: 10px
+   line-height: 20px
+   color: '#94a9bf'
+ raw:
+   font-family: "Ubuntu Mono", "Source Code Pro", "Courier New", Courier, monospace;
+   font-size: 15px
+   line-height: 22px
+   color: '#2a2a2a'
+   background-color: 'transparent'
+ hover:
+   background-color: '#f0f0f0'
+ specialline:
+   background-color: '#f9f9f9'
+...
+*/
+.rowhammerEnlighterJS, .rowhammerEnlighterJSWrapper, .rowhammerEnlighterJSTabPane{
+    font-family: "Ubuntu Mono", "Source Code Pro", "Courier New", Courier, monospace;
+}
+/* Inline specific styles */
+span.rowhammerEnlighterJS{
+	background-color: transparent;
+    border: none;
+}
+
+/* LIST specific styles */
+ol.rowhammerEnlighterJS, ul.rowhammerEnlighterJS, .rowhammerEnlighterJSWrapper pre{
+	font-size: 13px;
+	color: #404141;
+	background-color: transparent;
+    padding: 10px 0px 10px 0px;
+}
+
+
+/* line styles */
+ol.rowhammerEnlighterJS li, ul.rowhammerEnlighterJS li{
+	border: solid 0px #ffffff;
+	padding: 1px 5px 1px 0px;
+	line-height: 20px;
+	color: #94a9bf;
+    background-color: transparent;
+    font-size: 10px;
+    border-bottom: dotted 1px #e9e9f0;
+}
+ol.rowhammerEnlighterJS li:nth-of-type(1), ul.rowhammerEnlighterJS li:nth-of-type(1) {
+    border-top: dotted 1px #e9e9f0;
+}
+
+ol.rowhammerEnlighterJS li{
+	list-style: decimal-leading-zero inside;
+	padding: 1px 10px 1px 10px;
+    margin: 0px 0px 0px 0px;
+}
+
+/* special line highlight color */
+ol.rowhammerEnlighterJS li.specialline, ul.rowhammerEnlighterJS li.specialline {
+	background-color: #f9f9f9;
+}
+
+/* hover effect */
+ol.rowhammerEnlighterJS.hoverEnabled li:hover, ul.rowhammerEnlighterJS.hoverEnabled li:hover {
+	background-color: #f0f0f0;
+}
+ol.rowhammerEnlighterJS.hoverEnabled li:hover{
+}
+
+.rowhammerEnlighterJS span{
+    font-size: 15px;
+    color: #121212;
+}
+/* symbol styles */
+/* Delimiter e.g. <?php ?> */
+.rowhammerEnlighterJS .de1 { color: #9b0d5c; font-weight: bold; }
+.rowhammerEnlighterJS .de2 { color: #9b0d5c; font-weight: bold; }
+
+/* Laanguage Kewords */
+.rowhammerEnlighterJS .kw1 { color: #0077aa; font-weight: bold; border-bottom: dotted 1px #0077aa; }
+.rowhammerEnlighterJS .kw2 { color: #0077aa; font-weight: bold; }
+.rowhammerEnlighterJS .kw3 { color: #0077aa; }
+.rowhammerEnlighterJS .kw4 { color: #ae42a0; }
+
+/* Comments */
+.rowhammerEnlighterJS .co1 { color: #758697; }
+.rowhammerEnlighterJS .co2 { color: #758697; }
+
+/* Strings */
+.rowhammerEnlighterJS .st0 { color: #639500; border-bottom: dotted 1px #639500; }
+.rowhammerEnlighterJS .st1 { color: #639500; }
+.rowhammerEnlighterJS .st2 { color: #639500; }
+
+/* Numbers */
+.rowhammerEnlighterJS .nu0 { color: #9b0d5c; }
+
+.rowhammerEnlighterJS .me0 { color: #c2415b; font-weight: bold;}
+.rowhammerEnlighterJS .me1 { color: #d0284a; font-weight: bold;}
+
+/* Brackets */
+.rowhammerEnlighterJS .br0 { color: #6b7c8b; font-weight: bold; }
+
+/* Symbols */
+.rowhammerEnlighterJS .sy0 { color: #35434c; font-weight: bold; }
+
+/* Escape Sequences */
+.rowhammerEnlighterJS .es0 { }
+
+/* Regular Expression outside Strings */
+.rowhammerEnlighterJS .re0 { color: #d2901d }
+
+
+/* Tab Panel */
+.rowhammerEnlighterJSTabPane .controls{
+	background-color: transparent;
+	padding: 5px 5px 0px 5px;
+}
+.rowhammerEnlighterJSTabPane .controls ul{
+    margin: 0px 0px 5px 0px;
+}
+.rowhammerEnlighterJSTabPane .controls li {
+    font-size: 14px;
+    color: #758697;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 0px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 1px 6px 1px 6px;
+}
+.rowhammerEnlighterJSTabPane .controls li:hover {
+	background-color: transparent;
+}
+.rowhammerEnlighterJSTabPane .controls .selected,.rowhammerEnlighterJSTabPane .controls .selected:hover{
+	border-bottom: dotted 1px #758697;
+    background-color: #f0f0f0;
+}
+
+.rowhammerEnlighterJSTabPane .pane{
+	padding: 0px;
+}
+
+/* Raw Code Pane */
+.rowhammerEnlighterJSWrapper pre{
+	background-color: transparent;
+	font-size: 15px;
+    line-height: 22px;
+	color: #2a2a2a;
+}
+
+/* Raw Button */
+.rowhammerEnlighterJSWrapper .EnlighterJSRawButton{
+}
