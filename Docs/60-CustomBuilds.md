@@ -7,7 +7,7 @@ To save bandwidth/traffic or include self-defined languages, you can easily cust
 
 ### Cloud/Web based builder ###
 
-You can also use the web-based [EnlighterJS Builder](http://enlighterjs.andidittrich.de/Builder.html) to generate your customized package **without the need of ANT/development environment** - everything is done for you server-site!
+You can also use the web-based [EnlighterJS Builder](http://enlighterjs.org/Builder.html) to generate your customized package **without the need of ANT/development environment** - everything is done for you server-site!
 
 ### Software Requirements ###
 

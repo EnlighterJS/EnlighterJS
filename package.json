@@ -2,10 +2,10 @@
   "name": "enlighterjs",
   "description": "MooTools based Syntax Highlighter",
   "version": "v2.10.0-BETA2",
-  "homepage": "http://enlighterjs.andidittrich.de",
+  "homepage": "http://enlighterjs.org",
   "author": {
     "name": "Andi Dittrich",
-    "email": "andi.dittrich@a3non.org"
+    "email": "opensource _AT andidittrich D-O-T de"
   },
   "browser": "./Build/EnlighterJS.js",
   "files": [

@@ -3,6 +3,6 @@ name: EnlighterJS
 author: andidittrich
 category: Interface
 tags: [parser, syntax highlighter]
-demo: http://enlighterjs.andidittrich.de/Themes.html
-docs: http://enlighterjs.andidittrich.de
+demo: http://enlighterjs.org/Themes.html
+docs: http://enlighterjs.org
 current: v2.10.0-BETA2

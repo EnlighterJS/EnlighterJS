@@ -1,8 +1,8 @@
 {
   "name": "enlighterjs",
-  "homepage": "http://enlighterjs.andidittrich.de",
+  "homepage": "http://enlighterjs.org",
   "authors": [
-    "Andi Dittrich <andi.dittrich@a3non.org>"
+    "Andi Dittrich <opensource _AT andidittrich D-O-T de>"
   ],
   "description": "MooTools based Syntax Highlighter",
   "main": [
