@@ -211,5 +211,22 @@
             <fileset dir="Build/" />
         </copy>
     </target>
+
+
+
+
+
+    <!-- Release new Website Version !-->
+    <target name="www-upload">
+        <!-- Credentials, Host Settings !-->
+        <loadproperties srcFile=".credentials/account.conf" prefix="deploy" />
+
+        <!-- transfer deploy plugin !-->
+        <echo message="Uploading files" />
+
+        <scp todir="${deploy.user}@${deploy.host}:www" trust="true" port="${deploy.port}" sftp="true" keyfile="${user.home}/${deploy.keyfile}" passphrase="${deploy.keyfile.passphrase}">
+            <fileset dir="PublicHtml" />
+        </scp>
+    </target>
 	
 </project>
