@@ -16,14 +16,14 @@ Features
 --------
 
 * Written in MooTools. Requires version 1.4+
-* Build-in support for CSS, HTML, Javascript, XML, Java, Markdown, PHP, Python, Ruby, Shellscript, C++, C, NSIS and SQL
+* Build-in support for most commonly used languages
 * Easy to use with familiar MooTools syntax.
 * Supports code-groups (displays multiple code-blocks within a tab-pane)
 * Includes Inline Syntax highlighting
 * Extensible language and theme engines - add your own one.
 * Simple CSS based themes
 * ANT build-script included for easy custom builds (Web-based Customizer also available)
-* Small footprint: 56kB js + 35kB css (including ALL build-in languages + themes); GZ Compressed 22kB + 2.7kB
+* Small footprint
 * Point out special lines of code
 * Initialization can be performed by adding a simple html meta-tag or using a small piece of javascript
 * Toolbar buttons to switch to raw-code or open it into a new window

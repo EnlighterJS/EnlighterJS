@@ -1,12 +1,13 @@
 ## Branch 2.x ##
 
-### Version 2.10 BETA ###
+### Version 2.10 ###
 * Added: [Cython](http://cython.org/) Language support - thanks to [DevynCJohnson on GitHub](https://github.com/AndiDittrich/EnlighterJS/pull/14)
 * Added: [Squirrel](http://www.squirrel-lang.org/) Language support - thanks to [DevynCJohnson on GitHub](https://github.com/AndiDittrich/EnlighterJS/pull/16)
 * Added: [General Assembly Language support](https://en.wikipedia.org/wiki/Assembly_language) - feature requested on [GitHub](https://github.com/AndiDittrich/EnlighterJS/issues/12)
 * Added: [LUA](http://www.lua.org/) Language support
 * Added: Minimal Theme (bright, high contrast)
 * Added: Atomic Theme (dark, colorful)
+* Added: Rowhammer Theme (light)
 * Added: new social buttons to the website
 * Added: contribution guidelines
 * Added: missing AVR Assembly features (used [AVR-1022](www.atmel.com/Images/doc1022.pdf) reference) 
@@ -17,6 +18,7 @@
 * Changed: the file extensions of `ThemeDevelopment` and `LanguageDevelopment` are changed to `.html` because PHP is not needed anymore during language/theme development
 * Changed: removed some javascript keywords like `stop`, `close`
 * Bugfix: removed `console.log` debugging output from tokenizer
+* EnlighterJS has a new home **http://enlighterjs.org**
 
 ### Version 2.9 ###
 * Bugfix: the final character of highlighted code got removed by the tokenizer engine in case it's a text token with length=1 - thanks to [dan-j on GitHub](https://github.com/AndiDittrich/WordPress.Enlighter/issues/15)

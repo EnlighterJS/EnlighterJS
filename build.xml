@@ -3,8 +3,8 @@
 <!--
 	ANT-based build script for EnlighterJS
 	
-	@author		Andi Dittrich <andi.dittrich@a3non.org>
-	@version	1.8
+	@author		Andi Dittrich <opensource _AT andidittrich _D_O_T d-e>
+	@version	1.9
 	@license	The MIT License (X11)
 	
 !-->
@@ -17,7 +17,7 @@
     <property name="tmp.dir" value=".tmp/" />
 	<property name="www.dir" value="PublicHtml/" />
     <property name="example.dir" value="Examples/" />
-	<property name="build.var.version" value="2.10.0-BETA2" />
+	<property name="build.var.version" value="2.10.0" />
 	
 	<!-- Themes to include !-->
 	<property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide Minimal Atomic Rowhammer Git Mocha MooTools Panic Tutti Twilight" />
@@ -35,7 +35,7 @@
     <tstamp/>
 
     <!-- CP Notice !-->
-    <property name="cpnotice" value="/*! EnlighterJS Syntax Highlighter ${build.var.version} | MIT License (X11) | http://enlighterjs.andidittrich.de/ | ${TODAY} */"></property>
+    <property name="cpnotice" value="/*! EnlighterJS Syntax Highlighter ${build.var.version} | MIT License (X11) | http://enlighterjs.org/ | ${TODAY} */"></property>
 
     <!-- convert source lists to file lists !-->
     <propertyregex property="source.css" input="Base ${include.themes}" regexp="(\w+)\b" replace="Source/Themes/\1.css" global="true" />
@@ -200,21 +200,6 @@
 	</target>
 
     <target name="full" depends="build,docs,examples,website" />
-
-    <!-- Test the Enlighter Plugin with DEV versions !-->
-    <target name="wptest" depends="build">
-
-        <copy todir="C:\Development\htdocs\wordpress2\wp-content\plugins\enlighter\resources" overwrite="true">
-            <fileset dir="Build/" />
-        </copy>
-        <copy todir="C:\Development\htdocs\wordpress\wp-content\plugins\enlighter\resources" overwrite="true">
-            <fileset dir="Build/" />
-        </copy>
-    </target>
-
-
-
-
 
     <!-- Release new Website Version !-->
     <target name="www-upload">
