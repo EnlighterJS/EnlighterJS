@@ -46,7 +46,7 @@ EJS.UI.Toolbar = new Class({
 				events: {
 					// open new window on click
 					click: function(){
-						window.open('http://enlighterjs.andidittrich.de');
+						window.open('http://enlighterjs.org');
 					}.bind(this)
 				 }
 			}));

@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.10.0 | MIT License (X11) | http://enlighterjs.org/ | November 17 2015 */
+/*! EnlighterJS Syntax Highlighter 2.10.1 | MIT License (X11) | http://enlighterjs.org/ | December 6 2015 */
 (function() {
     /*
 ---
@@ -880,7 +880,7 @@ provides: [EnlighterJS.UI.Toolbar]
                     events: {
                         // open new window on click
                         click: function() {
-                            window.open("http://enlighterjs.andidittrich.de");
+                            window.open("http://enlighterjs.org");
                         }.bind(this)
                     }
                 }));

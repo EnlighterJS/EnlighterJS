@@ -1,6 +1,10 @@
 ## Branch 2.x ##
 
-### Version 2.10 ###
+### Version 2.10.1 ###
+* Changed: toolbar button link to http://enlighterjs.org
+* Bugfix: The special-line color of the Atomic theme was too dark. changed to 0x392d3b - thanks to [CraigMcKenna on GitHub](https://github.com/AndiDittrich/WordPress.Enlighter/issues/24)
+
+### Version 2.10.0 ###
 * Added: [Cython](http://cython.org/) Language support - thanks to [DevynCJohnson on GitHub](https://github.com/AndiDittrich/EnlighterJS/pull/14)
 * Added: [Squirrel](http://www.squirrel-lang.org/) Language support - thanks to [DevynCJohnson on GitHub](https://github.com/AndiDittrich/EnlighterJS/pull/16)
 * Added: [General Assembly Language support](https://en.wikipedia.org/wiki/Assembly_language) - feature requested on [GitHub](https://github.com/AndiDittrich/EnlighterJS/issues/12)
@@ -20,7 +24,7 @@
 * Bugfix: removed `console.log` debugging output from tokenizer
 * EnlighterJS has a new home **http://enlighterjs.org**
 
-### Version 2.9 ###
+### Version 2.9.0 ###
 * Bugfix: the final character of highlighted code got removed by the tokenizer engine in case it's a text token with length=1 - thanks to [dan-j on GitHub](https://github.com/AndiDittrich/WordPress.Enlighter/issues/15)
 * Bugfix: Generic highlighting was accidentally removed from EnlighterJS 
 

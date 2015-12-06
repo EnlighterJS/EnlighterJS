@@ -26,7 +26,7 @@ styles:
  hover:
    background-color: '#2e353e'
  specialline:
-   background-color: '#282e36'
+   background-color: '#392d3b'
 ...
 */
 
@@ -114,7 +114,7 @@ ol.atomicEnlighterJS.hoverEnabled li:hover, ul.atomicEnlighterJS.hoverEnabled li
 }
 /* special line highlight color */
 ol.atomicEnlighterJS li.specialline, ul.atomicEnlighterJS li.specialline {
-    background-color: #282e36;
+    background-color: #392d3b;
 }
 
 /* Tab Pane */

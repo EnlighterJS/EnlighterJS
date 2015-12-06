@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.10.0 | MIT License (X11) | http://enlighterjs.org/ | November 17 2015 *//*
+/*! EnlighterJS Syntax Highlighter 2.10.1 | MIT License (X11) | http://enlighterjs.org/ | December 6 2015 *//*
 ---
 description: EnlighterJS Theme-Base - All Themes are derived from these styles! Don't edit this file if you wan't to change styles! Use a derived theme!
 
@@ -1348,7 +1348,7 @@ styles:
  hover:
    background-color: '#2e353e'
  specialline:
-   background-color: '#282e36'
+   background-color: '#392d3b'
 ...
 */
 
@@ -1436,7 +1436,7 @@ ol.atomicEnlighterJS.hoverEnabled li:hover, ul.atomicEnlighterJS.hoverEnabled li
 }
 /* special line highlight color */
 ol.atomicEnlighterJS li.specialline, ul.atomicEnlighterJS li.specialline {
-    background-color: #282e36;
+    background-color: #392d3b;
 }
 
 /* Tab Pane */
