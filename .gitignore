@@ -7,4 +7,4 @@ PublicHtml/*
 node_modules*
 .tmp*
 intern_*
-.hidden*
+.hidden/*
