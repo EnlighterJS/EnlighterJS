@@ -24,6 +24,14 @@
     _w.SocialButton = (function(target, opt){
         var options = Object.merge({}, defaultOptions, opt || {});
 
+        // data source
+        var data = _w._social;
+
+        // valid data object ?
+        if (!data){
+            return;
+        }
+
         // urls
         var textUrl = '';
         var counterUrl = '';
@@ -31,6 +39,7 @@
         // website urls
         var githubUserUrl = 'https://github.com/' + options.username + '/';
         var githubRepoUrl = githubUserUrl + options.repo + '/';
+        var githubGistUrl = 'https://gist.github.com/' + options.username + '/';
         var twitterUserUrl = 'https://twitter.com/' + options.username + '/'
         var twitterFollowerUrl = twitterUserUrl + 'followers';
         var wordpressUserUrl = 'https://profiles.wordpress.org/' + options.username + '/';
@@ -48,10 +57,10 @@
         // star, fork, follow, watch are supported
         switch (options.type){
             case 'github-star':
-                text = 'Star #' + options.repo;;
+                text = 'Star #' + options.repo;
                 textUrl = githubRepoUrl;
                 counterUrl = githubRepoUrl + 'stargazers';
-                count = _w._github_profile.repos[options.repo].stargazers;
+                count = data.github.repos[options.repo].stargazers;
                 iconType = 'github';
                 break;
 
@@ -59,23 +68,31 @@
                 text = 'Fork #' + options.repo;
                 textUrl = githubRepoUrl;
                 counterUrl = githubRepoUrl + 'network';
-                count = _w._github_profile.repos[options.repo].forks;
+                count = data.github.repos[options.repo].forks;
                 iconType = 'github';
                 break;
 
             case 'github-followers':
                 text = 'Follow @' + options.username;
-                textUrl = githubRepoUrl;
+                textUrl = githubUserUrl;
                 counterUrl = githubUserUrl + 'followers';
-                count = _w._github_profile.user.followers;
+                count = data.github.followers;
                 iconType = 'github';
                 break;
 
             case 'github-opensource':
-                text = 'OpenSource @' + options.username;
-                textUrl = githubRepoUrl;
+                text = 'OpenSource';
+                textUrl = githubUserUrl;
                 counterUrl = githubUserUrl + '?tab=repositories';
-                count = Object.keys(_w._github_profile.repos).length;
+                count = Object.keys(data.github.repos).length;
+                iconType = 'github';
+                break;
+
+            case 'github-gist':
+                text = 'Code Snippets';
+                textUrl = githubGistUrl;
+                counterUrl = githubGistUrl;
+                count = data.github.gists;
                 iconType = 'github';
                 break;
 
@@ -83,23 +100,23 @@
                 text = 'Follow @' + options.username;
                 textUrl = twitterUserUrl;
                 counterUrl = twitterFollowerUrl;
-                count = _w._twitter_profile.user.followers;
+                count = data.twitter.followers;
                 iconType = 'twitter';
                 break;
 
             case 'twitter-tweets':
-                text = 'Tweets @' + options.username;
+                text = 'Tweets';
                 textUrl = twitterUserUrl;
                 counterUrl = twitterUserUrl;
-                count = _w._twitter_profile.user.tweets;
+                count = data.twitter.tweets;
                 iconType = 'twitter';
                 break;
 
             case 'wordpress-user':
-                text = 'Plugins @' + options.username;
+                text = 'WordPress Plugins';
                 textUrl = wordpressUserUrl;
                 counterUrl = wordpressUserUrl + '#content-plugins';
-                count = Object.keys(_w._wordpress_profile.plugins).length;
+                count = Object.keys(data.wordpress.plugins).length;
                 iconType = 'wordpress';
                 break;
 
@@ -107,7 +124,7 @@
                 text = options.plugin;
                 textUrl = wordpressPluginUrl;
                 counterUrl = wordpressPluginUrl + 'stats/';
-                count = _w._wordpress_profile.plugins[options.plugin.toLowerCase()].downloads;
+                count = data.wordpress.plugins[options.plugin.toLowerCase()].downloads;
                 iconType = 'wordpress';
                 break;
         }

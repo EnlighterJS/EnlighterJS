@@ -30,8 +30,13 @@ EJS.Tokenizer.Standard = new Class({
             }
         });
 
+
         // token list
 		var rawTokens = this.getPreprocessedTokens(token);
+
+        // cleaned token list to render
+        var tokens = [];
+
 
         // apply each rule to given sourcecode string
 		Array.each(language.getRules(), function(rule){
@@ -61,6 +66,7 @@ EJS.Tokenizer.Standard = new Class({
         rawTokens = rawTokens.sort(function(token1, token2){
 			return token1.index - token2.index;
 		});
+
 
         // cleaned token list to render
         var tokens = [];

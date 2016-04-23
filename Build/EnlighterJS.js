@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.10.1 | MIT License (X11) | http://enlighterjs.org/ | December 6 2015 */
+/*! EnlighterJS Syntax Highlighter 2.10.1 | MIT License (X11) | http://enlighterjs.org/ | April 23 2016 */
 (function() {
     /*
 ---
@@ -689,6 +689,8 @@ provides: [Tokenizer.Standard]
             };
             // token list
             var rawTokens = this.getPreprocessedTokens(token);
+            // cleaned token list to render
+            var tokens = [];
             // apply each rule to given sourcecode string
             Array.each(language.getRules(), function(rule) {
                 var match;
