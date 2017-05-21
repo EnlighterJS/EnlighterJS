@@ -7,7 +7,7 @@ It also supports Inline-Syntax-Highlighting as well as the automatic creation of
 Take a look into the [Documentation](http://enlighterjs.org/Documentation.html) or view the [Theme Demo](http://enlighterjs.org/Themes.html)
 
 ### Download ###
-* [Download Latest Release](https://github.com/AndiDittrich/EnlighterJS/releases/latest) 
+* [Download Latest Release](https://github.com/AndiDittrich/EnlighterJS/releases/latest)
 * [Custom-Builds](http://enlighterjs.org/Builder.html)
 
 ![Screenshot](http://enlighterjs.org/screenshot1.png)
@@ -41,14 +41,14 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
     ...
     <!-- Include EnlighterJS Styles -->
     <link rel="stylesheet" type="text/css" href="EnlighterJS.min.css" />
-    
+
     <!-- Include MooTools Framework -->
     <script type="text/javascript" src="mootools-core-nocompat.min.js"></script>
-    
+
     <!-- Include EnlighterJS -->
     <script type="text/javascript" src="EnlighterJS.min.js" ></script>
-    
-    <!-- Initialize EnlighterJS -->	
+
+    <!-- Initialize EnlighterJS -->
     <meta name="EnlighterJS" content="Advanced javascript based syntax highlighting" data-indent="4" data-selector-block="pre" data-selector-inline="code.special" />
     ...
 </head>
@@ -88,6 +88,7 @@ List of languages with their corresponding identifiers and supported aliases (wr
 * **Java** (java)
 * **Javascript** (js, javascript, jquery, mootools, ext.js)
 * **JSON** (json)
+* **Kotlin** (kotlin)
 * **LUA** (lua)
 * **NSIS** (nsis)
 * **Markdown** (md, markdown)
