@@ -17,13 +17,13 @@
     <property name="tmp.dir" value=".tmp/" />
 	<property name="www.dir" value="PublicHtml/" />
     <property name="example.dir" value="Examples/" />
-	<property name="build.var.version" value="2.10.1" />
+	<property name="build.var.version" value="2.11.0" />
 	
 	<!-- Themes to include !-->
 	<property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide Minimal Atomic Rowhammer Git Mocha MooTools Panic Tutti Twilight" />
 
 	<!-- Languages to include !-->
-	<property name="include.languages" value="Assembly AvrAssembly Css Cpp CSharp Diff Ini Java Javascript Json Lua Matlab Markdown Nsis Php Python Cython RAW Ruby Rust Shell Squirrel Sql Vhdl Xml" />
+	<property name="include.languages" value="Assembly AvrAssembly Css Cpp CSharp Diff Ini Java Javascript Json Kotlin Lua Matlab Markdown Nsis Php Python Cython RAW Ruby Rust Shell Squirrel Sql Vhdl Xml" />
 
 	<!-- Sourcefiles to include !-->
 	<property name="include.JsBaseSources" value="EnlighterJS TextFilter Dom/MooTools/Dom Dom/MooTools/Element SpecialLineHighlighter LanguageManager Renderer/InlineRenderer Renderer/BlockRenderer Tokenizer/Standard Tokenizer/Xml UI/CodeWindow UI/Toolbar" />
@@ -202,14 +202,14 @@
     <target name="full" depends="build,docs,examples,website" />
 
     <!-- Release new Website Version !-->
-    <target name="www-upload">
+    <target name="www-upload" depends="website">
         <!-- Credentials, Host Settings !-->
         <loadproperties srcFile=".credentials/account.conf" prefix="deploy" />
 
         <!-- transfer deploy plugin !-->
         <echo message="Uploading files" />
 
-        <scp todir="${deploy.user}@${deploy.host}:www" trust="true" port="${deploy.port}" sftp="true" keyfile="${user.home}/${deploy.keyfile}" passphrase="${deploy.keyfile.passphrase}">
+        <scp todir="${deploy.user}@${deploy.host}:enlighterjs_org/www" trust="true" port="${deploy.port}" keyfile="${user.home}/${deploy.keyfile}" passphrase="${deploy.keyfile.passphrase}">
             <fileset dir="PublicHtml" />
         </scp>
     </target>

@@ -1,4 +1,7 @@
 <?php
+// lightup parser (TMP FIX)
+require('/home/andi/Development/PHP/LightUp/Dist/LightUp.php');
+
 // Get output dir
 $outputDir = (isset($argv) && isset($argv[1]) ? $argv[1] : 'Output/');
 
@@ -57,6 +60,7 @@ function captureTemplate($file, $vars = array()){
  * Render a Markdown Document using LightUp with Promethium CloudAPI
  * @param unknown $content
  */
+ /*
 function renderMarkdownDocument($filename){
     $content = file_get_contents($filename);
 
@@ -75,5 +79,21 @@ function renderMarkdownDocument($filename){
     $htmlContent = file_get_contents('http://promethium.andidittrich.de/lightup/', false, stream_context_create($opts));
 
     // remove first heading1
+    return preg_replace('/<h1>.*<\/h1>/', '', $htmlContent, 1);
+}
+*/
+
+// TMP FIX
+function renderMarkdownDocument($filename){
+    $content = file_get_contents($filename);
+
+    $opt = array(
+        'highlightingMode' => 'enlighterjs',
+        'addAnchors' => 'false'
+    );
+
+    $htmlContent = de\andidittrich\lightup\LightUp::render($content, $opt);
+
+        // remove first heading1
     return preg_replace('/<h1>.*<\/h1>/', '', $htmlContent, 1);
 }

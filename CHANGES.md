@@ -1,5 +1,8 @@
 ## Branch 2.x ##
 
+### Version 2.11.0 ###
+* Added: Kontlin Language Support - thanks to [kevcodez on GitHub](https://github.com/AndiDittrich/EnlighterJS/pull/27)
+
 ### Version 2.10.1 ###
 * Changed: toolbar button link to http://enlighterjs.org
 * Bugfix: The special-line color of the Atomic theme was too dark. changed to 0x392d3b - thanks to [CraigMcKenna on GitHub](https://github.com/AndiDittrich/WordPress.Enlighter/issues/24)
