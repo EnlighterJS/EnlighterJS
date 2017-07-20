@@ -3190,7 +3190,7 @@ provides: [EnlighterJS.Language.xml]
                     alias: "st1"
                 },
                 closingTags: {
-                    pattern: /(?:&lt;|<)\/[A-Z:_][A-Z0-9:.-]*?(?:&gt;|>)/gi,
+                    pattern: /(?:&lt;|<)\/[A-Z:_][A-Z0-9:._-]*?(?:&gt;|>)/gi,
                     alias: "kw1"
                 },
                 doctype: {
