@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.11.0 | MIT License (X11) | http://enlighterjs.org/ | June 5 2017 */
+/*! EnlighterJS Syntax Highlighter 2.11.1 | MIT License (X11) | http://enlighterjs.org/ | July 20 2017 */
 (function() {
     /*
 ---
@@ -789,7 +789,7 @@ provides: [EnlighterJS.Tokenizer.Xml]
             // token list
             var rawTokens = [];
             // Tags + attributes matching and preprocessing.
-            var tagPattern = /((?:\&lt;|<)[A-Z:_][A-Z0-9:.-]*)([\s\S]*?)(\/?(?:\&gt;|>))/gi;
+            var tagPattern = /((?:\&lt;|<)[A-Z:_][A-Z0-9:._-]*)([\s\S]*?)(\/?(?:\&gt;|>))/gi;
             var attPattern = /\b([\w:-]+)([ \t]*)(=)([ \t]*)(['"][^'"]+['"]|[^'" \t]+)/gi;
             // tmp storage
             var match = null;

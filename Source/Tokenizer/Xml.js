@@ -36,7 +36,7 @@ EnlighterJS.Tokenizer.Xml = new Class({
         var rawTokens = [];
 
         // Tags + attributes matching and preprocessing.
-        var tagPattern = /((?:\&lt;|<)[A-Z:_][A-Z0-9:.-]*)([\s\S]*?)(\/?(?:\&gt;|>))/gi;
+        var tagPattern = /((?:\&lt;|<)[A-Z:_][A-Z0-9:._-]*)([\s\S]*?)(\/?(?:\&gt;|>))/gi;
         var attPattern = /\b([\w:-]+)([ \t]*)(=)([ \t]*)(['"][^'"]+['"]|[^'" \t]+)/gi;
 
         // tmp storage

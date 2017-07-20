@@ -1,7 +1,11 @@
 ## Branch 2.x ##
 
+### Version 2.11.1 ##
+* Bugfix: Underscore not allowed in xml tags - thanks to [higginbg on GitHub](https://github.com/AndiDittrich/WordPress.Enlighter/issues/72)
+
 ### Version 2.11.0 ###
 * Added: Kontlin Language Support - thanks to [kevcodez on GitHub](https://github.com/AndiDittrich/EnlighterJS/pull/27)
+* Bugfix: Fixed Websites Theme Chooser
 
 ### Version 2.10.1 ###
 * Changed: toolbar button link to http://enlighterjs.org
