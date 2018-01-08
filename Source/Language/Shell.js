@@ -38,6 +38,10 @@ EJS.Language.shell = new Class ({
                 pattern: /`.*?`/gm,
                 alias: 'st1'
             },
+            'braces': {
+                pattern: /=(\$\(.*?\))/gm,
+                alias: "me1"
+            },
             'cases': {
                 pattern: /^\s*\w+\)\s*$/gm,
                 alias: 'kw2'
@@ -47,11 +51,11 @@ EJS.Language.shell = new Class ({
                 alias: 'kw4'
             },
             'vars': {
-                pattern: /(\$\w+)\b/gim,
+                pattern: /(\$(?:\{\w+\}|\w+))\b/gim,
                 alias: 'kw4'
             },
             'functions': {
-                pattern: /^\s*\w+\(\)\s*\{/gm,
+                pattern: /^\s*(?:function\b)?\w+\(\)\s*\{/gm,
                 alias: 'kw3'
             }
         };
