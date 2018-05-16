@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.11.1 | MIT License (X11) | http://enlighterjs.org/ | July 20 2017 *//*
+/*! EnlighterJS Syntax Highlighter 2.11.2 | MIT License (X11) | https://enlighterjs.org/ | May 16 2018 *//*
 ---
 description: EnlighterJS Theme-Base - All Themes are derived from these styles! Don't edit this file if you wan't to change styles! Use a derived theme!
 
@@ -1084,7 +1084,6 @@ ol.droideEnlighterJS, ul.droideEnlighterJS, .droideEnlighterJSWrapper pre{
 	color: #404141;
 	border: solid 1px #e0e0e0;
 	background-color: #f7f7f9;
-    paddding: 10px;
 }
 
 /* line styles */

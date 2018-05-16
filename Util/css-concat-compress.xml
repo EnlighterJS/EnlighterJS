@@ -29,7 +29,7 @@
 
         <!-- Compressing Files -->
         <echo message="Compressing CSS Files.." />
-        <exec executable="${cleancss}">
+        <exec executable="node_modules/.bin/${cleancss}">
             <arg line="-o ${compress.output}"></arg>
             <arg line="${uncompress.output}"></arg>
         </exec>

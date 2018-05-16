@@ -1,5 +1,9 @@
 ## Branch 2.x ##
 
+### Version 2.11.2 ###
+* Bugfix: misspelled css attribute `padding` in droide theme - thanks to [audioscavenger on WordPress.org](https://wordpress.org/support/topic/paddding-does-not-exist/)
+* Changed: modified legacy build process to run with local npm modules
+
 ### Version 2.11.1 ##
 * Bugfix: Underscore not allowed in xml tags - thanks to [higginbg on GitHub](https://github.com/AndiDittrich/WordPress.Enlighter/issues/72)
 

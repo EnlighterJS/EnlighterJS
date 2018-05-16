@@ -1,13 +1,13 @@
 {
   "name": "enlighterjs",
-  "description": "MooTools based Syntax Highlighter",
-  "version": "v2.11.1",
+  "description": "Javascript based Post Syntax Highlighter",
+  "version": "v2.11.2",
   "homepage": "https://enlighterjs.org",
   "author": "Andi Dittrich (https://andidittrich.de)",
   "browser": "./Build/EnlighterJS.js",
   "files": [
-     "./Build/EnlighterJS.js",
-     "./Build/EnlighterJS.css"
+    "./Build/EnlighterJS.js",
+    "./Build/EnlighterJS.css"
   ],
   "keywords": [
     "c++",
@@ -36,12 +36,15 @@
   "license": "MIT",
   "bugs": "https://github.com/AndiDittrich/EnlighterJS/issues",
   "devDependencies": {
-    "clean-css": "~3.3.1",
-    "uglify-js": "~2.4.23",
     "bootstrap": "~3.3.4",
+    "less": "~2.5.1",
     "less-plugin-autoprefix": "~1.4.2",
-    "less": "~2.5.1"
+    "uglify-js": "~2.4.23",
+    "less-plugin-clean-css": "^1.5.1"
   },
-  "repository": "AndiDittrich/EnlighterJS",
-  "readmeFilename": "README.md"
+  "repository": "EnlighterJS/EnlighterJS",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    
+  }
 }

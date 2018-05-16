@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-	ANT-based build script for EnlighterJS
-	
-	@author		Andi Dittrich <opensource _AT andidittrich _D_O_T d-e>
-	@version	1.9
-	@license	The MIT License (X11)
-	
+    ANT-based build script for EnlighterJS
+    
+    @author        Andi Dittrich <opensource _AT andidittrich _D_O_T d-e>
+    @version    1.10
+    @license    The MIT License (X11)
+    
 !-->
 <project name="EnlighterJS" default="build" basedir=".">
     <!-- AN-contrib !-->
     <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
 
-	<!-- Target Properties ! -->
-	<property name="build.dir" value="Build/" />
+    <!-- Target Properties ! -->
+    <property name="build.dir" value="Build/" />
     <property name="tmp.dir" value=".tmp/" />
-	<property name="www.dir" value="PublicHtml/" />
+    <property name="www.dir" value="PublicHtml/" />
     <property name="example.dir" value="Examples/" />
-	<property name="build.var.version" value="2.11.1" />
-	
-	<!-- Themes to include !-->
-	<property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide Minimal Atomic Rowhammer Git Mocha MooTools Panic Tutti Twilight" />
+    <property name="build.var.version" value="2.11.2" />
+    
+    <!-- Themes to include !-->
+    <property name="include.themes" value="Enlighter Godzilla Beyond Classic MooTwo Eclipse Droide Minimal Atomic Rowhammer Git Mocha MooTools Panic Tutti Twilight" />
 
-	<!-- Languages to include !-->
-	<property name="include.languages" value="Assembly AvrAssembly Css Cpp CSharp Diff Ini Java Javascript Json Kotlin Lua Matlab Markdown Nsis Php Python Cython RAW Ruby Rust Shell Squirrel Sql Vhdl Xml" />
+    <!-- Languages to include !-->
+    <property name="include.languages" value="Assembly AvrAssembly Css Cpp CSharp Diff Ini Java Javascript Json Kotlin Lua Matlab Markdown Nsis Php Python Cython RAW Ruby Rust Shell Squirrel Sql Vhdl Xml" />
 
-	<!-- Sourcefiles to include !-->
-	<property name="include.JsBaseSources" value="EnlighterJS TextFilter Dom/MooTools/Dom Dom/MooTools/Element SpecialLineHighlighter LanguageManager Renderer/InlineRenderer Renderer/BlockRenderer Tokenizer/Standard Tokenizer/Xml UI/CodeWindow UI/Toolbar" />
+    <!-- Sourcefiles to include !-->
+    <property name="include.JsBaseSources" value="EnlighterJS TextFilter Dom/MooTools/Dom Dom/MooTools/Element SpecialLineHighlighter LanguageManager Renderer/InlineRenderer Renderer/BlockRenderer Tokenizer/Standard Tokenizer/Xml UI/CodeWindow UI/Toolbar" />
 
-	<!-- Additional Features to include !-->
-	<property name="include.JsFeatures" value="Native/Element.EnlighterJS Util/Helper UI/TabPane Util/Metainit Util/Init" />
+    <!-- Additional Features to include !-->
+    <property name="include.JsFeatures" value="Native/Element.EnlighterJS Util/Helper UI/TabPane Util/Metainit Util/Init" />
 
     <!-- set date vars !-->
     <tstamp/>
 
     <!-- CP Notice !-->
-    <property name="cpnotice" value="/*! EnlighterJS Syntax Highlighter ${build.var.version} | MIT License (X11) | http://enlighterjs.org/ | ${TODAY} */"></property>
+    <property name="cpnotice" value="/*! EnlighterJS Syntax Highlighter ${build.var.version} | MIT License (X11) | https://enlighterjs.org/ | ${TODAY} */"></property>
 
     <!-- convert source lists to file lists !-->
     <propertyregex property="source.css" input="Base ${include.themes}" regexp="(\w+)\b" replace="Source/Themes/\1.css" global="true" />
@@ -43,18 +43,18 @@
     <propertyregex property="source.core.js" input="${include.JsBaseSources} ${include.JsFeatures}" regexp="([\w/\.]+)\b" replace="Source/\1.js" global="true" />
 
     <!-- Generate Build -->
-	<target name="build">
-		<!-- Cleanup Build Dir -->
-		<delete dir="${build.dir}" />
+    <target name="build">
+        <!-- Cleanup Build Dir -->
+        <delete dir="${build.dir}" />
         <mkdir dir="${build.dir}" />
         <mkdir dir="${tmp.dir}" />
-		
-		<!-- ****************************** BUILD LIBRARY **************************** -->
-		<ant antfile="Util/js-concat-compress.xml">
-			<property name="compress.input" value="${source.core.js} ${source.languages.js}" />
-			<property name="compress.output" value="${build.dir}EnlighterJS.min.js" />
-			<property name="uncompress.output" value="${build.dir}EnlighterJS.js" />
-		</ant>
+        
+        <!-- ****************************** BUILD LIBRARY **************************** -->
+        <ant antfile="Util/js-concat-compress.xml">
+            <property name="compress.input" value="${source.core.js} ${source.languages.js}" />
+            <property name="compress.output" value="${build.dir}EnlighterJS.min.js" />
+            <property name="uncompress.output" value="${build.dir}EnlighterJS.js" />
+        </ant>
         <ant antfile="Util/css-concat-compress.xml">
             <property name="compress.input" value="${source.css}" />
             <property name="compress.output" value="${build.dir}EnlighterJS.min.css" />
@@ -67,42 +67,42 @@
         <echo message="${include.languages}" file=".tmp/languages.txt"></echo>
         <echo message="${include.themes}" file=".tmp/themes.txt"></echo>
 
-		<!-- Change Package Versions !-->
-		<replaceregexp byline="true" flags="s">
-			<regexp pattern="current: v(.*)" />
-			<substitution expression="current: v${build.var.version}"/>
-			<fileset file="package.yml" />
-		</replaceregexp>
+        <!-- Change Package Versions !-->
+        <replaceregexp byline="true" flags="s">
+            <regexp pattern="current: v(.*)" />
+            <substitution expression="current: v${build.var.version}"/>
+            <fileset file="package.yml" />
+        </replaceregexp>
         <replaceregexp byline="true" flags="s">
             <regexp pattern="&quot;version&quot;: &quot;v(.*)&quot;" />
             <substitution expression="&quot;version&quot;: &quot;v${build.var.version}&quot;"/>
             <fileset file="package.json" />
         </replaceregexp>
 
-	</target>
+    </target>
 
-	<target name="webbuild" depends="build">
-		<!-- Copy files !-->
-		<copy file="CHANGES.md" tofile="${build.dir}CHANGES.md" />
-		<copy file="LICENSE.md" tofile="${build.dir}LICENSE.md" />
-		<copy file="README.md" tofile="${build.dir}README.md" />
+    <target name="webbuild" depends="build">
+        <!-- Copy files !-->
+        <copy file="CHANGES.md" tofile="${build.dir}CHANGES.md" />
+        <copy file="LICENSE.md" tofile="${build.dir}LICENSE.md" />
+        <copy file="README.md" tofile="${build.dir}README.md" />
 
-		<!-- Create Archive !-->
-		<zip destfile="${build.dir}/EnlighterJS.zip" basedir="${build.dir}" />
-	</target>
-	
-	<!-- Generate Examples -->
-	<target name="examples">
-		<!-- Cleanup www Dir -->
-		<delete dir="${example.dir}" />
-		<mkdir dir="${example.dir}"/>
+        <!-- Create Archive !-->
+        <zip destfile="${build.dir}/EnlighterJS.zip" basedir="${build.dir}" />
+    </target>
+    
+    <!-- Generate Examples -->
+    <target name="examples">
+        <!-- Cleanup www Dir -->
+        <delete dir="${example.dir}" />
+        <mkdir dir="${example.dir}"/>
 
         <!-- Std Examples !-->
-		<exec executable="php">
-			<arg value="Util/ExampleGenerator.php" />
-			<arg value="${example.dir}" />
-		</exec>
-	</target>
+        <exec executable="php">
+            <arg value="Util/ExampleGenerator.php" />
+            <arg value="${example.dir}" />
+        </exec>
+    </target>
 
     <!-- Markdown Docs => HTML !-->
     <target name="docs">
@@ -134,19 +134,19 @@
             <arg line="Util/cli.php markdown CHANGES.md ${tmp.dir}/Changelog.html"></arg>
         </exec>
     </target>
-	
-	<!-- Generate Demo Website !-->
-	<target name="website">
-		<!-- Cleanup www Dir -->
-		<delete dir="${www.dir}" />
-		<mkdir dir="${www.dir}"/>
+    
+    <!-- Generate Demo Website !-->
+    <target name="website">
+        <!-- Cleanup www Dir -->
+        <delete dir="${www.dir}" />
+        <mkdir dir="${www.dir}"/>
 
         <!-- Generate Pages !-->
-		<exec executable="php">
-			<arg value="Util/PageGenerator.php" />
-			<arg value="${www.dir}" />
-			<arg value="${build.var.version}" />
-		</exec>
+        <exec executable="php">
+            <arg value="Util/PageGenerator.php" />
+            <arg value="${www.dir}" />
+            <arg value="${build.var.version}" />
+        </exec>
 
         <!-- Generate Examples !-->
         <exec executable="php">
@@ -156,9 +156,9 @@
         </exec>
 
         <!-- Copy fonts !-->
-		<copy todir="${www.dir}/fonts">
-			<fileset dir="Resources/bootstrap/fonts"/>
-		</copy>
+        <copy todir="${www.dir}/fonts">
+            <fileset dir="Resources/bootstrap/fonts"/>
+        </copy>
         <copy todir="${www.dir}/img">
             <fileset dir="Resources/img"/>
         </copy>
@@ -172,7 +172,7 @@
 
         <!-- Less CSS build (WEB CSS) !-->
         <echo message="Building LESS Files.." />
-        <exec executable="lessc">
+        <exec executable="node_modules/.bin/lessc">
             <arg line="Resources/EnlighterWeb.less" />
             <arg line="${www.dir}EnlighterWeb.min.css" />
             <arg line="--clean-css" />
@@ -184,20 +184,20 @@
             <property name="uncompress.output" value="${tmp.dir}_null" />
         </ant>
 
-		<!-- Copy Screenshots -->
-		<copy file="screenshot1.png" tofile="${www.dir}screenshot1.png" />
-		<copy file="screenshot2.png" tofile="${www.dir}screenshot2.png" />
+        <!-- Copy Screenshots -->
+        <copy file="screenshot1.png" tofile="${www.dir}screenshot1.png" />
+        <copy file="screenshot2.png" tofile="${www.dir}screenshot2.png" />
 
         <!-- Copy Favicon !-->
         <copy file="Resources/favicon.png" tofile="${www.dir}favicon.png" />
 
-		<!-- Copy License and fix linebreaks !-->
-		<copy file="LICENSE.md" tofile="${www.dir}LICENSE.txt" />
-		<fixcrlf eol="crlf" file="${www.dir}LICENSE.txt" />
+        <!-- Copy License and fix linebreaks !-->
+        <copy file="LICENSE.md" tofile="${www.dir}LICENSE.txt" />
+        <fixcrlf eol="crlf" file="${www.dir}LICENSE.txt" />
 
         <!-- Backward Compatibility !-->
         <copy file="${www.dir}Theme.Enlighter.html" tofile="${www.dir}Themes.html" />
-	</target>
+    </target>
 
     <target name="full" depends="build,docs,examples,website" />
 
@@ -213,5 +213,5 @@
             <fileset dir="PublicHtml" />
         </scp>
     </target>
-	
+    
 </project>

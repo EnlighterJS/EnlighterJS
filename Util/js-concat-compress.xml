@@ -22,7 +22,7 @@
 
         <!-- Beautified Version -->
         <echo message="Generating beautified version.." />
-        <exec executable="${uglifyjs}">
+        <exec executable="node_modules/.bin/${uglifyjs}">
             <arg line="--beautify"></arg>
             <arg line="--comments all"></arg>
             <arg line="--enclose"></arg>
@@ -35,7 +35,7 @@
 
 		<!-- Compressed Version -->
 		<echo message="Generating minified version.." />
-        <exec executable="${uglifyjs}">
+        <exec executable="node_modules/.bin/${uglifyjs}">
             <arg line="--compress"></arg>
             <arg line="--mangle"></arg>
             <arg line="--enclose"></arg>
