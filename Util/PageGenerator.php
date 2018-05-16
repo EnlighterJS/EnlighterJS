@@ -8,8 +8,8 @@
 
 // Get Build Version
 define('EJS_VERSION', (count($argv)>=3 ? $argv[2] : 'unknown'));
-define('EJS_PACKAGE_ZIP', 'https://github.com/AndiDittrich/EnlighterJS/archive/v' . EJS_VERSION.'.zip');
-define('EJS_PACKAGE_TGZ', 'https://github.com/AndiDittrich/EnlighterJS/archive/v' . EJS_VERSION.'.tar.gz');
+define('EJS_PACKAGE_ZIP', 'https://github.com/EnlighterJS/EnlighterJS/archive/v' . EJS_VERSION.'.zip');
+define('EJS_PACKAGE_TGZ', 'https://github.com/EnlighterJS/EnlighterJS/archive/v' . EJS_VERSION.'.tar.gz');
 
 require('global.php');
 

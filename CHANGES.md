@@ -1,6 +1,7 @@
 ## Branch 2.x ##
 
-### Version 2.11.2 ###
+### Version 2.12.0 ###
+* Added: `msdos` support - thanks to [audioscavenger on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/33/commits)
 * Bugfix: misspelled css attribute `padding` in droide theme - thanks to [audioscavenger on WordPress.org](https://wordpress.org/support/topic/paddding-does-not-exist/)
 * Changed: modified legacy build process to run with local npm modules
 
