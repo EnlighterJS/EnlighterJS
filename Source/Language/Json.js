@@ -32,7 +32,7 @@ EJS.Language.json = new Class({
                 alias: 'kw1'
             },
             'strings': {
-                pattern: this.common.strings,
+                pattern: /('[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'|"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*")\s*[,\]}]+/gi,
                 alias:   'st0'
             },
             'brackets': {
