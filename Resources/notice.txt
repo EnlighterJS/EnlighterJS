@@ -1,1 +1,0 @@
-/*! EnlighterJS Syntax Highlighter {{VERSION}} | MIT-Style X11 License | http://enlighterjs.andidittrich.de/ | build {{BUILD}}/{{DATE}} */
