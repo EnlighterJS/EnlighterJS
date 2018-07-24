@@ -1,0 +1,378 @@
+.enlighter-t-droide{
+    
+    .enlighter-toolbar .enlighter-btn{
+        background-color: #f7f7f9;
+        color: #717171;
+        font-size: 12px;
+        padding: 0;
+        border: 1px solid #e0e0e0;
+        margin: 0 0 0 8px;
+        text-decoration: none;
+        width: 23px;
+        height: 23px;
+        background-position: 0 0;
+        background-size: contain;
+
+        &:hover{
+            background-color: #ffffff;
+        }
+
+        // hide text
+        &:after{
+            content: '';
+        }
+    }
+    // toolbar buttons
+    .enlighter-btn-raw{
+        
+    }
+
+    .enlighter-btn-window{
+    }
+
+    .enlighter-btn-website{
+        
+    }
+
+    // line hover color
+    &.enlighter-hover{
+        ul.enlighter li:hover{
+            background-color: #fae9d9;
+        }
+        ol.enlighter li:hover{
+            background-color: #fae9d9;
+        }
+    }
+
+    // Inline specific styles
+    &.enlighter-v-inline span.enlighter{
+        background-color: #f7f7f9;
+        border: solid 1px #e0e0e0;
+    }
+
+    // RAW code pane
+    .enlighter-raw{
+        font-size: 13px;
+        color: #404141;
+        border: solid 1px #e0e0e0;
+        background-color: #f7f7f9;
+        line-height: 18px;
+        padding: 4px 5px 4px 55px;
+    }
+
+    // LIST specific styles
+    ol.enlighter, ul.enlighter{
+        font-size: 11px;
+        color: #707070;
+        border: solid 1px #e0e0e0;
+        background-color: #f7f7f9;
+    }
+
+    // line styles
+    .enlighter li{
+        border: solid 0px #ffffff;
+        background-color: #f7f7f9;
+        padding: 1px 5px 1px 14px;
+        line-height: 16px;
+        color: #aaaaaa;
+
+        // top+bottom offsets + borders
+        &:FIRST-CHILD {
+            padding-top: 5px;
+        }
+
+        &:LAST-CHILD {
+            padding-bottom: 5px;
+        }
+
+        &:AFTER {
+            content: ' ';
+        }
+
+        // special line highlight color
+        &.enlighter-special{
+            background-color: #fae9d9;
+            border-left: solid 5px #e07c19;
+        }
+    }
+
+    // Line Number Styles
+    ol.enlighter li {
+        list-style: decimal outside;
+        border-left: 1px dashed #e0e0e0;
+        padding: 1px 5px 1px 14px;
+
+        // borders
+        &:FIRST-CHILD {
+        }
+
+        &:LAST-CHILD {
+        }
+    }
+
+    // default text fragment color
+    .enlighter-text{
+        color: #000000;
+    }
+
+    // text size
+    .enlighter span{
+        font-size: 13px;
+    }
+
+    // comments
+    .enlighter-c0{
+        color: #086b08;
+    }
+    .enlighter-c1{
+        color: #086b08;
+    }
+    .enlighter-c2{
+        color: #086b08;
+    }
+    .enlighter-c9{
+        color: #086b08;
+    }
+
+    // keywords
+    .enlighter-k0{
+        color: #12217c;
+        font-weight: bold;
+    }
+    .enlighter-k1{
+        color: #12217c;
+        font-weight: bold;
+    }
+    .enlighter-k2{
+        color: #445588;
+        font-weight: bold;
+    }
+    .enlighter-k3{
+        color: #6e0d6e;
+    }
+    .enlighter-k4{
+        color: #6e0d6e;
+        font-weight: bold;
+    }
+    .enlighter-k5{
+        color: #12217c;
+        font-weight: bold;
+    }
+    .enlighter-k6{
+        color: #12217c;
+        font-style: italic;
+    }
+    .enlighter-k7{
+        color: #12217c;
+        font-weight: bold;
+    }
+    .enlighter-k8{
+        color: #445588;
+    }
+    .enlighter-k9{
+        color: #990073;
+        font-weight: bold;
+    }
+    .enlighter-k10{
+        color: #6e0d6e;
+        font-style: italic;
+    }
+
+    // expressions
+    .enlighter-e0{
+        color: #34068a;
+        font-weight: bold;
+    }
+    .enlighter-e1{
+        color: #34068a;
+        font-weight: bold;
+    }
+    .enlighter-e2{
+        color: #009926;
+    }
+    .enlighter-e3{
+        color: #286491;
+    }
+    .enlighter-e4{
+        color: #ff8c00;
+        font-style: italic;
+    }
+
+    // strings
+    .enlighter-s0{
+        color: #961414;
+    }
+    .enlighter-s1{
+        color: #961414;
+    }
+    .enlighter-s2{
+        color: #961414;
+    }
+    .enlighter-s3{
+        color: #961414;
+    }
+    .enlighter-s4{
+        color: #963f14;
+        font-weight: bold;
+    }
+    .enlighter-s5{
+        color: #961414;
+        font-style: italic;
+    }
+
+    // numbers
+    .enlighter-n0{
+        color: #009999;
+    }
+    .enlighter-n1{
+        color: #009999;
+    }
+    .enlighter-n2{
+        color: #009999;
+        font-style: italic;
+    }
+    .enlighter-n3{
+        color: #009999;
+        font-style: italic;
+    }
+    .enlighter-n4{
+        color: #009999;
+        font-style: italic;
+    }
+    .enlighter-n5{
+        color: #009999;
+        text-decoration: underline;
+    }
+
+    // methods/functions
+    .enlighter-m0{
+        color: #000000;
+    }
+    .enlighter-m1{
+        color: #000000;
+    }
+    .enlighter-m2{
+        color: #000000;
+    }
+    .enlighter-m3{
+        color: #000000;
+    }
+
+    // generic
+    .enlighter-g0{
+        color: #12217c;
+    }
+    .enlighter-g1{
+        color: #12217c;
+    }
+
+    // Text Documents
+    .enlighter-t0{
+        color: #777;
+    }
+    .enlighter-t1{
+        color: #961414;
+        font-weight: bold;
+    }
+    .enlighter-t2{
+        color: #990073;
+        font-weight: bold;
+    }
+    .enlighter-t3{
+        color: #445588;
+    }
+    .enlighter-t4{
+        color: #6e0d6e;
+    }
+    .enlighter-t5{
+        color: #6e0d6e;
+    }
+    .enlighter-t6{
+        color: #961414;
+    }
+    .enlighter-t7{
+        color: #535353;
+        font-weight: bold;
+    }
+    .enlighter-t8{
+        color: #777;
+        font-style: italic;
+    }
+
+    // XML
+    .enlighter-x1{
+        color: #12217c;
+        font-weight: bold;
+    }
+    .enlighter-x2{
+        color: #6e0d6e;
+    }
+
+    // CSS
+    .enlighter-x10{
+        color: #12217c;
+        font-weight: bold;
+    }
+    .enlighter-x11{
+        color: #12217c;
+        font-weight: bold;
+    }
+    .enlighter-x12{
+        color: #445588;
+    }
+    .enlighter-x13{
+        color: #009999;
+    }
+    .enlighter-x14{
+        color: #009999;
+    }
+    .enlighter-x15{
+        color: #990073;
+        font-style: italic;
+    }
+
+} // .enlighter-t-enlighter
+
+
+/* Object Wrapper - layout::CODEGROUPS
+----------------------------------------------------------------------------------- */
+.enlighter-t-droide.enlighter-v-codegroup{
+    display: block;
+
+    // border radius top
+    ol.enlighter, ul.enlighter, .enlighter-raw{
+
+    }
+
+    // border radius upper right corner
+    .enlighter li:first-child{
+
+    }
+
+    // contains the tabs
+    .enlighter-codegroup-wrapper{
+        position: relative;
+    }
+
+    // contains the buttons
+    .enlighter-codegroup-switch{
+        padding-left: 15px;
+
+        .enlighter-btn{
+            border: solid 1px #e0e0e0;
+            font-size: 12px;
+            color: #000000;
+            background-color: transparent;
+            border-radius: 0px;
+            border-bottom-width: 0px;
+            padding: 5px 10px 5px 10px;
+            font-weight: bold;
+
+            &.enlighter-active{
+                background-color: #f7f7f9;
+                color: #000000;
+                border-color: #c9c9c9;
+            }
+        }
+    }
+}

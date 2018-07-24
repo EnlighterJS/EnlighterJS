@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EnlighterJS Test</title>
+
+    <!-- EnlighterJS CSS !-->
+    <link rel="stylesheet" href="../dist/enlighterjs.min.css" />
+</head>
+<body>
+
+    <main>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore 
+                    et dolore <code>window.addEvent('domready', async (a,b) => {});</code> magna aliquyam erat.
+                </p>
+                
+        <!-- Code to highlight -->
+        <pre id="codeblock1">
+// buttons used in codegroups + toolbar
+.enlighter-btn{
+    display: inline-block;
+    margin: 0px 5px 0px 5px;
+    padding: 3px 5px 3px 5px;
+    border: solid 1px #333333;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+// buttons
+.enlighter-btn-raw{
+    background-image: data-uri('icons/enlighter_code.svg');
+}
+
+.enlighter-btn-window{
+    background-image: data-uri('icons/enlighter_rawcode.svg');
+}
+
+.enlighter-btn-website{
+    background-image: data-uri('icons/enlighter_icon_white.svg');
+}
+        </pre>
+
+    </main>
+
+    <!-- EnlighterJS -->
+    <script type="text/javascript" src="../dist/enlighterjs.min.js"></script>
+
+    <!-- Init Code -->
+    <script type="text/javascript">
+        // highlight a single element directly
+        // set all parameters via options
+        EnlighterJS.enlight(document.getElementById('codeblock1'), {
+            language: 'less',
+            theme: 'bootstrap4',
+            lineoffset: 412,
+            highlight: '423,427,431'
+        });
+    </script>
+</body>
+</html>

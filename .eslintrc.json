@@ -1,0 +1,6 @@
+{
+    "extends": ["eslint:recommended", "aenondynamics", "plugin:react/recommended"],
+    "plugins": [
+        "react"
+    ]
+}

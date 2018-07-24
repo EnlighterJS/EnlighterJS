@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EnlighterJS Codegroups</title>
+
+    <!-- load external font -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet" />
+
+    <!-- EnlighterJS CSS - Just Include a single theme !-->
+    <link rel="stylesheet" href="../dist/enlighterjs.min.css" />
+
+</head>
+<body>
+
+    <main>
+        <!-- Code to highlight -->
+        <pre data-enlighter-language="less" data-enlighter-title="Core/Defaut" data-enlighter-group="mygroup1">
+// buttons used in codegroups + toolbar
+.enlighter-btn{
+    display: inline-block;
+    margin: 0px 5px 0px 5px;
+    padding: 3px 5px 3px 5px;
+    border: solid 1px #333333;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+// buttons
+.enlighter-btn-raw{
+    background-image: data-uri('icons/enlighter_code.svg');
+}
+
+.enlighter-btn-window{
+    background-image: data-uri('icons/enlighter_rawcode.svg');
+}
+
+.enlighter-btn-website{
+    background-image: data-uri('icons/enlighter_icon_white.svg');
+}
+        </pre>
+<!-- Code to highlight -->
+<pre data-enlighter-language="less" data-enlighter-title="Classic Theme" data-enlighter-group="mygroup1">
+// line hover color
+&amp;.enlighter-hover{
+    ul.enlighter li:hover{
+        border: none;
+        background-color: #ddf0dd;
+    }
+    ol.enlighter li:hover{
+        border: none;
+        border-left: solid 4px #52ce52;
+        background-color: #ddf0dd;
+    }
+}
+
+// Inline specific styles
+&amp;.enlighter-v-inline span.enlighter{
+    background-color: transparent;
+    border: none;
+}
+</pre>
+    </main>
+
+    <!-- EnlighterJS -->
+    <script type="text/javascript" src="../dist/enlighterjs.min.js"></script>
+
+    <!-- Init Code -->
+    <script type="text/javascript">
+        // - highlight all pre + code tags (CSS3 selectors)
+        // - use javascript as default language
+        // - use theme "enlighter" as default theme
+        // - replace tabs with 2 spaces
+        EnlighterJS.init('pre', 'code', {
+                language : 'javascript',
+                theme: 'godzilla',
+                indent : 2
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+@import "fonts.less";
+
+/* Object Wrapper - ALL
+----------------------------------------------------------------------------------- */
+.enlighter-default{
+    font-family: @font_SourceCodePro;
+    font-size: 10px;
+    line-height: 16px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0px 0px 20px 0px;
+    padding: 0px;
+    position: relative;
+
+    // special line highlight color
+    li.enlighter-special:hover{
+        background-color: #F4F8FC;
+    }
+
+    // RAW code pane
+    .enlighter-raw{
+        display: none;
+        line-height: inherit;
+        font-size: 12px;
+        font-family: inherit;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    // show toolbar on hover
+    &:hover .enlighter-toolbar{
+        display: block;
+    }
+
+    // buttons used in codegroups + toolbar
+    .enlighter-btn{
+        display: inline-block;
+        margin: 0px 5px 0px 5px;
+        padding: 3px 5px 3px 5px;
+        border: solid 1px #333333;
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+
+    // buttons
+    .enlighter-btn-raw{
+        background-image: data-uri('icons/enlighter_code.svg');
+    }
+
+    .enlighter-btn-copy{
+        background-image: data-uri('icons/enlighter_copy.svg');
+    }
+
+    .enlighter-btn-window{
+        background-image: data-uri('icons/enlighter_window.svg');
+    }
+
+    .enlighter-btn-website{
+        background-image: data-uri('icons/enlighter_icon_white.svg');
+    }
+}
+
+/* Utility
+----------------------------------------------------------------------------------- */
+
+// hide original codeblock
+.enlighter-origin{
+    display: none !important;
+}
+
+
+/* Object Wrapper - layout::INLINE
+----------------------------------------------------------------------------------- */
+.enlighter-v-inline{
+    display: inline-block;
+    overflow: inherit;
+    margin: 0px;
+}
+
+/* Object Wrapper - layout::BLOCK
+----------------------------------------------------------------------------------- */
+.enlighter-v-standard{
+    display: block;
+}
+
+/* Object Wrapper - layout::CODEGROUPS
+----------------------------------------------------------------------------------- */
+.enlighter-v-codegroup{
+    display: block;
+
+    // contains the tabs
+    .enlighter-codegroup-wrapper{
+        position: relative;
+    }
+
+    // contains the buttons
+    .enlighter-codegroup-switch{
+
+    }
+
+
+}
+
+/* Highlighted Object (List or Span)
+----------------------------------------------------------------------------------- */
+.enlighter{
+
+    /* INLINE specific styles
+    -------------------------------------------- */
+    span& {
+        display: inline-block;
+        padding: 3px 5px 1px 5px;
+        border: solid 1px #e0e0e0;
+        color: #333333;
+        background-color: #f7f7f7;
+        margin: 0px 2px 0px 2px;
+    }
+
+    /* BLOCK specific styles
+    -------------------------------------------- */
+    ol&, 
+    ul& {
+        display: block;
+        font-size: 10px;
+        background-color: #f2f2f2;
+        color: #939393;
+        margin: 0px;
+        padding: 0px;
+        text-indent: 0px;
+        list-style: none;
+    }
+
+    // line styles
+    li{
+        margin: 0px;
+        background-color: #ffffff;
+        border: solid 0px #ffffff;
+        padding: 0px 5px 0px 14px;
+        line-height: 14px;
+        color: #939393;
+        list-style: none;
+        font-size: inherit;
+
+        /* top+bottom offsets */
+        &:FIRST-CHILD {
+            padding-top: 5px;
+        }
+
+        &:LAST-CHILD {
+            padding-bottom: 5px;
+        }
+
+        &::AFTER {
+            content: ' ';
+        }
+    }
+
+    // Line Number Styles
+    ol& li {
+        list-style: decimal-leading-zero outside;
+        margin-left: 40px;
+        padding-left: 20px;
+    }
+
+
+
+    // default symbole/token style
+    span {
+        margin: 0px;
+        padding: 0px;
+        line-height: inherit;
+        font-size: 12px;
+        font-family: inherit;
+    }
+}
+
+/* Object Wrapper Property: show raw code
+----------------------------------------------------------------------------------- */
+.enlighter-show-rawcode{
+    pre.enlighter-raw{
+        display: block;
+    }
+    .enlighter{
+        display: none;
+    }
+}
+
+/* Enlighter Overlay Toolbar
+----------------------------------------------------------------------------------- */
+.enlighter-toolbar{
+    display: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 10;
+}

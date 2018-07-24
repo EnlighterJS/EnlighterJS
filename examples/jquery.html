@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EnlighterJS with jQuery</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" />
+    
+    <!-- EnlighterJS CSS !-->
+    <link rel="stylesheet" href="../dist/enlighterjs.min.css" />
+</head>
+<body>
+
+    <main>
+        <div class="container">
+            <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                <h1 class="display-4">EnlighterJS</h1>
+                <p class="lead">jQuery Example</p>
+
+                <p>
+                    <button type="button" class="btn btn-success btn-sm" id="btn-enable">Highlight Code</button>
+                    <button type="button" class="btn btn-danger btn-sm" id="btn-disable">Remove Highlighting</button>
+                    <button type="button" class="btn btn-outline-dark btn-sm" disabled>Rendering Time: <strong id="timer">X</strong>ms</button>
+                </p>
+            </div>
+   
+            <h2>jQuery Code used on this page</h2>
+            <pre data-enlighter-language="javascript" class="toggler">
+jQuery(function(jq){
+    // enlight all pre elements with class "toggler"
+    jq('#btn-enable').click(function(){
+        jq('pre.toggler').enlight({
+            theme: 'bootstrap4'
+        });
+    });
+
+    // remove highlighting from all pre elements with class "toggler"
+    jq('#btn-disable').click(function(){
+        jq('pre.toggler').enlight(false);
+    });
+});</pre>
+
+            <h2>Another codeblock</h2>
+            <!-- Code to highlight -->
+            <pre data-enlighter-language="less" class="toggler">
+// buttons used in codegroups + toolbar
+.enlighter-btn{
+    display: inline-block;
+    margin: 0px 5px 0px 5px;
+    padding: 3px 5px 3px 5px;
+    border: solid 1px #333333;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+// buttons
+.enlighter-btn-raw{
+    background-image: data-uri('icons/enlighter_code.svg');
+}
+
+.enlighter-btn-window{
+    background-image: data-uri('icons/enlighter_rawcode.svg');
+}
+
+.enlighter-btn-website{
+    background-image: data-uri('icons/enlighter_icon_white.svg');
+}
+             </pre>
+         </div>
+    </main>
+
+    <!-- load jQuery BEFORE EnlighterJS-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+
+    <!-- EnlighterJS -->
+    <script type="text/javascript" src="../dist/enlighterjs.min.js"></script>
+
+    <!-- Init Code -->
+    <script type="text/javascript">
+
+        jQuery(function(jq){
+            // enlight all pre elements with class "toggle"
+            jq('#btn-enable').click(function(){
+                var start = Date.now();
+
+                // highlight elements
+                jq('pre.toggler').enlight({
+                    theme: 'bootstrap4'
+                });
+
+                // show elapsed time
+                var stop = Date.now();
+                jq('#timer').text(stop-start);
+            });
+
+            // remove highlighting from all pre elements with class "toggle"
+            jq('#btn-disable').click(function(){
+                jq('pre.toggler').enlight(false);
+            });
+        });
+    </script>
+</body>
+</html>

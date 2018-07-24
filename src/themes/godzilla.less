@@ -1,0 +1,377 @@
+@import "fonts.less";
+
+// Godzilla - Inspired by MDN colors
+.enlighter-t-godzilla{
+
+    .enlighter-toolbar .enlighter-btn{
+        border-radius: 3px;
+        background-color: #fff;
+        color: #717171;
+        font-size: 12px;
+        padding: 0;
+        border: 1px solid #e0e0e0;
+        margin: 0 0 0 8px;
+        text-decoration: none;
+        width: 23px;
+        height: 23px;
+        background-position: 0 0;
+        background-size: contain;
+
+        &:hover{
+            border-color: #c9c9c9;
+        }
+
+        // hide text
+        &:after{
+            content: '';
+        }
+    }
+
+    // line hover color
+    &.enlighter-hover{
+        ul.enlighter li:hover{
+            background-color: #f0f0f1;
+        }
+        ol.enlighter li:hover{
+            background-color: #f0f0f1;
+        }
+    }
+
+    // Inline specific styles
+    &.enlighter-v-inline span.enlighter{
+        background-color: #f7f7f7;
+        border: dotted 1px #e0e0e1;
+        border-left: solid 2px #4a80b3;
+    }
+
+    // bg
+    .enlighter-raw, ol.enlighter, ul.enlighter{
+        border-left: solid 6px #4a80b3;
+        background-image: url('data:image/gif;base64,R0lGODlhHgAeAJEAAPLz9ezt7vf39wAAACwAAAAAHgAeAAACYYyPqXvi/wCccr5gY3Y1491Z4fRlI3Rem5ByaymurQBT8nuDuM57wA8MCodEQA2V8yRjm6OmZ3G6oKSlrWlFYqlaJffpNWUvxbL5J2WNHenZrL2mxd/znfjLrm/v/Kg+UwAAOw==');
+        background-repeat: repeat;
+        background-position: 0px 0px;
+    }
+
+    // RAW code pane
+    .enlighter-raw{
+        font-size: 14px;
+        line-height: 19px;
+        color: #2b333a;
+        padding: 4px 5px 4px 54px;
+    }
+
+    // LIST specific styles
+    ol.enlighter, ul.enlighter{
+        font-size: 11px;
+        
+        &.enlighter-hover .enlighter-special:hover{
+            background-color: #fffcd3;
+            color: #444444;
+        }
+    }
+
+    // line styles
+    .enlighter li{
+        padding: 1px 5px 1px 14px;
+        line-height: 16px;
+        color: #9c9ea0;
+
+        // top+bottom offsets + borders
+        &:FIRST-CHILD {
+            padding-top: 5px;
+        }
+
+        &:LAST-CHILD {
+            padding-bottom: 5px;
+        }
+
+        &:AFTER {
+            content: ' ';
+        }
+
+        // special line highlight color
+        &.enlighter-special{
+            border-left: solid 5px #9b0d5c;
+            background-color: transparent;
+        }
+    }
+
+    // Line Number Styles
+    ol.enlighter li {
+        list-style: decimal outside;
+        padding: 1px 5px 1px 14px;
+        background-color: transparent;
+
+        // borders
+        &:FIRST-CHILD {
+        }
+
+        &:LAST-CHILD {
+        }
+    }
+
+    // default text fragment color
+    .enlighter-text{
+        color: #2b333a;
+    }
+
+    // text size
+    .enlighter span{
+        font-size: 14px;
+    }
+
+    // comments
+    .enlighter-c0{
+        color: #6b7c8b;
+    }
+    .enlighter-c1{
+        color: #6b7c8b;
+    }
+    .enlighter-c2{
+        color: #6b7c8b;
+    }
+    .enlighter-c9{
+        color: #5b7c9c;
+    }
+
+    // keywords
+    .enlighter-k0{
+        color: #085789;
+        font-weight: bold;
+    }
+    .enlighter-k1{
+        color: #085789;
+        font-weight: bold;
+    }
+    .enlighter-k2{
+        color: #4284ae;
+        font-weight: bold;
+    }
+    .enlighter-k3{
+        color: #4284ae;
+        background-color: #f0f0f0;
+    }
+    .enlighter-k4{
+        color: #4284ae;
+        font-weight: bold;
+    }
+    .enlighter-k5{
+        color: #085789;
+        font-weight: bold;
+    }
+    .enlighter-k6{
+        color: #085789;
+        font-style: italic;
+    }
+    .enlighter-k7{
+        color: #085789;
+        font-weight: bold;
+    }
+    .enlighter-k8{
+        color: #4284ae;
+    }
+    .enlighter-k9{
+        color: #ae42a0;
+        font-weight: bold;
+    }
+    .enlighter-k10{
+        color: #ae42a0;
+        font-style: italic;
+    }
+
+    // expressions
+    .enlighter-e0{
+        color: #085789;
+        font-weight: bold;
+    }
+    .enlighter-e1{
+        color: #085789;
+        font-weight: bold;
+    }
+    .enlighter-e2{
+        color: #085789;
+    }
+    .enlighter-e3{
+        color: #085789;
+    }
+    .enlighter-e4{
+        color: #d2901d;
+    }
+
+    // strings
+    .enlighter-s0{
+        color: #5e860f;
+    }
+    .enlighter-s1{
+        color: #5e860f;
+    }
+    .enlighter-s2{
+        color: #5e860f;
+    }
+    .enlighter-s3{
+        color: #5e860f;
+    }
+    .enlighter-s4{
+        color: #5e860f;
+    }
+    .enlighter-s5{
+        color: #5e860f;
+    }
+
+    // numbers
+    .enlighter-n0{
+        color: #9b0d5c;
+    }
+    .enlighter-n1{
+        color: #9b0d5c;
+    }
+    .enlighter-n2{
+        color: #9b0d5c;
+        font-style: italic;
+    }
+    .enlighter-n3{
+        color: #9b0d5c;
+        font-style: italic;
+    }
+    .enlighter-n4{
+        color: #9b0d5c;
+        font-style: italic;
+    }
+    .enlighter-n5{
+        color: #9b0d5c;
+        text-decoration: underline;
+    }
+
+    // methods/functions
+    .enlighter-m0{
+        color: #d0284a;
+    }
+    .enlighter-m1{
+        color: #d0284a;
+    }
+    .enlighter-m2{
+        color: #d0284a;
+    }
+    .enlighter-m3{
+        color: #d0284a;
+    }
+
+    // generic
+    .enlighter-g0{
+        color: #35434c;
+    }
+    .enlighter-g1{
+        color: #35434c;
+    }
+
+    // Text Documents
+    .enlighter-t0{
+        color: #35434c;
+    }
+    .enlighter-t1{
+        color: #d0284a;
+        font-weight: bold;
+    }
+    .enlighter-t2{
+        color: #9b0d5c;
+        font-weight: bold;
+    }
+    .enlighter-t3{
+        color: #085789;
+    }
+    .enlighter-t4{
+        color: #085789;
+    }
+    .enlighter-t5{
+        color: #085789;
+    }
+    .enlighter-t6{
+        color: #d0284a;
+    }
+    .enlighter-t7{
+        color: #35434c;
+        font-weight: bold;
+    }
+    .enlighter-t8{
+        color: #35434c;
+        background-color: #f0f0f0;
+        font-style: italic;
+    }
+
+    // XML
+    .enlighter-x1{
+        color: #085789;
+        font-weight: bold;
+    }
+    .enlighter-x2{
+        color: #4284ae;
+    }
+
+    // CSS
+    .enlighter-x10{
+        color: #35434c;
+        font-weight: bold;
+    }
+    .enlighter-x11{
+        color: #085789;
+        font-weight: bold;
+    }
+    .enlighter-x12{
+        color: #085789;
+        text-decoration: underline;
+    }
+    .enlighter-x13{
+        color: #4284ae;
+    }
+    .enlighter-x14{
+        color: #4284ae;
+        font-style: italic;
+    }
+    .enlighter-x15{
+        color: #9b0d5c;
+        font-style: italic;
+    }
+
+} // .enlighter-t-enlighter
+
+
+/* Object Wrapper - layout::CODEGROUPS
+----------------------------------------------------------------------------------- */
+.enlighter-t-godzilla.enlighter-v-codegroup{
+    display: block;
+
+    // border radius top
+    ol.enlighter, ul.enlighter, .enlighter-raw{
+
+    }
+
+    // border radius upper right corner
+    .enlighter li:first-child{
+
+    }
+
+    // contains the tabs
+    .enlighter-codegroup-wrapper{
+        position: relative;
+    }
+
+    // contains the buttons
+    .enlighter-codegroup-switch{
+        font-family: @font_sans;
+        background-color: #4a80b3;
+        padding: 5px 5px 5px 5px;
+
+        .enlighter-btn{
+            padding: 3px 10px 3px 10px;
+            border: none;
+            background-color: transparent;
+            line-height: 20px;
+            font-size: 14px;
+            color: #f0f0f0;
+
+            &.enlighter-active{
+                background-color: #00417f;
+            }
+        }
+    }
+}

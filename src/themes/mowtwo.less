@@ -1,0 +1,358 @@
+.enlighter-t-mowtwo{
+    
+    .enlighter-toolbar .enlighter-btn{
+        background-color: #ffffff;
+        color: #717171;
+        font-size: 12px;
+        padding: 0;
+        border: 1px solid #e0e0e0;
+        margin: 0 0 0 8px;
+        text-decoration: none;
+        width: 23px;
+        height: 23px;
+        background-position: 0 0;
+        background-size: contain;
+
+        &:hover{
+        }
+
+        // hide text
+        &:after{
+            content: '';
+        }
+    }
+    // toolbar buttons
+    .enlighter-btn-raw{
+        
+    }
+
+    .enlighter-btn-window{
+    }
+
+    .enlighter-btn-website{
+        
+    }
+
+    // line hover color
+    &.enlighter-hover{
+        ul.enlighter li:hover{
+            background-color: #e9e9e9;
+        }
+        ol.enlighter li:hover{
+            background-color: #e9e9e9;
+        }
+    }
+
+    // Inline specific styles
+    &.enlighter-v-inline span.enlighter{
+        border-radius: 4px;
+        background-color: #f0f0f1;
+        border: solid 1px #f0f0f1;
+    }
+
+    // RAW code pane
+    .enlighter-raw{
+        font-size: 14px;
+        line-height: 21px;
+        color: #313437;
+        padding: 5px 5px 5px 51px;
+        background-color: transparent;
+    }
+
+    // LIST specific styles
+    ol.enlighter, ul.enlighter{
+        font-size: 11px;
+        background-color: #f0f0f1;
+        border: solid 1px #f0f0f1;
+        border-radius: 7px;
+    }
+
+    // line styles
+    .enlighter li{
+        border: solid 0px #ffffff;
+        line-height: 18px;
+        background-color: #f0f0f1;
+        padding: 1px 5px 1px 14px;
+        color: #9c9ea0;
+
+        // top+bottom offsets + borders
+        &:FIRST-CHILD {
+            padding-top: 5px;
+        }
+
+        &:LAST-CHILD {
+            padding-bottom: 5px;
+        }
+
+        &:AFTER {
+            content: ' ';
+        }
+
+        // special line highlight color
+        &.enlighter-special{
+            background-color: #e9e9e9;
+        }
+    }
+
+    // Line Number Styles
+    ol.enlighter li {
+        list-style: decimal outside;
+        padding: 1px 10px 1px 10px;
+
+        // borders
+        &:FIRST-CHILD {
+        }
+
+        &:LAST-CHILD {
+        }
+    }
+
+    // default text fragment color
+    .enlighter-text{
+        color: #313437;
+    }
+
+    // text size
+    .enlighter span{
+        font-size: 14px;
+    }
+
+    // comments
+    .enlighter-c0{
+        color: #9c9ea0;
+    }
+    .enlighter-c1{
+        color: #9c9ea0;
+    }
+    .enlighter-c2{
+        color: #9c9ea0;
+    }
+    .enlighter-c9{
+        color: #9c9ea0;
+    }
+
+    // keywords
+    .enlighter-k0{
+        color: #b05098;
+        font-weight: bold;
+    }
+    .enlighter-k1{
+        color: #b05098;
+        font-weight: bold;
+    }
+    .enlighter-k2{
+        color: #b05098;
+    }
+    .enlighter-k3{
+        color: #b05098;
+    }
+    .enlighter-k4{
+        color: #b05098;
+    }
+    .enlighter-k5{
+        color: #b05098;
+    }
+    .enlighter-k6{
+        color: #b05098;
+    }
+    .enlighter-k7{
+        color: #b05098;
+    }
+    .enlighter-k8{
+        color: #313437;
+    }
+    .enlighter-k9{
+        color: #313437;
+    }
+    .enlighter-k10{
+        color: #313437;
+    }
+
+    // expressions
+    .enlighter-e0{
+        color: #b05098;
+    }
+    .enlighter-e1{
+        color: #b05098;
+    }
+    .enlighter-e2{
+        color:#864c08; 
+    }
+    .enlighter-e3{
+        color: #b05098;
+    }
+    .enlighter-e4{
+        color: #b05098;
+    }
+
+    // strings
+    .enlighter-s0{
+        color: #83a440;
+    }
+    .enlighter-s1{
+        color: #83a440;
+    }
+    .enlighter-s2{
+        color: #83a440;
+    }
+    .enlighter-s3{
+        color: #83a440;
+    }
+    .enlighter-s4{
+        color: #83a440;
+    }
+    .enlighter-s5{
+        color: #83a440;
+    }
+
+    // numbers
+    .enlighter-n0{
+        color: #429bc1;
+    }
+    .enlighter-n1{
+        color: #429bc1;
+    }
+    .enlighter-n2{
+        color: #429bc1;
+    }
+    .enlighter-n3{
+        color: #429bc1;
+    }
+    .enlighter-n4{
+        color: #429bc1;
+    }
+    .enlighter-n5{
+        color: #429bc1;
+    }
+
+    // methods/functions
+    .enlighter-m0{
+        color: #666666;
+    }
+    .enlighter-m1{
+        color: #666666;
+    }
+    .enlighter-m2{
+        color: #666666;
+    }
+    .enlighter-m3{
+        color: #666666;
+    }
+
+    // generic
+    .enlighter-g0{
+        color: #864c08;
+    }
+    .enlighter-g1{
+        color: #909090;
+    }
+
+    // Text Documents
+    .enlighter-t0{
+        color: #909090;
+    }
+    .enlighter-t1{
+        color: #b05098;
+        font-weight: bold;
+    }
+    .enlighter-t2{
+        color: #b05098;
+        font-weight: bold;
+    }
+    .enlighter-t3{
+        color: #b05098;
+    }
+    .enlighter-t4{
+        color: #b05098;
+    }
+    .enlighter-t5{
+        color: #83a440;
+    }
+    .enlighter-t6{
+        color: #b05098;
+    }
+    .enlighter-t7{
+        color: #909090;
+        font-weight: bold;
+    }
+    .enlighter-t8{
+        color: #909090;
+        font-style: italic;
+    }
+
+    // XML
+    .enlighter-x1{
+        color: #b05098;
+        font-weight: bold;
+    }
+    .enlighter-x2{
+        color: #b05098;
+    }
+
+    // CSS
+    .enlighter-x10{
+        color: #b05098;
+        font-weight: bold;
+    }
+    .enlighter-x11{
+        color: #b05098;
+        font-weight: bold;
+    }
+    .enlighter-x12{
+        color: #313437;
+    }
+    .enlighter-x13{
+        color: #429bc1;
+    }
+    .enlighter-x14{
+        color: #429bc1;
+    }
+    .enlighter-x15{
+        color: #313437;
+    }
+
+} // .enlighter-t-enlighter
+
+
+/* Object Wrapper - layout::CODEGROUPS
+----------------------------------------------------------------------------------- */
+.enlighter-t-mowtwo.enlighter-v-codegroup{
+    display: block;
+
+    // border radius top
+    ol.enlighter, ul.enlighter, .enlighter-raw{
+
+    }
+
+    // border radius upper right corner
+    .enlighter li:first-child{
+
+    }
+
+    // contains the tabs
+    .enlighter-codegroup-wrapper{
+        position: relative;
+    }
+
+    // contains the buttons
+    .enlighter-codegroup-switch{
+        background-color: #585b5e;
+        padding: 10px 0px 10px 20px;
+        border-radius: 8px;
+        margin-bottom: 5px;
+
+        .enlighter-btn{
+            border-radius: 0px;
+            background-color: transparent;
+            line-height: 20px;
+            font-size: 13px;
+            color: #f0f0f0;
+            border: none;
+            padding: 0px 10px 0px 10px;
+
+            &.enlighter-active{
+                text-decoration: underline;
+            }
+        }
+    }
+}
