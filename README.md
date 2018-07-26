@@ -14,8 +14,8 @@ Using it can be as simple as adding a single script and style to your website, c
 Related
 ----------------------------------------------
 
-* [Website](https://enlighterjs.org)
 * [Documentation](https://github.com/EnlighterJS/docs)
+* [Website](https://enlighterjs.org)
 * [Developer Guide](https://github.com/EnlighterJS/docs/blob/master/DeveloperGuide.md)
 * [Examples](examples/)
 * [EnlighterJS for WordPress](https://wordpress.org/plugins/enlighter/) - The official EnlighterJS plugin for WordPress | [Repository](https://github.com/EnlighterJS/Plugin.WordPress)
@@ -120,25 +120,25 @@ Quickstart
 This is a minimalistic example how to highlight sourcecode with EnlighterJS. The working example (valid js+css paths) is available within the [example directory](examples/).
 
 ```html
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-    &lt;meta charset="utf-8" /&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
-    &lt;title&gt;EnlighterJS Test&lt;/title&gt;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EnlighterJS Test</title>
 
-    &lt;!-- EnlighterJS Resources !--&gt;
-    &lt;link rel="stylesheet" href="enlighterjs.min.css" /&gt;
-&lt;/head&gt;
-&lt;body&gt;
+    <!-- EnlighterJS Resources !-->
+    <link rel="stylesheet" href="enlighterjs.min.css" />
+</head>
+<body>
 
-    &lt;main&gt;
-        &lt;p&gt;Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore 
-            et dolore &lt;code&gt;window.addEvent('domready', async (a,b) =&gt; {});&lt;/code&gt; magna aliquyam erat.
-        &lt;/p&gt;
+    <main>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore 
+            et dolore <code>window.addEvent('domready', async (a,b) => {});</code> magna aliquyam erat.
+        </p>
 
-        &lt;!-- Code to hghlight !--&gt;
-        &lt;pre data-enlighter-language="less"&gt;
+        <!-- Code to hghlight !-->
+        <pre data-enlighter-language="less">
 // buttons used in codegroups + toolbar
 .enlighter-btn{
     display: inline-block;
@@ -161,12 +161,12 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
 .enlighter-btn-website{
     background-image: data-uri('icons/enlighter_icon_white.svg');
 }
-        &lt;/pre&gt;
+        </pre>
 
-    &lt;/main&gt;
+    </main>
 
-    &lt;script type="text/javascript" src="enlighterjs.min.js"&gt;&lt;/script&gt;
-    &lt;script type="text/javascript"&gt;
+    <script type="text/javascript" src="enlighterjs.min.js"></script>
+    <script type="text/javascript">
         // INIT CODE - simple page-wide initialization based on css selectors
         // - highlight all pre + code tags (CSS3 selectors)
         // - use javascript as default language
@@ -177,9 +177,9 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
                 theme: 'enlighter',
                 indent : 2
         });
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+    </script>
+</body>
+</html>
 ```
 
 Contribution
