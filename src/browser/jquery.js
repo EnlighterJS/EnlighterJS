@@ -33,5 +33,5 @@
             EnlighterJS.enlight(this, options);
         });
     }
-}(jQuery));
+}(window.jQuery));
 
