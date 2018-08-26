@@ -7,7 +7,7 @@
 // ----------------------------------------------------------------------
 
 // Renderer
-import _domBlockRenderer from '../renderer/dom-block';
+import _domBlockRenderer from '../renderer/dom-block.jsx';
 
 // Internal "ReactDOM"
 import * as React from '../lib/dom';

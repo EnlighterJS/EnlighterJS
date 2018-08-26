@@ -2,5 +2,8 @@
     "extends": ["eslint:recommended", "aenondynamics", "plugin:react/recommended"],
     "plugins": [
         "react"
-    ]
+    ],
+    "rules": {
+        "react/jsx-key": 0
+    }
 }

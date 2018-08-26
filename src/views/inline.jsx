@@ -7,7 +7,7 @@
 // ----------------------------------------------------------------------
 
 // Renderer
-import _domInlineRenderer from '../renderer/dom-inline';
+import _domInlineRenderer from '../renderer/dom-inline.jsx';
 
 // Internal "ReactDOM"
 import * as React from '../lib/dom';

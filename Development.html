@@ -15,7 +15,25 @@
 
     <style type="text/css">
         .enlighter-default .enlighter-toolbar{
-                display: block !important;
+                display: none !important;
+        }
+
+        .enlighter-v-standard{
+            
+        }
+
+        .enlighter-v-standard .enlighter,
+        .enlighter-v-codegroup .enlighter{
+            overflow-x: auto;
+            word-wrap: normal !important;
+            min-width: 100%;
+        }
+
+        .enlighter-v-standard .enlighter > div,
+        .enlighter-v-codegroup .enlighter > div{
+            white-space: pre !important;
+            width: inherit !important;
+            min-width: inherit !important;
         }
     </style>
 
@@ -53,7 +71,8 @@
             </p>
 
             <h3>Block</h3>
-<pre id="ejs-1" data-enlighter-language="js" data-enlighter-highlight="16" data-enlighter-lineoffset="10">
+<pre id="ejs-1" data-enlighter-language="js" data-enlighter-highlight="16">
+// x                xx                xx                xx                xx                xx                x 
 // prepare elements, extract code
 const dataset = elements.map(function(element){
     // extract code
@@ -68,6 +87,8 @@ const dataset = elements.map(function(element){
     // render the 
     return {element, code, params}
 });
+// xxx
+// yyy
 </pre>
 
     <pre id="ejs-2-1" data-enlighter-language="scss" data-enlighter-group="g1">

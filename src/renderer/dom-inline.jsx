@@ -6,21 +6,13 @@
 // Copyright 2016-2018 Andi Dittrich <https://andidittrich.de>
 // ----------------------------------------------------------------------
 
-import * as _dom from '../lib/dom';
-import _foreach from '../lib/foreach';
+// Internal "ReactDOM"
+import * as React from '../lib/dom';
 
 export default function DomInlineRenderer(tokens){
-    // create new outer container element
-    const container = _dom.createElement('span', {
-        'class': 'enlighter'
-    });
-
-    // generate output based on ordered list of tokens
-    _foreach(tokens, function(token){
-        container.appendChild(_dom.createElement('span', {
-            'class': 'enlighter-' + token.type
-        }, token.text));
-    });
-
-    return container;
+    return <span className="enlighter">
+        {tokens.map(token => {
+             return <span className={'enlighter-' + token.type}>{token.text}</span>
+        })}
+    </span>;
 }
