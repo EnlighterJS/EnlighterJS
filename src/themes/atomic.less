@@ -1,3 +1,5 @@
+@import "selectors.less";
+
 .enlighter-t-atomic{
     
     .enlighter-toolbar {
@@ -59,7 +61,7 @@
     }
 
     // Inline specific styles
-    &.enlighter-v-inline span.enlighter{
+    &.@{VIEW_INLINE} span.enlighter{
         background-color: #272b33;
     }
 
@@ -344,7 +346,7 @@
 
 /* Object Wrapper - layout::CODEGROUPS
 ----------------------------------------------------------------------------------- */
-.enlighter-t-atomic.enlighter-v-codegroup{
+.enlighter-t-atomic.@{VIEW_CODEGROUP}{
     display: block;
 
     // border radius top

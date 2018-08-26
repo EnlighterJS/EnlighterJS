@@ -1,4 +1,5 @@
 @import "fonts.less";
+@import "selectors.less";
 
 /* Object Wrapper - ALL
 ----------------------------------------------------------------------------------- */
@@ -72,7 +73,7 @@
 
 /* Object Wrapper - layout::INLINE
 ----------------------------------------------------------------------------------- */
-.enlighter-v-inline{
+.@{VIEW_INLINE}{
     display: inline-block;
     overflow: inherit;
     margin: 0px;
@@ -80,13 +81,13 @@
 
 /* Object Wrapper - layout::BLOCK
 ----------------------------------------------------------------------------------- */
-.enlighter-v-standard{
+.@{VIEW_STANDARD}{
     display: block;
 }
 
 /* Object Wrapper - layout::CODEGROUPS
 ----------------------------------------------------------------------------------- */
-.enlighter-v-codegroup{
+.@{VIEW_CODEGROUP}{
     display: block;
 
     // contains the tabs

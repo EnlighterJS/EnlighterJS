@@ -1,4 +1,5 @@
 @import "fonts.less";
+@import "selectors.less";
 
 // Godzilla - Inspired by MDN colors
 .enlighter-t-godzilla{
@@ -38,7 +39,7 @@
     }
 
     // Inline specific styles
-    &.enlighter-v-inline span.enlighter{
+    &.@{VIEW_INLINE} span.enlighter{
         background-color: #f7f7f7;
         border: dotted 1px #e0e0e1;
         border-left: solid 2px #4a80b3;
@@ -337,7 +338,7 @@
 
 /* Object Wrapper - layout::CODEGROUPS
 ----------------------------------------------------------------------------------- */
-.enlighter-t-godzilla.enlighter-v-codegroup{
+.enlighter-t-godzilla.@{VIEW_CODEGROUP}{
     display: block;
 
     // border radius top

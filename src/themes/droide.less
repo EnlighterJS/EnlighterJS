@@ -1,3 +1,5 @@
+@import "selectors.less";
+
 .enlighter-t-droide{
     
     .enlighter-toolbar .enlighter-btn{
@@ -45,7 +47,7 @@
     }
 
     // Inline specific styles
-    &.enlighter-v-inline span.enlighter{
+    &.@{VIEW_INLINE} span.enlighter{
         background-color: #f7f7f9;
         border: solid 1px #e0e0e0;
     }
@@ -336,7 +338,7 @@
 
 /* Object Wrapper - layout::CODEGROUPS
 ----------------------------------------------------------------------------------- */
-.enlighter-t-droide.enlighter-v-codegroup{
+.enlighter-t-droide.@{VIEW_CODEGROUP}{
     display: block;
 
     // border radius top

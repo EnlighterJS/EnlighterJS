@@ -1,3 +1,5 @@
+@import "selectors.less";
+
 .enlighter-t-beyond{
 
     .enlighter-toolbar .enlighter-btn{
@@ -37,7 +39,7 @@
     }
 
     // Inline specific styles
-    &.enlighter-v-inline span.enlighter{
+    &.@{VIEW_INLINE} span.enlighter{
         border-radius: 3px;
         background-color: #f7f7fa;
         border: dotted 1px #e2e2e8;
@@ -342,7 +344,7 @@
 
 /* Object Wrapper - layout::CODEGROUPS
 ----------------------------------------------------------------------------------- */
-.enlighter-t-beyond.enlighter-v-codegroup{
+.enlighter-t-beyond.@{VIEW_CODEGROUP}{
     display: block;
 
     // border radius top

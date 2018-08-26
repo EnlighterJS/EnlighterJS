@@ -1,3 +1,5 @@
+@import "selectors.less";
+
 // dracula theme colors
 // @see https://github.com/dracula/dracula-theme#color-palette
 @dracula_background: #282a36;
@@ -77,7 +79,7 @@
     }
 
     // Inline specific styles
-    &.enlighter-v-inline span.enlighter{
+    &.@{VIEW_INLINE} span.enlighter{
         background-color: @dracula_background;
     }
 
@@ -355,7 +357,7 @@
 
 /* Object Wrapper - layout::CODEGROUPS
 ----------------------------------------------------------------------------------- */
-.enlighter-t-dracula.enlighter-v-codegroup{
+.enlighter-t-dracula.@{VIEW_CODEGROUP}{
     display: block;
 
     // border radius top

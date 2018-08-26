@@ -1,3 +1,5 @@
+@import "selectors.less";
+
 .enlighter-t-enlighter{
     
     .enlighter-toolbar .enlighter-btn{
@@ -50,7 +52,7 @@
     }
 
     // Inline specific styles
-    &.enlighter-v-inline span.enlighter{
+    &.@{VIEW_INLINE} span.enlighter{
         border-radius: 3px;
         background-color: #fafafa;
     }
@@ -344,7 +346,7 @@
 
 /* Object Wrapper - layout::CODEGROUPS
 ----------------------------------------------------------------------------------- */
-.enlighter-t-enlighter.enlighter-v-codegroup{
+.enlighter-t-enlighter.@{VIEW_CODEGROUP}{
     display: block;
 
     // border radius top
