@@ -33,6 +33,16 @@ export function standard(dataset, options){
         cssClasses.push('enlighter-hover');
     }
 
+    // linenumbers enabled ?
+    if (options.linenumbers === true){
+        cssClasses.push('enlighter-linenumbers');
+    }
+
+    // overflow === scroll
+    if (options.textOverflow === 'scroll'){
+        cssClasses.push('enlighter-overflow-scroll');
+    }
+
     // code container
     const codeEl = _domBlockRenderer(dataset[0].tokens, dataset[0].params);
 

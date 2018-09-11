@@ -15,7 +15,7 @@
     position: relative;
 
     // special line highlight color
-    li.enlighter-special:hover{
+    .enlighter-special:hover{
         background-color: #F4F8FC;
     }
 
@@ -65,7 +65,7 @@
 /* Utility
 ----------------------------------------------------------------------------------- */
 
-// hide original codeblock
+// hide original codeblock (pre container marked to highlight)
 .enlighter-origin{
     display: none !important;
 }
@@ -73,21 +73,21 @@
 
 /* Object Wrapper - layout::INLINE
 ----------------------------------------------------------------------------------- */
-.@{VIEW_INLINE}{
+.VIEW_INLINE({
     display: inline-block;
     overflow: inherit;
     margin: 0px;
-}
+});
 
 /* Object Wrapper - layout::BLOCK
 ----------------------------------------------------------------------------------- */
-.@{VIEW_STANDARD}{
+.VIEW_STANDARD({
     display: block;
-}
+});
 
 /* Object Wrapper - layout::CODEGROUPS
 ----------------------------------------------------------------------------------- */
-.@{VIEW_CODEGROUP}{
+.VIEW_CODEGROUP({
     display: block;
 
     // contains the tabs
@@ -99,93 +99,80 @@
     .enlighter-codegroup-switch{
 
     }
+});
 
-
-}
-
-/* Highlighted Object (List or Span)
+/* Highlighted Object (Block Style)
 ----------------------------------------------------------------------------------- */
-.enlighter{
+.STYLE_CODE_CONTAINER_BLOCK({
+    //display: table;
+    //width: 100%;
+    display: block;
+    font-size: 10px;
+    background-color: #f2f2f2;
+    color: #939393;
+    margin: 0px;
+    padding: 0px;
+    text-indent: 0px;
+    counter-reset: enlighter 0;
 
-    /* INLINE specific styles
-    -------------------------------------------- */
-    span& {
-        display: inline-block;
-        padding: 3px 5px 1px 5px;
-        border: solid 1px #e0e0e0;
-        color: #333333;
-        background-color: #f7f7f7;
-        margin: 0px 2px 0px 2px;
-    }
+    // line container
+    & > div{
+        background-color: #333333;
+        //display: table-row;
+        display: flex;
 
-    /* BLOCK specific styles
-    -------------------------------------------- */
-    ol&, 
-    ul& {
-        display: block;
-        font-size: 10px;
-        background-color: #f2f2f2;
-        color: #939393;
-        margin: 0px;
-        padding: 0px;
-        text-indent: 0px;
-        list-style: none;
-    }
-
-    // line styles
-    li{
         margin: 0px;
         background-color: #ffffff;
         border: solid 0px #ffffff;
-        padding: 0px 5px 0px 14px;
         line-height: 14px;
         color: #939393;
         list-style: none;
         font-size: inherit;
 
-        /* top+bottom offsets */
-        &:FIRST-CHILD {
-            padding-top: 5px;
-        }
-
-        &:LAST-CHILD {
-            padding-bottom: 5px;
-        }
-
-        &::AFTER {
-            content: ' ';
+        // line token container
+        & > div{
+            //display: table-cell;
+            display: inline-block;
+            width: auto;
+            flex: 1 1;
+            padding-left: 15px;
         }
     }
+});
 
-    // Line Number Styles
-    ol& li {
-        list-style: decimal-leading-zero outside;
-        margin-left: 40px;
-        padding-left: 20px;
-    }
-
-
-
-    // default symbole/token style
-    span {
-        margin: 0px;
-        padding: 0px;
-        line-height: inherit;
-        font-size: 12px;
-        font-family: inherit;
-    }
-}
-
-/* Object Wrapper Property: show raw code
+/* Highlighted Object (Inline Style)
 ----------------------------------------------------------------------------------- */
-.enlighter-show-rawcode{
-    pre.enlighter-raw{
-        display: block;
-    }
-    .enlighter{
-        display: none;
-    }
-}
+.STYLE_CODE_CONTAINER_INLINE({
+    display: inline-block;
+    padding: 3px 5px 1px 5px;
+    border: solid 1px #e0e0e0;
+    color: #333333;
+    background-color: #f7f7f7;
+    margin: 0px 2px 0px 2px;
+});
+
+/* Edefault symbole/token style
+----------------------------------------------------------------------------------- */
+.STYLE_TOKEN_DEFAULT({
+    margin: 0px;
+    padding: 0px;
+    line-height: inherit;
+    font-size: 12px;
+    font-family: inherit;
+});
+
+/* Enlighter linenumbering
+----------------------------------------------------------------------------------- */
+.STYLE_LINENUMBERS({
+    white-space: nowrap;
+    display: block;
+    flex: 0 0 40px;
+    counter-increment: enlighter;
+    content: counter(enlighter, decimal) + ".";
+    min-width: 40px;
+    text-align: right;
+    padding-right: 10px;
+}, {}, {});
 
 /* Enlighter Overlay Toolbar
 ----------------------------------------------------------------------------------- */
@@ -195,4 +182,37 @@
     right: 10px;
     top: 10px;
     z-index: 10;
+}
+
+/* Enlighter textOverflow === scroll
+----------------------------------------------------------------------------------- */
+.@{ATTB_OVERFLOW_SCROLL}{
+
+    &.@{VIEW_STANDARD} div.enlighter,
+    &.@{VIEW_CODEGROUP} div.enlighter{
+        // scrollbar on x axis
+        overflow-x: auto;
+        word-wrap: normal !important;
+
+        // cross browser behaviour to set lines to max width in case overflow scroll is set
+        display: inline-block;
+        min-width: 100%;
+
+        // match token container
+        & > div > div {
+            // disable auto line wrapping
+            white-space: pre !important;
+        }
+    }
+}
+
+/* Object Wrapper Property: show raw code
+----------------------------------------------------------------------------------- */
+.enlighter-show-rawcode{
+    .enlighter-raw{
+        display: block;
+    }
+    .enlighter{
+        display: none !important;
+    }
 }

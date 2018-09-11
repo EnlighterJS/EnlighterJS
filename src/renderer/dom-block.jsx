@@ -55,13 +55,15 @@ export default function DomBlockRenderer(tokens, options = {}){
     // grab last line into container
     lines.push(currentLine);
 
-    return <ol className="enlighter" start={options.lineoffset||1}>
+    return <div className="enlighter">
         {lines.map((line, index) => {
-            return <li className={(isSpecialLine(index+1) ? 'enlighter-special' : '')}>
+            return <div className={(isSpecialLine(index+1) ? 'enlighter-special' : '')}>
+                <div>
                 {line.map(fragment => {
                     return <span className={'enlighter-' + fragment[0]}>{fragment[1]}</span>
                 })}
-            </li>
+                </div>
+            </div>
         })}
-    </ol>;
+    </div>;
 }

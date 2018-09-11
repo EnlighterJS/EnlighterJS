@@ -1,6 +1,6 @@
 @import "selectors.less";
 
-.enlighter-t-enlighter{
+.THEME(enlighter, {
     
     .enlighter-toolbar .enlighter-btn{
         border-radius: 3px;
@@ -25,40 +25,24 @@
             content: '';
         }
     }
-    // toolbar buttons
-    .enlighter-btn-raw{
-        
-    }
 
-    .enlighter-btn-window{
-    }
-
-    .enlighter-btn-website{
-        
-    }
-
-    // line hover color
-    &.enlighter-hover{
-        ul.enlighter li:hover{
-            color: #444444;
-            background-color: #fffcd3;
-            border-left: 0px solid #e0e0e0;
-        }
-        ol.enlighter li:hover{
-            color: #444444;
-            background-color: #fffcd3;
-            border-left: 1px solid #e0e0e0;
-        }
-    }
+    // hover styles
+    .STYLE_LINEHOVER({
+        color: #444444;
+        background-color: #fffcd3;
+    }, {
+        color: #444444;
+        background-color: #fffcd3;
+    });
 
     // Inline specific styles
-    &.@{VIEW_INLINE} span.enlighter{
+    .STYLE_CODE_CONTAINER_INLINE({
         border-radius: 3px;
         background-color: #fafafa;
-    }
-
+    });
+    
     // RAW code pane
-    .enlighter-raw{
+    .STYLE_CODE_CONTAINER_RAW({
         font-size: 12px;
         color: #000000;
         border: solid 1px #e0e0e0;
@@ -66,60 +50,52 @@
         border-radius: 8px;
         line-height: 18px;
         padding: 4px 5px 4px 55px;
-    }
+    });
 
     // LIST specific styles
-    ol.enlighter, ul.enlighter{
+    .STYLE_CODE_CONTAINER_BLOCK({
         font-size: 11px;
         color: #939393;
         border-radius: 8px;
         border: solid 1px #e0e0e0;
         background-color: #f9f9f9;
-    }
+    });
 
     // line styles
-    .enlighter li{
+    .STYLE_LINE({
         border: solid 0px #ffffff;
-        padding: 1px 5px 1px 14px;
         line-height: 16px;
         color: #aaaaaa;
 
         // top+bottom offsets + borders
         &:FIRST-CHILD {
-            padding-top: 5px;
+            //padding-top: 5px;
             border-radius: 8px 8px 0px 0px;
         }
 
         &:LAST-CHILD {
-            padding-bottom: 5px;
+            //  padding-bottom: 5px;
             border-radius: 0px 0px 8px 8px;
-        }
-
-        &:AFTER {
-            content: ' ';
         }
 
         // special line highlight color
         &.enlighter-special{
             background-color: #fdf5f0;
         }
-    }
+
+    }, {}, {});
 
     // Line Number Styles
-    ol.enlighter li {
-        list-style: decimal outside;
-        border-left: solid 1px #e0e0e0;
-        padding: 1px 5px 1px 14px;
+    .STYLE_LINENUMBERS({
+        border-right: solid 1px #e0e0e0;
+        background-color: #f9f9f9;
 
-        // borders
-        &:FIRST-CHILD {
-            border-radius: 0px 8px 0px 0px;
-        }
-
-        &:LAST-CHILD {
-            border-radius: 0px 0px 8px 0px;
-        }
-    }
+    // borders
+    }, {
+        border-radius: 8px 0px 0px 0px;
+    }, {
+        border-radius: 0px 0px 0px 8px;
+    });
 
     // default text fragment color
     .enlighter-text{
@@ -341,7 +317,7 @@
         font-style: italic;
     }
 
-} // .enlighter-t-enlighter
+}); // .enlighter-t-enlighter
 
 
 /* Object Wrapper - layout::CODEGROUPS
@@ -350,13 +326,13 @@
     display: block;
 
     // border radius top
-    ol.enlighter, ul.enlighter, .enlighter-raw{
+    .enlighter, .enlighter-raw{
         border-top-left-radius: 0px;
         border-top-right-radius: 0px;
     }
 
     // border radius upper right corner
-    .enlighter li:first-child{
+    .enlighter div:first-child{
         border-radius: 0px;
     }
 

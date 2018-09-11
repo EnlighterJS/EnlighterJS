@@ -40,6 +40,16 @@ export function codegroup(dataset, options){
         cssClasses.push('enlighter-hover');
     }
 
+    // linenumbers enabled ?
+    if (options.linenumbers === true){
+        cssClasses.push('enlighter-linenumbers');
+    }
+
+    // overflow === scroll
+    if (options.textOverflow === 'scroll'){
+        cssClasses.push('enlighter-overflow-scroll');
+    }
+
     // utility function to toggle raw code
     function toggleContainer(){
         React.toggleClass(wrapper, 'enlighter-show-rawcode');
@@ -90,7 +100,7 @@ export function codegroup(dataset, options){
     });
 
     // list of tab buttons
-    buttons = dataset.map((d, i) => <div className="enlighter-btn" onClick={e => showtab(i)}>{d.params.title||d.params.language}</div>);
+    buttons = dataset.map((d, i) => <div className="enlighter-btn" onClick={() => showtab(i)}>{d.params.title||d.params.language}</div>);
 
     // highlight first button
     showtab(0);

@@ -36,7 +36,10 @@ export const _options = {
     theme: 'enlighter',
 
     // show raw code on double click ?
-    rawcodeDbclick: false
+    rawcodeDbclick: false,
+
+    // text overflow behaviour: break/scroll
+    textOverflow: 'break'
 };
 
 // set global enlighter options

@@ -1,4 +1,142 @@
-// views
 @VIEW_INLINE: enlighter-v-inline;
 @VIEW_STANDARD: enlighter-v-standard;
 @VIEW_CODEGROUP: enlighter-v-codegroup;
+
+// layout options/attributes
+@ATTB_OVERFLOW_SCROLL: enlighter-overflow-scroll;
+
+// detached rulesets
+// ------------------------------------------
+
+// views
+.VIEW_INLINE(@rules){
+    .enlighter-v-inline{
+        @rules();
+    }
+}
+.VIEW_STANDARD(@rules){
+    .enlighter-v-standard{
+        @rules();
+    }
+}
+.VIEW_CODEGROUP(@rules){
+    .enlighter-v-codegroup{
+        @rules();
+    }
+}
+
+// code container
+.STYLE_CODE_CONTAINER(@rules){
+    .enlighter{
+        @rules();
+    }
+}
+
+// block code container
+.STYLE_CODE_CONTAINER_BLOCK(@rules){
+    div.enlighter{
+        @rules();
+    }
+}
+
+// inline code container
+.STYLE_CODE_CONTAINER_INLINE(@rules){
+    span.enlighter{
+        @rules();
+    }
+}
+
+// raw code container
+.STYLE_CODE_CONTAINER_RAW(@rules){
+    .enlighter-raw{
+        @rules();
+    }
+}
+
+// match linenumber container
+.STYLE_LINENUMBERS(@rules, @firstChild, @lastChild){
+
+    // match the wrapper class attribute
+    &.enlighter-linenumbers{
+
+        // line container
+        div.enlighter > div{
+            // virtual line counter
+            &::before{
+                @rules();
+            }
+
+            &:FIRST-CHILD{
+                &::before{
+                    @firstChild();
+                }
+            }
+
+            &:LAST-CHILD{
+                &::before{
+                    @lastChild();
+                }
+            }
+        }
+    }
+}
+
+// match single line
+.STYLE_LINE(@rules, @rulesOdd, @rulesEven){
+    // line container
+    div.enlighter > div{
+        // default (each line)
+        @rules();
+
+        // odd lines
+        &:nth-child(odd){
+            @rulesOdd();
+        }
+
+        // even lines
+        &:nth-child(even){
+            @rulesEven();
+        }
+    }
+}
+
+// match hover
+.STYLE_LINEHOVER(@rulesLinenumbers, @rulesPlain){
+    // hover + linenumbering enabled
+    &.enlighter-hover.enlighter-linenumbers{
+        .STYLE_LINE({
+            &:hover{
+                @rulesLinenumbers();
+            }            
+        }, {}, {});
+    }
+    
+    // hover enabled
+    &.enlighter-hover{
+        .STYLE_LINE({
+            &:hover{
+                @rulesPlain();
+            }            
+        }, {}, {});
+    }
+}
+
+.STYLE_TOKEN_DEFAULT(@rules){
+    .enlighter span{
+        @rules();
+    }   
+}
+
+// match theme name
+.THEME(@name, @rules){
+    .enlighter-t-@{name}{
+        @rules();
+    }
+}
+
+// match token
+.TOKEN(@name, @rules){
+    .enlighter-@{name}{
+        @rules();
+    }
+}
