@@ -85,7 +85,7 @@ function less2css(themes, outputFilename){
         .pipe(_prettyError())
 
         .pipe(_gulp_less())
-        .pipe(_gulp_cleancss())
+        //.pipe(_gulp_cleancss())
         .pipe(_concat(outputFilename + '.min.css'))
 
         // add license header

@@ -7,7 +7,7 @@
     font-family: @font_SourceCodePro;
     font-size: 10px;
     line-height: 16px;
-    overflow: auto;
+    overflow: hidden;
     white-space: pre-wrap;
     word-wrap: break-word;
     margin: 0px 0px 20px 0px;
@@ -22,11 +22,14 @@
     // RAW code pane
     .enlighter-raw{
         display: none;
+        min-width: 100%;
         line-height: inherit;
         font-size: 12px;
         font-family: inherit;
         margin: 0px;
         padding: 0px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
     }
 
     // show toolbar on hover
@@ -45,21 +48,21 @@
     }
 
     // buttons
-    .enlighter-btn-raw{
+    .STYLE_TOOLBAR_BUTTON(raw, '', {
         background-image: data-uri('icons/enlighter_code.svg');
-    }
+    });
 
-    .enlighter-btn-copy{
+    .STYLE_TOOLBAR_BUTTON(copy, '', {
         background-image: data-uri('icons/enlighter_copy.svg');
-    }
+    });
 
-    .enlighter-btn-window{
+    .STYLE_TOOLBAR_BUTTON(window, '', {
         background-image: data-uri('icons/enlighter_window.svg');
-    }
+    });
 
-    .enlighter-btn-website{
+    .STYLE_TOOLBAR_BUTTON(website, '', {
         background-image: data-uri('icons/enlighter_icon_white.svg');
-    }
+    });
 }
 
 /* Utility
@@ -69,7 +72,6 @@
 .enlighter-origin{
     display: none !important;
 }
-
 
 /* Object Wrapper - layout::INLINE
 ----------------------------------------------------------------------------------- */
@@ -106,7 +108,8 @@
 .STYLE_CODE_CONTAINER_BLOCK({
     //display: table;
     //width: 100%;
-    display: block;
+    display: inline-block;
+    min-width: 100%;
     font-size: 10px;
     background-color: #f2f2f2;
     color: #939393;
@@ -145,7 +148,6 @@
 .STYLE_CODE_CONTAINER_INLINE({
     display: inline-block;
     padding: 3px 5px 1px 5px;
-    border: solid 1px #e0e0e0;
     color: #333333;
     background-color: #f7f7f7;
     margin: 0px 2px 0px 2px;
@@ -188,21 +190,32 @@
 ----------------------------------------------------------------------------------- */
 .@{ATTB_OVERFLOW_SCROLL}{
 
-    &.@{VIEW_STANDARD} div.enlighter,
-    &.@{VIEW_CODEGROUP} div.enlighter{
+    &.@{VIEW_STANDARD} ,
+    &.@{VIEW_CODEGROUP}{
+
         // scrollbar on x axis
         overflow-x: auto;
         word-wrap: normal !important;
 
-        // cross browser behaviour to set lines to max width in case overflow scroll is set
-        display: inline-block;
-        min-width: 100%;
+        // code container
+        .enlighter{
 
-        // match token container
-        & > div > div {
+            // match token container
+            & > div > div {
+                // disable auto line wrapping
+                white-space: pre !important;
+            }
+        }
+
+        // raw code container
+        .enlighter-raw{
             // disable auto line wrapping
             white-space: pre !important;
         }
+    }
+
+    &.enlighter-show-rawcode{
+
     }
 }
 
@@ -210,7 +223,7 @@
 ----------------------------------------------------------------------------------- */
 .enlighter-show-rawcode{
     .enlighter-raw{
-        display: block;
+        display: inline-block;
     }
     .enlighter{
         display: none !important;

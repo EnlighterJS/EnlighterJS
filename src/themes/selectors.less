@@ -107,7 +107,7 @@
         .STYLE_LINE({
             &:hover{
                 @rulesLinenumbers();
-            }            
+            }
         }, {}, {});
     }
     
@@ -121,6 +121,32 @@
     }
 }
 
+// toolbar
+.STYLE_TOOLBAR(@rules){
+    .enlighter-toolbar{
+        @rules();
+    }
+}
+
+// toolbar button
+.STYLE_TOOLBAR_BUTTON(@rules){
+    .enlighter-toolbar .enlighter-btn{
+        @rules();
+    }
+}
+.STYLE_TOOLBAR_BUTTON(@name, @text, @rules){
+    .enlighter-toolbar .enlighter-btn-@{name}{
+
+        @rules();
+
+        // button text
+        &:after when not (@text = '') {
+            content: @text;
+        }
+    }
+}
+
+// default token container
 .STYLE_TOKEN_DEFAULT(@rules){
     .enlighter span{
         @rules();

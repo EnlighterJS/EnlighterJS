@@ -2,7 +2,12 @@
 
 .THEME(enlighter, {
     
-    .enlighter-toolbar .enlighter-btn{
+    color: #939393;
+    border-radius: 8px;
+    border: solid 1px #e0e0e0;
+    background-color: #f9f9f9;
+
+    .enlighter-btn{
         border-radius: 3px;
         background-color: #fff;
         color: #717171;
@@ -45,7 +50,6 @@
     .STYLE_CODE_CONTAINER_RAW({
         font-size: 12px;
         color: #000000;
-        border: solid 1px #e0e0e0;
         background-color: #f9f9f9;
         border-radius: 8px;
         line-height: 18px;
@@ -54,11 +58,7 @@
 
     // LIST specific styles
     .STYLE_CODE_CONTAINER_BLOCK({
-        font-size: 11px;
-        color: #939393;
-        border-radius: 8px;
-        border: solid 1px #e0e0e0;
-        background-color: #f9f9f9;
+
     });
 
     // line styles
@@ -323,7 +323,6 @@
 /* Object Wrapper - layout::CODEGROUPS
 ----------------------------------------------------------------------------------- */
 .enlighter-t-enlighter.@{VIEW_CODEGROUP}{
-    display: block;
 
     // border radius top
     .enlighter, .enlighter-raw{
@@ -345,8 +344,7 @@
     .enlighter-codegroup-switch{
         border-radius: 8px 8px 0 0;
         background-color: #f9f9f9;
-        border: 1px solid #e0e0e0;
-        border-bottom-width: 0;
+        border-bottom: 1px solid #e0e0e0;
         padding: 5px 5px 5px 45px;
 
         .enlighter-btn{
@@ -356,6 +354,7 @@
             font-size: 12px;
             color: #000;
             background-color: transparent;
+            width: auto;
 
             &.enlighter-active{
                 background-color: #e5e5e5;

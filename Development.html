@@ -48,7 +48,7 @@
                     indent : 2,
                     linenumbers: true,
                     linehover: true,
-                    textOverflow: 'wrap'
+                    textOverflow: 'scroll'
             };
 
             console.time('Rendering');
@@ -101,7 +101,7 @@ const dataset = elements.map(function(element){
 
     /* INLINE specific styles
     -------------------------------------------- */
-    span&amp;amp; {
+    span&amp; {
         display: inline-block;
         padding: 3px 5px 1px 5px;
         border: solid 1px #e0e0e0;
@@ -112,8 +112,8 @@ const dataset = elements.map(function(element){
 
     /* BLOCK specific styles
     -------------------------------------------- */
-    ol&amp;amp;, 
-    ul&amp;amp; {
+    ol&amp;, 
+    ul&amp; {
         display: block;
         font-size: 10px;
         background-color: #f2f2f2;
