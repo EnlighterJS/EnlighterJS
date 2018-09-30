@@ -116,6 +116,8 @@
     margin: 0px;
     padding: 0px;
     text-indent: 0px;
+
+    // note: the counter is set by the block-renderer in case a line-offset was provided
     counter-reset: enlighter 0;
 
     // line container
@@ -188,7 +190,7 @@
 
 /* Enlighter textOverflow === scroll
 ----------------------------------------------------------------------------------- */
-.@{ATTB_OVERFLOW_SCROLL}{
+.enlighter-overflow-scroll{
 
     &.@{VIEW_STANDARD} ,
     &.@{VIEW_CODEGROUP}{

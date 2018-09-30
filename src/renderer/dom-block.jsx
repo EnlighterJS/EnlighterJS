@@ -55,7 +55,16 @@ export default function DomBlockRenderer(tokens, options = {}){
     // grab last line into container
     lines.push(currentLine);
 
-    return <div className="enlighter">
+    // list of styles 
+    const styles = [];
+
+    // lineoffset ?
+    if (options.lineoffset > 0){
+        // set css counter start
+        styles.push("counter-reset: enlighter " + (parseInt(options.lineoffset)-1));
+    }
+
+    return <div className="enlighter" style={styles.join(';')}>
         {lines.map((line, index) => {
             return <div className={(isSpecialLine(index+1) ? 'enlighter-special' : '')}>
                 <div>
