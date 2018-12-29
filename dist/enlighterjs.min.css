@@ -115,7 +115,7 @@ span.enlighter {
   background-color: #f7f7f7;
   margin: 0px 2px 0px 2px;
 }
-/* Edefault symbole/token style
+/* default symbole/token style
 ----------------------------------------------------------------------------------- */
 .enlighter span {
   margin: 0px;
@@ -212,8 +212,8 @@ span.enlighter {
   color: #000000;
   background-color: #f9f9f9;
   border-radius: 8px;
-  line-height: 18px;
-  padding: 4px 5px 4px 55px;
+  line-height: 17px;
+  padding: 0px 5px 0px 55px;
 }
 .enlighter-t-enlighter div.enlighter > div {
   border: solid 0px #ffffff;

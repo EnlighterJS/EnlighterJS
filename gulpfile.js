@@ -125,6 +125,9 @@ _gulp.task('webserver', function(){
     webapp.get('/', function(req, res){
         res.sendFile(_path.join(__dirname, 'Development.html'));
     });
+    webapp.get('/dev.html', function(req, res){
+        res.sendFile(_path.join(__dirname, 'Development.html'));
+    });
     webapp.use(_express.static(_path.join(__dirname, 'dist')));
     webapp.listen(8888, () => _log('DEV Webserver Online - localhost:8888'));
 });

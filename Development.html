@@ -59,21 +59,29 @@
 </head>
 
 <body>
-    <!-- Begin page content -->
+
+<header>
+
+</header>
+
+<!-- Begin page content -->
+<article>
     <div class="container">
-            <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-                <h1 class="display-4">EnlighterJS</h1>
-                <p class="lead">an open source syntax highlighter written in pure javascript</p>
-            </div>
+        <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <h1 class="display-4">EnlighterJS</h1>
+            <h3 class="lead">an open source syntax highlighter written in pure javascript</h3>
+        </div>
+            
+        <h2>Inline-Content</h2>
 
-            <p>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore <kbd>Javascript</kbd> <code class="special">window.addEvent('domready', async (a,b) => {});</code> magna aliquyam erat, 
-                sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                <kbd>PHP</kbd> <code class="special" data-enlighter-language="php">$auth->setStorage(new SessionStorage('someNamespace'), $instance);</code>
-                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br /> Lorem ipsum dolor sit amet,
-            </p>
+        <p>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore <kbd>Javascript</kbd> <code class="special">window.addEvent('domready', async (a,b) => {});</code> magna aliquyam erat, 
+            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+            <kbd>PHP</kbd> <code class="special" data-enlighter-language="php">$auth->setStorage(new SessionStorage('someNamespace'), $instance);</code>
+            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br /> Lorem ipsum dolor sit amet,
+        </p>
 
-            <h3>Block</h3>
+        <h2>Block-Content</h2>
 <pre id="ejs-1" data-enlighter-language="js" data-enlighter-highlight="158" data-enlighter-lineoffset="151">
 // x                xx                xx                xx                xx                xx                x x                xx                xx                xx                xx                xx                x 
 // prepare elements, extract code
@@ -93,6 +101,24 @@ const dataset = elements.map(function(element){
 // xxx
 // yyy
 </pre>
+
+<p>
+    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+    123456789 123456
+   </p>
+
+   <p>
+    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+    123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+    123456789 123456
+   </p>
 
     <pre id="ejs-2-1" data-enlighter-language="scss" data-enlighter-group="g1">
 /* Highlighted Object (List or Span)
@@ -232,8 +258,15 @@ if (($o = $this->_settings->getOption('customFontColor')) != false){
 }
 </pre>
 
-    </div>
-    <!-- // container -->
+   
+    </div><!-- // container -->
+</article>
+
+<footer>
+    <div class="container">
+        <p class="small text-center">EnlighterJS 3 development page</p>
+    </div>    
+</footer>
 
 <script type="text/javascript" src="enlighterjs.min.js"></script>
 <script type="text/javascript">
