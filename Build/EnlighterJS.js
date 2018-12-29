@@ -1,4 +1,4 @@
-/*! EnlighterJS Syntax Highlighter 2.12.0 | MIT License (X11) | https://enlighterjs.org/ | May 16 2018 */
+/*! EnlighterJS Syntax Highlighter 2.13.0 | MIT License (X11) | https://enlighterjs.org/ | December 29 2018 */
 (function() {
     /*
 ---
@@ -107,7 +107,7 @@ provides: [EnlighterJS]
                 // compile tokens -> generate output
                 this.output = this.renderer.render(language, specialLines, {
                     lineOffset: this.originalCodeblock.get("data-enlighter-lineoffset") || null,
-                    lineNumbers: this.originalCodeblock.get("data-enlighter-linenumbers")
+                    lineNumbers: this.originalCodeblock.get("data-enlighter-linenumbers") || null
                 });
                 // set class and id attributes.
                 this.output.addClass(themeName.toLowerCase() + "EnlighterJS").addClass("EnlighterJS");
@@ -588,22 +588,29 @@ provides: [EnlighterJS.Renderer.BlockRenderer]
             this.textFilter = textFilter;
         },
         /**
-	 * Renders the generated Tokens
-	 * 
-	 * @param {Language} language The Language used when parsing.
-	 * @param {SpecialLineHighlighter} specialLines Instance to define the lines to highlight           
-	 * @return {Element} The renderer output
-	 */
+     * Renders the generated Tokens
+     * 
+     * @param {Language} language The Language used when parsing.
+     * @param {SpecialLineHighlighter} specialLines Instance to define the lines to highlight           
+     * @return {Element} The renderer output
+     */
         render: function(language, specialLines, localOptions) {
             // elememt shortcut
             var _el = EJS.Dom.Element;
-            // create new outer container element - use ol tag if lineNumbers are enabled. element attribute settings are priorized
-            var container = null;
-            if (localOptions.lineNumbers != null) {
-                container = new _el(localOptions.lineNumbers.toLowerCase() === "true" ? "ol" : "ul");
-            } else {
-                container = new _el(this.options.showLinenumbers ? "ol" : "ul");
+            // create new outer container element - use global settings
+            var containerType = this.options.showLinenumbers ? "ol" : "ul";
+            // use ol tag if lineNumbers are enabled. element attribute settings are priorized
+            if (localOptions.lineNumbers !== null) {
+                var linenumbers = localOptions.lineNumbers.toLowerCase();
+                // excplicit true/false ?
+                if (linenumbers === "true") {
+                    containerType = "ol";
+                } else if (linenumbers === "false") {
+                    containerType = "ul";
+                }
             }
+            // create new outer container element
+            var container = new _el(containerType);
             // add "start" attribute ?
             if ((localOptions.lineNumbers || this.options.showLinenumbers) && localOptions.lineOffset && localOptions.lineOffset.toInt() > 1) {
                 container.set("start", localOptions.lineOffset);
@@ -2073,7 +2080,7 @@ provides: [EnlighterJS.Language.json]
                     alias: "kw1"
                 },
                 strings: {
-                    pattern: this.common.strings,
+                    pattern: /('[^'\\\r\n]*(?:\\.[^'\\\r\n]*)*'|"[^"\\\r\n]*(?:\\.[^"\\\r\n]*)*")\s*[,\]}]+/gi,
                     alias: "st0"
                 },
                 brackets: {
