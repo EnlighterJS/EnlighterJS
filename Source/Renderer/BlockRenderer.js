@@ -14,48 +14,58 @@ provides: [EnlighterJS.Renderer.BlockRenderer]
 ...
 */
 EJS.Renderer.BlockRenderer = new Class({
-	Implements: Options,
-	
-	options : {
-		hover : 'hoverEnabled',
-		oddClassname: 'odd',
-		evenClassname: 'even',
-		showLinenumbers: true
-	},
+    Implements: Options,
+    
+    options : {
+        hover : 'hoverEnabled',
+        oddClassname: 'odd',
+        evenClassname: 'even',
+        showLinenumbers: true
+    },
 
     textFilter: null,
 
-	initialize : function(options, textFilter){
-		this.setOptions(options);
+    initialize : function(options, textFilter){
+        this.setOptions(options);
         this.textFilter = textFilter;
-	},
+    },
 
-	/**
-	 * Renders the generated Tokens
-	 * 
-	 * @param {Language} language The Language used when parsing.
-	 * @param {SpecialLineHighlighter} specialLines Instance to define the lines to highlight           
-	 * @return {Element} The renderer output
-	 */
-	render : function(language, specialLines, localOptions){
+    /**
+     * Renders the generated Tokens
+     * 
+     * @param {Language} language The Language used when parsing.
+     * @param {SpecialLineHighlighter} specialLines Instance to define the lines to highlight           
+     * @return {Element} The renderer output
+     */
+    render : function(language, specialLines, localOptions){
         // elememt shortcut
         var _el = EJS.Dom.Element;
 
-        // create new outer container element - use ol tag if lineNumbers are enabled. element attribute settings are priorized
-		var container = null;
-		if (localOptions.lineNumbers != null){
-			container = new _el((localOptions.lineNumbers.toLowerCase() === 'true') ? 'ol' : 'ul');
-		}else{
-			container = new _el(this.options.showLinenumbers ? 'ol' : 'ul');
-		}
-		
-		// add "start" attribute ?
-		if ((localOptions.lineNumbers || this.options.showLinenumbers) && localOptions.lineOffset && localOptions.lineOffset.toInt() > 1){
-			container.set('start', localOptions.lineOffset);
-		}
-		
-		// line number count
-		var lineCounter = 1;
+        // create new outer container element - use global settings
+        var containerType = this.options.showLinenumbers ? 'ol' : 'ul';
+
+        // use ol tag if lineNumbers are enabled. element attribute settings are priorized
+        if (localOptions.lineNumbers !== null){
+            var linenumbers = localOptions.lineNumbers.toLowerCase();
+
+            // excplicit true/false ?
+            if (linenumbers === 'true'){
+                containerType = 'ol';
+            }else if (linenumbers === 'false'){
+                containerType = 'ul';
+            }
+        }
+        
+        // create new outer container element
+        var container = new _el(containerType);
+
+        // add "start" attribute ?
+        if ((localOptions.lineNumbers || this.options.showLinenumbers) && localOptions.lineOffset && localOptions.lineOffset.toInt() > 1){
+            container.set('start', localOptions.lineOffset);
+        }
+        
+        // line number count
+        var lineCounter = 1;
 
         var tokens = language.getTokens();
 
@@ -106,15 +116,15 @@ EJS.Renderer.BlockRenderer = new Class({
             }
         });
 
-		// grab last line into container
-		container.grab(currentLine);
+        // grab last line into container
+        container.grab(currentLine);
 
-		// highlight lines ?
-		if (this.options.hover && this.options.hover != "NULL"){
-			// add hover enable class
-			container.addClass(this.options.hover);
-		}
+        // highlight lines ?
+        if (this.options.hover && this.options.hover != "NULL"){
+            // add hover enable class
+            container.addClass(this.options.hover);
+        }
 
-		return container;
-	}
+        return container;
+    }
 });

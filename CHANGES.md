@@ -1,5 +1,9 @@
 ## Branch 2.x ##
 
+### Version 2.13.0 ###
+
+* Changed: `data-enlighter-linenumbers` attribute is ignored in case it is not set (empty string) to be compatible with the new [Gutenberg Editor Plugin](https://github.com/EnlighterJS/Plugin.Gutenberg) - explicit true/false required
+
 ### Version 2.12.0 ###
 * Added: `msdos` support - thanks to [audioscavenger on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/33/commits)
 * Bugfix: misspelled css attribute `padding` in droide theme - thanks to [audioscavenger on WordPress.org](https://wordpress.org/support/topic/paddding-does-not-exist/)

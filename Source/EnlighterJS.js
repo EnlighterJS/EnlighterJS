@@ -131,11 +131,11 @@ var EJS = window.EnlighterJS = new Class({
 			// compile tokens -> generate output
 			this.output = this.renderer.render(language, specialLines, {
 				lineOffset: (this.originalCodeblock.get('data-enlighter-lineoffset') || null),
-				lineNumbers: this.originalCodeblock.get('data-enlighter-linenumbers')
+				lineNumbers: this.originalCodeblock.get('data-enlighter-linenumbers') || null
 			});
 			
 			// set class and id attributes.
-			this.output.addClass(themeName.toLowerCase() + 'EnlighterJS').addClass('EnlighterJS');		
+			this.output.addClass(themeName.toLowerCase() + 'EnlighterJS').addClass('EnlighterJS');
 	
 			// add wrapper ?
 			if (this.options.renderer == 'Block'){
