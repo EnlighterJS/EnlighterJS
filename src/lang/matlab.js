@@ -34,6 +34,9 @@ export class matlab extends generic {
             // strings
             _language_common_rules.sqStrings,
 
+            // strings
+            _language_common_rules.dqStrings,
+
             // boolean
             _language_common_rules.boolean,
 
