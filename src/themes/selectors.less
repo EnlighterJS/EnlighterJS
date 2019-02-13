@@ -5,19 +5,23 @@
 // detached rulesets
 // ------------------------------------------
 
-// views
+// inline content
 .VIEW_INLINE(@rules){
-    .enlighter-v-inline{
+    &.@{VIEW_INLINE}{
         @rules();
     }
 }
+
+// standard layout - single block
 .VIEW_STANDARD(@rules){
-    .enlighter-v-standard{
+    &.@{VIEW_STANDARD}{
         @rules();
     }
 }
+
+// tabbed layout
 .VIEW_CODEGROUP(@rules){
-    .enlighter-v-codegroup{
+    &.@{VIEW_CODEGROUP}{
         @rules();
     }
 }

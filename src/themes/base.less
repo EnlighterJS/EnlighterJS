@@ -106,9 +106,18 @@
 /* Highlighted Object (Block Style)
 ----------------------------------------------------------------------------------- */
 .STYLE_CODE_CONTAINER_BLOCK({
-    //display: table;
-    //width: 100%;
-    display: inline-block;
+    // fallback: table layout
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+    
+    // used for flex layout
+    //display: inline-block;
+    
+
+    // styling
     min-width: 100%;
     font-size: 10px;
     background-color: #f2f2f2;
@@ -122,25 +131,41 @@
 
     // line container
     & > div{
-        background-color: #333333;
-        //display: table-row;
-        display: flex;
+        // fallback: table layout
+        display: table-row;
 
+        // prefer flex layout
+        //display: flex;
+
+        // styling
+        background-color: #333333;
         margin: 0px;
         background-color: #ffffff;
         border: solid 0px #ffffff;
-        line-height: 14px;
         color: #939393;
         list-style: none;
         font-size: inherit;
 
+        line-height: 14px;
+        min-height: 14px;
+
         // line token container
         & > div{
-            //display: table-cell;
-            display: inline-block;
-            width: auto;
-            flex: 1 1;
-            padding-left: 15px;
+            // fallback: table layout
+            display: table-cell;
+            
+            // prefer flex layout
+            //display: inline-block;
+            //width: auto;
+            //flex: 1 1;
+
+            // styling
+            padding-left: 10px;
+
+            &::before{
+                // add a single whitespace char to ensure the table row is rendered in case it's empty
+                content: " ";
+            }
         }
     }
 });
@@ -165,17 +190,28 @@
     font-family: inherit;
 });
 
-/* Enlighter linenumbering
+/* Enlighter line-numbering
 ----------------------------------------------------------------------------------- */
 .STYLE_LINENUMBERS({
     white-space: nowrap;
     display: block;
-    flex: 0 0 40px;
+
+    // flex layout
+    //flex: 0 0 40px;
+
+    // fallback: table layout
+    display: table-cell;
+
+    // enforce width
+    width: 45px;
+    min-width: 45px;
+
+    // line counter
     counter-increment: enlighter;
     content: counter(enlighter, decimal) + ".";
-    min-width: 40px;
+    
     text-align: right;
-    padding-right: 10px;
+    padding-right: 8px;
 }, {}, {});
 
 /* Enlighter Overlay Toolbar
@@ -200,20 +236,20 @@
         word-wrap: normal !important;
 
         // code container
-        .enlighter{
+        .STYLE_CODE_CONTAINER({
 
             // match token container
             & > div > div {
                 // disable auto line wrapping
                 white-space: pre !important;
             }
-        }
+        });
 
         // raw code container
-        .enlighter-raw{
+        .STYLE_CODE_CONTAINER_RAW({
             // disable auto line wrapping
             white-space: pre !important;
-        }
+        });
     }
 
     &.enlighter-show-rawcode{
@@ -230,4 +266,13 @@
     .enlighter{
         display: none !important;
     }
+
+    /*
+    .enlighter span{
+        font-weight: inherit !important;
+        color: inherit !important;
+        background-color: none !important;
+        font-style: inherit !important;
+    }
+    */
 }
