@@ -73,9 +73,9 @@ export function standard(dataset, options){
 
     // generate wrapper
     wrapper = <div className={cssClasses.join(' ')}>
-            {codeEl}
-            {rawEl}
             {toolbarEl}
+            {codeEl}
+            {rawEl}            
         </div>;
 
     // dbclick event ?
