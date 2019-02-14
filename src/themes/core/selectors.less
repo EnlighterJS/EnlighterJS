@@ -148,6 +148,11 @@
 
         @rules();
 
+        // remove bg image in case text label is set
+        & when not (@text = '') {
+            background-image: none;
+        }
+
         // button text
         &:after when not (@text = '') {
             content: @text;

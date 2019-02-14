@@ -28,7 +28,7 @@
     }
 
     // RAW code pane
-    .enlighter-raw{
+    .STYLE_CODE_CONTAINER_RAW({
         display: none;
         min-width: 100%;
         line-height: inherit;
@@ -38,7 +38,7 @@
         padding: 0px;
         white-space: pre-wrap;
         word-wrap: break-word;
-    }
+    });
 
     // show toolbar on hover
     &:hover .enlighter-toolbar{
@@ -46,14 +46,15 @@
     }
 
     // buttons used in codegroups + toolbar
-    .enlighter-btn{
+    .STYLE_BUTTON({
         display: inline-block;
         margin: 0px 5px 0px 5px;
         padding: 3px 5px 3px 5px;
         border: solid 1px #333333;
         background-color: #f0f0f0;
         cursor: pointer;
-    }
+        font-family: inherit;
+    });
 
     // buttons
     .STYLE_TOOLBAR_BUTTON(raw, '', {
@@ -183,8 +184,7 @@
 .STYLE_CODE_CONTAINER_INLINE({
     display: inline-block;
     padding: 3px 5px 1px 5px;
-    color: #333333;
-    background-color: #f7f7f7;
+
     margin: 0px 2px 0px 2px;
 });
 
@@ -224,25 +224,39 @@
 
 /* Enlighter Overlay Toolbar
 ----------------------------------------------------------------------------------- */
-.enlighter-toolbar{
+.STYLE_TOOLBAR({
     display: none;
     position: absolute;
     right: 10px;
     top: 10px;
     z-index: 10;
-}
+});
 
 /* Enlighter textOverflow === scroll
 ----------------------------------------------------------------------------------- */
 .enlighter-overflow-scroll{
 
-    &.@{VIEW_STANDARD} ,
-    &.@{VIEW_CODEGROUP}{
+    // default layout - single codeblock
+    &.@{VIEW_STANDARD}{
 
         // scrollbar on x axis
         overflow-x: auto;
         word-wrap: normal !important;
+    }
 
+    // tabbed layout - use inner container a scroll wrapper!
+    &.@{VIEW_CODEGROUP}{
+
+        // scroll wrap
+        .enlighter-codegroup-wrapper{
+            // scrollbar on x axis
+            overflow-x: auto;
+            word-wrap: normal !important;
+        }
+    }
+
+    &.@{VIEW_STANDARD},
+    &.@{VIEW_CODEGROUP}{
         // code container
         .STYLE_CODE_CONTAINER({
 
