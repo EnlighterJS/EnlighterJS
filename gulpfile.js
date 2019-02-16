@@ -3,7 +3,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 // --
-// Copyright 2016-2018 Andi Dittrich <https://andidittrich.de>
+// Copyright 2016-2019 Andi Dittrich <https://andidittrich.de>
 // ----------------------------------------------------------------------
 
 
@@ -81,11 +81,11 @@ function less2css(themes, outputFilename){
     });
     
     // base is always required!
-    return _gulp.src(['src/themes/base.less'].concat(themesources))
+    return _gulp.src(['src/themes/core/base.less'].concat(themesources))
         .pipe(_prettyError())
 
         .pipe(_gulp_less())
-        //.pipe(_gulp_cleancss())
+        .pipe(_gulp_cleancss())
         .pipe(_concat(outputFilename + '.min.css'))
 
         // add license header
@@ -113,7 +113,7 @@ _gulp.task('watch', ['library', 'less-themes-full', 'webserver'], function(){
     });
 
     // less files
-    _gulp.watch('src/themes/*.less', ['less-themes-full']).on('change', function(event) {
+    _gulp.watch('src/**/*.less', ['less-themes-full']).on('change', function(event) {
         _log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
 });

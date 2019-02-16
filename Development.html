@@ -14,27 +14,10 @@
     <link rel="stylesheet" href="enlighterjs.min.css" />
 
     <style type="text/css">
-        .enlighter-default .enlighter-toolbar{
 
+        body{
+            /*font-family: 'Times New Roman', Times, serif;*/
         }
-
-        .enlighter-v-standard{
-            
-        }
-
-/*
-        .enlighter-v-standard .enlighter,
-        .enlighter-v-codegroup .enlighter{
-            overflow-x: auto;
-            word-wrap: normal !important;
-        }
-
-        .enlighter-v-standard .enlighter > div > div,
-        .enlighter-v-codegroup .enlighter > div > div{
-            white-space: pre !important;
-        }
-  
-        */
         
     </style>
 
@@ -44,11 +27,11 @@
             
             var options = {
                     language : 'javascript',
-                    theme: 'enlighter',
+                    theme: 'rowhammer',
                     indent : 2,
-                    linenumbers: true,
-                    linehover: true,
-                    textOverflow: 'break'
+                    linenumbers: false,
+                    linehover: false,
+                    textOverflow: 'scroll'
             };
 
             console.time('Rendering');
