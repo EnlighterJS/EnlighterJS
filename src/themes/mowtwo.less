@@ -1,8 +1,21 @@
-@import "selectors.less";
+// ----------------------------------------------------------------------
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// --
+// Copyright 2016-2019 Andi Dittrich <https://andidittrich.de>
+// ----------------------------------------------------------------------
 
-.enlighter-t-mowtwo{
+@import "core/selectors.less";
+@import "core/fonts.less";
+
+.THEME(mowtwo, {
+
+    background-color: #f0f0f1;
+    border: solid 1px #f0f0f1;
+    border-radius: 7px;
     
-    .enlighter-toolbar .enlighter-btn{
+    .STYLE_BUTTON({
         background-color: #ffffff;
         color: #717171;
         font-size: 12px;
@@ -22,58 +35,26 @@
         &:after{
             content: '';
         }
-    }
-    // toolbar buttons
-    .enlighter-btn-raw{
-        
-    }
-
-    .enlighter-btn-window{
-    }
-
-    .enlighter-btn-website{
-        
-    }
+    });
 
     // line hover color
-    &.enlighter-hover{
-        ul.enlighter li:hover{
-            background-color: #e9e9e9;
-        }
-        ol.enlighter li:hover{
-            background-color: #e9e9e9;
-        }
-    }
-
-    // Inline specific styles
-    &.@{VIEW_INLINE} span.enlighter{
-        border-radius: 4px;
-        background-color: #f0f0f1;
-        border: solid 1px #f0f0f1;
-    }
+    .STYLE_LINEHOVER({
+    }, {
+        background-color: #e9e9e9;
+    });
 
     // RAW code pane
-    .enlighter-raw{
+    .STYLE_CODE_CONTAINER_RAW({
         font-size: 14px;
         line-height: 21px;
         color: #313437;
         padding: 5px 5px 5px 51px;
         background-color: transparent;
-    }
-
-    // LIST specific styles
-    ol.enlighter, ul.enlighter{
-        font-size: 11px;
-        background-color: #f0f0f1;
-        border: solid 1px #f0f0f1;
-        border-radius: 7px;
-    }
+    });
 
     // line styles
-    .enlighter li{
-        border: solid 0px #ffffff;
+    .STYLE_LINE({
         line-height: 18px;
-        background-color: #f0f0f1;
         padding: 1px 5px 1px 14px;
         color: #9c9ea0;
 
@@ -94,267 +75,257 @@
         &.enlighter-special{
             background-color: #e9e9e9;
         }
-    }
+    }, {}, {});
 
     // Line Number Styles
-    ol.enlighter li {
-        list-style: decimal outside;
+    .STYLE_LINENUMBERS({
         padding: 1px 10px 1px 10px;
+        font-size: 11px;
 
-        // borders
-        &:FIRST-CHILD {
-        }
-
-        &:LAST-CHILD {
-        }
-    }
-
-    // default text fragment color
-    .enlighter-text{
-        color: #313437;
-    }
+    // borders
+    }, {
+        border-radius: 0px 8px 0px 0px;
+    }, {
+        border-radius: 0px 0px 8px 0px;
+    });
 
     // text size
-    .enlighter span{
+    .STYLE_TOKEN_DEFAULT({
         font-size: 14px;
-    }
+    });
+
+    // default text fragment color
+    .TOKEN(text, {
+        color: #313437;
+    });
 
     // comments
-    .enlighter-c0{
+    .TOKEN(c0, {
         color: #9c9ea0;
-    }
-    .enlighter-c1{
+    });
+    .TOKEN(c1, {
         color: #9c9ea0;
-    }
-    .enlighter-c2{
+    });
+    .TOKEN(c2, {
         color: #9c9ea0;
-    }
-    .enlighter-c9{
+    });
+    .TOKEN(c9, {
         color: #9c9ea0;
-    }
+    });
 
     // keywords
-    .enlighter-k0{
+    .TOKEN(k0, {
         color: #b05098;
         font-weight: bold;
-    }
-    .enlighter-k1{
+    });
+    .TOKEN(k1, {
         color: #b05098;
         font-weight: bold;
-    }
-    .enlighter-k2{
+    });
+    .TOKEN(k2, {
         color: #b05098;
-    }
-    .enlighter-k3{
+    });
+    .TOKEN(k3, {
         color: #b05098;
-    }
-    .enlighter-k4{
+    });
+    .TOKEN(k4, {
         color: #b05098;
-    }
-    .enlighter-k5{
+    });
+    .TOKEN(k5, {
         color: #b05098;
-    }
-    .enlighter-k6{
+    });
+    .TOKEN(k6, {
         color: #b05098;
-    }
-    .enlighter-k7{
+    });
+    .TOKEN(k7, {
         color: #b05098;
-    }
-    .enlighter-k8{
+    });
+    .TOKEN(k8, {
         color: #313437;
-    }
-    .enlighter-k9{
+    });
+    .TOKEN(k9, {
         color: #313437;
-    }
-    .enlighter-k10{
+    });
+    .TOKEN(k10, {
         color: #313437;
-    }
+    });
 
     // expressions
-    .enlighter-e0{
+    .TOKEN(e0, {
         color: #b05098;
-    }
-    .enlighter-e1{
+    });
+    .TOKEN(e1, {
         color: #b05098;
-    }
-    .enlighter-e2{
+    });
+    .TOKEN(e2, {
         color:#864c08; 
-    }
-    .enlighter-e3{
+    });
+    .TOKEN(e3, {
         color: #b05098;
-    }
-    .enlighter-e4{
+    });
+    .TOKEN(e4, {
         color: #b05098;
-    }
+    });
 
     // strings
-    .enlighter-s0{
+    .TOKEN(s0, {
         color: #83a440;
-    }
-    .enlighter-s1{
+    });
+    .TOKEN(s1, {
         color: #83a440;
-    }
-    .enlighter-s2{
+    });
+    .TOKEN(s2, {
         color: #83a440;
-    }
-    .enlighter-s3{
+    });
+    .TOKEN(s3, {
         color: #83a440;
-    }
-    .enlighter-s4{
+    });
+    .TOKEN(s4, {
         color: #83a440;
-    }
-    .enlighter-s5{
+    });
+    .TOKEN(s5, {
         color: #83a440;
-    }
+    });
 
     // numbers
-    .enlighter-n0{
+    .TOKEN(n0, {
         color: #429bc1;
-    }
-    .enlighter-n1{
+    });
+    .TOKEN(n1, {
         color: #429bc1;
-    }
-    .enlighter-n2{
+    });
+    .TOKEN(n2, {
         color: #429bc1;
-    }
-    .enlighter-n3{
+    });
+    .TOKEN(n3, {
         color: #429bc1;
-    }
-    .enlighter-n4{
+    });
+    .TOKEN(n4, {
         color: #429bc1;
-    }
-    .enlighter-n5{
+    });
+    .TOKEN(n5, {
         color: #429bc1;
-    }
+    });
 
     // methods/functions
-    .enlighter-m0{
+    .TOKEN(m0, {
         color: #666666;
-    }
-    .enlighter-m1{
+    });
+    .TOKEN(m1, {
         color: #666666;
-    }
-    .enlighter-m2{
+    });
+    .TOKEN(m2, {
         color: #666666;
-    }
-    .enlighter-m3{
+    });
+    .TOKEN(m3, {
         color: #666666;
-    }
+    });
 
     // generic
-    .enlighter-g0{
+    .TOKEN(g0, {
         color: #864c08;
-    }
-    .enlighter-g1{
+    });
+    .TOKEN(g1, {
         color: #909090;
-    }
+    });
 
     // Text Documents
-    .enlighter-t0{
+    .TOKEN(t0, {
         color: #909090;
-    }
-    .enlighter-t1{
+    });
+    .TOKEN(t1, {
         color: #b05098;
         font-weight: bold;
-    }
-    .enlighter-t2{
+    });
+    .TOKEN(t2, {
         color: #b05098;
         font-weight: bold;
-    }
-    .enlighter-t3{
+    });
+    .TOKEN(t3, {
         color: #b05098;
-    }
-    .enlighter-t4{
+    });
+    .TOKEN(t4, {
         color: #b05098;
-    }
-    .enlighter-t5{
+    });
+    .TOKEN(t5, {
         color: #83a440;
-    }
-    .enlighter-t6{
+    });
+    .TOKEN(t6, {
         color: #b05098;
-    }
-    .enlighter-t7{
+    });
+    .TOKEN(t7, {
         color: #909090;
         font-weight: bold;
-    }
-    .enlighter-t8{
+    });
+    .TOKEN(t8, {
         color: #909090;
         font-style: italic;
-    }
+    });
 
     // XML
-    .enlighter-x1{
+    .TOKEN(x1, {
         color: #b05098;
         font-weight: bold;
-    }
-    .enlighter-x2{
+    });
+    .TOKEN(x2, {
         color: #b05098;
-    }
+    });
 
     // CSS
-    .enlighter-x10{
+    .TOKEN(x10, {
         color: #b05098;
         font-weight: bold;
-    }
-    .enlighter-x11{
+    });
+    .TOKEN(x11, {
         color: #b05098;
         font-weight: bold;
-    }
-    .enlighter-x12{
+    });
+    .TOKEN(x12, {
         color: #313437;
-    }
-    .enlighter-x13{
+    });
+    .TOKEN(x13, {
         color: #429bc1;
-    }
-    .enlighter-x14{
+    });
+    .TOKEN(x14, {
         color: #429bc1;
-    }
-    .enlighter-x15{
+    });
+    .TOKEN(x15, {
         color: #313437;
-    }
+    });
 
-} // .enlighter-t-enlighter
+    /* Object Wrapper - layout::INLINE
+    ----------------------------------------------------------------------------------- */
+    .VIEW_INLINE({
+        border-radius: 4px;
+    });
 
+    /* Object Wrapper - layout::CODEGROUPS
+    ----------------------------------------------------------------------------------- */
+    .VIEW_CODEGROUP({
+        // contains the buttons
+        .enlighter-codegroup-switch{
+            background-color: #585b5e;
+            padding: 10px 0px 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 5px;
 
-/* Object Wrapper - layout::CODEGROUPS
------------------------------------------------------------------------------------ */
-.enlighter-t-mowtwo.@{VIEW_CODEGROUP}{
-    display: block;
+            .enlighter-btn{
+                border-radius: 0px;
+                background-color: transparent;
+                line-height: 20px;
+                font-size: 15px;
+                color: #f0f0f0;
+                border: none;
+                padding: 0px 10px 0px 10px;
+                width: auto;
+                height: auto;
+                font-family: @font_sans;
 
-    // border radius top
-    ol.enlighter, ul.enlighter, .enlighter-raw{
-
-    }
-
-    // border radius upper right corner
-    .enlighter li:first-child{
-
-    }
-
-    // contains the tabs
-    .enlighter-codegroup-wrapper{
-        position: relative;
-    }
-
-    // contains the buttons
-    .enlighter-codegroup-switch{
-        background-color: #585b5e;
-        padding: 10px 0px 10px 20px;
-        border-radius: 8px;
-        margin-bottom: 5px;
-
-        .enlighter-btn{
-            border-radius: 0px;
-            background-color: transparent;
-            line-height: 20px;
-            font-size: 13px;
-            color: #f0f0f0;
-            border: none;
-            padding: 0px 10px 0px 10px;
-
-            &.enlighter-active{
-                text-decoration: underline;
+                &.enlighter-active{
+                    text-decoration: underline;
+                }
             }
         }
-    }
-}
+    });
+
+});

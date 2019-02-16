@@ -1,10 +1,24 @@
-@import "fonts.less";
-@import "selectors.less";
+// ----------------------------------------------------------------------
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// --
+// Copyright 2016-2019 Andi Dittrich <https://andidittrich.de>
+// ----------------------------------------------------------------------
+
+@import "core/selectors.less";
+@import "core/fonts.less";
 
 // Godzilla - Inspired by MDN colors
-.enlighter-t-godzilla{
+.THEME(godzilla, {
 
-    .enlighter-toolbar .enlighter-btn{
+    // bg
+    border-left: solid 6px #4a80b3;
+    background-image: url('data:image/gif;base64,R0lGODlhHgAeAJEAAPLz9ezt7vf39wAAACwAAAAAHgAeAAACYYyPqXvi/wCccr5gY3Y1491Z4fRlI3Rem5ByaymurQBT8nuDuM57wA8MCodEQA2V8yRjm6OmZ3G6oKSlrWlFYqlaJffpNWUvxbL5J2WNHenZrL2mxd/znfjLrm/v/Kg+UwAAOw==');
+    background-repeat: repeat;
+    background-position: 0px 0px;
+
+    .STYLE_BUTTON({
         border-radius: 3px;
         background-color: #fff;
         color: #717171;
@@ -26,53 +40,24 @@
         &:after{
             content: '';
         }
-    }
+    });
 
     // line hover color
-    &.enlighter-hover{
-        ul.enlighter li:hover{
-            background-color: #f0f0f1;
-        }
-        ol.enlighter li:hover{
-            background-color: #f0f0f1;
-        }
-    }
-
-    // Inline specific styles
-    &.@{VIEW_INLINE} span.enlighter{
-        background-color: #f7f7f7;
-        border: dotted 1px #e0e0e1;
-        border-left: solid 2px #4a80b3;
-    }
-
-    // bg
-    .enlighter-raw, ol.enlighter, ul.enlighter{
-        border-left: solid 6px #4a80b3;
-        background-image: url('data:image/gif;base64,R0lGODlhHgAeAJEAAPLz9ezt7vf39wAAACwAAAAAHgAeAAACYYyPqXvi/wCccr5gY3Y1491Z4fRlI3Rem5ByaymurQBT8nuDuM57wA8MCodEQA2V8yRjm6OmZ3G6oKSlrWlFYqlaJffpNWUvxbL5J2WNHenZrL2mxd/znfjLrm/v/Kg+UwAAOw==');
-        background-repeat: repeat;
-        background-position: 0px 0px;
-    }
+    .STYLE_LINEHOVER({
+    }, {
+        background-color: #f0f0f1;
+    });
 
     // RAW code pane
-    .enlighter-raw{
+    .STYLE_CODE_CONTAINER_RAW({
         font-size: 14px;
         line-height: 19px;
         color: #2b333a;
         padding: 4px 5px 4px 54px;
-    }
-
-    // LIST specific styles
-    ol.enlighter, ul.enlighter{
-        font-size: 11px;
-        
-        &.enlighter-hover .enlighter-special:hover{
-            background-color: #fffcd3;
-            color: #444444;
-        }
-    }
+    });
 
     // line styles
-    .enlighter li{
+    .STYLE_LINE({
         padding: 1px 5px 1px 14px;
         line-height: 16px;
         color: #9c9ea0;
@@ -92,287 +77,276 @@
 
         // special line highlight color
         &.enlighter-special{
-            border-left: solid 5px #9b0d5c;
-            background-color: transparent;
+            background-color: #fffcd3;
         }
-    }
+    }, {}, {});
 
     // Line Number Styles
-    ol.enlighter li {
-        list-style: decimal outside;
+    .STYLE_LINENUMBERS({
         padding: 1px 5px 1px 14px;
         background-color: transparent;
+        font-size: 11px;
 
-        // borders
-        &:FIRST-CHILD {
-        }
+    // borders
+    }, {
 
-        &:LAST-CHILD {
-        }
-    }
+    }, {
 
-    // default text fragment color
-    .enlighter-text{
-        color: #2b333a;
-    }
+    });
 
     // text size
-    .enlighter span{
+    .STYLE_TOKEN_DEFAULT({
         font-size: 14px;
-    }
+    });
+    
+    // default text fragment color
+    .TOKEN(text, {
+        color: #2b333a;
+    });
 
     // comments
-    .enlighter-c0{
+    .TOKEN(c0, {
         color: #6b7c8b;
-    }
-    .enlighter-c1{
+    });
+    .TOKEN(c1, {
         color: #6b7c8b;
-    }
-    .enlighter-c2{
+    });
+    .TOKEN(c2, {
         color: #6b7c8b;
-    }
-    .enlighter-c9{
+    });
+    .TOKEN(c9, {
         color: #5b7c9c;
-    }
+    });
 
     // keywords
-    .enlighter-k0{
+    .TOKEN(k0, {
         color: #085789;
         font-weight: bold;
-    }
-    .enlighter-k1{
+    });
+    .TOKEN(k1, {
         color: #085789;
         font-weight: bold;
-    }
-    .enlighter-k2{
+    });
+    .TOKEN(k2, {
         color: #4284ae;
         font-weight: bold;
-    }
-    .enlighter-k3{
+    });
+    .TOKEN(k3, {
         color: #4284ae;
         background-color: #f0f0f0;
-    }
-    .enlighter-k4{
+    });
+    .TOKEN(k4, {
         color: #4284ae;
         font-weight: bold;
-    }
-    .enlighter-k5{
+    });
+    .TOKEN(k5, {
         color: #085789;
         font-weight: bold;
-    }
-    .enlighter-k6{
+    });
+    .TOKEN(k6, {
         color: #085789;
         font-style: italic;
-    }
-    .enlighter-k7{
+    });
+    .TOKEN(k7, {
         color: #085789;
         font-weight: bold;
-    }
-    .enlighter-k8{
+    });
+    .TOKEN(k8, {
         color: #4284ae;
-    }
-    .enlighter-k9{
+    });
+    .TOKEN(k9, {
         color: #ae42a0;
         font-weight: bold;
-    }
-    .enlighter-k10{
+    });
+    .TOKEN(k10, {
         color: #ae42a0;
         font-style: italic;
-    }
+    });
 
     // expressions
-    .enlighter-e0{
+    .TOKEN(e0, {
         color: #085789;
         font-weight: bold;
-    }
-    .enlighter-e1{
+    });
+    .TOKEN(e1, {
         color: #085789;
         font-weight: bold;
-    }
-    .enlighter-e2{
+    });
+    .TOKEN(e2, {
         color: #085789;
-    }
-    .enlighter-e3{
+    });
+    .TOKEN(e3, {
         color: #085789;
-    }
-    .enlighter-e4{
+    });
+    .TOKEN(e4, {
         color: #d2901d;
-    }
+    });
 
     // strings
-    .enlighter-s0{
+    .TOKEN(s0, {
         color: #5e860f;
-    }
-    .enlighter-s1{
+    });
+    .TOKEN(s1, {
         color: #5e860f;
-    }
-    .enlighter-s2{
+    });
+    .TOKEN(s2, {
         color: #5e860f;
-    }
-    .enlighter-s3{
+    });
+    .TOKEN(s3, {
         color: #5e860f;
-    }
-    .enlighter-s4{
+    });
+    .TOKEN(s4, {
         color: #5e860f;
-    }
-    .enlighter-s5{
+    });
+    .TOKEN(s5, {
         color: #5e860f;
-    }
+    });
 
     // numbers
-    .enlighter-n0{
+    .TOKEN(n0, {
         color: #9b0d5c;
-    }
-    .enlighter-n1{
+    });
+    .TOKEN(n1, {
         color: #9b0d5c;
-    }
-    .enlighter-n2{
-        color: #9b0d5c;
-        font-style: italic;
-    }
-    .enlighter-n3{
+    });
+    .TOKEN(n2, {
         color: #9b0d5c;
         font-style: italic;
-    }
-    .enlighter-n4{
+    });
+    .TOKEN(n3, {
         color: #9b0d5c;
         font-style: italic;
-    }
-    .enlighter-n5{
+    });
+    .TOKEN(n4, {
+        color: #9b0d5c;
+        font-style: italic;
+    });
+    .TOKEN(n5, {
         color: #9b0d5c;
         text-decoration: underline;
-    }
+    });
 
     // methods/functions
-    .enlighter-m0{
+    .TOKEN(m0, {
         color: #d0284a;
-    }
-    .enlighter-m1{
+    });
+    .TOKEN(m1, {
         color: #d0284a;
-    }
-    .enlighter-m2{
+    });
+    .TOKEN(m2, {
         color: #d0284a;
-    }
-    .enlighter-m3{
+    });
+    .TOKEN(m3, {
         color: #d0284a;
-    }
+    });
 
     // generic
-    .enlighter-g0{
+    .TOKEN(g0, {
         color: #35434c;
-    }
-    .enlighter-g1{
+    });
+    .TOKEN(g1, {
         color: #35434c;
-    }
+    });
 
     // Text Documents
-    .enlighter-t0{
+    .TOKEN(t0, {
         color: #35434c;
-    }
-    .enlighter-t1{
+    });
+    .TOKEN(t1, {
         color: #d0284a;
         font-weight: bold;
-    }
-    .enlighter-t2{
+    });
+    .TOKEN(t2, {
         color: #9b0d5c;
         font-weight: bold;
-    }
-    .enlighter-t3{
+    });
+    .TOKEN(t3, {
         color: #085789;
-    }
-    .enlighter-t4{
+    });
+    .TOKEN(t4, {
         color: #085789;
-    }
-    .enlighter-t5{
+    });
+    .TOKEN(t5, {
         color: #085789;
-    }
-    .enlighter-t6{
+    });
+    .TOKEN(t6, {
         color: #d0284a;
-    }
-    .enlighter-t7{
+    });
+    .TOKEN(t7, {
         color: #35434c;
         font-weight: bold;
-    }
-    .enlighter-t8{
+    });
+    .TOKEN(t8, {
         color: #35434c;
         background-color: #f0f0f0;
         font-style: italic;
-    }
+    });
 
     // XML
-    .enlighter-x1{
+    .TOKEN(x1, {
         color: #085789;
         font-weight: bold;
-    }
-    .enlighter-x2{
+    });
+    .TOKEN(x2, {
         color: #4284ae;
-    }
+    });
 
     // CSS
-    .enlighter-x10{
+    .TOKEN(x10, {
         color: #35434c;
         font-weight: bold;
-    }
-    .enlighter-x11{
+    });
+    .TOKEN(x11, {
         color: #085789;
         font-weight: bold;
-    }
-    .enlighter-x12{
+    });
+    .TOKEN(x12, {
         color: #085789;
         text-decoration: underline;
-    }
-    .enlighter-x13{
+    });
+    .TOKEN(x13, {
         color: #4284ae;
-    }
-    .enlighter-x14{
+    });
+    .TOKEN(x14, {
         color: #4284ae;
         font-style: italic;
-    }
-    .enlighter-x15{
+    });
+    .TOKEN(x15, {
         color: #9b0d5c;
         font-style: italic;
-    }
+    });
 
-} // .enlighter-t-enlighter
+     /* Object Wrapper - layout::INLINE
+    ----------------------------------------------------------------------------------- */
+    .VIEW_INLINE({
+        background-color: #f7f7f7;
+        border: dotted 1px #e0e0e1;
+        border-left: solid 2px #4a80b3;
+    });
 
+    /* Object Wrapper - layout::CODEGROUPS
+    ----------------------------------------------------------------------------------- */
+    .VIEW_CODEGROUP({
+        // contains the buttons
+        .enlighter-codegroup-switch{
+            font-family: @font_sans;
+            background-color: #4a80b3;
+            padding: 5px 5px 5px 5px;
 
-/* Object Wrapper - layout::CODEGROUPS
------------------------------------------------------------------------------------ */
-.enlighter-t-godzilla.@{VIEW_CODEGROUP}{
-    display: block;
+            .enlighter-btn{
+                padding: 3px 10px 3px 10px;
+                border: none;
+                background-color: transparent;
+                line-height: 20px;
+                font-size: 14px;
+                color: #f0f0f0;
+                width: auto;
 
-    // border radius top
-    ol.enlighter, ul.enlighter, .enlighter-raw{
-
-    }
-
-    // border radius upper right corner
-    .enlighter li:first-child{
-
-    }
-
-    // contains the tabs
-    .enlighter-codegroup-wrapper{
-        position: relative;
-    }
-
-    // contains the buttons
-    .enlighter-codegroup-switch{
-        font-family: @font_sans;
-        background-color: #4a80b3;
-        padding: 5px 5px 5px 5px;
-
-        .enlighter-btn{
-            padding: 3px 10px 3px 10px;
-            border: none;
-            background-color: transparent;
-            line-height: 20px;
-            font-size: 14px;
-            color: #f0f0f0;
-
-            &.enlighter-active{
-                background-color: #00417f;
+                &.enlighter-active{
+                    background-color: #00417f;
+                }
             }
         }
-    }
-}
+    });
+
+});

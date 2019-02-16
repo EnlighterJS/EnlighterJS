@@ -1,4 +1,12 @@
-@import "selectors.less";
+// ----------------------------------------------------------------------
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// --
+// Copyright 2016-2019 Andi Dittrich <https://andidittrich.de>
+// ----------------------------------------------------------------------
+
+@import "core/selectors.less";
 
 // dracula theme colors
 // @see https://github.com/dracula/dracula-theme#color-palette
@@ -16,91 +24,62 @@
 @dracula_yellow: #f1fa8c;
 @dracula_font_label: "Arial, Helvetica, sans-serif";
 
-.enlighter-t-dracula{
+.THEME(dracula, {
+
+    background-color: @dracula_background;
     
-    .enlighter-toolbar {
+    .STYLE_TOOLBAR({
         top: 10px;
         right: 10px;
+    });
 
-        // keep toolbar visible
-        display: block;
+    .STYLE_BUTTON({
+        background-image: none;
+        background-color: @dracula_selection;
+        color: @dracula_foreground;
+        font-size: 12px;
+        padding: 2px 8px 2px 8px;
+        margin: 0px 5px 0px 5px;
+        border: none;
+        border-radius: 4px;
+        font-family: @dracula_font_label;
 
-        .enlighter-btn{
-            background-image: none;
-            background-color: transparent;
+        &:hover{
+            background-color: @dracula_comment;
             color: @dracula_foreground;
-            font-size: 12px;
-            padding: 2px 8px 2px 8px;
-            margin: 0px 5px 0px 5px;
-            border: none;
-            border-radius: 4px;
-            font-family: @dracula_font_label;
-    
-            &:hover{
-                background-color: @dracula_selection;
-                color: @dracula_foreground;
-            }
         }
+    });
 
-        // toolbar buttons
-        .enlighter-btn-raw{
-            &::after{
-                content: 'Raw';
-            }
-        }
+    // set button labels
+    .STYLE_TOOLBAR_BUTTON(raw, 'Raw', {
+    });
 
-        .enlighter-btn-window{
-            &::after{
-                content: 'Extern';
-            }
-        }
+    .STYLE_TOOLBAR_BUTTON(copy, 'Copy', {
+    });
 
-        .enlighter-btn-copy{
-            &::after{
-                content: 'Copy';
-            }
-        }
+    .STYLE_TOOLBAR_BUTTON(window, 'Extern', {
+    });
 
-        .enlighter-btn-website{
-            &::after{
-                content: 'EnlighterJS';
-            }
-        }
-    }
+    .STYLE_TOOLBAR_BUTTON(website, 'EnlighterJS', {
+    });
 
     // line hover color
-    &.enlighter-hover{
-        ul.enlighter li:hover{
-            background-color: @dracula_currentline;
-        }
-        ol.enlighter li:hover{
-            background-color: @dracula_currentline;
-        }
-    }
-
-    // Inline specific styles
-    &.@{VIEW_INLINE} span.enlighter{
-        background-color: @dracula_background;
-    }
+    .STYLE_LINEHOVER({
+    }, {
+        background-color: @dracula_currentline;
+    });
 
     // RAW code pane
-    .enlighter-raw{
+    .STYLE_CODE_CONTAINER_RAW({
         font-size: 15px;
         color: @dracula_foreground;
-        background-color: @dracula_background;
         line-height: 22px;
         padding: 4px 5px 4px 55px;
-    }
+    });
 
-    // LIST specific styles
-    ol.enlighter, ul.enlighter{
-        font-size: 12px;
-        color: @dracula_comment;
-        background-color: @dracula_background;
-    }
 
     // line styles
-    .enlighter li{
+    .STYLE_LINE({
         padding: 1px 5px 1px 14px;
         line-height: 19px;
         color: @dracula_comment;
@@ -123,278 +102,266 @@
         &.enlighter-special{
             background-color: @dracula_selection;
         }
-    }
+    }, {}, {});
 
     // Line Number Styles
-    ol.enlighter li {
-        list-style: decimal outside;
-        padding: 1px 5px 1px 14px;
+    .STYLE_LINENUMBERS({
+        font-size: 12px;
+        color: @dracula_comment;
 
-        // borders
-        &:FIRST-CHILD {
-        }
+    // borders
+    }, {
 
-        &:LAST-CHILD {
-        }
-    }
+    }, {
 
-    // default text fragment color
-    .enlighter-text{
-        color: @dracula_foreground;
-    }
+    });
 
     // text size
-    .enlighter span{
+    .STYLE_TOKEN_DEFAULT({
         font-size: 15px;
-    }
+    });
+
+    // default text fragment color
+    .TOKEN(text, {
+        color: @dracula_foreground;
+    });
 
     // comments
-    .enlighter-c0{
+    .TOKEN(c0, {
         color: @dracula_comment;
-    }
-    .enlighter-c1{
+    });
+    .TOKEN(c1, {
         color: @dracula_comment;
-    }
-    .enlighter-c2{
+    });
+    .TOKEN(c2, {
         color: @dracula_comment;
-    }
-    .enlighter-c9{
+    });
+    .TOKEN(c9, {
         color: @dracula_comment;
-    }
+    });
 
     // keywords
-    .enlighter-k0{
+    .TOKEN(k0, {
         color: @dracula_pink;
         font-weight: bold;
-    }
-    .enlighter-k1{
+    });
+    .TOKEN(k1, {
         color: @dracula_cyan;
         font-weight: bold;
-    }
-    .enlighter-k2{
+    });
+    .TOKEN(k2, {
         color: @dracula_pink;
         font-weight: bold;
-    }
-    .enlighter-k3{
+    });
+    .TOKEN(k3, {
         color: @dracula_pink;
-    }
-    .enlighter-k4{
+    });
+    .TOKEN(k4, {
         color: @dracula_cyan;
-    }
-    .enlighter-k5{
+    });
+    .TOKEN(k5, {
         color: @dracula_cyan;
-    }
-    .enlighter-k6{
+    });
+    .TOKEN(k6, {
         color: @dracula_cyan;
-    }
-    .enlighter-k7{
+    });
+    .TOKEN(k7, {
         color: @dracula_orange;
-    }
-    .enlighter-k8{
+    });
+    .TOKEN(k8, {
         color: @dracula_cyan;
-    }
-    .enlighter-k9{
+    });
+    .TOKEN(k9, {
         color: @dracula_green;
-    }
-    .enlighter-k10{
+    });
+    .TOKEN(k10, {
         color: @dracula_green;
-    }
+    });
 
     // expressions
-    .enlighter-e0{
+    .TOKEN(e0, {
         color: @dracula_purple;
         font-weight: bold;
-    }
-    .enlighter-e1{
+    });
+    .TOKEN(e1, {
         color: @dracula_purple;
         font-weight: bold;
-    }
-    .enlighter-e2{
+    });
+    .TOKEN(e2, {
         color: @dracula_yellow;
-    }
-    .enlighter-e3{
+    });
+    .TOKEN(e3, {
         color: @dracula_purple;
-    }
-    .enlighter-e4{
+    });
+    .TOKEN(e4, {
         color: @dracula_purple;
         font-style: italic;
-    }
+    });
 
     // strings
-    .enlighter-s0{
+    .TOKEN(s0, {
         color: @dracula_yellow;
-    }
-    .enlighter-s1{
+    });
+    .TOKEN(s1, {
         color: @dracula_yellow;
-    }
-    .enlighter-s2{
+    });
+    .TOKEN(s2, {
         color: @dracula_yellow;
-    }
-    .enlighter-s3{
+    });
+    .TOKEN(s3, {
         color: @dracula_yellow;
-    }
-    .enlighter-s4{
+    });
+    .TOKEN(s4, {
         color: @dracula_yellow;
         font-weight: bold;
-    }
-    .enlighter-s5{
+    });
+    .TOKEN(s5, {
         color: @dracula_yellow;
         font-style: italic;
-    }
+    });
 
     // numbers
-    .enlighter-n0{
+    .TOKEN(n0, {
         color: @dracula_purple;
-    }
-    .enlighter-n1{
+    });
+    .TOKEN(n1, {
         color: @dracula_purple;
-    }
-    .enlighter-n2{
+    });
+    .TOKEN(n2, {
         color: @dracula_purple;
-    }
-    .enlighter-n3{
+    });
+    .TOKEN(n3, {
         color: @dracula_purple;
-    }
-    .enlighter-n4{
+    });
+    .TOKEN(n4, {
         color: @dracula_purple;
-    }
-    .enlighter-n5{
+    });
+    .TOKEN(n5, {
         color: @dracula_purple;
-    }
+    });
 
     // methods/functions
-    .enlighter-m0{
+    .TOKEN(m0, {
         color: @dracula_cyan;
-    }
-    .enlighter-m1{
+    });
+    .TOKEN(m1, {
         color: @dracula_cyan;
-    }
-    .enlighter-m2{
+    });
+    .TOKEN(m2, {
         color: @dracula_cyan;
-    }
-    .enlighter-m3{
+    });
+    .TOKEN(m3, {
         color: @dracula_cyan;
-    }
+    });
 
     // generic
-    .enlighter-g0{
+    .TOKEN(g0, {
         color: @dracula_foreground;
         font-weight: bold;
-    }
-    .enlighter-g1{
+    });
+    .TOKEN(g1, {
         color: @dracula_foreground;
         font-weight: bold;
-    }
+    });
 
     // Text Documents
-    .enlighter-t0{
+    .TOKEN(t0, {
         color: @dracula_comment;
-    }
-    .enlighter-t1{
+    });
+    .TOKEN(t1, {
         color: @dracula_cyan;
         font-weight: bold;
-    }
-    .enlighter-t2{
+    });
+    .TOKEN(t2, {
         color: @dracula_cyan;
         font-weight: bold;
-    }
-    .enlighter-t3{
+    });
+    .TOKEN(t3, {
         color: @dracula_pink;
-    }
-    .enlighter-t4{
+    });
+    .TOKEN(t4, {
         color: @dracula_orange;
-    }
-    .enlighter-t5{
+    });
+    .TOKEN(t5, {
         color: @dracula_green
-    }
-    .enlighter-t6{
+    });
+    .TOKEN(t6, {
         color: @dracula_red;
-    }
-    .enlighter-t7{
+    });
+    .TOKEN(t7, {
         color: @dracula_foreground;
         font-weight: bold;
-    }
-    .enlighter-t8{
+    });
+    .TOKEN(t8, {
         color: @dracula_foreground;
-    }
+    });
 
     // XML
-    .enlighter-x1{
+    .TOKEN(x1, {
         color: @dracula_pink;
         font-weight: bold;
-    }
-    .enlighter-x2{
+    });
+    .TOKEN(x2, {
         color: @dracula_green;
-    }
+    });
 
     // CSS
-    .enlighter-x10{
+    .TOKEN(x10, {
         color: @dracula_foreground;
         font-weight: bold;
-    }
-    .enlighter-x11{
+    });
+    .TOKEN(x11, {
         color: @dracula_green;
         font-weight: bold;
-    }
-    .enlighter-x12{
+    });
+    .TOKEN(x12, {
         color: @dracula_cyan;
         font-style: italic;
-    }
-    .enlighter-x13{
+    });
+    .TOKEN(x13, {
         color: @dracula_purple;
-    }
-    .enlighter-x14{
+    });
+    .TOKEN(x14, {
         color: @dracula_purple;
         font-style: italic;
-    }
-    .enlighter-x15{
+    });
+    .TOKEN(x15, {
         color: @dracula_orange;
         font-style: italic;
-    }
-
-} // .enlighter-t-enlighter
+    });
 
 
-/* Object Wrapper - layout::CODEGROUPS
------------------------------------------------------------------------------------ */
-.enlighter-t-dracula.@{VIEW_CODEGROUP}{
-    display: block;
+     /* Object Wrapper - layout::INLINE
+    ----------------------------------------------------------------------------------- */
+    .VIEW_INLINE({
 
-    // border radius top
-    ol.enlighter, ul.enlighter, .enlighter-raw{
+    });
 
-    }
+    /* Object Wrapper - layout::CODEGROUPS
+    ----------------------------------------------------------------------------------- */
+    .VIEW_CODEGROUP({
+        // contains the buttons
+        .enlighter-codegroup-switch{
+            background-color: @dracula_background;
+            padding: 10px;
 
-    // border radius upper right corner
-    .enlighter li:first-child{
-
-    }
-
-    // contains the tabs
-    .enlighter-codegroup-wrapper{
-        position: relative;
-    }
-
-    // contains the buttons
-    .enlighter-codegroup-switch{
-        background-color: @dracula_background;
-        padding: 10px;
-
-        .enlighter-btn{
-            background-image: none;
-            background-color: transparent;
-            color: @dracula_foreground;
-            font-size: 14px;
-            padding: 2px 8px 2px 8px;
-            margin: 0px 5px 0px 5px;
-            border: none;
-            border-radius: 4px;
-            font-family: @dracula_font_label;
-
-            &.enlighter-active{
-                background-color: @dracula_currentline;
+            .enlighter-btn{
+                background-image: none;
+                background-color: transparent;
                 color: @dracula_foreground;
+                font-size: 14px;
+                padding: 2px 8px 2px 8px;
+                margin: 0px 5px 0px 5px;
+                border: none;
+                border-radius: 4px;
+                font-family: @dracula_font_label;
+
+                &.enlighter-active{
+                    background-color: @dracula_currentline;
+                    color: @dracula_foreground;
+                }
             }
         }
-    }
-}
+    });
+
+});

@@ -1,9 +1,21 @@
-@import "selectors.less";
+// ----------------------------------------------------------------------
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// --
+// Copyright 2016-2019 Andi Dittrich <https://andidittrich.de>
+// ----------------------------------------------------------------------
 
-.enlighter-t-droide{
-    
-    .enlighter-toolbar .enlighter-btn{
-        background-color: #f7f7f9;
+@import "core/selectors.less";
+@import "core/fonts.less";
+
+.THEME(droide, {
+
+    background-color: #f7f7f9;
+    border: solid 1px #e0e0e0;
+
+    .STYLE_BUTTON({
+        background-color: #ffffff;
         color: #717171;
         font-size: 12px;
         padding: 0;
@@ -23,57 +35,26 @@
         &:after{
             content: '';
         }
-    }
-    // toolbar buttons
-    .enlighter-btn-raw{
-        
-    }
-
-    .enlighter-btn-window{
-    }
-
-    .enlighter-btn-website{
-        
-    }
-
+    });
+    
     // line hover color
-    &.enlighter-hover{
-        ul.enlighter li:hover{
-            background-color: #fae9d9;
-        }
-        ol.enlighter li:hover{
-            background-color: #fae9d9;
-        }
-    }
-
-    // Inline specific styles
-    &.@{VIEW_INLINE} span.enlighter{
-        background-color: #f7f7f9;
-        border: solid 1px #e0e0e0;
-    }
+    .STYLE_LINEHOVER({
+    }, {
+        background-color: #fae9d9;
+    });
 
     // RAW code pane
-    .enlighter-raw{
+    .STYLE_CODE_CONTAINER_RAW({
         font-size: 13px;
         color: #404141;
-        border: solid 1px #e0e0e0;
-        background-color: #f7f7f9;
         line-height: 18px;
         padding: 4px 5px 4px 55px;
-    }
-
-    // LIST specific styles
-    ol.enlighter, ul.enlighter{
-        font-size: 11px;
-        color: #707070;
-        border: solid 1px #e0e0e0;
-        background-color: #f7f7f9;
-    }
+    });
 
     // line styles
-    .enlighter li{
+    .STYLE_LINE({
         border: solid 0px #ffffff;
-        background-color: #f7f7f9;
+        
         padding: 1px 5px 1px 14px;
         line-height: 16px;
         color: #aaaaaa;
@@ -96,285 +77,284 @@
             background-color: #fae9d9;
             border-left: solid 5px #e07c19;
         }
-    }
+    }, {}, {});
 
     // Line Number Styles
-    ol.enlighter li {
-        list-style: decimal outside;
-        border-left: 1px dashed #e0e0e0;
-        padding: 1px 5px 1px 14px;
+    .STYLE_LINENUMBERS({
+        padding: 1px 5px 1px 0px;
+        border-right: 1px dashed #e0e0e0;
+        font-size: 11px;
+        color: #707070;
+        background-color: #f7f7f9;
 
-        // borders
-        &:FIRST-CHILD {
-        }
+    // borders
+    }, {
 
-        &:LAST-CHILD {
-        }
-    }
+    }, {
 
-    // default text fragment color
-    .enlighter-text{
-        color: #000000;
-    }
+    });
 
     // text size
-    .enlighter span{
+    .STYLE_TOKEN_DEFAULT({
         font-size: 13px;
-    }
+    });
+
+    // default text fragment color
+    .TOKEN(text, {
+        color: #000000;
+    });
 
     // comments
-    .enlighter-c0{
+    .TOKEN(c0, {
         color: #086b08;
-    }
-    .enlighter-c1{
+    });
+    .TOKEN(c1, {
         color: #086b08;
-    }
-    .enlighter-c2{
+    });
+    .TOKEN(c2, {
         color: #086b08;
-    }
-    .enlighter-c9{
+    });
+    .TOKEN(c9, {
         color: #086b08;
-    }
+    });
 
     // keywords
-    .enlighter-k0{
+    .TOKEN(k0, {
         color: #12217c;
         font-weight: bold;
-    }
-    .enlighter-k1{
+    });
+    .TOKEN(k1, {
         color: #12217c;
         font-weight: bold;
-    }
-    .enlighter-k2{
+    });
+    .TOKEN(k2, {
         color: #445588;
         font-weight: bold;
-    }
-    .enlighter-k3{
+    });
+    .TOKEN(k3, {
         color: #6e0d6e;
-    }
-    .enlighter-k4{
+    });
+    .TOKEN(k4, {
         color: #6e0d6e;
         font-weight: bold;
-    }
-    .enlighter-k5{
+    });
+    .TOKEN(k5, {
         color: #12217c;
         font-weight: bold;
-    }
-    .enlighter-k6{
+    });
+    .TOKEN(k6, {
         color: #12217c;
         font-style: italic;
-    }
-    .enlighter-k7{
+    });
+    .TOKEN(k7, {
         color: #12217c;
         font-weight: bold;
-    }
-    .enlighter-k8{
+    });
+    .TOKEN(k8, {
         color: #445588;
-    }
-    .enlighter-k9{
+    });
+    .TOKEN(k9, {
         color: #990073;
         font-weight: bold;
-    }
-    .enlighter-k10{
+    });
+    .TOKEN(k10, {
         color: #6e0d6e;
         font-style: italic;
-    }
+    });
 
     // expressions
-    .enlighter-e0{
+    .TOKEN(e0, {
         color: #34068a;
         font-weight: bold;
-    }
-    .enlighter-e1{
+    });
+    .TOKEN(e1, {
         color: #34068a;
         font-weight: bold;
-    }
-    .enlighter-e2{
+    });
+    .TOKEN(e2, {
         color: #009926;
-    }
-    .enlighter-e3{
+    });
+    .TOKEN(e3, {
         color: #286491;
-    }
-    .enlighter-e4{
+    });
+    .TOKEN(e4, {
         color: #ff8c00;
         font-style: italic;
-    }
+    });
 
     // strings
-    .enlighter-s0{
+    .TOKEN(s0, {
         color: #961414;
-    }
-    .enlighter-s1{
+    });
+    .TOKEN(s1, {
         color: #961414;
-    }
-    .enlighter-s2{
+    });
+    .TOKEN(s2, {
         color: #961414;
-    }
-    .enlighter-s3{
+    });
+    .TOKEN(s3, {
         color: #961414;
-    }
-    .enlighter-s4{
+    });
+    .TOKEN(s4, {
         color: #963f14;
         font-weight: bold;
-    }
-    .enlighter-s5{
+    });
+    .TOKEN(s5, {
         color: #961414;
         font-style: italic;
-    }
+    });
 
     // numbers
-    .enlighter-n0{
+    .TOKEN(n0, {
         color: #009999;
-    }
-    .enlighter-n1{
+    });
+    .TOKEN(n1, {
         color: #009999;
-    }
-    .enlighter-n2{
-        color: #009999;
-        font-style: italic;
-    }
-    .enlighter-n3{
+    });
+    .TOKEN(n2, {
         color: #009999;
         font-style: italic;
-    }
-    .enlighter-n4{
+    });
+    .TOKEN(n3, {
         color: #009999;
         font-style: italic;
-    }
-    .enlighter-n5{
+    });
+    .TOKEN(n4, {
+        color: #009999;
+        font-style: italic;
+    });
+    .TOKEN(n5, {
         color: #009999;
         text-decoration: underline;
-    }
+    });
 
     // methods/functions
-    .enlighter-m0{
+    .TOKEN(m0, {
         color: #000000;
-    }
-    .enlighter-m1{
+    });
+    .TOKEN(m1, {
         color: #000000;
-    }
-    .enlighter-m2{
+    });
+    .TOKEN(m2, {
         color: #000000;
-    }
-    .enlighter-m3{
+    });
+    .TOKEN(m3, {
         color: #000000;
-    }
+    });
 
     // generic
-    .enlighter-g0{
+    .TOKEN(g0, {
         color: #12217c;
-    }
-    .enlighter-g1{
+    });
+    .TOKEN(g1, {
         color: #12217c;
-    }
+    });
 
     // Text Documents
-    .enlighter-t0{
+    .TOKEN(t0, {
         color: #777;
-    }
-    .enlighter-t1{
+    });
+    .TOKEN(t1, {
         color: #961414;
         font-weight: bold;
-    }
-    .enlighter-t2{
+    });
+    .TOKEN(t2, {
         color: #990073;
         font-weight: bold;
-    }
-    .enlighter-t3{
+    });
+    .TOKEN(t3, {
         color: #445588;
-    }
-    .enlighter-t4{
+    });
+    .TOKEN(t4, {
         color: #6e0d6e;
-    }
-    .enlighter-t5{
+    });
+    .TOKEN(t5, {
         color: #6e0d6e;
-    }
-    .enlighter-t6{
+    });
+    .TOKEN(t6, {
         color: #961414;
-    }
-    .enlighter-t7{
+    });
+    .TOKEN(t7, {
         color: #535353;
         font-weight: bold;
-    }
-    .enlighter-t8{
+    });
+    .TOKEN(t8, {
         color: #777;
         font-style: italic;
-    }
+    });
 
     // XML
-    .enlighter-x1{
+    .TOKEN(x1, {
         color: #12217c;
         font-weight: bold;
-    }
-    .enlighter-x2{
+    });
+    .TOKEN(x2, {
         color: #6e0d6e;
-    }
+    });
 
     // CSS
-    .enlighter-x10{
+    .TOKEN(x10, {
         color: #12217c;
         font-weight: bold;
-    }
-    .enlighter-x11{
+    });
+    .TOKEN(x11, {
         color: #12217c;
         font-weight: bold;
-    }
-    .enlighter-x12{
+    });
+    .TOKEN(x12, {
         color: #445588;
-    }
-    .enlighter-x13{
+    });
+    .TOKEN(x13, {
         color: #009999;
-    }
-    .enlighter-x14{
+    });
+    .TOKEN(x14, {
         color: #009999;
-    }
-    .enlighter-x15{
+    });
+    .TOKEN(x15, {
         color: #990073;
         font-style: italic;
-    }
+    });
 
-} // .enlighter-t-enlighter
+     /* Object Wrapper - layout::INLINE
+    ----------------------------------------------------------------------------------- */
+    .VIEW_INLINE({
 
+    });
 
-/* Object Wrapper - layout::CODEGROUPS
------------------------------------------------------------------------------------ */
-.enlighter-t-droide.@{VIEW_CODEGROUP}{
-    display: block;
+    /* Object Wrapper - layout::CODEGROUPS
+    ----------------------------------------------------------------------------------- */
+    .VIEW_CODEGROUP({
+        background-color: transparent;
+        border: none;
 
-    // border radius top
-    ol.enlighter, ul.enlighter, .enlighter-raw{
-
-    }
-
-    // border radius upper right corner
-    .enlighter li:first-child{
-
-    }
-
-    // contains the tabs
-    .enlighter-codegroup-wrapper{
-        position: relative;
-    }
-
-    // contains the buttons
-    .enlighter-codegroup-switch{
-        padding-left: 15px;
-
-        .enlighter-btn{
+        // contains the tabs
+        .enlighter-codegroup-wrapper{
+            background-color: #f7f7f9;
             border: solid 1px #e0e0e0;
-            font-size: 12px;
-            color: #000000;
-            background-color: transparent;
-            border-radius: 0px;
-            border-bottom-width: 0px;
-            padding: 5px 10px 5px 10px;
-            font-weight: bold;
+        }
+        
+        // contains the buttons
+        .enlighter-codegroup-switch{
+            padding-left: 15px;
 
-            &.enlighter-active{
-                background-color: #f7f7f9;
+            .enlighter-btn{
+                border: solid 1px #e0e0e0;
+                font-size: 12px;
                 color: #000000;
-                border-color: #c9c9c9;
+                background-color: transparent;
+                border-radius: 0px;
+                border-bottom-width: 0px;
+                padding: 5px 10px 5px 10px;
+                font-weight: bold;
+                width: auto;
+
+                &.enlighter-active{
+                    background-color: #f7f7f9;
+                    color: #000000;
+                    border-color: #c9c9c9;
+                }
             }
         }
-    }
-}
+
+    });
+});
