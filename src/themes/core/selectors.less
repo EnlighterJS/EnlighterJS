@@ -6,33 +6,11 @@
 // Copyright 2016-2019 Andi Dittrich <https://andidittrich.de>
 // ----------------------------------------------------------------------
 
-@VIEW_INLINE: enlighter-v-inline;
-@VIEW_STANDARD: enlighter-v-standard;
-@VIEW_CODEGROUP: enlighter-v-codegroup;
+@import "flags.less";
+@import "views.less";
 
 // detached rulesets
 // ------------------------------------------
-
-// inline content
-.VIEW_INLINE(@rules){
-    &.@{VIEW_INLINE}{
-        @rules();
-    }
-}
-
-// standard layout - single block
-.VIEW_STANDARD(@rules){
-    &.@{VIEW_STANDARD}{
-        @rules();
-    }
-}
-
-// tabbed layout
-.VIEW_CODEGROUP(@rules){
-    &.@{VIEW_CODEGROUP}{
-        @rules();
-    }
-}
 
 // code container
 .STYLE_CODE_CONTAINER(@rules){
@@ -66,7 +44,7 @@
 .STYLE_LINENUMBERS(@rules, @firstChild, @lastChild){
 
     // match the wrapper class attribute
-    &.enlighter-linenumbers{
+    .OPT_LINENUMBERS({
 
         // line container
         div.enlighter > div{
@@ -87,7 +65,7 @@
                 }
             }
         }
-    }
+    });
 }
 
 // match single line
@@ -111,23 +89,28 @@
 
 // match hover
 .STYLE_LINEHOVER(@rulesLinenumbers, @rulesPlain){
-    // hover + linenumbering enabled
-    &.enlighter-hover.enlighter-linenumbers{
-        .STYLE_LINE({
-            &:hover{
-                @rulesLinenumbers();
-            }
-        }, {}, {});
-    }
-    
+
     // hover enabled
-    &.enlighter-hover{
+    .OPT_HOVER({
+
+        // hover + linenumbering enabled
+        .OPT_LINENUMBERS({
+            .STYLE_LINE({
+                &:hover{
+                    @rulesLinenumbers();
+                }
+            }, {}, {});
+        });
+
+        // hover effect of each line
         .STYLE_LINE({
             &:hover{
                 @rulesPlain();
-            }            
+            }
         }, {}, {});
-    }
+
+        // hover effect of each line in case line-numbers are also enabled
+    });
 }
 
 // toolbar

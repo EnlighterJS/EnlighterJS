@@ -1,16 +1,19 @@
-@import "selectors.less";
+@import "core/selectors.less";
+@import "core/fonts.less";
 
-.enlighter-t-bootstrap4{
+.THEME(bootstrap4, {
+
+    font-size: 10px;
+    color: #212529;
+    background-color: #f8f9fa;
+    padding: 25px 25px 25px 25px;
     
-    .enlighter-toolbar {
+    .STYLE_TOOLBAR({
         top: 10px;
         right: 10px;
+    });
 
-        // keep toolbar visible
-        display: block;
-    }
-
-    .enlighter-btn{
+    .STYLE_BUTTON({
         background-image: none;
         background-color: transparent;
         color: #818a91;
@@ -19,75 +22,49 @@
         margin: 0px 5px 0px 5px;
         border: none;
         border-radius: 4px;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: @font_sans;
 
         &:hover{
             background-color: #007bff;
             color: #f0f0f0;
         }
-    }
+    });
 
-    // toolbar buttons
-    .enlighter-btn-raw{
-        &::after{
-            content: 'Raw';
-        }
-    }
+    // set button labels
+    .STYLE_TOOLBAR_BUTTON(raw, 'Raw', {
+    });
 
-    .enlighter-btn-window{
-        &::after{
-            content: 'Extern';
-        }
-    }
+    .STYLE_TOOLBAR_BUTTON(copy, 'Copy', {
+    });
 
-    .enlighter-btn-copy{
-        &::after{
-            content: 'Copy';
-        }
-    }
+    .STYLE_TOOLBAR_BUTTON(window, 'Extern', {
+    });
 
-    .enlighter-btn-website{
-        &::after{
-            content: 'EnlighterJS';
-        }
-    }
+    .STYLE_TOOLBAR_BUTTON(website, 'EnlighterJS', {
+    });
 
     // line hover color
-    &.enlighter-hover{
-        ul.enlighter li:hover{
-            background-color: #eceef0;
-        }
-        ol.enlighter li:hover{
-            background-color: #eceef0;
-        }
-    }
-
-    // Inline specific styles
-    &.@{VIEW_INLINE} span.enlighter{
-        background-color: #f8f9fa;
-        border: none;
-        border-radius: 5px;
-    }
+    .STYLE_LINEHOVER({
+    }, {
+        background-color: #eceef0;
+    });
 
     // RAW code pane
-    .enlighter-raw{
+    .STYLE_CODE_CONTAINER_RAW({
         font-size: 14px;
         color: #212529;
         background-color: #f8f9fa;
         line-height: 20px;
         padding: 28px 25px 30px 79px;
-    }
+    });
 
     // LIST specific styles
-    ol.enlighter, ul.enlighter{
-        font-size: 10px;
-        color: #212529;
-        background-color: #f8f9fa;
-        padding: 25px;
-    }
+    .STYLE_CODE_CONTAINER_BLOCK({
+        
+    });
 
     // line styles
-    .enlighter li{
+    .STYLE_LINE({
         padding: 1px 5px 1px 14px;
         line-height: 16px;
         color: #999999;
@@ -110,264 +87,256 @@
         &.enlighter-special{
             background-color: #eceef0;
         }
-    }
+    }, {}, {});
 
     // Line Number Styles
-    ol.enlighter li {
-        list-style: decimal outside;
-        padding: 1px 5px 1px 14px;
+    .STYLE_LINENUMBERS({
+        padding: 1px 5px 1px 0px;
 
-        // borders
-        &:FIRST-CHILD {
-        }
+    // borders
+    }, {
 
-        &:LAST-CHILD {
-        }
-    }
+    }, {
 
-    // default text fragment color
-    .enlighter-text{
-        color: #212529;
-    }
+    });
 
     // text size
-    .enlighter span{
+    .STYLE_TOKEN_DEFAULT({
         font-size: 14px;
-    }
+    });
+    
+    // default text fragment color
+    .TOKEN(text, {
+        color: #212529;
+    });
 
     // comments
-    .enlighter-c0{
+    .TOKEN(c0, {
         color: #999999;
-    }
-    .enlighter-c1{
+    });
+    .TOKEN(c1, {
         color: #999999;
-    }
-    .enlighter-c2{
+    });
+    .TOKEN(c2, {
         color: #999999;
-    }
-    .enlighter-c9{
+    });
+    .TOKEN(c9, {
         color: #999999;
-    }
+    });
 
     // keywords
-    .enlighter-k0{
+    .TOKEN(k0, {
         color: #069;
-    }
-    .enlighter-k1{
+    });
+    .TOKEN(k1, {
         color: #069;
-    }
-    .enlighter-k2{
+    });
+    .TOKEN(k2, {
         color: #069;
-    }
-    .enlighter-k3{
+    });
+    .TOKEN(k3, {
         color: #069;
-    }
-    .enlighter-k4{
+    });
+    .TOKEN(k4, {
         color: #069;
         font-style: italic;
-    }
-    .enlighter-k5{
+    });
+    .TOKEN(k5, {
         color: #212529;
-    }
-    .enlighter-k6{
+    });
+    .TOKEN(k6, {
         color: #069;
-    }
-    .enlighter-k7{
+    });
+    .TOKEN(k7, {
         color: #069;
         border-bottom: dotted 1px #069;
-    }
-    .enlighter-k8{
+    });
+    .TOKEN(k8, {
         color: #212529;
-    }
-    .enlighter-k9{
+    });
+    .TOKEN(k9, {
         color: #069;
-    }
-    .enlighter-k10{
+    });
+    .TOKEN(k10, {
         color: #212529;
-    }
+    });
 
     // expressions
-    .enlighter-e0{
+    .TOKEN(e0, {
         color: #069;
-    }
-    .enlighter-e1{
+    });
+    .TOKEN(e1, {
         color: #069;
-    }
-    .enlighter-e2{
+    });
+    .TOKEN(e2, {
         color: #009926;
-    }
-    .enlighter-e3{
+    });
+    .TOKEN(e3, {
         color: #069;
-    }
-    .enlighter-e4{
+    });
+    .TOKEN(e4, {
         color: #069;
-    }
+    });
 
     // strings
-    .enlighter-s0{
+    .TOKEN(s0, {
         color: #d44950;
-    }
-    .enlighter-s1{
+    });
+    .TOKEN(s1, {
         color: #d44950;
-    }
-    .enlighter-s2{
+    });
+    .TOKEN(s2, {
         color: #d44950;
-    }
-    .enlighter-s3{
+    });
+    .TOKEN(s3, {
         color: #d44950;
-    }
-    .enlighter-s4{
+    });
+    .TOKEN(s4, {
         color: #d44950;
-    }
-    .enlighter-s5{
+    });
+    .TOKEN(s5, {
         color: #d44950;
-    }
+    });
 
     // numbers
-    .enlighter-n0{
+    .TOKEN(n0, {
         color: #f60;
-    }
-    .enlighter-n1{
+    });
+    .TOKEN(n1, {
         color: #f60;
-    }
-    .enlighter-n2{
+    });
+    .TOKEN(n2, {
         color: #f60;
-    }
-    .enlighter-n3{
+    });
+    .TOKEN(n3, {
         color: #f60;
-    }
-    .enlighter-n4{
+    });
+    .TOKEN(n4, {
         color: #f60;
-    }
-    .enlighter-n5{
+    });
+    .TOKEN(n5, {
         color: #f60;
-    }
+    });
 
     // methods/functions
-    .enlighter-m0{
+    .TOKEN(m0, {
         color: #99f;
-    }
-    .enlighter-m1{
+    });
+    .TOKEN(m1, {
         color: #212529;
-    }
-    .enlighter-m2{
+    });
+    .TOKEN(m2, {
         color: #212529;
-    }
-    .enlighter-m3{
+    });
+    .TOKEN(m3, {
         color: #212529;
-    }
+    });
 
     // generic
-    .enlighter-g0{
+    .TOKEN(g0, {
         color: #2f6f9f;
-    }
-    .enlighter-g1{
+    });
+    .TOKEN(g1, {
         color: #999999;
         font-weight: bold;
-    }
+    });
 
     // Text Documents
-    .enlighter-t0{
+    .TOKEN(t0, {
         color: #999999;
-    }
-    .enlighter-t1{
+    });
+    .TOKEN(t1, {
         color: #d44950;
         font-weight: bold;
-    }
-    .enlighter-t2{
+    });
+    .TOKEN(t2, {
         color: #d44950;
         font-weight: bold;
-    }
-    .enlighter-t3{
+    });
+    .TOKEN(t3, {
         color: #0086b3;
-    }
-    .enlighter-t4{
+    });
+    .TOKEN(t4, {
         color: #0a8;
-    }
-    .enlighter-t5{
+    });
+    .TOKEN(t5, {
         color: #0a8;
-    }
-    .enlighter-t6{
+    });
+    .TOKEN(t6, {
         color: #f60;
-    }
-    .enlighter-t7{
+    });
+    .TOKEN(t7, {
         color: #999999;
         font-weight: bold;
-    }
-    .enlighter-t8{
+    });
+    .TOKEN(t8, {
         color: #999999;
-    }
+    });
 
     // XML
-    .enlighter-x1{
+    .TOKEN(x1, {
         color: #2f6f9f;
-    }
-    .enlighter-x2{
+    });
+    .TOKEN(x2, {
         color: #4f9fcf;
-    }
+    });
 
     // CSS
-    .enlighter-x10{
+    .TOKEN(x10, {
         color: #0a8;
-    }
-    .enlighter-x11{
+    });
+    .TOKEN(x11, {
         color: #0a8;
-    }
-    .enlighter-x12{
+    });
+    .TOKEN(x12, {
         color: #99f;
-    }
-    .enlighter-x13{
+    });
+    .TOKEN(x13, {
         color: #f60;
-    }
-    .enlighter-x14{
+    });
+    .TOKEN(x14, {
         color: #f60;
-    }
-    .enlighter-x15{
+    });
+    .TOKEN(x15, {
         color: #f60;
-    }
+    });
 
-} // .enlighter-t-enlighter
+     /* Object Wrapper - layout::INLINE
+    ----------------------------------------------------------------------------------- */
+    .VIEW_INLINE({
+        background-color: #f8f9fa;
+        border: none;
+        border-radius: 5px;
+    });
 
+    /* Object Wrapper - layout::CODEGROUPS
+    ----------------------------------------------------------------------------------- */
+    .VIEW_CODEGROUP({
 
-/* Object Wrapper - layout::CODEGROUPS
------------------------------------------------------------------------------------ */
-.enlighter-t-bootstrap4.@{VIEW_CODEGROUP}{
-    display: block;
+        // contains the buttons
+        .enlighter-codegroup-switch{
 
-    // border radius top
-    ol.enlighter, ul.enlighter, .enlighter-raw{
+            border: solid 3px #f8f9fa;
+            border-bottom-width: 0px;
+            padding: 15px;
 
-    }
+            .enlighter-btn{
+                padding: 3px 10px 3px 10px;
+                border: none;
+                font-size: 11px;
+                color: #212529;
+                font-weight: bold;
+                
+                background-color: #f8f9fa;
+                border-radius: 5px;
 
-    // border radius upper right corner
-    .enlighter li:first-child{
-
-    }
-
-    // contains the tabs
-    .enlighter-codegroup-wrapper{
-        position: relative;
-    }
-
-    // contains the buttons
-    .enlighter-codegroup-switch{
-        border: solid 3px #f8f9fa;
-        border-bottom-width: 0px;
-        padding: 15px;
-        .enlighter-btn{
-            padding: 3px 10px 3px 10px;
-            border: none;
-            font-size: 11px;
-            color: #212529;
-            font-weight: bold;
-            
-            background-color: #f8f9fa;
-            border-radius: 5px;
-
-            &.enlighter-active{
-                background-color: #007bff;
-                color: #f0f0f0;
+                &.enlighter-active{
+                    background-color: #007bff;
+                    color: #f0f0f0;
+                }
             }
         }
-    }
-}
+
+    });
+
+});

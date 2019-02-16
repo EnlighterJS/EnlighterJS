@@ -1,13 +1,12 @@
-@import "selectors.less";
+@import "core/selectors.less";
 
 .THEME(enlighter, {
     
     color: #939393;
     border-radius: 8px;
     border: solid 1px #e0e0e0;
-    background-color: #f9f9f9;
 
-    .enlighter-btn{
+    .STYLE_BUTTON({
         border-radius: 3px;
         background-color: #fff;
         color: #717171;
@@ -29,7 +28,7 @@
         &:after{
             content: '';
         }
-    }
+    });
 
     // hover styles
     .STYLE_LINEHOVER({
@@ -42,8 +41,7 @@
 
     // Inline specific styles
     .STYLE_CODE_CONTAINER_INLINE({
-        border-radius: 3px;
-        background-color: #fafafa;
+
     });
     
     // RAW code pane
@@ -317,6 +315,12 @@
         font-style: italic;
     });
 
+    /* Object Wrapper - layout::INLINE
+    ----------------------------------------------------------------------------------- */
+    .VIEW_INLINE({
+        border-radius: 3px;
+        background-color: #fafafa;
+    });
 
     /* Object Wrapper - layout::CODEGROUPS
     ----------------------------------------------------------------------------------- */

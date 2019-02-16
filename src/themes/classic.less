@@ -1,8 +1,12 @@
-@import "selectors.less";
+@import "core/selectors.less";
+@import "core/fonts.less";
 
-.enlighter-t-classic{
+.THEME(classic, {
 
-    .enlighter-toolbar .enlighter-btn{
+    background-color: #ffffff;
+    border: 1px solid #e8e8e2;
+
+    .STYLE_BUTTON({
         background-color: #fff;
         color: #717171;
         font-size: 12px;
@@ -14,6 +18,7 @@
         height: 23px;
         background-position: 0 0;
         background-size: contain;
+        font-family: @font_sans;
 
         &:hover{
             border-color: #c9c9c9;
@@ -23,52 +28,39 @@
         &:after{
             content: '';
         }
-    }
+    });
 
     // line hover color
-    &.enlighter-hover{
-        ul.enlighter li:hover{
-            border: none;
-            background-color: #ddf0dd;
-        }
-        ol.enlighter li:hover{
-            border: none;
-            border-left: solid 4px #52ce52;
-            background-color: #ddf0dd;
-        }
-    }
+    .STYLE_LINEHOVER({
+    }, {
+        background-color: #ddf0dd;
+    });
 
-    // Inline specific styles
-    &.@{VIEW_INLINE} span.enlighter{
-        background-color: transparent;
-        border: none;
-    }
 
     // RAW code pane
-    .enlighter-raw{
-        background-color: #ffffff;
+    .STYLE_CODE_CONTAINER_RAW({
         font-size: 15px;
         color: #000000;
-        border: 1px solid #e8e8e2;
         line-height: 22px;
         padding: 4px 5px 4px 58px;
-    }
+    });
 
     // LIST specific styles
-    ol.enlighter, ul.enlighter{
-        background-color: #f8f8f8;
-        border: 1px solid #e8e8e2;
+    .STYLE_CODE_CONTAINER_BLOCK({
         line-height: 20px;
-        color: #505050;
-        font-size: 14px;
-    }
+    });
+    
 
     // line styles
-    .enlighter li{
-        border: solid 0px #ffffff;
+    .STYLE_LINE({
         padding: 1px 5px 1px 14px;
         line-height: 20px;
         color: #aaaaaa;
+
+        // match content container
+        & > div{
+            border-left: solid 4px #52ce52;
+        }
 
         // top+bottom offsets + borders
         &:FIRST-CHILD {
@@ -79,27 +71,38 @@
             padding-bottom: 5px;
         }
 
-        &:nth-child(2n){
-            background-color: #f8f8f8;
-        }
-
         &:AFTER {
             content: ' ';
         }
-    }
 
-    // without line numbers - green border by outer container
-    ul.enlighter{
-        border-left: solid 4px #52ce52;
-    }
+        // special line highlight color
+        &.enlighter-special{
+            background-color: #f9f9f9;
+        }
+    }, {
 
-    // Line Number Styles - green border by li elements
-    ol.enlighter li {
-        list-style: decimal outside;
-        border-left: solid 4px #52ce52;
+    }, {
+        background-color: #f8f8f8;
+    });
+
+    // Line Number Styles
+    .STYLE_LINENUMBERS({
+        
         padding: 1px 5px 1px 14px;
         color: #000000;
-    }
+        background-color: #f8f8f8;
+        font-size: 14px;
+
+        // enforce width
+        width: 55px;
+        min-width: 55px;
+
+    // borders
+    }, {
+
+    }, {
+
+    });
 
     // special line highlight color
     .enlighter li.enlighter-special{
@@ -108,270 +111,265 @@
     }
 
     // text size
-    .enlighter span{
+    .STYLE_TOKEN_DEFAULT({
         font-size: 15px;
-    }
+    });
 
     // default text fragment color
-    .enlighter-text{
+    .TOKEN(text, {
         color: #000000;
-    }
+    });
 
     // comments
-    .enlighter-c0{
+    .TOKEN(c0, {
         color: #888888;
-    }
-    .enlighter-c1{
+    });
+    .TOKEN(c1, {
         color: #888888;
-    }
-    .enlighter-c2{
+    });
+    .TOKEN(c2, {
         color: #888888;
-    }
-    .enlighter-c9{
+    });
+    .TOKEN(c9, {
         color: #888888;
-    }
+    });
 
     // keywords
-    .enlighter-k0{
+    .TOKEN(k0, {
         color: #066da1;
         font-weight: bold;
-    }
-    .enlighter-k1{
+    });
+    .TOKEN(k1, {
         color: #066da1;
         font-weight: bold;
-    }
-    .enlighter-k2{
+    });
+    .TOKEN(k2, {
         color: #404247;
         font-weight: bold;
-    }
-    .enlighter-k3{
+    });
+    .TOKEN(k3, {
         color: #404247;
         background-color: #f0f0f0;
-    }
-    .enlighter-k4{
+    });
+    .TOKEN(k4, {
         color: #404247;
         font-weight: bold;
-    }
-    .enlighter-k5{
+    });
+    .TOKEN(k5, {
         color: #404247;
         font-weight: bold;
-    }
-    .enlighter-k6{
+    });
+    .TOKEN(k6, {
         color: #066da1;
         font-style: italic;
-    }
-    .enlighter-k7{
+    });
+    .TOKEN(k7, {
         color: #066da1;
         font-weight: bold;
-    }
-    .enlighter-k8{
+    });
+    .TOKEN(k8, {
         color: #404247;
-    }
-    .enlighter-k9{
+    });
+    .TOKEN(k9, {
         color: #d53aa9;
         font-weight: bold;
-    }
-    .enlighter-k10{
+    });
+    .TOKEN(k10, {
         color: #404247;
         font-style: italic;
-    }
+    });
 
     // expressions
-    .enlighter-e0{
+    .TOKEN(e0, {
         color: #d53aa9;
         font-weight: bold;
-    }
-    .enlighter-e1{
+    });
+    .TOKEN(e1, {
         color: #d53aa9;
         font-weight: bold;
-    }
-    .enlighter-e2{
+    });
+    .TOKEN(e2, {
         color: #009926;
-    }
-    .enlighter-e3{
+    });
+    .TOKEN(e3, {
         color: #d53aa9;
-    }
-    .enlighter-e4{
+    });
+    .TOKEN(e4, {
         color: #d53aa9;
         font-style: italic;
-    }
+    });
 
     // strings
-    .enlighter-s0{
+    .TOKEN(s0, {
         color: #2d47e6;
-    }
-    .enlighter-s1{
+    });
+    .TOKEN(s1, {
         color: #2d47e6;
-    }
-    .enlighter-s2{
+    });
+    .TOKEN(s2, {
         color: #2d47e6;
-    }
-    .enlighter-s3{
+    });
+    .TOKEN(s3, {
         color: #2d47e6;
-    }
-    .enlighter-s4{
+    });
+    .TOKEN(s4, {
         color: #2d47e6;
         font-weight: bold;
-    }
-    .enlighter-s5{
+    });
+    .TOKEN(s5, {
         color: #d53aa9;
         font-weight: bold;
-    }
+    });
 
     // numbers
-    .enlighter-n0{
+    .TOKEN(n0, {
         color: #d53aa9;
-    }
-    .enlighter-n1{
+    });
+    .TOKEN(n1, {
         color: #d53aa9;
-    }
-    .enlighter-n2{
+    });
+    .TOKEN(n2, {
         color: #d53aa9;
-    }
-    .enlighter-n3{
+    });
+    .TOKEN(n3, {
         color: #d53aa9;
-    }
-    .enlighter-n4{
+    });
+    .TOKEN(n4, {
         color: #d53aa9;
-    }
-    .enlighter-n5{
+    });
+    .TOKEN(n5, {
         color: #d53aa9;
-    }
+    });
 
     // methods/functions
-    .enlighter-m0{
+    .TOKEN(m0, {
         color: #404247;
-    }
-    .enlighter-m1{
+    });
+    .TOKEN(m1, {
         color: #404247;
-    }
-    .enlighter-m2{
+    });
+    .TOKEN(m2, {
         color: #404247;
-    }
-    .enlighter-m3{
+    });
+    .TOKEN(m3, {
         color: #404247;
-    }
+    });
 
     // generic
-    .enlighter-g0{
+    .TOKEN(g0, {
         color: #444444;
-    }
-    .enlighter-g1{
+    });
+    .TOKEN(g1, {
         color: #444444;
-    }
+    });
 
     // Text Documents
-    .enlighter-t0{
+    .TOKEN(t0, {
         color: #444444;
-    }
-    .enlighter-t1{
+    });
+    .TOKEN(t1, {
         color: #d53aa9;
         font-weight: bold;
-    }
-    .enlighter-t2{
+    });
+    .TOKEN(t2, {
         color: #d53aa9;
         font-weight: bold;
-    }
-    .enlighter-t3{
+    });
+    .TOKEN(t3, {
         color: #066da1;
-    }
-    .enlighter-t4{
+    });
+    .TOKEN(t4, {
         color: #009926;
-    }
-    .enlighter-t5{
+    });
+    .TOKEN(t5, {
         color: #009926;
-    }
-    .enlighter-t6{
+    });
+    .TOKEN(t6, {
         color: #d53aa9;
-    }
-    .enlighter-t7{
+    });
+    .TOKEN(t7, {
         color: #444444;
         font-weight: bold;
-    }
-    .enlighter-t8{
+    });
+    .TOKEN(t8, {
         color: #444444;
         background-color: #f0f0f0;
         font-style: italic;
-    }
+    });
 
     // XML
-    .enlighter-x1{
+    .TOKEN(x1, {
         color: #066da1;
         font-weight: bold;
-    }
-    .enlighter-x2{
+    });
+    .TOKEN(x2, {
         color: #404247;
         font-weight: bold;
-    }
+    });
 
     // CSS
-    .enlighter-x10{
+    .TOKEN(x10, {
         color: #000000;
         font-weight: bold;
-    }
-    .enlighter-x11{
+    });
+    .TOKEN(x11, {
         color: #286491;
         font-weight: bold;
-    }
-    .enlighter-x12{
+    });
+    .TOKEN(x12, {
         color: #286491;
         text-decoration: underline;
-    }
-    .enlighter-x13{
+    });
+    .TOKEN(x13, {
         color: #0086b3;
-    }
-    .enlighter-x14{
+    });
+    .TOKEN(x14, {
         color: #009999;
         font-style: italic;
-    }
-    .enlighter-x15{
+    });
+    .TOKEN(x15, {
         color: #990073;
         font-style: italic;
-    }
+    });
 
-} // .enlighter-t-enlighter
+    /* Object Wrapper - layout::INLINE
+    ----------------------------------------------------------------------------------- */
+    .VIEW_INLINE({
+        background-color: transparent;
+        border: none;
+    });
 
+    /* Object Wrapper - layout::CODEGROUPS
+    ----------------------------------------------------------------------------------- */
+    .VIEW_CODEGROUP({
+        display: block;
 
-/* Object Wrapper - layout::CODEGROUPS
------------------------------------------------------------------------------------ */
-.enlighter-t-classic.@{VIEW_CODEGROUP}{
-    display: block;
-
-    // border radius top
-    ol.enlighter, ul.enlighter, .enlighter-raw{
-        border-top-width: 0px;
-    }
-
-    // border radius upper right corner
-    .enlighter li:first-child{
-
-    }
-
-    // contains the tabs
-    .enlighter-codegroup-wrapper{
-        position: relative;
-    }
-
-    // contains the buttons
-    .enlighter-codegroup-switch{
-        background-color: #f8f8f8;
-        height: 31px;
-        border: 1px solid #e8e8e2;
-        border-bottom-width: 0px;
-        padding-left: 35px;
-
-        .enlighter-btn{
-            border: none;
-            font-size: 15px;
-            background-color: transparent;
-            line-height: 20px;
-            padding: 5px 10px 5px 10px;
-
-            &.enlighter-active{
-                background-color: #52ce52;
-                color: #f9f9f9;
-                font-weight: bold;
+        // contains the tabs
+        .enlighter-codegroup-wrapper{
+            position: relative;
+        }
+    
+        // contains the buttons
+        .enlighter-codegroup-switch{
+            background-color: #f8f8f8;
+            padding-left: 45px;
+    
+            .enlighter-btn{
+                border: none;
+                font-size: 15px;
+                line-height: 25px;
+                width: auto;
+                height: auto;
+                background-color: transparent;
+                padding: 5px 10px 5px 10px;
+    
+                &.enlighter-active{
+                    background-color: #52ce52;
+                    color: #f9f9f9;
+                    font-weight: bold;
+                }
             }
         }
-    }
-}
+    });
+
+});
