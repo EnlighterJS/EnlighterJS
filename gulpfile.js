@@ -31,7 +31,7 @@ const _rollup_babel = require('rollup-plugin-babel');
 _gulp.task('default', ['library', 'less-themes-full', 'less-themes-single']);
 
 // themes to include
-const themelist = ['enlighter', 'beyond', 'classic', 'godzilla', 'atomic', 'droide', 'minimal', 'eclipse', 'mowtwo', 'rowhammer', 'bootstrap4', 'dracula'];
+const themelist = ['enlighter', 'beyond', 'classic', 'godzilla', 'atomic', 'droide', 'minimal', 'eclipse', 'mowtwo', 'rowhammer', 'bootstrap4', 'dracula', 'monokai'];
 
 // license header prepended to builds
 const licenseHeader = `/*! EnlighterJS Syntax Highlighter ${_package.version} | Mozilla Public License 2.0 | https://enlighterjs.org */\n`;

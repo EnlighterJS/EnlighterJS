@@ -1,0 +1,355 @@
+// ----------------------------------------------------------------------
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// --
+// Copyright 2016-2019 Andi Dittrich <https://andidittrich.de>
+// ----------------------------------------------------------------------
+
+@import "core/selectors.less";
+@import "core/fonts.less";
+
+// monokai theme colors
+// @see https://raw.githubusercontent.com/Maximetinu/Sublime-Text-Monokai-theme-for-Visual-Studio-Code/development/theme-sublime-monokai-csharp-colorizer/themes/sublime-monokai-color-theme.json
+@monokai_background: #272822;
+@monokai_foreground: #f8f8f2;
+@monokai_border: #1e1f1c;
+@monokai_selection: #414339;
+@monokai_focus: #75715e;
+@monokai_green: #a6e22e;
+@monokai_orange: #fd971f;
+@monokai_red: #f92672;
+@monokai_yellow: #e6db74;
+@monokai_purple: #ae81ff;
+@monokai_cyan: #66d9ef;
+
+// derived colors
+@monokai_currentline: @monokai_focus;
+@monokai_comment: @monokai_focus;
+
+.THEME(monokai, {
+
+    background-color: @monokai_background;
+    
+    .STYLE_TOOLBAR({
+        top: 10px;
+        right: 10px;
+    });
+
+    .STYLE_BUTTON({
+        background-image: none;
+        background-color: @monokai_selection;
+        color: @monokai_foreground;
+        font-size: 12px;
+        padding: 2px 8px 2px 8px;
+        margin: 0px 5px 0px 5px;
+        border: solid 1px @monokai_border;
+        font-family: @font_sans;
+
+        &:hover{
+            background-color: lighten(@monokai_selection, 5%);
+        }
+    });
+
+    // set button labels
+    .STYLE_TOOLBAR_BUTTON(raw, 'Raw', {
+    });
+
+    .STYLE_TOOLBAR_BUTTON(copy, 'Copy', {
+    });
+
+    .STYLE_TOOLBAR_BUTTON(window, 'Extern', {
+    });
+
+    .STYLE_TOOLBAR_BUTTON(website, 'EnlighterJS', {
+    });
+
+    // line hover color
+    .STYLE_LINEHOVER({
+    }, {
+        background-color: @monokai_currentline;
+    });
+
+    // RAW code pane
+    .STYLE_CODE_CONTAINER_RAW({
+        font-size: 15px;
+        color: @monokai_foreground;
+        line-height: 22px;
+        padding: 4px 5px 4px 55px;
+    });
+
+
+    // line styles
+    .STYLE_LINE({
+        padding: 1px 5px 1px 14px;
+        line-height: 19px;
+
+        // top+bottom offsets + borders
+        &:FIRST-CHILD {
+            padding-top: 5px;
+        }
+
+        &:LAST-CHILD {
+            padding-bottom: 5px;
+        }
+
+        &:AFTER {
+            content: ' ';
+        }
+
+        // special line highlight color
+        &.enlighter-special{
+            background-color: @monokai_selection;
+        }
+    }, {}, {});
+
+    // Line Number Styles
+    .STYLE_LINENUMBERS({
+        font-size: 12px;
+        color: #808080;
+
+    // borders
+    }, {
+
+    }, {
+
+    });
+
+    // text size
+    .STYLE_TOKEN_DEFAULT({
+        font-size: 15px;
+    });
+
+    // default text fragment color
+    .TOKEN(text, {
+        color: @monokai_foreground;
+    });
+
+    // comments
+    .TOKEN(c0, {
+        color: @monokai_comment;
+    });
+    .TOKEN(c1, {
+        color: @monokai_comment;
+    });
+    .TOKEN(c2, {
+        color: @monokai_comment;
+    });
+    .TOKEN(c9, {
+        color: @monokai_comment;
+    });
+
+    // keywords
+    .TOKEN(k0, {
+        color: @monokai_red;
+    });
+    .TOKEN(k1, {
+        color: @monokai_red;
+    });
+    .TOKEN(k2, {
+        color: @monokai_red;
+    });
+    .TOKEN(k3, {
+        color: @monokai_red;
+    });
+    .TOKEN(k4, {
+        color: @monokai_red;
+    });
+    .TOKEN(k5, {
+        color: @monokai_red;
+    });
+    .TOKEN(k6, {
+        color: @monokai_red;
+    });
+    .TOKEN(k7, {
+        color: @monokai_foreground;
+    });
+    .TOKEN(k8, {
+        color: @monokai_red;
+    });
+    .TOKEN(k9, {
+        color: @monokai_orange;
+    });
+    .TOKEN(k10, {
+        color: @monokai_red;
+    });
+
+    // expressions
+    .TOKEN(e0, {
+        color: @monokai_purple;
+    });
+    .TOKEN(e1, {
+        color: @monokai_purple;
+    });
+    .TOKEN(e2, {
+        color: @monokai_purple;
+    });
+    .TOKEN(e3, {
+        color: @monokai_purple;
+    });
+    .TOKEN(e4, {
+        color: @monokai_purple;
+    });
+
+    // strings
+    .TOKEN(s0, {
+        color: @monokai_yellow;
+    });
+    .TOKEN(s1, {
+        color: @monokai_yellow;
+    });
+    .TOKEN(s2, {
+        color: @monokai_yellow;
+    });
+    .TOKEN(s3, {
+        color: @monokai_yellow;
+    });
+    .TOKEN(s4, {
+        color: @monokai_yellow;
+        font-weight: bold;
+    });
+    .TOKEN(s5, {
+        color: @monokai_yellow;
+        font-style: italic;
+    });
+
+    // numbers
+    .TOKEN(n0, {
+        color: @monokai_purple;
+    });
+    .TOKEN(n1, {
+        color: @monokai_purple;
+    });
+    .TOKEN(n2, {
+        color: @monokai_purple;
+    });
+    .TOKEN(n3, {
+        color: @monokai_purple;
+    });
+    .TOKEN(n4, {
+        color: @monokai_purple;
+    });
+    .TOKEN(n5, {
+        color: @monokai_purple;
+    });
+
+    // methods/functions
+    .TOKEN(m0, {
+        color: @monokai_cyan;
+    });
+    .TOKEN(m1, {
+        color: @monokai_cyan;
+    });
+    .TOKEN(m2, {
+        color: @monokai_cyan;
+    });
+    .TOKEN(m3, {
+        color: @monokai_cyan;
+    });
+
+    // generic
+    .TOKEN(g0, {
+        color: @monokai_foreground;
+        font-weight: bold;
+    });
+    .TOKEN(g1, {
+        color: @monokai_foreground;
+        font-weight: bold;
+    });
+
+    // Text Documents
+    .TOKEN(t0, {
+        color: @monokai_foreground;
+    });
+    .TOKEN(t1, {
+        color: @monokai_green;
+    });
+    .TOKEN(t2, {
+        color: @monokai_green;
+    });
+    .TOKEN(t3, {
+        color: @monokai_yellow;
+    });
+    .TOKEN(t4, {
+        color: @monokai_yellow;
+    });
+    .TOKEN(t5, {
+        color: @monokai_green;
+    });
+    .TOKEN(t6, {
+        color: @monokai_red;
+    });
+    .TOKEN(t7, {
+        color: @monokai_red;
+    });
+    .TOKEN(t8, {
+        color: @monokai_comment;
+    });
+
+    // XML
+    .TOKEN(x1, {
+        color: @monokai_red;
+    });
+    .TOKEN(x2, {
+        color: @monokai_green;
+    });
+
+    // CSS
+    .TOKEN(x10, {
+        color: @monokai_green;
+    });
+    .TOKEN(x11, {
+        color: @monokai_green;
+    });
+    .TOKEN(x12, {
+        color: @monokai_cyan;
+        font-style: italic;
+    });
+    .TOKEN(x13, {
+        color: @monokai_red;
+    });
+    .TOKEN(x14, {
+        color: @monokai_purple;
+    });
+    .TOKEN(x15, {
+        color: @monokai_green;
+    });
+
+
+     /* Object Wrapper - layout::INLINE
+    ----------------------------------------------------------------------------------- */
+    .VIEW_INLINE({
+
+    });
+
+    /* Object Wrapper - layout::CODEGROUPS
+    ----------------------------------------------------------------------------------- */
+    .VIEW_CODEGROUP({
+        // contains the buttons
+        .enlighter-codegroup-switch{
+            background-color: @monokai_selection;
+            padding: 10px 10px 0px 30px;
+
+            .enlighter-btn{
+                background-image: none;
+                background-color: @monokai_selection;
+                color: @monokai_foreground;
+                font-size: 14px;
+                padding: 2px 8px 2px 8px;
+                margin: 0px 10px 0px 10px;
+                border: none;
+                line-height: 25px;
+                border-radius: 0px;
+                font-style: italic;
+
+                &.enlighter-active{
+                    background-color: @monokai_background;
+                    color: @monokai_foreground;
+                    font-weight: bold;
+                    font-style: normal;
+                }
+            }
+        }
+    });
+
+});

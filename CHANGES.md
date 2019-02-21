@@ -22,6 +22,7 @@
 * Added jQuery (jQuery.fn.x) `enlight()` extensions
 * Added: ECMA6 Support to Javascript Engine
 * Added: Copy to clipboard button
+* Added: horizontal scroll option
 * Added: [YAML](http://docs.ansible.com/ansible/YAMLSyntax.html) Support
 * Added: [Kotlin](https://kotlinlang.org) support
 * Added: [TypeScript](https://www.typescriptlang.org/) support
@@ -36,5 +37,6 @@
 * Added: Prolog Support (simple)
 * Added: Bootstrap4 Theme
 * Added: Dracula Theme (dark, following [draculatheme](https://draculatheme.com/) colors)
+* Added: Monokai Theme (dark)
 * Removed: Lighter.js legacy themes (Git, Mocha, MooTools, Panic, Tutti, Twilight)
 * Removed: most keyword lists from language files (direct regular expressions are used)
