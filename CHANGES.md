@@ -34,6 +34,7 @@
 * Added: [Powershell](https://msdn.microsoft.com/en-us/powershell/mt173057.aspx) Support
 * Added: [VisualBasic NET/Classic](https://msdn.microsoft.com/de-de/library/2x7h1hfk.aspx) Support
 * Added: [Swift](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/index.html) Support
+* Added: [QML](https://doc.qt.io/qt-5/qtqml-syntax-basics.html) Support
 * Added: Prolog Support (simple)
 * Added: Bootstrap4 Theme
 * Added: Dracula Theme (dark, following [draculatheme](https://draculatheme.com/) colors)

@@ -35,6 +35,7 @@ export {php} from './php';
 export {powershell} from './powershell';
 export {prolog} from './prolog';
 export {python} from './python';
+export {qml} from './qml';
 export {raw} from './raw';
 export {ruby} from './ruby';
 export {rust} from './rust';
