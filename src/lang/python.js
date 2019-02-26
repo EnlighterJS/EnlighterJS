@@ -48,6 +48,7 @@ export class python extends generic {
             },
 
             // control keywords
+            // https://github.com/python/cpython/blob/3.7/Lib/keyword.py
             {
                 regex: /\b(raise|while|try|if|for|finally|else|elif|continue|break)\b/g,
                 type: 'k1'
@@ -55,7 +56,7 @@ export class python extends generic {
 
             // keywords
             {
-                regex: /\b(yield|with|return|print|pass|lambda|is|in|import|global|from|exec|except|def|class|assert|as)\b/g,
+                regex: /\b(yield|with|return|pass|lambda|is|in|import|global|from|except|def|class|assert|as|async|await)\b/g,
                 type: 'k0'
             },
 
@@ -63,6 +64,18 @@ export class python extends generic {
             {
                 regex: /\b(and|or|not|del)\b/g,
                 type: 'k3'
+            },
+
+            // boolean
+            {
+                regex: /\b(True|False)\b/g,
+                type: 'e0'
+            },
+
+            // null
+            {
+                regex: /\b(None)\b/g,
+                type: 'e1'
             },
 
             // method calls
