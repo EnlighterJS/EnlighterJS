@@ -18,8 +18,11 @@ import Toolbar from '../ui/toolbar.jsx';
 // clipboard copy
 import * as Clipboard from '../lib/clipboard';
 
-export function codegroup(dataset, options){
+export function codegroup(dataset){
     let wrapper = null;
+
+    // extract options/params from first codeblock
+    const options = dataset[0].params;
 
     // index of the active tab
     let activeTabIndex = 0;
@@ -32,7 +35,7 @@ export function codegroup(dataset, options){
     const cssClasses = [
         'enlighter-default',
         'enlighter-v-codegroup',
-        'enlighter-t-' + dataset[0].params.theme
+        'enlighter-t-' + options.theme
     ];
 
     // hover enabled ?

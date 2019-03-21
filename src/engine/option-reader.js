@@ -31,16 +31,23 @@ function mergeOptions(...options){
 
 // utility function to fetch enlighter data attributes and merge local + global options
 export function parse(element, elementOptions){
+
+    // get the options provided via javascript
+    function getOption(name){
+        // merge defaults - use utlity function to handle numbers + boolean options (|| operator won't!)
+        return mergeOptions(elementOptions[name], _options[name], null);
+    }
+
     // merge options:
     // 1. element options (data attribute)
     // 2. given options
     // 3. global options/defaults
-    function getEnlighterAttribute(name, type){
+    function getAttributeOption(name, type){
         // is attribute set ?
         let v = _dom.getElementDataAttribute(element, 'enlighter-' + name);
 
-        // merge defaults - use utlity function to handle numbers + boolean options (|| operator won't!)
-        const defaults = mergeOptions(elementOptions[name], _options[name], null);
+        // merge default values with provided element options
+        const defaults = getOption(name);
 
         // string input
         if (v && v.length > 0){
@@ -82,16 +89,23 @@ export function parse(element, elementOptions){
         }
     }
 
-    // rendering parameters
-    // add some defaults
+    // merge options
     return {
-        language: getEnlighterAttribute('language') || 'generic',
-        theme: getEnlighterAttribute('theme') || 'enlighter',
-        layout: getEnlighterAttribute('layout') || 'standard',
-        title: getEnlighterAttribute('title'),
-        highlight: getEnlighterAttribute('highlight'),
-        linenumbers: getEnlighterAttribute('linenumbers', 'boolean'),
-        lineoffset: getEnlighterAttribute('lineoffset', 'int')
+        // @scope SETTINGS,ATTRIBUTE
+        language:           getAttributeOption('language'),
+        theme:              getAttributeOption('theme'),
+        layout:             getAttributeOption('layout'),
+        title:              getAttributeOption('title'),
+        highlight:          getAttributeOption('highlight'),
+        linenumbers:        getAttributeOption('linenumbers', 'boolean'),
+        lineoffset:         getAttributeOption('lineoffset', 'int'),
+
+        // @scope SETTINGS
+        indent:             getOption('indent'),
+        ampersandCleanup:   getOption('ampersandCleanup'),
+        linehover:          getOption('linehover'),
+        rawcodeDbclick:     getOption('rawcodeDbclick'),
+        textOverflow:       getOption('textOverflow'),
     }
 }
 

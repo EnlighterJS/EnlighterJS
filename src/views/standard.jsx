@@ -18,8 +18,11 @@ import Toolbar from '../ui/toolbar.jsx';
 // clipboard copy
 import * as Clipboard from '../lib/clipboard';
 
-export function standard(dataset, options){
+export function standard(dataset){
     let wrapper = null;
+
+    // extract options/params from first codeblock
+    const options = dataset[0].params;
 
     // list of css classes to apply on the outer wrapper
     const cssClasses = [

@@ -58,7 +58,7 @@ export function enlight(elements, elementOptions={}){
         });
 
         // render code
-        const wrapper = _engine.render(dataset, elementOptions);
+        const wrapper = _engine.render(dataset);
 
         // add element before the original container
         _dom.insertBefore(elements[0], wrapper);

@@ -40,9 +40,7 @@ function getLayout(name){
 }
 
 // The Highlighting Engine Backend
-export function render(dataset, localOptions={}){
-    // merge global options
-    Object.assign(localOptions, _options);
+export function render(dataset){
 
     // get layout
     const layoutEngine = getLayout(dataset[0].params.layout)
@@ -54,7 +52,7 @@ export function render(dataset, localOptions={}){
             throw new TypeError('EnlighterJS Engine requires string input')
         }
 
-        // use given language or default one - including generic fallback
+        // use given language - including generic fallback
         const languageIdentifier = getLanguage(params.language) || getLanguage(_options.language) || 'generic';
 
         // create language engine instance
@@ -69,5 +67,5 @@ export function render(dataset, localOptions={}){
     });
 
     // render layout
-    return layoutEngine(codeblocks, localOptions);
+    return layoutEngine(codeblocks);
 }

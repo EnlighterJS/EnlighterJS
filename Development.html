@@ -17,6 +17,7 @@
 
         body{
             /*font-family: 'Times New Roman', Times, serif;*/
+            direction: rtl;
         }
         
     </style>
@@ -26,12 +27,11 @@
         var _domready = (function(_window, _document){
             
             var options = {
-                    language : 'javascript',
-                    theme: 'rowhammer',
+                    language : 'php',
                     indent : 2,
-                    linenumbers: false,
-                    linehover: false,
-                    textOverflow: 'scroll'
+                    linenumbers: true,
+                    linehover: true,
+                    textOverflow: 'break'
             };
 
             console.time('Rendering');
@@ -65,21 +65,48 @@
         </p>
 
         <h2>Block-Content</h2>
+<pre 
+    data-enlighter-language="js" 
+    data-enlighter-linenumbers="true" 
+    data-enlighter-theme="dracula"
+    data-enlighter-title="xxxx" >
+// Importing core libraries
+import 'dart:math';
 
-<pre data-enlighter-language="matlab">
-str = ["Mercury","Gemini","Apollo";
-"Skylab","Skylab B","ISS"]
+// Importing libraries from external packages
+import 'package:test/test.dart';
 
-str = "Hello, world"
+// Importing files
+import 'path/to/my_other_file.dart';
 
-str = "A horse! A horse! My kingdom for a horse!"
-
-str = erase(str,"!")
-
-A = 'Four score and seven years ago'
-
-A = {'Mercury','Gemini','Apollo';...
-     'Skylab','Skylab B','ISS'}
+class Spacecraft {
+    String name;
+    DateTime launchDate;
+    
+    // Constructor, with syntactic sugar for assignment to members.
+    Spacecraft(this.name, this.launchDate) {
+        // Initialization code goes here.
+    }
+    
+    // Named constructor that forwards to the default one.
+    Spacecraft.unlaunched(String name) : this(name, null);
+    
+    int get launchYear =>
+        launchDate?.year; // read-only non-final property
+    
+    // Method.
+    void describe() {
+        print('Spacecraft: $name');
+        if (launchDate != null) {
+        int years =
+            DateTime.now().difference(launchDate).inDays ~/
+                365;
+        print('Launched: $launchYear ($years years ago)');
+        } else {
+        print('Unlaunched');
+        }
+    }
+    }    
 </pre>
     
 <pre id="ejs-1" data-enlighter-language="js" data-enlighter-highlight="158" data-enlighter-lineoffset="151">

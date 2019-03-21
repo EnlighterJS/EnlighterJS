@@ -9,37 +9,52 @@
 // global options storage
 export const _options = {
     // default code indentation
+    // @scope SETTINGS
     indent: 4,
 
     // &amp; to &
+    // @scope SETTINGS
     ampersandCleanup: true,
 
     // enable line hover highlighting
+    // @scope SETTINGS
     linehover: true,
 
-    // show linenumbers
-    linenumbers: true,
-
-    // no line offset
-    lineoffset: 0,
-
-    // no special line highlighting
-    highlight: '',
-
-    // default layout
-    layout: 'standard',
-
-    // default language
-    language: 'generic',
-
-    // default theme
-    theme: 'enlighter',
-
     // show raw code on double click ?
+    // @scope SETTINGS
     rawcodeDbclick: false,
 
     // text overflow behaviour: break/scroll
-    textOverflow: 'break'
+    // @scope SETTINGS
+    textOverflow: 'break',
+
+    // show linenumbers
+    // @scope SETTINGS,ATTRIBUTE
+    linenumbers: true,
+
+    // no line offset
+    // @scope SETTINGS,ATTRIBUTE
+    lineoffset: 0,
+
+    // no special line highlighting
+    // @scope SETTINGS,ATTRIBUTE
+    highlight: '',
+
+    // default layout
+    // @scope SETTINGS,ATTRIBUTE
+    layout: 'standard',
+
+    // default language
+    // @scope SETTINGS,ATTRIBUTE
+    language: 'generic',
+
+    // default theme
+    // @scope SETTINGS,ATTRIBUTE
+    theme: 'enlighter',
+
+    // default title
+    // @scope SETTINGS,ATTRIBUTE
+    title: ''
 };
 
 // set global enlighter options
