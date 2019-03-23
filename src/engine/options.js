@@ -68,11 +68,11 @@ export function getOptions(){
 }
 
 // fetch a single options
-export function get(key){
+export function getOption(key){
     return _options[key] || null;
 }
 
 // set a single options
-export function set(key, value){
+export function setOption(key, value){
     _options.key = value;
 }

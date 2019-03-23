@@ -6,9 +6,7 @@
 // Copyright 2016-2018 Andi Dittrich <https://andidittrich.de>
 // ----------------------------------------------------------------------
 
-import {_options} from '../engine/options';
-
-export function getRawCodeFromElement(element){
+export function getRawCodeFromElement(element, options){
     // get the raw content
     let code = element.innerHTML || '';
 
@@ -19,7 +17,7 @@ export function getRawCodeFromElement(element){
     //code = this.textFilter.filterInput(code);
 
     // cleanup ampersand ?
-    if (_options.ampersandCleanup === true) {
+    if (options.ampersandCleanup === true) {
         code = code.replace(/&amp;/gim, '&');
     }
 
@@ -29,7 +27,7 @@ export function getRawCodeFromElement(element){
                 .replace(/&nbsp;/gim, ' ');
 
     // get indent option value
-    const newIndent = _options.indent;
+    const newIndent = options.indent;
 
     // replace tabs with spaces ? re-indent code if specified
     if (newIndent !== false && newIndent > -1){

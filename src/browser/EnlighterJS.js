@@ -44,14 +44,14 @@ export function enlight(elements, elementOptions={}){
         
         // prepare elements, extract code
         const dataset = elements.map(function(element){
+            // extract + parse params
+            const params = _optionReader.parse(element, elementOptions);
+
             // extract code
-            const code = getRawCodeFromElement(element);
+            const code = getRawCodeFromElement(element, params);
 
             // hide the element
             _dom.addClass(element, 'enlighter-origin');
-
-            // extract + parse params
-            const params = _optionReader.parse(element, elementOptions);
 
             // render the 
             return {element, code, params}

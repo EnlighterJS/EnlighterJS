@@ -7,7 +7,7 @@
 // ----------------------------------------------------------------------
 
 // global plugin options
-import {_options} from '../engine/options';
+import {getOption} from '../engine/options';
 
 // Container of Language Engines
 import * as _languages from '../lang/index';
@@ -35,8 +35,8 @@ function getLayout(name){
     // transform to lowercase
     name = (name || '').toLowerCase();
 
-     // layout available ?
-     return (_views[name] ? _views[name] : _views.standard);
+    // layout available ?
+    return (_views[name] ? _views[name] : _views.standard);
 }
 
 // The Highlighting Engine Backend
@@ -53,7 +53,7 @@ export function render(dataset){
         }
 
         // use given language - including generic fallback
-        const languageIdentifier = getLanguage(params.language) || getLanguage(_options.language) || 'generic';
+        const languageIdentifier = getLanguage(params.language) || getLanguage(getOption('language')) || 'generic';
 
         // create language engine instance
         const languageProcessor = new _languages[languageIdentifier];
