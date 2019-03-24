@@ -9,16 +9,22 @@
 // Internal "ReactDOM"
 import * as DOM from './dom';
 
-// copy content of sourceElement to clipboard
-export function copy(sourceElement, wrapper=null, toggleClass){
+// copy content to clipboard
+export function copy(content){
     // optimization
     const _document = DOM.getDocument();
     const _window = DOM.getWindow();
 
+    // create dummy node
+    const contentContainer = DOM.createElement('pre', {className: 'enlighter-clipboard'}, content);
+
+    // append dummy element to document
+    _document.body.appendChild(contentContainer)
+
     try{
         // select source element
         const range = _document.createRange();
-        range.selectNodeContents(sourceElement);
+        range.selectNodeContents(contentContainer);
 
         // add range to window
         const selection = _window.getSelection();
@@ -37,21 +43,14 @@ export function copy(sourceElement, wrapper=null, toggleClass){
         }
     }
     
-    let success = false;
-
-    // just copy in case the raw code pane is visible
-    if (wrapper===null || DOM.hasClass(wrapper, toggleClass)){
-        success = execCommand();
-
-    // set raw container temporary visible
-    }else{
-        DOM.toggleClass(wrapper, toggleClass);
-        success = execCommand();
-        DOM.toggleClass(wrapper, toggleClass);
-    }
+    // try to exec "copy"
+    const success = execCommand();
 
     // remove range from window
     _window.getSelection().removeAllRanges();
+
+    // dispose dummy element
+    DOM.disposeElement(contentContainer);
 
     return success;
 }
