@@ -16,7 +16,7 @@ import * as _languages from '../lang/index';
 import _languageAliases from './alias';
 
 // Container of Views/Layouts
-import * as _views from '../views/index';
+import * as _views from '../ui/views/index';
 
 // helper function to process aliases
 function getLanguage(lang){

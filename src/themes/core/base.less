@@ -8,6 +8,7 @@
 
 @import "fonts.less";
 @import "selectors.less";
+@import "tooltip.less";
 
 /* Object Wrapper - ALL
 ----------------------------------------------------------------------------------- */
@@ -86,6 +87,16 @@
 // hide original codeblock (pre container marked to highlight)
 .enlighter-origin{
     display: none !important;
+}
+
+// invisble clipboard copy container
+.enlighter-clipboard{
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
 }
 
 /* Object Wrapper - layout::INLINE

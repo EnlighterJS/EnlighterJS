@@ -157,6 +157,14 @@
     }   
 }
 
+// tooltip style
+.STYLE_TOOLTIP(@rules){
+    .enlighter-tooltip{
+        @rules();
+    }   
+}
+
+
 // match theme name
 .THEME(@name, @rules){
     .enlighter-t-@{name}{

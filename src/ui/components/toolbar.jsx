@@ -7,9 +7,14 @@
 // ----------------------------------------------------------------------
 
 // Internal "ReactDOM"
-import * as React from '../lib/dom';
+import * as React from '../../lib/dom';
 
-export default function toolbar(options){
+import {Container} from './container.jsx';
+import {Button} from './button.jsx';
+
+import * as _clipboard from '../../lib/clipboard';
+
+export function Toolbar(props){
 
     // optimization
     const _window = React.getWindow();
@@ -21,7 +26,7 @@ export default function toolbar(options){
         const w = _window.open('', '', 'width=' + (_window.screen.width/2) + ', height=' + (_window.screen.height/2) + ', menubar=no, titlebar=no, toolbar=no, top=100, left=100, scrollbars=yes, status=no');
 
         // escape code
-        const code = options.getRawCode().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const code = props.getRawCode().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
         // insert code
         w.document.body.innerHTML = '<pre>' + code + '</pre>';
@@ -33,11 +38,17 @@ export default function toolbar(options){
         _window.open('https://enlighterjs.org');
     }
 
+    // trigger clipboard copy
+    function copyToClipboard(){
+        // try to copy to clipboard
+        _clipboard.copy(props.getRawCode());
+    }
+
     // generate wrapper
-    return <div className={'enlighter-toolbar'}>
-        <div className="enlighter-btn enlighter-btn-raw" onClick={options.toggleRawCode} title="Toggle RAW code"></div>
-        <div className="enlighter-btn enlighter-btn-copy" onClick={options.copyCode} title="Copy to clipboard"></div>
-        <div className="enlighter-btn enlighter-btn-window" onClick={openCodeWindow} title="Open code in new window"></div>
-        <div className="enlighter-btn enlighter-btn-website" onClick={openEnlighterLink} title="EnlighterJS 3 Syntax Highlighter"></div>
-    </div>;
+    return <Container name="toolbar">
+        <Button name="raw" tooltip="Toggle RAW code" onClick={props.toggleRawCode}></Button>
+        <Button name="copy" tooltip="Copy to clipboard" onClick={copyToClipboard}></Button>
+        <Button name="window" tooltip="Open code in new window" onClick={openCodeWindow}></Button>
+        <Button name="website" tooltip="EnlighterJS 3 Syntax Highlighter" onClick={openEnlighterLink}></Button>
+    </Container>;
 }

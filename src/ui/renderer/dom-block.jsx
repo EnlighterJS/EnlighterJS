@@ -8,11 +8,11 @@
 
 
 // Internal "ReactDOM"
-import * as React from '../lib/dom';
+import * as React from '../../lib/dom';
 
-import {getSpecialLines} from '../engine/special-lines';
+import {getSpecialLines} from '../../engine/special-lines';
 
-export default function DomBlockRenderer(tokens, options = {}){
+export function DomBlockRenderer({tokens, options}){
 
     // check if the current line is special (should highlighted)
     const isSpecialLine = getSpecialLines(options.highlight, options.lineoffset);

@@ -6,15 +6,24 @@
 // Copyright 2016-2018 Andi Dittrich <https://andidittrich.de>
 // ----------------------------------------------------------------------
 
-// Renderer
-import _domInlineRenderer from '../renderer/dom-inline.jsx';
-
 // Internal "ReactDOM"
-import * as React from '../lib/dom';
+import * as React from '../../lib/dom';
 
-export function inline(dataset){
-    return <div className={'enlighter-default enlighter-v-inline enlighter-t-' + dataset[0].params.theme}>
-        {_domInlineRenderer(dataset[0].tokens, dataset[0].params)}
-    </div>;
+export function Button(props){
+
+    // button css classes
+    const classes = ['enlighter-btn'];
+
+    // name set ?
+    if (props.name){
+        classes.push('enlighter-btn-' + props.name);
+    }
+
+    // create button
+    return <div 
+            className={classes.join(' ')} 
+            onClick={props.onClick}
+        >
+            {props.text||null}
+        </div>
 }
-

@@ -7,16 +7,15 @@
 // ----------------------------------------------------------------------
 
 // Renderer
-import _domBlockRenderer from '../renderer/dom-block.jsx';
+import {DomBlockRenderer} from '../renderer/dom-block.jsx';
 
 // Internal "ReactDOM"
-import * as React from '../lib/dom';
+import * as React from '../../lib/dom';
 
-// button toolbar
-import Toolbar from '../ui/toolbar.jsx';
-
-// clipboard copy
-import * as Clipboard from '../lib/clipboard';
+import {CodegroupSwitch} from '../components/codegroup-switch.jsx';
+import {Toolbar} from '../components/toolbar.jsx';
+import {Container} from '../components/container.jsx';
+import {RawCode} from '../components/rawcode.jsx';
 
 export function codegroup(dataset){
     let wrapper = null;
@@ -29,7 +28,7 @@ export function codegroup(dataset){
 
     // tabs, buttons
     let tabs = [];
-    let buttons = [];
+    //let buttons = [];
 
     // list of css classes to apply on the outer wrapper
     const cssClasses = [
@@ -71,54 +70,31 @@ export function codegroup(dataset){
         // show new element
         React.displayElement(tabs[index], true);
 
-        // unlight old button
-        React.removeClass(buttons[activeTabIndex], 'enlighter-active');
-
-        // highlight button
-        React.addClass(buttons[index], 'enlighter-active');
-
         // store index
         activeTabIndex = index;
     }
-
-    // utility to copy code to clipboard from current tab
-    function copyCode(){
-        Clipboard.copy(tabs[activeTabIndex], wrapper, 'enlighter-show-rawcode');
-    }
-
-    // initialize toolbar with custom event handlers
-    const toolbarEl = Toolbar({
-        toggleRawCode: toggleContainer,
-        getRawCode: getRawCode,
-        copyCode: copyCode
-    });
 
     // list of tabs
     tabs = dataset.map(d => {
         // create container
         return <div style="display:none">
-            {_domBlockRenderer(d.tokens, d.params)}
-            <pre className="enlighter-raw">{d.code}</pre>
+            <DomBlockRenderer tokens={d.tokens} options={d.params} />
+            <RawCode>{d.code}</RawCode>
         </div>;
     });
-
-    // list of tab buttons
-    buttons = dataset.map((d, i) => <div className="enlighter-btn" onClick={() => showtab(i)}>{d.params.title||d.params.language}</div>);
 
     // highlight first button
     showtab(0);
 
     // create wrapper
-    wrapper = 
-    <div className={cssClasses.join(' ')}>
-        <div className="enlighter-codegroup-switch">
-            {buttons}
-        </div>
-        <div className="enlighter-codegroup-wrapper">
-            {toolbarEl}
-            {tabs}
-        </div>
-    </div>;
+    wrapper =   <Container className={cssClasses}>
+                    <CodegroupSwitch onChange={i => showtab(i)} dataset={dataset} />
+
+                    <Container name="codegroup-wrapper">
+                        <Toolbar toggleRawCode={toggleContainer} getRawCode={getRawCode} />
+                        {tabs}
+                    </Container>
+                </Container>;
 
     // dbclick event ?
     if (options.rawcodeDbclick){

@@ -7,16 +7,14 @@
 // ----------------------------------------------------------------------
 
 // Renderer
-import _domBlockRenderer from '../renderer/dom-block.jsx';
+import {DomBlockRenderer} from '../renderer/dom-block.jsx';
 
 // Internal "ReactDOM"
-import * as React from '../lib/dom';
+import * as React from '../../lib/dom';
 
-// button toolbar
-import Toolbar from '../ui/toolbar.jsx';
-
-// clipboard copy
-import * as Clipboard from '../lib/clipboard';
+import {Toolbar} from '../components/toolbar.jsx';
+import {Container} from '../components/container.jsx';
+import {RawCode} from '../components/rawcode.jsx';
 
 export function standard(dataset){
     let wrapper = null;
@@ -46,12 +44,6 @@ export function standard(dataset){
         cssClasses.push('enlighter-overflow-scroll');
     }
 
-    // code container
-    const codeEl = _domBlockRenderer(dataset[0].tokens, dataset[0].params);
-
-    // raw container
-    const rawEl = <pre className="enlighter-raw">{dataset[0].code}</pre>;
-
     // utility function to toggle raw code
     function toggleContainer(){
         React.toggleClass(wrapper, 'enlighter-show-rawcode');
@@ -62,24 +54,12 @@ export function standard(dataset){
         return dataset[0].code;
     }
 
-    // utility to copy code to clipboard from current tab
-    function copyCode(){
-        Clipboard.copy(rawEl, wrapper, 'enlighter-show-rawcode');
-    }
-
-    // initialize toolbar with custom event handlers
-    const toolbarEl = Toolbar({
-        toggleRawCode: toggleContainer,
-        getRawCode: getRawCode,
-        copyCode: copyCode
-    });
-
     // generate wrapper
-    wrapper = <div className={cssClasses.join(' ')}>
-            {toolbarEl}
-            {codeEl}
-            {rawEl}            
-        </div>;
+    wrapper =   <Container className={cssClasses}>
+                    <Toolbar toggleRawCode={toggleContainer} getRawCode={getRawCode} />
+                    <DomBlockRenderer tokens={dataset[0].tokens} options={dataset[0].params} />
+                    <RawCode>{dataset[0].code}</RawCode>
+                </Container>;
 
     // dbclick event ?
     if (options.rawcodeDbclick){

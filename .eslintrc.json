@@ -4,6 +4,7 @@
         "react"
     ],
     "rules": {
-        "react/jsx-key": 0
+        "react/jsx-key": 0,
+        "react/prop-types": 0
     }
 }

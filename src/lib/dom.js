@@ -87,12 +87,19 @@ export function toggleClass(element, name){
 }
 
 // create a new dom element with given attributes / text / dom nodes
-export function createElement(name, attributes, ...content){
+export function createElement(element, attributes, ...content){
+
+    // is function ? passthrough
+    if (typeof element === 'function'){
+        return element(attributes || {}, ...content);
+    }
+
     // create new dom element
-    const el = _document.createElement(name);
+    const el = _document.createElement(element);
 
     // inner content set ?
     if (content.length > 0){
+
         // push nodes to parent element
         _foreach(content, function (node){
             // valid element ?
