@@ -12,7 +12,6 @@ import {generic} from './generic';
 
 // Scala Language
 // Author: [Pascal Havé]
-// keywords from https://www.oreilly.com/library/view/learning-scala/9781449368814/apa.html
 // --
 export class scala extends generic {
 
@@ -39,7 +38,7 @@ export class scala extends generic {
             // annotations
             {
                 regex: /@[\W\w_][\w]+/g,
-                type: 'k7'
+                type: 's9'
             },
 
              // basic types
@@ -62,25 +61,25 @@ export class scala extends generic {
 
             // control keywords
             {
-                regex: /\b(while|try|catch|else|throw|break|if|do|goto|switch|for|match|yield)\b/g,
-                type: 'k0'
+                regex: /\b(while|try|catch|else|throw|break|if|do|goto|switch|for|match)\b/g,
+                type: 'k1'
             },
 
             // package directives
             {
                 regex: /(package|import)(\s+[\w.]+)/gm,
-                type: ['k0', 'text']
+                type: ['k0', 'k10']
             },
 
             // symbol keywords
             {
                 regex: /[\b\w\s)](_|:|@|#|<-|←|<:|<%|=|=>|⇒|>:)[\b\w\s]/g,
-                type: 'k3'
+                type: 'k4'
             },
 
             // keywords
             {
-                regex: /\b(abstract|case|class|extends|final|finally|forSome|implicit|lazy|object|override|private|protected|return|sealed|trait|with)\b/g,
+                regex: /\b(abstract|case|class|extends|final|finally|forSome|implicit|lazy|object|override|private|protected|return|sealed|trait|with|yield)\b/g,
                 type: 'k0'
             },
 
@@ -105,13 +104,13 @@ export class scala extends generic {
             // var keyword
             {
                 regex: /\b(var)\s+(\w+)\b/g,
-                type: ['t6', 'text']
+                type: ['k7', 'text']
             },
 
             // special inheritance
             {
                 regex: /\b(this|super)\b/g,
-                type: 'k2'
+                type: 'k9'
             },
 
             // operator
@@ -123,15 +122,15 @@ export class scala extends generic {
             // function/method calls
             {
                 regex: /\b([a-z][\w]*)\s*(?:\[(.*?)\])?\s*\(/gm,
-                type: ['t5', 't6']
+                type: 'm0'
             },
             {
                 regex: /\.\s*([a-z][\w]*)/gm,
-                type: 't5'
+                type: 'm0'
             },
             {
                 regex: /\b[a-z]\w*\s+([a-z][\w]*)\b/gm,
-                type: 't5'
+                type: 'm0'
             },
 
             // boolean values, null keywords
