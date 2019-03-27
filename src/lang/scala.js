@@ -26,13 +26,13 @@ export class scala extends generic {
             // string interpolation : s"hello ${world}"
             {
                 regex: /s"(?:[^"\\]|\\.)*"/g,
-                type: 's5'
+                type: 's2'
             },
 
             // backticks identifier
             {
                 regex: /`(?:[^`\\]|\\.)*`/g,
-                type: 'e4'
+                type: 'k7'
             },
 
             // annotations
@@ -74,7 +74,7 @@ export class scala extends generic {
             // symbol keywords
             {
                 regex: /[\b\w\s)](_|:|@|#|<-|←|<:|<%|=|=>|⇒|>:)[\b\w\s]/g,
-                type: 'k4'
+                type: 'k3'
             },
 
             // keywords
@@ -86,25 +86,25 @@ export class scala extends generic {
             // def keyword
             {
                 regex: /\b(def)\s+(\w+)\b/gm,
-                type: ['k0', 't5']
+                type: ['k2', 'm0']
             },
 
             // type keyword
             {
                 regex: /\b(type)\s+(\w+)\b/gm,
-                type: ['k0', 'k4']
+                type: ['k2', 'k5']
             },
 
             // val keyword
             {
                 regex: /\b(val)\s+(\w+)\b/gm,
-                type: ['k0', 'text']
+                type: ['k2', 'k7']
             },
 
             // var keyword
             {
-                regex: /\b(var)\s+(\w+)\b/g,
-                type: ['k7', 'text']
+                regex: /\b(var)\s+(\w+)\b/gm,
+                type: ['k2', 'k7']
             },
 
             // special inheritance
