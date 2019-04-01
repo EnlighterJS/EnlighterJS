@@ -39,6 +39,7 @@ export {qml} from './qml';
 export {raw} from './raw';
 export {ruby} from './ruby';
 export {rust} from './rust';
+export {scala} from './scala';
 export {scss} from './scss';
 export {shell} from './shell';
 export {sql} from './sql';
