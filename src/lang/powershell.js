@@ -10,6 +10,9 @@
 import _language_common_rules from '../engine/generic-rules';
 import {generic} from './generic';
 
+import _token from '../engine/token';
+import _microTokenizer from '../engine/micro-tokenizer';
+
 // Powershell Scripting
 // Author: [Andi Dittrich]
 // --
@@ -17,14 +20,39 @@ export class powershell extends generic {
 
     setupLanguage() {
 
+        // template strings. Stage-2 Analyzing
+        function parseTemplateSeq(token){
+
+            // run the MicroTokenizer to identify the template tags
+            return _microTokenizer(token, /\$(?:\w+|\(.*?\))/g, function(match){
+                return [_token(match[0], 'k7')];
+            });
+        }
+
         this.rules = [
 
-            // strings
-            _language_common_rules.dqStrings,
+            // double quoted strings
+            {
+                regex: /"(?:[^"`]|`.)*"/g,
+                type: 's2',
+                filter: parseTemplateSeq
+            },
+
+            // single quoted strings
             _language_common_rules.sqStrings,
 
-            // properties
-            _language_common_rules.prop,
+            // double quoted here strings
+            {
+                regex: /@"[\S\s]*?\n\s*"@/g,
+                type: 's5',
+                filter: parseTemplateSeq
+            },
+
+            // single quoted here strings
+            {
+                regex: /@'[\S\s]*?\n\s*'@/g,
+                type: 's5'
+            },
 
             // control keywords
             {
