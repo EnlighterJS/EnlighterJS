@@ -43,19 +43,20 @@ export class scala extends generic {
                 regex: /@[\W\w_][\w]+/g,
                 type: 's9'
             },
-
+/*
              // basic types
             {
                 regex: /\b(Boolean|Byte|Int|Long|Float|Double|Char|String|Unit)\b/g,
                 type: 'k5'
             },
 
+
             // template types
             {
                 regex: /\[\s*([-+]?[A-Z]\w*)\s*\]/g,
                 type: 'k5'
             },
-
+*/
             // types
             {
                 regex: /\b([A-Z]\w*)\b/g,
@@ -82,11 +83,12 @@ export class scala extends generic {
 
             // keywords
             {
-                regex: /\b(abstract|case|class|extends|final|finally|forSome|implicit|lazy|object|override|private|protected|return|sealed|trait|with|yield)\b/g,
+                regex: /\b(abstract|class|case|extends|final|finally|forSome|implicit|lazy|object|override|private|protected|return|sealed|trait|with|yield)\b/g,
                 type: 'k0'
             },
 
             // def keyword
+            
             {
                 regex: /\b(def)\s+(\w+)\b/gm,
                 type: ['k2', 'm0']
@@ -122,6 +124,9 @@ export class scala extends generic {
                 type: 'k3'
             },
 
+            _language_common_rules.mCalls,
+            _language_common_rules.fCalls,
+/*
             // function/method calls
             {
                 regex: /\b([a-z][\w]*)\s*(?:\[(.*?)\])?\s*\(/gm,
@@ -135,7 +140,7 @@ export class scala extends generic {
                 regex: /\b[a-z]\w*\s+([a-z][\w]*)\b/gm,
                 type: 'm0'
             },
-
+*/
             // boolean values, null keywords
             _language_common_rules.null,
             _language_common_rules.boolean,
@@ -149,8 +154,8 @@ export class scala extends generic {
             _language_common_rules.int,
             _language_common_rules.floats,
             _language_common_rules.bin,
-            _language_common_rules.hex,
-            _language_common_rules.octal,
+            //_language_common_rules.hex,
+            //_language_common_rules.octal,
 
             // brackets
             _language_common_rules.brackets
