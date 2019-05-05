@@ -10,6 +10,7 @@
 export {generic} from './generic';
 
 // specific language suport files
+export {abap} from './abap';
 export {assembly} from './assembly';
 export {avrassembly} from './avr-assembly';
 export {cpp} from './cpp';
