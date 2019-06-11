@@ -19,14 +19,17 @@ export class shell extends generic {
 
         this.rules = [
 
-            // strings
-            _language_common_rules.dqStrings,
-
             // shebang
             {
                 regex: /(^#!.*?)\n/gi,
                 type: 'k4'
             },
+
+            // comments
+            _language_common_rules.poundComments,
+            
+            // strings
+            _language_common_rules.dqStrings,
 
             // back-tick command string
             {
@@ -62,12 +65,6 @@ export class shell extends generic {
             {
                 regex: /^\s*\w+\)\s*$/gm,
                 type: 'k6'
-            },
-
-            // comments
-            {
-                regex: /((?:^\s*|\s+)#.*$)/gm,
-                type: 'c0'
             },
 
             // control keywords
