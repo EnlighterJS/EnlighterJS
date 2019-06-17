@@ -60,7 +60,7 @@ _gulp.task('library', ['es6-transpile'], function(){
     return _gulp.src(['.tmp/enlighterjs.js', 'src/browser/jquery.js'])
 
         // minify
-        //.pipe(_uglify())
+        .pipe(_uglify())
         .pipe(_concat('enlighterjs.min.js'))
 
         // add license header
