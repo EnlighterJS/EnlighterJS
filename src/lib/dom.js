@@ -53,6 +53,11 @@ export function getElementDataAttribute(el, attb){
     return el.getAttribute('data-' + attb) || null;
 }
 
+// get attribute
+export function getElementAttribute(el, attb){
+    return el.getAttribute(attb) || null;
+}
+
 // add element before the original container
 export function insertBefore(origin, element){
     return origin.parentNode.insertBefore(element, origin);

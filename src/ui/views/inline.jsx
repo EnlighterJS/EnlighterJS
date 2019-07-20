@@ -15,16 +15,24 @@ import * as React from '../../lib/dom';
 import {Container} from '../components/container.jsx';
 
 export function inline(dataset){
+    // extract options/params from first codeblock
+    const options = dataset[0].params;
+
     // list of css classes to apply on the outer wrapper
     const cssClasses = [
         'enlighter-default',
         'enlighter-v-inline',
-        'enlighter-t-' + dataset[0].params.theme
+        'enlighter-t-' + options.theme
     ];
+
+    // additional css classes set ?
+    if (options.cssClasses.length > 0){
+        cssClasses.push(...options.cssClasses);
+    }
     
     // render
     return  <Container className={cssClasses}>
-                <DomInlineRenderer tokens={dataset[0].tokens} options={dataset[0].params} />
+                <DomInlineRenderer tokens={dataset[0].tokens} options={options} />
             </Container>;
 }
 

@@ -2,7 +2,13 @@
 
 **Re-Created from Scratch - The whole systems architecture has been changed**
 
-### Version 3.0 ###
+### Version 3.1.0 ###
+
+* Added: additional css classes can be added to the outer container
+* Added: css classes of the origin element can be copied to the outer container (disabled by default)
+* Bugfix: rawcode on doubleclick doesn't work - event handler name typo
+
+### Version 3.0.1 ###
 
 * License changed to **Mozilla Public License 2.0**
 * Replaced MooTools Framework by native code - requires IE >= 10

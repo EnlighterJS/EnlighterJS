@@ -89,6 +89,17 @@ export function parse(element, elementOptions){
         }
     }
 
+    // additional css classes
+    let additionalCssClasses = getOption('cssClasses') || '';
+
+    // retain origin element classes ?
+    if (getOption('retainCssClasses') === true){
+        additionalCssClasses += ' ' + (_dom.getElementAttribute(element, 'class') || '');
+    }
+
+    // to array
+    const cssClassList = additionalCssClasses.replace(/\s+/g, ' ').trim().split(' ');
+
     // merge options
     return {
         // @scope SETTINGS,ATTRIBUTE
@@ -106,6 +117,7 @@ export function parse(element, elementOptions){
         linehover:          getOption('linehover'),
         rawcodeDbclick:     getOption('rawcodeDbclick'),
         textOverflow:       getOption('textOverflow'),
+        cssClasses:         cssClassList
     }
 }
 

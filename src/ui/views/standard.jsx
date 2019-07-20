@@ -44,6 +44,11 @@ export function standard(dataset){
         cssClasses.push('enlighter-overflow-scroll');
     }
 
+    // additional css classes set ?
+    if (options.cssClasses.length > 0){
+        cssClasses.push(...options.cssClasses);
+    }
+
     // utility function to toggle raw code
     function toggleContainer(){
         React.toggleClass(wrapper, 'enlighter-show-rawcode');
@@ -63,7 +68,7 @@ export function standard(dataset){
 
     // dbclick event ?
     if (options.rawcodeDbclick){
-        wrapper.on('dbclick', toggleContainer);
+        wrapper.on('dblclick', toggleContainer);
     }
 
     return wrapper;

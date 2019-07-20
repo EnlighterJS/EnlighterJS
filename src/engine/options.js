@@ -28,6 +28,14 @@ export const _options = {
     // @scope SETTINGS
     textOverflow: 'break',
 
+    // copy css classes from origin element to outer wrapper
+    // @scope SETTINGS
+    retainCssClasses: false,
+
+    // additional css classes added to outer wrapper
+    // @scope SETTINGS
+    cssClasses: '',
+
     // show linenumbers
     // @scope SETTINGS,ATTRIBUTE
     linenumbers: true,
