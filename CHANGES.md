@@ -7,6 +7,7 @@
 * Added: additional css classes can be added to the outer container
 * Added: css classes of the origin element can be copied to the outer container (disabled by default)
 * Bugfix: rawcode on doubleclick doesn't work - event handler name typo
+* Bugfix: removed invalid c# annoation symbol #76
 
 ### Version 3.0.1 ###
 
@@ -29,6 +30,8 @@
 * Added: ECMA6 Support to Javascript Engine
 * Added: Copy to clipboard button
 * Added: horizontal scroll option
+* Added: [GO](https://golang.org/) Support
+* Added: [RUST](https://www.rust-lang.org/) Support
 * Added: [YAML](http://docs.ansible.com/ansible/YAMLSyntax.html) Support
 * Added: [Kotlin](https://kotlinlang.org) support
 * Added: [TypeScript](https://www.typescriptlang.org/) support
@@ -41,7 +44,10 @@
 * Added: [VisualBasic NET/Classic](https://msdn.microsoft.com/de-de/library/2x7h1hfk.aspx) Support
 * Added: [Swift](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/Swift_Programming_Language/index.html) Support
 * Added: [QML](https://doc.qt.io/qt-5/qtqml-syntax-basics.html) Support
+* Added: VHDL Support
+* Added: ABAP Support (simple)
 * Added: Prolog Support (simple)
+* Added: Cordpro Support (simple)
 * Added: Bootstrap4 Theme
 * Added: Dracula Theme (dark, following [draculatheme](https://draculatheme.com/) colors)
 * Added: Monokai Theme (dark)

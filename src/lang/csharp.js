@@ -37,14 +37,9 @@ export class csharp extends generic {
                 type: 's0',
                 filter: parseInterpolatedStrings
             },
+
             _language_common_rules.dqStrings,
             _language_common_rules.char,
-
-            // annotations
-            {
-                regex: /@[\W\w_][\w]+/gm,
-                type: 's9'
-            },
 
             // boolean, null
             _language_common_rules.null,
