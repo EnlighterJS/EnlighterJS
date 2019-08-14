@@ -10,25 +10,13 @@
 import {getOption} from '../engine/options';
 
 // Container of Language Engines
-import * as _languages from '../lang/index';
+//import * as _languages from '../lang/index';
 
 // Languages aliases
-import _languageAliases from './alias';
+import {getInstance} from './language-resolver';
 
 // Container of Views/Layouts
 import * as _views from '../ui/views/index';
-
-// helper function to process aliases
-function getLanguage(lang){
-    // transform to lowercase
-    lang = (lang || '').toLowerCase();
-
-    // alias used ?
-    lang = _languageAliases[lang] || lang;
-
-    // language available ?
-    return (_languages[lang] ? lang : null);
-}
 
 // helper funtion
 function getLayout(name){
@@ -53,10 +41,13 @@ export function render(dataset){
         }
 
         // use given language - including generic fallback
-        const languageIdentifier = getLanguage(params.language) || getLanguage(getOption('language')) || 'generic';
+        //const languageIdentifier = getLanguage(params.language) || getLanguage(getOption('language')) || 'generic';
 
         // create language engine instance
-        const languageProcessor = new _languages[languageIdentifier];
+        //const languageProcessor = new _languages[languageIdentifier];
+
+        // create language engine instance
+        const languageProcessor = getInstance(params.language, getOption('language'));
 
         // apply language processor
         return {

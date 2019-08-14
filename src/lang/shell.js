@@ -15,6 +15,11 @@ import {generic} from './generic';
 // --
 export class shell extends generic {
 
+    // language aliases
+    static alias(){
+        return ['bash', 'sh', 'zsh'];
+    }
+
     setupLanguage() {
 
         this.rules = [

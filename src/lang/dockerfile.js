@@ -15,6 +15,11 @@ import {generic} from './generic';
 // --
 export class dockerfile extends generic {
 
+    // language aliases
+    static alias(){
+        return ['docker'];
+    }
+
     setupLanguage() {
 
         this.rules = [

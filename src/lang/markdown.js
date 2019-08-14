@@ -14,6 +14,11 @@ import {generic} from './generic';
 // --
 export class markdown extends generic {
 
+    // language aliases
+    static alias(){
+        return ['md', 'gfm'];
+    }
+
     setupLanguage() {
 
         this.rules = [

@@ -15,6 +15,11 @@ import {generic} from './generic';
 // --
 export class ini extends generic {
 
+    // language aliases
+    static alias(){
+        return ['conf', 'cnf'];
+    }
+
     setupLanguage() {
 
         this.rules = [

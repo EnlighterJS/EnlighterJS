@@ -15,6 +15,11 @@ import {generic} from './generic';
 // --
 export class go extends generic {
 
+    // language aliases
+    static alias(){
+        return ['golang'];
+    }
+
     setupLanguage() {
 
         this.rules = [

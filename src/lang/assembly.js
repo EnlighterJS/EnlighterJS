@@ -14,7 +14,12 @@ import {generic} from './generic';
 // Author: [Andi Dittrich]
 // --
 export class assembly extends generic {
-   
+
+    // language aliases
+    static alias(){
+        return ['asm'];
+    }
+
     setupLanguage(){
 
         this.rules = [

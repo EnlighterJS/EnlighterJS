@@ -15,6 +15,11 @@ import {css} from './css';
 // --
 export class scss extends css {
 
+    // language aliases
+    static alias(){
+        return ['sass'];
+    }
+
     setupLanguage(){
         // setup css
         super.setupLanguage();

@@ -15,6 +15,11 @@ import {generic} from './generic';
 // --
 export class avrassembly extends generic{
 
+    // language aliases
+    static alias(){
+        return ['avrasm'];
+    }
+
     setupLanguage() {
 
         this.rules = [

@@ -15,6 +15,11 @@ import {generic} from './generic';
 // --
 export class css extends generic {
 
+    // language aliases
+    static alias(){
+        return ['styles'];
+    }
+
     setupLanguage() {
 
         this.rules = [

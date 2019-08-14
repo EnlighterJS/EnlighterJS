@@ -18,6 +18,11 @@ import _microTokenizer from '../engine/micro-tokenizer';
 // --
 export class csharp extends generic {
 
+    // language aliases
+    static alias(){
+        return ['c#'];
+    }
+
     setupLanguage() {
 
         // template strings. Stage-2 Analyzing

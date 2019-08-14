@@ -18,6 +18,11 @@ import _microTokenizer from '../engine/micro-tokenizer';
 // --
 export class javascript extends generic{
 
+    // language aliases
+    static alias(){
+        return ['js'];
+    }
+
     setupLanguage(){
         // escape sequences within strings. Stage-2 Analyzing
         function parseEscapeSeq(token){

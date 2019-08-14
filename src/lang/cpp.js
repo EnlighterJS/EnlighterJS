@@ -15,6 +15,11 @@ import {generic} from './generic';
 // --
 export class cpp extends generic {
 
+    // language aliases
+    static alias(){
+        return ['c++', 'c'];
+    }
+
     setupLanguage() {
 
         this.rules = [

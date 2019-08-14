@@ -15,6 +15,11 @@ import {generic} from './generic';
 // --
 export class python extends generic {
 
+    // language aliases
+    static alias(){
+        return ['py'];
+    }
+
     setupLanguage() {
 
         this.rules = [

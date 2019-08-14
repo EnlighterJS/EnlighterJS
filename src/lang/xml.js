@@ -17,6 +17,11 @@ import _microTokenizer from '../engine/micro-tokenizer';
 // --
 export class xml extends generic {
 
+    // language aliases
+    static alias(){
+        return ['html'];
+    }
+
     setupLanguage(){
 
         // xml attributes. Stage-2 Analyzing

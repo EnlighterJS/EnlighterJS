@@ -15,6 +15,11 @@ import {generic} from './generic';
 // --
 export class visualbasic extends generic {
 
+    // language aliases
+    static alias(){
+        return ['vb'];
+    }
+
     setupLanguage() {
 
         this.rules = [

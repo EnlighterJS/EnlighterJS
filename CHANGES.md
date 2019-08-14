@@ -6,6 +6,9 @@
 
 * Added: additional css classes can be added to the outer container
 * Added: css classes of the origin element can be copied to the outer container (disabled by default)
+* Added: additional shell script aliases `sh` and `zsh` - feature requested [on GitHub](https://github.com/EnlighterJS/Plugin.WordPress/issues/183)
+* Changed: language aliases moved into language support files as static method
+* Changed: language instances are initialized via factory
 * Bugfix: rawcode on doubleclick doesn't work - event handler name typo
 * Bugfix: removed invalid c# annoation symbol #76
 
