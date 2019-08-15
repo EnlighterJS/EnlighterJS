@@ -33,8 +33,11 @@ export class shell extends generic {
             // comments
             _language_common_rules.poundComments,
             
-            // strings
-            _language_common_rules.dqStrings,
+            // strings, single escaped chars like \" can be used within bash scripts
+            {
+                regex: /[^\\]("(?:[^"\\]|\\.)*")/g,
+                type: 's0'
+            },
 
             // back-tick command string
             {
@@ -91,7 +94,7 @@ export class shell extends generic {
             },
 
             // numbers
-            _language_common_rules.floats
+            _language_common_rules.int
         ];
     }
 }

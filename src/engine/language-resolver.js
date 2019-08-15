@@ -14,6 +14,9 @@ const _aliasList = {
     'standard': 'generic'
 };
 
+// list of language instances
+const _instances = {};
+
 // flag
 let _aliasListGenerated = false;
 
@@ -63,6 +66,12 @@ export function getInstance(name1, name2){
     // use given language - including generic fallback
     const languageIdentifier = getLanguage(name1) || getLanguage(name2) || 'generic';
 
-    // create language engine instance
-    return new _languages[languageIdentifier];
+    // instance already exists ?
+    if (!_instances[languageIdentifier]){
+        // create language engine instance
+        _instances[languageIdentifier] = new _languages[languageIdentifier];
+    }
+
+    // return cached instance
+    return _instances[languageIdentifier];
 }
