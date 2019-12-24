@@ -3,7 +3,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 // --
-// Copyright 2016-2018 Andi Dittrich <https://andidittrich.de>
+// Copyright 2016-2019 Andi Dittrich <https://andidittrich.de>
 // ----------------------------------------------------------------------
 
 // array/object foreach
@@ -24,7 +24,7 @@ export default function foreach(objectOrArray, cb, context){
         // iterate over object properties
         for (const key in objectOrArray){
             // object property ?
-            if (!objectOrArray.hasOwnProperty(key)){
+            if (!Object.prototype.hasOwnProperty.call(objectOrArray, key)){
                 continue;
             }
 
