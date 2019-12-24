@@ -2,6 +2,11 @@
 
 **Re-Created from Scratch - The whole systems architecture has been changed**
 
+### Version 3.2.0 ###
+
+* Added: verilog support - thanks to [t123yh on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/86)
+* Changed: updated gulp + plugins
+
 ### Version 3.1.0 ###
 
 * Added: additional css classes can be added to the outer container
