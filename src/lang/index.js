@@ -51,3 +51,4 @@ export {vhdl} from './vhdl';
 export {visualbasic} from './visual-basic';
 export {xml} from './xml';
 export {yaml} from './yaml';
+export {verilog} from './verilog';
