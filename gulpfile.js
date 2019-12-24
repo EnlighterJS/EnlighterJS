@@ -20,9 +20,9 @@ const _log = require('fancy-log');
 const _gulp_less = require('gulp-less');
 const _gulp_replace = require('gulp-replace');
 const _prettyError = require('gulp-prettyerror');
-const _concat = require('gulp-concat-util');
+const _concat = require('gulp-concat');
 const _gulp_cleancss = require('gulp-clean-css');
-const _wrapper = require('gulp-wrapper');
+const _header = require('gulp-header');
 const _uglify = require('gulp-uglify');
 const _rollup = require('rollup');
 const _rollup_babel = require('rollup-plugin-babel');
@@ -55,15 +55,14 @@ _gulp.task('library', _gulp.series('es6-transpile', function(){
 
     // add jquery addon and minify it
     return _gulp.src(['.tmp/enlighterjs.js', 'src/browser/jquery.js'])
+        .pipe(_prettyError())
 
         // minify
         .pipe(_uglify())
         .pipe(_concat('enlighterjs.min.js'))
 
         // add license header
-        .pipe(_wrapper({
-            header: licenseHeader
-        }))
+        .pipe(_header(licenseHeader))
 
         // add version string
         .pipe(_gulp_replace(/\[\[VERSION]]/g, _package.version))
@@ -86,9 +85,7 @@ function less2css(themes, outputFilename){
         .pipe(_concat(outputFilename + '.min.css'))
 
         // add license header
-        .pipe(_wrapper({
-            header: licenseHeader
-        }))
+        .pipe(_header(licenseHeader))
 
         .pipe(_gulp.dest('dist'));
 }
