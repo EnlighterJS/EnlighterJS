@@ -1,12 +1,11 @@
 {
     "plugins": [
-        "external-helpers",
-        ["transform-react-jsx", {
+        ["@babel/plugin-transform-react-jsx", {
         }]
     ],
     "presets": [
         [
-            "env",
+            "@babel/preset-env",
             {
                 "modules": false,
                 "targets": {

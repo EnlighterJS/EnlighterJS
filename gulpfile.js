@@ -27,9 +27,6 @@ const _uglify = require('gulp-uglify');
 const _rollup = require('rollup');
 const _rollup_babel = require('rollup-plugin-babel');
 
-// default task
-_gulp.task('default', ['library', 'less-themes-full', 'less-themes-single']);
-
 // themes to include
 const themelist = ['enlighter', 'beyond', 'classic', 'godzilla', 'atomic', 'droide', 'minimal', 'eclipse', 'mowtwo', 'rowhammer', 'bootstrap4', 'dracula', 'monokai'];
 
@@ -54,7 +51,7 @@ _gulp.task('es6-transpile', async function(){
 });
 
 // compress
-_gulp.task('library', ['es6-transpile'], function(){
+_gulp.task('library', _gulp.series('es6-transpile', function(){
 
     // add jquery addon and minify it
     return _gulp.src(['.tmp/enlighterjs.js', 'src/browser/jquery.js'])
@@ -72,7 +69,7 @@ _gulp.task('library', ['es6-transpile'], function(){
         .pipe(_gulp_replace(/\[\[VERSION]]/g, _package.version))
 
         .pipe(_gulp.dest('./dist/'));
-});
+}));
 
 // generator to transpile less->css
 function less2css(themes, outputFilename){
@@ -102,21 +99,14 @@ _gulp.task('less-themes-full', function (){
 });
 
 // Single Theme export
-_gulp.task('less-themes-single', function(){
-    return themelist.map(name => less2css([name], 'enlighterjs.' + name));
-});
-
-_gulp.task('watch', ['library', 'less-themes-full', 'webserver'], function(){
-    // js, jsx files
-    _gulp.watch(['src/**/*.js', 'src/**/*.jsx'], ['library']).on('change', function(event) {
-        _log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-    });
-
-    // less files
-    _gulp.watch('src/**/*.less', ['less-themes-full']).on('change', function(event) {
-        _log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-    });
-});
+_gulp.task('less-themes-single', _gulp.series(
+    ...themelist.map(name => {
+        _gulp.task('less-theme-' + name, function(){
+            return less2css([name], 'enlighterjs.' + name)
+        });
+        return 'less-theme-' + name;
+    })
+));
 
 // development webserver
 _gulp.task('webserver', function(){
@@ -131,3 +121,18 @@ _gulp.task('webserver', function(){
     webapp.use(_express.static(_path.join(__dirname, 'dist')));
     webapp.listen(8888, () => _log('DEV Webserver Online - localhost:8888'));
 });
+
+_gulp.task('watch', _gulp.series('library', 'less-themes-full', 'webserver', function(){
+    // js, jsx files
+    _gulp.watch(['src/**/*.js', 'src/**/*.jsx'], ['library']).on('change', function(event) {
+        _log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+    });
+
+    // less files
+    _gulp.watch('src/**/*.less', ['less-themes-full']).on('change', function(event) {
+        _log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+    });
+}));
+
+// default task
+_gulp.task('default', _gulp.series('library', 'less-themes-full', 'less-themes-single'));
