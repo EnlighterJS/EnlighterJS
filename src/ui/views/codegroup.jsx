@@ -52,6 +52,11 @@ export function codegroup(dataset){
         cssClasses.push('enlighter-overflow-scroll');
     }
 
+    // limit vertical height ?
+    if (options.collapse === true){
+        cssClasses.push('enlighter-collapse');
+    }
+
     // additional css classes set ?
     if (options.cssClasses.length > 0){
         cssClasses.push(...options.cssClasses);

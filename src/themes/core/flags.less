@@ -31,7 +31,16 @@
 // class .enlighter-overflow-scroll added to outer container
 .OPT_OVERFLOW_SCROLL(@rules){
     // match the wrapper class attribute
-    &.enlighter-overflow-scroll {
+    &.enlighter-overflow-scroll{
+        @rules();
+    }
+}
+
+// collapse enabled
+// class .enlighter-collapse added to outer container
+.OPT_COLLAPSE(@rules){
+    // match the wrapper class attribute
+    &.enlighter-collapse{
         @rules();
     }
 }

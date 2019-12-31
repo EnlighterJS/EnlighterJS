@@ -296,6 +296,40 @@
     }
 }
 
+/* Enlighter collapse
+----------------------------------------------------------------------------------- */
+.enlighter-collapse{
+
+    // default layout - single codeblock
+    &.@{VIEW_STANDARD}{
+
+        // scrollbar on y axis
+        overflow-y: auto;
+        max-height: 500px;
+
+        // override in case the full sourcecode should be displayed
+        &.enlighter-collapse-full{
+            max-height: none;
+        }
+    }
+
+    // tabbed layout - use inner container a scroll wrapper!
+    &.@{VIEW_CODEGROUP}{
+
+        // scroll wrap
+        .enlighter-codegroup-wrapper{
+            // scrollbar on y axis
+            overflow-y: auto;
+            max-height: 500px;
+
+            // override in case the full sourcecode should be displayed
+            &.enlighter-collapse-full{
+                max-height: none;
+            }
+        }
+    }
+}
+
 /* Object Wrapper Property: show raw code
 ----------------------------------------------------------------------------------- */
 .enlighter-show-rawcode{

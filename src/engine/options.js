@@ -28,6 +28,10 @@ export const _options = {
     // @scope SETTINGS
     textOverflow: 'break',
 
+    // enable collapse / vertical scroll
+    // @scope SETTINGS
+    collapse: false,
+
     // copy css classes from origin element to outer wrapper
     // @scope SETTINGS
     retainCssClasses: false,

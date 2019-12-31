@@ -117,6 +117,7 @@ export function parse(element, elementOptions){
         linehover:          getOption('linehover'),
         rawcodeDbclick:     getOption('rawcodeDbclick'),
         textOverflow:       getOption('textOverflow'),
+        collapse:           getOption('collapse'),
         cssClasses:         cssClassList
     }
 }

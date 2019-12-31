@@ -5,6 +5,7 @@
 ### Version 3.2.0 ###
 
 * Added: verilog support - thanks to [t123yh on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/86)
+* Added: `collapse` option to limit the maximal height
 * Changed: updated gulp + plugins
 
 ### Version 3.1.0 ###
