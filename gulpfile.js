@@ -26,6 +26,7 @@ const _header = require('gulp-header');
 const _uglify = require('gulp-uglify');
 const _rollup = require('rollup');
 const _rollup_babel = require('rollup-plugin-babel');
+const _rollup_resolve = require('@rollup/plugin-node-resolve');
 
 // themes to include
 const themelist = ['enlighter', 'beyond', 'classic', 'godzilla', 'atomic', 'droide', 'minimal', 'eclipse', 'mowtwo', 'rowhammer', 'bootstrap4', 'dracula', 'monokai'];
@@ -38,6 +39,7 @@ _gulp.task('es6-transpile', async function(){
     const bundle = await _rollup.rollup({
         input: './src/browser/EnlighterJS.js',
         plugins: [
+            _rollup_resolve(),
             _rollup_babel()
         ]
     });
