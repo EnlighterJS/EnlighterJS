@@ -35,6 +35,7 @@ export {nsis} from './nsis';
 export {php} from './php';
 export {powershell} from './powershell';
 export {prolog} from './prolog';
+export {purebasic} from './purebasic';
 export {python} from './python';
 export {qml} from './qml';
 export {raw} from './raw';
