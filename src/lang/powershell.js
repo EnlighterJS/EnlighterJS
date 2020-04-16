@@ -68,7 +68,7 @@ export class powershell extends generic {
 
             // commands
             {
-                regex: /\b([A-Z]\w+(?:-\w+)+)\b/g,
+                regex: /\b([A-Z]\w+(?:-\w+)+)\b/gi,
                 type: 'm0'
             },
 
