@@ -22,18 +22,18 @@ export class sql extends generic {
             // general comments
             _language_common_rules.poundComments,
             _language_common_rules.blockComments,
+            
+            // -- style comments
+            {
+                regex: /--.*$/gm,
+                type: 'c0'
+            },
 
             // null keywords
             _language_common_rules.null,
 
             // values
             _language_common_rules.sqStrings,
-
-            // -- style comments
-            {
-                regex: /--.*$/g,
-                type: 'c0'
-            },
 
             // column name literals
             {
@@ -47,15 +47,27 @@ export class sql extends generic {
                 type: 'k3'
             },
 
-            // general keywords
+            // static types
             {
-                regex: /\b[A-Z]+\b/g,
-                type: 'k0'
+                regex: /\b(bigint)\b/g,
+                type: 'k5'
+            },
+
+            // qualifier/modifier
+            {
+                regex: /\b(unsigned)\b/g,
+                type: 'k8'
             },
 
             // common keyword set
             {
-                regex: /\b(SELECT|INSERT|UPDATE|DELETE|INTO|FROM|CREATE|TABLE|VIEW|TRIGGER|ALTER|ORDER BY|DESC|ASC|AS|BETWEEN|IN|JOIN|LEFT|RIGHT|INNER|OUTER|USING|ON)b/gi,
+                regex: /\b(SELECT|INSERT|UPDATE|DELETE|INTO|FROM|CREATE|TABLE|VIEW|WHERE|TRIGGER|ALTER|ORDER BY|DESC|ASC|AS|BETWEEN|IN|JOIN|LEFT|RIGHT|INNER|OUTER|USING|ON|UNION)\b/gi,
+                type: 'k0'
+            },
+
+            // general keywords (uppercase)
+            {
+                regex: /\b[A-Z]+\b/g,
                 type: 'k0'
             },
 
@@ -63,6 +75,7 @@ export class sql extends generic {
             _language_common_rules.fCalls,
 
             // numbers
+            _language_common_rules.int,
             _language_common_rules.floats
         ]
     }
