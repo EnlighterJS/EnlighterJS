@@ -248,6 +248,10 @@
     top: 10px;
     z-index: 10;
 });
+.STYLE_TOOLBAR_BOTTOM({
+    top: unset;
+    bottom: 0px;
+});
 
 /* Enlighter textOverflow === scroll
 ----------------------------------------------------------------------------------- */
@@ -306,11 +310,6 @@
         // scrollbar on y axis
         overflow-y: auto;
         max-height: 500px;
-
-        // override in case the full sourcecode should be displayed
-        &.enlighter-collapse-full{
-            max-height: none;
-        }
     }
 
     // tabbed layout - use inner container a scroll wrapper!
@@ -321,12 +320,15 @@
             // scrollbar on y axis
             overflow-y: auto;
             max-height: 500px;
-
-            // override in case the full sourcecode should be displayed
-            &.enlighter-collapse-full{
-                max-height: none;
-            }
         }
+    }
+
+    // override in case the full sourcecode should be displayed
+    &.enlighter-collapse-full.@{VIEW_STANDARD}{
+        max-height: none;
+    }
+    &.enlighter-collapse-full.@{VIEW_CODEGROUP} .enlighter-codegroup-wrapper{
+        max-height: none;
     }
 }
 

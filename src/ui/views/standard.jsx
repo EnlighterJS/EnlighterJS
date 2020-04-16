@@ -10,7 +10,7 @@
 import {DomBlockRenderer} from '../renderer/dom-block.jsx';
 
 // Internal "ReactDOM"
-import * as React from '../../lib/dom';
+import * as React from 'dom-magic';
 
 import {Toolbar} from '../components/toolbar.jsx';
 import {Container} from '../components/container.jsx';
@@ -55,8 +55,8 @@ export function standard(dataset){
     }
 
     // utility function to toggle raw code
-    function toggleContainer(){
-        React.toggleClass(wrapper, 'enlighter-show-rawcode');
+    function toggleClass(name){
+        React.toggleClass(wrapper, name);
     }
 
     // utility to fetch raw code
@@ -66,14 +66,17 @@ export function standard(dataset){
 
     // generate wrapper
     wrapper =   <Container className={cssClasses}>
-                    <Toolbar toggleRawCode={toggleContainer} getRawCode={getRawCode} />
+                    <Toolbar name="top" layout={options.toolbarTop} toggleClass={toggleClass} getRawCode={getRawCode} />
                     <DomBlockRenderer tokens={dataset[0].tokens} options={dataset[0].params} />
                     <RawCode>{dataset[0].code}</RawCode>
+                    <Toolbar name="bottom" layout={options.toolbarBottom} toggleClass={toggleClass} getRawCode={getRawCode} />
                 </Container>;
 
     // dbclick event ?
     if (options.rawcodeDbclick){
-        wrapper.on('dblclick', toggleContainer);
+        wrapper.on('dblclick', () => {
+            toggleClass('enlighter-show-rawcode');
+        });
     }
 
     return wrapper;

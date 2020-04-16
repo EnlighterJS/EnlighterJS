@@ -6,7 +6,7 @@
 // Copyright 2016-2018 Andi Dittrich <https://andidittrich.de>
 // ----------------------------------------------------------------------
 
-import * as _dom from '../lib/dom';
+import * as _dom from 'dom-magic';
 
 // separate codegorups and single instances
 export function map(elements){

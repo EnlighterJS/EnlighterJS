@@ -6,7 +6,7 @@
 // Copyright 2016-2018 Andi Dittrich <https://andidittrich.de>
 // ----------------------------------------------------------------------
 
-import * as _dom from '../lib/dom';
+import * as _dom from 'dom-magic';
 
 // global list of highlighted elements
 const _highlightedElements = [];

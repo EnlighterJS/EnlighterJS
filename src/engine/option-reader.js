@@ -6,7 +6,7 @@
 // Copyright 2016-2018 Andi Dittrich <https://andidittrich.de>
 // ----------------------------------------------------------------------
 
-import * as _dom from '../lib/dom';
+import * as _dom from 'dom-magic';
 import {_options} from './options';
 
 // merge multiple options
@@ -118,7 +118,10 @@ export function parse(element, elementOptions){
         rawcodeDbclick:     getOption('rawcodeDbclick'),
         textOverflow:       getOption('textOverflow'),
         collapse:           getOption('collapse'),
-        cssClasses:         cssClassList
+        cssClasses:         cssClassList,
+        toolbarTop:         getOption('toolbarTop'),
+        toolbarBottom:      getOption('toolbarBottom'),
+        toolbarHeader:      getOption('toolbarHeader')
     }
 }
 

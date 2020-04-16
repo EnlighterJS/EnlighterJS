@@ -10,7 +10,7 @@
 import {DomInlineRenderer} from '../renderer/dom-inline.jsx';
 
 // Internal "ReactDOM"
-import * as React from '../../lib/dom';
+import * as React from 'dom-magic';
 
 import {Container} from '../components/container.jsx';
 

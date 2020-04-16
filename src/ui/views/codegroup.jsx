@@ -10,7 +10,7 @@
 import {DomBlockRenderer} from '../renderer/dom-block.jsx';
 
 // Internal "ReactDOM"
-import * as React from '../../lib/dom';
+import * as React from 'dom-magic';
 
 import {CodegroupSwitch} from '../components/codegroup-switch.jsx';
 import {Toolbar} from '../components/toolbar.jsx';
@@ -63,8 +63,8 @@ export function codegroup(dataset){
     }
 
     // utility function to toggle raw code
-    function toggleContainer(){
-        React.toggleClass(wrapper, 'enlighter-show-rawcode');
+    function toggleClass(name){
+        React.toggleClass(wrapper, name);
     }
 
     // utility to fetch raw code
@@ -101,14 +101,17 @@ export function codegroup(dataset){
                     <CodegroupSwitch onChange={i => showtab(i)} dataset={dataset} />
 
                     <Container name="codegroup-wrapper">
-                        <Toolbar toggleRawCode={toggleContainer} getRawCode={getRawCode} />
+                        <Toolbar name="top" layout={options.toolbarTop} toggleClass={toggleClass} getRawCode={getRawCode} />
                         {tabs}
+                        <Toolbar name="bottom" layout={options.toolbarBottom} toggleClass={toggleClass} getRawCode={getRawCode} />
                     </Container>
                 </Container>;
 
     // dbclick event ?
     if (options.rawcodeDbclick){
-        wrapper.on('dblclick', toggleContainer);
+        wrapper.on('dblclick', () => {
+            toggleClass('enlighter-show-rawcode');
+        });
     }
 
     return wrapper;

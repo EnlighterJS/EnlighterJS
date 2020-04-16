@@ -7,10 +7,10 @@
 // ----------------------------------------------------------------------
 
 // Internal "ReactDOM"
-import * as React from '../../lib/dom';
+import * as React from 'dom-magic';
 
 import {Container} from './container.jsx';
-import {Button} from './button.jsx';
+import {Button} from './buttons/button.jsx';
 
 export function CodegroupSwitch(props){
 

@@ -3,11 +3,11 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 // --
-// Copyright 2016-2018 Andi Dittrich <https://andidittrich.de>
+// Copyright 2016-2020 Andi Dittrich <https://andidittrich.de>
 // ----------------------------------------------------------------------
 
 // Internal "ReactDOM"
-import * as React from '../../lib/dom';
+import * as React from 'dom-magic';
 
 export function Button(props){
 
@@ -23,6 +23,7 @@ export function Button(props){
     return <div 
             className={classes.join(' ')} 
             onClick={props.onClick}
+            title={props.tooltip}
         >
             {props.text||null}
         </div>

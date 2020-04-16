@@ -7,7 +7,7 @@
 // ----------------------------------------------------------------------
 
 import * as _engine from '../engine/engine';
-import * as _dom from '../lib/dom';
+import * as _dom from 'dom-magic';
 import {setOptions} from '../engine/options';
 import {getRawCodeFromElement} from '../engine/sourcecode-extractor';
 import * as _codegroupMapper from '../engine/codegroup-mapper';

@@ -88,6 +88,7 @@ Features
 * **Typescript** (typescript)
 * **VHDL** (vhdl)
 * **VisualBasic** (visualbasic, vb)
+* **Verilog** (verilog)
 * **XML** (xml)
 * **YAML** (yaml)
 

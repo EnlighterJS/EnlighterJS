@@ -3,16 +3,12 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 // --
-// Copyright 2016-2018 Andi Dittrich <https://andidittrich.de>
+// Copyright 2016-2020 Andi Dittrich <https://andidittrich.de>
 // ----------------------------------------------------------------------
 
-// Internal "ReactDOM"
-import * as React from 'dom-magic';
-
-export function DomInlineRenderer({tokens}){
-    return <span className="enlighter">
-        {tokens.map(token => {
-             return <span className={'enlighter-' + token.type}>{token.text}</span>
-        })}
-    </span>;
-}
+export {raw} from './raw.jsx';
+export {copy} from './copy.jsx';
+export {window} from './window.jsx';
+export {website} from './website.jsx';
+export {collapse} from './collapse.jsx';
+//export {tabs} from './tabs.jsx';

@@ -7,13 +7,13 @@
 // ----------------------------------------------------------------------
 
 // Internal "ReactDOM"
-import * as React from '../../lib/dom';
+import * as React from 'dom-magic';
 
 // wrap child elements into raw container
 export function RawCode(props, content){
 
     // just some sugar..
-    return   <pre className="enlighter-raw">
+    return   <div className="enlighter-raw">
                 {content}
-            </pre>;
+            </div>;
 }

@@ -40,6 +40,15 @@ export const _options = {
     // @scope SETTINGS
     cssClasses: '',
 
+    // top outer toolbar
+    toolbarOuter: '{BTN_TABS}',
+
+    // header toolbar
+    toolbarTop: '{BTN_RAW}{BTN_COPY}{BTN_WINDOW}{BTN_WEBSITE}',
+
+    // footer toolbar
+    toolbarBottom: '{BTN_COLLAPSE}',
+
     // show linenumbers
     // @scope SETTINGS,ATTRIBUTE
     linenumbers: true,

@@ -8,7 +8,7 @@
 
 
 // Internal "ReactDOM"
-import * as React from '../../lib/dom';
+import * as React from 'dom-magic';
 
 import {getSpecialLines} from '../../engine/special-lines';
 

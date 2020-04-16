@@ -7,7 +7,7 @@
 // ----------------------------------------------------------------------
 
 // Internal "ReactDOM"
-import * as React from '../../lib/dom';
+import * as React from 'dom-magic';
 
 // wrap child elements into div container
 export function Container(props, ...children){

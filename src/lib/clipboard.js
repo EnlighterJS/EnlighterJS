@@ -7,7 +7,7 @@
 // ----------------------------------------------------------------------
 
 // Internal "ReactDOM"
-import * as DOM from './dom';
+import * as DOM from 'dom-magic';
 
 // copy content to clipboard
 export function copy(content){
