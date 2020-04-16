@@ -7,7 +7,9 @@
 * Added: verilog support - thanks to [t123yh on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/86)
 * Added: `collapse` option to limit the maximal height
 * Added: integer highlighting for sql
-* Changed: updated gulp + plugins
+* Added: modular configurable toolbar system using placeholders
+* Added: collapse mode
+* Added: browser based tooltips to the buttons (title attribute)
 * Bugfix: powershell commands can also expressed lowercase (camel-case not required) - thanks to [krysiekBP on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/88)
 * Bugfix: sql `--` styles comments ignored due to invalid regex - thanks to [petr-hybler on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/97)
 
