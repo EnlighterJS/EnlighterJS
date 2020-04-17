@@ -24,6 +24,31 @@ export class purebasic extends generic {
 
         this.rules = [
 
+
+            // integers
+            _language_common_rules.int,
+
+            // floats
+            _language_common_rules.floats,
+
+            // hex numbers: $21F1A9
+            {
+                regex: /[\b\W](-?\$[A-F0-9]+)\b/gi,
+                type: 'n2'
+            },
+
+            // binary numbers: %10001001
+            {
+                regex: /[\b\W](-?%[01]+)\b/gi,
+                type: 'n3'
+            },
+
+            // pointers *abc
+            {
+                regex: /[\b\W](\*\w+)\b/gi,
+                type: 'text'
+            },
+
             // double quoted strings
             _language_common_rules.dqStrings,
 
@@ -53,20 +78,26 @@ export class purebasic extends generic {
 
             // control keywords
             {
-                regex: /\b(Break|Case|Continue|Default|Else|ElseIf|End|EndIf|EndSelect|For|ForEver|ForEach|Gosub|Goto|If|Next|Repeat|Return|FakeReturn|Select|Until|Wend|While)\b/gi,
+                regex: /\b(Break|Case|Continue|Default|Else|ElseIf|End|EndIf|EndSelect|For|ForEver|ForEach|Gosub|Goto|If|Next|Repeat|Return|FakeReturn|Select|Until|Wend|While|To|Step)\b/gi,
                 type: 'k1'
             },
 
             // keywords
             {
-                regex: /\b(Array|List|Map|Procedure(?:C|Dll|CDll)?|ProcedureReturn|EndProcedure|Declare(?:C|Dll|CDll)?|ImportC?|EndImport|As|Interface|Extends|EndInterface|Macro|MacroExpandedCount|EndMacro|UndefineMacro|DeclareModule|EndDeclareModule|Module|EndModule|UseModule|UnuseModule|To|Step|Structure(?:Union)?|EndStructure(?:Union)?|With|EndWith|PrototypeC?|Runtime|Swap|Data|DataSection|EndDataSection|Read|Restore)\b/gi,
+                regex: /\b(Array|List|Map|Procedure(?:C|Dll|CDll)?|ProcedureReturn|EndProcedure|Declare(?:C|Dll|CDll)?|ImportC?|EndImport|As|Macro|MacroExpandedCount|EndMacro|UndefineMacro|DeclareModule|EndDeclareModule|Module|EndModule|UseModule|UnuseModule|With|EndWith|PrototypeC?|Runtime|Swap|Data|DataSection|EndDataSection|Read|Restore)\b/gi,
                 type: 'k2'
             },
 
             // type initialization
             {
-                regex: /\b(Dim|Enumeration|EndEnumeration|ReDim|NewList|NewMap)\b/gi,
-                type: 'k2'
+                regex: /\b(ReDim|Dim|NewList|NewMap|Enumeration|EndEnumeration|Interface|Extends|EndInterface|Structure(?:Union)?|EndStructure(?:Union)?)\b/gi,
+                type: 'k4'
+            },
+
+            // Array, List and Map definition
+            {
+                regex: /\b(?:ReDim|Dim|NewList|NewMap)\s*([\w]+)\(/gim,
+                type: 'text'
             },
 
             // qualifier/modifier
@@ -95,7 +126,13 @@ export class purebasic extends generic {
 
             // arithemtic operator
             {
-                regex: /(<=|=<|>=|=>|<>|<<|>>|=|\+|(?<!(?:[(,=<>+/*\-%&|!~:]|case|if|elseif|to|step|while|until|select|and|or|xor|not|procedurereturn|debug|debuglevel)\s*)-|\*|\/|<|>|(?!%[01])%|&|\||!|~)/gi,
+                regex: /(<=|=<|>=|=>|<>|<<|>>|=|-|\+|\/|%|<|>|&|\||!|~)/gi,
+                type: 'k6'
+            },
+
+            // arithemtic operator *
+            {
+                regex: /(\*)(?:\d|\s*(?:\b|-|\(|%|\$|\*))/gi,
                 type: 'k6'
             },
 
@@ -112,33 +149,12 @@ export class purebasic extends generic {
             },            
 
             // function calls
-            {
-                regex: /\b(?<!(?:\.|Dim|NewList|NewMap)\s*)([\w]+)\(/gim,
-                type: 'm0'
-            },
+            _language_common_rules.fCalls,
 
             // single line comments
             {
                 regex: /;.*$/gm,
                 type: 'c0'
-            },
-
-            // integers
-            _language_common_rules.int,
-
-            // floats
-            _language_common_rules.floats,
-
-            // hex numbers: $21F1A9
-            {
-                regex: /[\b\W](-?\$[A-F0-9]+)\b/gi,
-                type: 'n2'
-            },
-
-            // binary numbers: %10001001
-            {
-                regex: /[\b\W](-?%[01]+)\b/gi,
-                type: 'n3'
             },
 
             // prop
