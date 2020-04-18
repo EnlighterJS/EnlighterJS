@@ -61,7 +61,7 @@ export class sql extends generic {
 
             // common keyword set
             {
-                regex: /\b(SELECT|INSERT|UPDATE|DELETE|INTO|FROM|CREATE|TABLE|VIEW|WHERE|TRIGGER|ALTER|ORDER BY|DESC|ASC|AS|BETWEEN|IN|JOIN|LEFT|RIGHT|INNER|OUTER|USING|ON|UNION)\b/gi,
+                regex: /\b(SELECT|INSERT|UPDATE|DELETE|INTO|FROM|CREATE|TABLE|VIEW|WHERE|TRIGGER|ALTER|ORDER BY|DESC|ASC|AS|BETWEEN|JOIN|LEFT|RIGHT|INNER|OUTER|USING|ON|UNION)\b/gi,
                 type: 'k0'
             },
 
@@ -71,8 +71,6 @@ export class sql extends generic {
                 type: 'k0'
             },
 
-            // functions
-            _language_common_rules.fCalls,
 
             // numbers
             _language_common_rules.int,
