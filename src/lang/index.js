@@ -29,6 +29,7 @@ export {javascript} from './javascript';
 export {json} from './json';
 export {kotlin} from './kotlin';
 export {less} from './less';
+export {lighttpd} from './lighttpd';
 export {lua} from './lua';
 export {markdown} from './markdown';
 export {matlab} from './matlab';
