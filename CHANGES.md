@@ -2,6 +2,13 @@
 
 **Re-Created from Scratch - The whole systems architecture has been changed**
 
+### Version 3.3.0 ###
+
+* Added: `apacheconf` / `htaccess` support
+* Added: `purebasic` support - thanks to [gphilippot on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/96)
+* Changed: theme font sizes + line-height are based on relative `em` values - only the font size of the outer wrapper is set explicitly
+* Changed: removed "function" highlighting regex from `sql`
+
 ### Version 3.2.0 ###
 
 * Added: verilog support - thanks to [t123yh on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/86)

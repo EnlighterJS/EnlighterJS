@@ -77,6 +77,7 @@ Features
 * **Powerhsell** (powershell)
 * **Prolog** (prolog)
 * **Python** (py, python)
+* **PureBasic** (purebasic, pb)
 * **RAW** (raw) - raw code without highlighting with EnlighterJS container styles!
 * **Ruby** (ruby)
 * **Rust** (rust)
