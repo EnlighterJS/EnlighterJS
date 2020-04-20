@@ -4,8 +4,10 @@
 
 ### Version 3.3.0 ###
 
-* Added: `apacheconf` / `htaccess` support
-* Added: `purebasic` support - thanks to [gphilippot on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/96)
+* Added: [apachehttpd/htaccess](https://httpd.apache.org/docs/2.4/configuring.html) support
+* Added: [lighttpd](https://redmine.lighttpd.net/projects/lighttpd/wiki/Docs_Configuration) support
+* Added: [nginx](https://www.nginx.com/resources/wiki/start/topics/examples/full/) support
+* Added: [purebasic](https://www.purebasic.com/) support - thanks to [gphilippot on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/96)
 * Changed: theme font sizes + line-height are based on relative `em` values - only the font size of the outer wrapper is set explicitly
 * Changed: removed "function" highlighting regex from `sql`
 

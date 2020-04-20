@@ -33,6 +33,7 @@ export {lighttpd} from './lighttpd';
 export {lua} from './lua';
 export {markdown} from './markdown';
 export {matlab} from './matlab';
+export {nginx} from './nginx';
 export {nsis} from './nsis';
 export {php} from './php';
 export {powershell} from './powershell';
