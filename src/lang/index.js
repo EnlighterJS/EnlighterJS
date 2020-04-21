@@ -28,6 +28,7 @@ export {java} from './java';
 export {javascript} from './javascript';
 export {json} from './json';
 export {kotlin} from './kotlin';
+export {latex} from './latex';
 export {less} from './less';
 export {lighttpd} from './lighttpd';
 export {lua} from './lua';

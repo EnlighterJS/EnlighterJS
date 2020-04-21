@@ -8,8 +8,10 @@
 * Added: [lighttpd](https://redmine.lighttpd.net/projects/lighttpd/wiki/Docs_Configuration) support
 * Added: [nginx](https://www.nginx.com/resources/wiki/start/topics/examples/full/) support
 * Added: [purebasic](https://www.purebasic.com/) support - thanks to [gphilippot on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/96)
+* Added: latex/tex support
 * Changed: theme font sizes + line-height are based on relative `em` values - only the font size of the outer wrapper is set explicitly
 * Changed: removed "function" highlighting regex from `sql`
+* Bugfix: [engine] possible overlapping matches of multitype tokens in case submatches are equal
 
 ### Version 3.2.0 ###
 
