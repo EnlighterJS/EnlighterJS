@@ -57,18 +57,35 @@ export function getTokens(code, rules, defaultTokenType = 'text'){
             // matching group used ?
             if (match.length > 1){
 
+                console.log(match);
+                console.log(rule.type);
+
+                // match indexOf offset
+                let offset = 0;
+                
                 // process each matching group as single token
                 for (let i=1;i<match.length;i++){
+
                     // valid match ?
                     if (match[i]){
+                        console.log(match[i], rule.type[i-1]);
                         // is array ? get nth type
                         const type = (Array.isArray(rule.type) && rule.type.length >= i) ? rule.type[i-1] : defaultType;
 
                         // is array ? get nth type
                         const filter = (Array.isArray(rule.filter) && rule.filter.length >= i) ? rule.filter[i-1] : defaultFilter;
 
+                        console.log(match[i], type);
+
+                        // get match index - avoid overlapping using offset
+                        const matchPosition = match[0].indexOf(match[i], offset);
+                        console.log(matchPosition);
+
+                        // set new offset
+                        offset = matchPosition;
+
                         // create new token
-                        rawTokens.push(_token(match[i], type, filter, match.index + match[0].indexOf(match[i]), priority));
+                        rawTokens.push(_token(match[i], type, filter, match.index + matchPosition, priority));
                     }
                 }
             }else{
