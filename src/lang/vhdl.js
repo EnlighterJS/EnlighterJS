@@ -43,7 +43,10 @@ export class vhdl extends generic {
             _language_common_rules.dqStrings,
 
             // single bit (single quotes)
-            _language_common_rules.sqStrings,
+            {
+                regex: /('.')/g,
+                type: 's0'
+            },
 
             // brackets
             _language_common_rules.brackets,

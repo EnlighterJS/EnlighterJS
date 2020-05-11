@@ -7,6 +7,7 @@
 * Added: keyword `k11` for annotations
 * Changed: `java`, `scala`, `cpp` annotation token changed to `k11`
 * Changed: added token `k11` to themes
+* Bugfix: vhdl single bit highlighting collided with attribute syntax - thanks to [tyriun on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/106)
 
 ### Version 3.3.0 ###
 
