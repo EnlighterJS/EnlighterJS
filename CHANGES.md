@@ -2,6 +2,12 @@
 
 **Re-Created from Scratch - The whole systems architecture has been changed**
 
+### Version 3.4.0 ###
+
+* Added: keyword `k11` for annotations
+* Changed: `java`, `scala`, `cpp` annotation token changed to `k11`
+* Changed: added token `k11` to themes
+
 ### Version 3.3.0 ###
 
 * Added: [apachehttpd/htaccess](https://httpd.apache.org/docs/2.4/configuring.html) support

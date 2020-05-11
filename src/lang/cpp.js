@@ -33,7 +33,7 @@ export class cpp extends generic {
             // annotations
             {
                 regex: /@[\W\w_][\w]+/gm,
-                type: 's9'
+                type: 'k11'
             },
 
             // boolean expression

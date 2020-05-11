@@ -41,7 +41,7 @@ export class scala extends generic {
             // annotations
             {
                 regex: /@[\W\w_][\w]+/g,
-                type: 's9'
+                type: 'k11'
             },
 /*
              // basic types
