@@ -42,6 +42,7 @@ export {prolog} from './prolog';
 export {purebasic} from './purebasic';
 export {python} from './python';
 export {qml} from './qml';
+export {r} from './r';
 export {raw} from './raw';
 export {ruby} from './ruby';
 export {rust} from './rust';

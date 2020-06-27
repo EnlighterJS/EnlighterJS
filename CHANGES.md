@@ -8,6 +8,7 @@
 * Added: keyword `x16` for css element selectors
 * Added: contextual keywords to csharp - thanks to [mabako on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/112)
 * Added: kotlin string template support
+* Added: `r` language support (covered by generic ruleset)
 * Changed: css selector fragment highlighting is limited to the selector itself
 * Changed: enhanced css unit parsing
 * Changed: `java`, `scala`, `cpp` annotation token changed to `k11`
