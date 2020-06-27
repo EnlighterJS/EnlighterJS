@@ -17,5 +17,5 @@ export function raw(props){
         props.toggleClass('enlighter-show-rawcode');
     }
 
-    return <Button name="raw" tooltip="Toggle RAW code" onClick={toggleRawCode}></Button>
+    return <Button name="raw" tooltip="Plain text" onClick={toggleRawCode}></Button>
 }
