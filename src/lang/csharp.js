@@ -89,6 +89,12 @@ export class csharp extends generic {
                 type: 'k0'
             },
 
+            // contextual keywords
+            {
+                regex: /\b(add|alias|ascending|async|await|by|descending|dynamic|equals|from|get|global|group|into|join|let|nameof|on|orderby|partial|remove|select|set|unmanaged|value|var|when|where|yield)\b/g,
+                type: 'k0'
+            },
+
             // special inheritance
             {
                 regex: /\b(this)\b/g,
