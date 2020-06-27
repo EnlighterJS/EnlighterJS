@@ -30,7 +30,11 @@ export class css extends generic {
             _common_css_rules.pseudoElements,
             _common_css_rules.idSelector,
             _common_css_rules.classSelector,
-            _common_css_rules.elementSelector
+            _common_css_rules.elementSelector,
+            
+            // strings (e.g. fonts, images)
+            _language_common_rules.dqStrings,
+            _language_common_rules.sqStrings,
         ];
 
         // main ruleset

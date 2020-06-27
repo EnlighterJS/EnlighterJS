@@ -10,7 +10,7 @@
 export default {
     // pseudo elements + selectors
     pseudoElements: {
-        regex: /[\w\]](::?[\w-]+)\b/g,
+        regex: /[\w\])](::?[\w-]+)\b/g,
         type: 'x15'
     },
 
