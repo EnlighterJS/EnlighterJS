@@ -7,8 +7,9 @@
 // ----------------------------------------------------------------------
 
 // Generic Rules/Regex
-import _language_common_rules from '../engine/generic-rules';
+import _language_common_rules from './rulesets/generic';
 import {css} from './css';
+import _common_css_rules from './rulesets/css';
 
 // SCSS/SASS
 // Author: [Andi Dittrich]
@@ -24,10 +25,18 @@ export class scss extends css {
         // setup css
         super.setupLanguage();
 
+        // remove selector subparser
+        this.rules.shift();
+
         // addon rules
         const addonRules = [
             // single line comments
             _language_common_rules.slashComments,
+
+            // selectors
+            _common_css_rules.pseudoElements,
+            _common_css_rules.idSelector,
+            _common_css_rules.classSelector,
 
             // functions
             {

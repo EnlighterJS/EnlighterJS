@@ -7,8 +7,11 @@
 // ----------------------------------------------------------------------
 
 // Generic Rules/Regex
-import _language_common_rules from '../engine/generic-rules';
+import _language_common_rules from './rulesets/generic';
 import {generic} from './generic';
+import _common_css_rules from './rulesets/css';
+
+import {getTokens} from '../engine/tokenizer';
 
 // CSS - Cascading Style Sheets
 // Author: [Andi Dittrich]
@@ -22,12 +25,32 @@ export class css extends generic {
 
     setupLanguage() {
 
+        // selector rules (2nd stage)
+        const selectorRules = [
+            _common_css_rules.pseudoElements,
+            _common_css_rules.idSelector,
+            _common_css_rules.classSelector,
+            _common_css_rules.elementSelector
+        ];
+
+        // main ruleset
         this.rules = [
+
+            // selectors
+            {
+                regex: /(?:^|}|\*\/|;|{)\s*([^{};/]+?)\s*{/g,
+                type: 'text',
+                filter: function(token){
+                    // selectors. Stage-2 Analyzing
+                    // run tokenizer with sub-ruleset
+                    return getTokens(token.text, selectorRules);
+                }
+            },
 
             // strings (e.g. fonts, images)
             _language_common_rules.dqStrings,
             _language_common_rules.sqStrings,
-
+            
             // directives @media, @import
             {
                 regex: /\W@(charset|import|namespace|page|font-face|keyframes|viewport|document|supports)\b/gi,
@@ -48,26 +71,8 @@ export class css extends generic {
 
             // units
             {
-                regex: /\b(\d+[.\d+-]?\s*(%|[a-z]{1,3})?)/gi,
+                regex: /(-?\.?\d+[.\d]*(%|[a-z]{2,4})?)/gim,
                 type: 'x13'
-            },
-
-            // pseudo elements + selectors
-            {
-                regex: /[\w\]](::?[\w-]+)\b/g,
-                type: 'x15'
-            },
-
-            // id selector
-            {
-                regex: /(#[\w-]+)\W/g,
-                type: 'x10'
-            },
-
-            // class selector
-            {
-                regex: /(\.[\w-]+)\W/g,
-                type: 'x11'
             },
 
             // rule/property
