@@ -12,6 +12,7 @@
 * Changed: `java`, `scala`, `cpp` annotation token changed to `k11`
 * Changed: added token `k11` to themes
 * Changed: moved generic highlighting rules to `lang/rulesets/generic`
+* Changed: `ampersandCleanup` is performed after html escape sequences to eliminate issues related to double unquoting #109
 * Bugfix: vhdl single bit highlighting collided with attribute syntax - thanks to [tyriun on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/106)
 * Bugfix: css classnames/ids with hyphens were not recognized
 * Bugfix: XML mixins of single/double quotes in attributes failed #108

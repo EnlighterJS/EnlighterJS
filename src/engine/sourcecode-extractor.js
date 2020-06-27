@@ -16,15 +16,16 @@ export function getRawCodeFromElement(element, options){
     // apply input filter
     //code = this.textFilter.filterInput(code);
 
-    // cleanup ampersand ?
-    if (options.ampersandCleanup === true) {
-        code = code.replace(/&amp;/gim, '&');
-    }
-
     // replace html escaped chars
     code = code .replace(/&lt;/gim, '<')
                 .replace(/&gt;/gim, '>')
                 .replace(/&nbsp;/gim, ' ');
+
+    // cleanup ampersand ?
+    // run cleanup after regular html escape sequences
+    if (options.ampersandCleanup === true) {
+        code = code.replace(/&amp;/gim, '&');
+    }
 
     // get indent option value
     const newIndent = options.indent;
