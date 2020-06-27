@@ -5,9 +5,17 @@
 ### Version 3.4.0 ###
 
 * Added: keyword `k11` for annotations
+* Added: keyword `x16` for css element selectors
+* Added: contextual keywords to csharp - thanks to [mabako on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/112)
+* Changed: css selector fragment highlighting is limited to the selector itself
+* Changed: enhanced css unit parsing
 * Changed: `java`, `scala`, `cpp` annotation token changed to `k11`
 * Changed: added token `k11` to themes
+* Changed: moved generic highlighting rules to `lang/rulesets/generic`
 * Bugfix: vhdl single bit highlighting collided with attribute syntax - thanks to [tyriun on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/106)
+* Bugfix: css classnames/ids with hyphens were not recognized
+* Bugfix: XML mixins of single/double quotes in attributes failed #108
+* Bugfix: dot char within XML attribute names not recognized
 
 ### Version 3.3.0 ###
 

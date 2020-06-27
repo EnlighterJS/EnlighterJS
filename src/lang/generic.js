@@ -7,7 +7,7 @@
 // ----------------------------------------------------------------------
 
 // Generic Rules/Regex
-import _language_common_rules from '../engine/generic-rules';
+import _language_common_rules from './rulesets/generic';
 
 // Tokenizer
 import * as _tokenizer from '../engine/tokenizer';

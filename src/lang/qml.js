@@ -7,7 +7,7 @@
 // ----------------------------------------------------------------------
 
 // Generic Rules/Regex
-import _language_common_rules from '../engine/generic-rules';
+import _language_common_rules from './rulesets/generic';
 import {generic} from './generic';
 
 // QML https://doc.qt.io/qt-5/qtqml-syntax-basics.html
