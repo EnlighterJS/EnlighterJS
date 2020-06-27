@@ -25,9 +25,12 @@ export class xml extends generic {
     setupLanguage(){
 
         // xml attributes. Stage-2 Analyzing
+        // @todo support unicode chars 
+        // @see https://www.w3.org/TR/xml/#d0e804
+        // @see https://www.w3.org/TR/2011/WD-html5-20110525/syntax.html#syntax-attribute-name
         function parseXmlAttributes(token){
             // run the MicroTokenizer to identify the name=value match
-            return _microTokenizer(token, /\b([\w:-]+)(\s*=\s*)((['"]).*?\4|[^'" \t]+)/gi, function(match){
+            return _microTokenizer(token, /\b([^\s\0"'>/=]+)(\s*=\s*)((['"]).*?\4|[^'" \t]+)/gi, function(match){
                 // attribute name | assignment operator | attribute value (string)
                 return [_token(match[1], 'x2'), _token(match[2], 'k3'), _token(match[3], 's0')];
             });
