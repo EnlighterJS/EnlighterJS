@@ -3,12 +3,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 // --
-// Copyright 2016-2018 Andi Dittrich <https://andidittrich.de>
+// Copyright 2016-2020 Andi Dittrich <https://andidittrich.de>
 // ----------------------------------------------------------------------
 
 // Generic Rules/Regex
 import _language_common_rules from './rulesets/generic';
 import {generic} from './generic';
+
+import _token from '../engine/token';
+import _microTokenizer from '../engine/micro-tokenizer';
 
 // Kotlin Language
 // Author: [Andi Dittrich]
@@ -17,17 +20,33 @@ export class kotlin extends generic {
 
     setupLanguage() {
 
-        this.rules = [
+        // template strings. Stage-2 Analyzing
+        function parseTemplateSeq(token){
 
-            // strings, chars
-            _language_common_rules.dqStrings,
-            _language_common_rules.char,
+            // run the MicroTokenizer to identify the template tags
+            return _microTokenizer(token, /\$(?:\{.*?}|\w+)/g, function(match){
+                return [_token(match[0], 's3')];
+            });
+        }
+
+        this.rules = [
 
             // multi line strings
             {
                 regex: /"""[\s\S]*?"""/g,
-                type: 's5'
+                type: 's5',
+                filter: parseTemplateSeq
             },
+            
+            // strings
+            {
+                regex: _language_common_rules.dqStrings.regex,
+                type: 's0',
+                filter: parseTemplateSeq
+            },
+
+            // chars
+            _language_common_rules.char,
 
             // properties
             _language_common_rules.prop,
