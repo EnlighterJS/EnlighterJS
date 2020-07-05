@@ -44,6 +44,7 @@ export {python} from './python';
 export {qml} from './qml';
 export {r} from './r';
 export {raw} from './raw';
+export {routeros} from './routeros';
 export {ruby} from './ruby';
 export {rust} from './rust';
 export {scala} from './scala';
