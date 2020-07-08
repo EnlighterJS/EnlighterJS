@@ -83,15 +83,17 @@
             content: ' ';
         }
 
-        // special line highlight color
-        &.enlighter-special{
-            background-color: #f9f9f9;
-        }
     }, {
 
     }, {
         background-color: #f8f8f8;
     });
+
+    // special line highlight color
+    div.enlighter > div.enlighter-special{
+        background-color: #edf9ec;
+        border-left-color: #3fa03f;
+    }
 
     // Line Number Styles
     .STYLE_LINENUMBERS({
@@ -111,12 +113,6 @@
     }, {
 
     });
-
-    // special line highlight color
-    .enlighter li.enlighter-special{
-        background-color: #edf9ec;
-        border-left-color: #3fa03f;
-    }
 
     // text size
     .STYLE_TOKEN_DEFAULT({

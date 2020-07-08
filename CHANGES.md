@@ -9,6 +9,7 @@
 * Added: contextual keywords to csharp - thanks to [mabako on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/112)
 * Added: kotlin string template support
 * Added: `r` language support (covered by generic ruleset)
+* Added: MikroTik `RouterOS` language support (ros/mikrotik/switchos/routeros/mt)
 * Changed: css selector fragment highlighting is limited to the selector itself
 * Changed: enhanced css unit parsing
 * Changed: `java`, `scala`, `cpp` annotation token changed to `k11`
@@ -21,6 +22,7 @@
 * Bugfix: XML mixins of single/double quotes in attributes failed #108
 * Bugfix: dot char within XML attribute names not recognized
 * Bugfix: kotlin raw string where not correctly parsed (wrong rule priority)
+* Bugfix: highlighting color of `classic` theme not applied due to invalid selectors - thanks to [woolseyj on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/117)
 
 ### Version 3.3.0 ###
 
