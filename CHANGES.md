@@ -10,6 +10,7 @@
 * Added: kotlin string template support
 * Added: `r` language support (covered by generic ruleset)
 * Added: MikroTik `RouterOS` language support (ros/mikrotik/switchos/routeros/mt)
+* Added: pound style comment support to `php`
 * Changed: css selector fragment highlighting is limited to the selector itself
 * Changed: enhanced css unit parsing
 * Changed: `java`, `scala`, `cpp` annotation token changed to `k11`

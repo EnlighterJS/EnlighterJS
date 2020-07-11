@@ -73,6 +73,9 @@ export class php extends generic {
             // slash style comments
             _language_common_rules.slashComments,
 
+            // pound style comments
+            _language_common_rules.poundComments,
+
             // multi line comments
             _language_common_rules.blockComments,
 
