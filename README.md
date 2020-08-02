@@ -16,7 +16,7 @@ Related
 
 * [Documentation](https://github.com/EnlighterJS/docs)
 * [Website](https://enlighterjs.org)
-* [Developer Guide](https://github.com/EnlighterJS/docs/blob/master/DeveloperGuide.md)
+* [Developer Guide](https://github.com/EnlighterJS/documentation/blob/master/development/README.md)
 * [Examples](examples/)
 * [EnlighterJS for WordPress](https://wordpress.org/plugins/enlighter/) - The official EnlighterJS plugin for WordPress | [Repository](https://github.com/EnlighterJS/Plugin.WordPress)
 * [EnlighterJS for TinyMCE Editor](https://tinymce.enlighterjs.org) - The official EnlighterJS plugin for TinyMCE Visual Editor | [Repository](https://github.com/EnlighterJS/Plugin.TinyMCE)
