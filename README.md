@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/EnlighterJS/EnlighterJS.svg?branch=master)](https://travis-ci.org/EnlighterJS/EnlighterJS)
 
-[Quickstart](#quickstart) | [Documentation](https://github.com/EnlighterJS/docs) | [Languages](#languages) | [Themes](themes) | [Website](https://enlighterjs.org) 
+[Quickstart](#quickstart) | [Documentation](https://github.com/EnlighterJS/docs) | [Languages](#languages) | [Themes](#themes) | [Website](https://enlighterjs.org) 
 
 EnlighterJS3
 ====================================================================
