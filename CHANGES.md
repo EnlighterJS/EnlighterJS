@@ -18,6 +18,7 @@
 * Changed: moved generic highlighting rules to `lang/rulesets/generic`
 * Changed: `ampersandCleanup` is performed after html escape sequences to eliminate issues related to double unquoting #109
 * Changed: toggle raw code label to "Plain text"
+* Changed: allowed utf8 characters in `php` variable and function names (side effect of the php parser)
 * Bugfix: vhdl single bit highlighting collided with attribute syntax - thanks to [tyriun on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/106)
 * Bugfix: css classnames/ids with hyphens were not recognized
 * Bugfix: XML mixins of single/double quotes in attributes failed #108
