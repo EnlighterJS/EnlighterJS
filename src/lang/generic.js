@@ -48,7 +48,7 @@ export class generic{
 
             // common used keywords
             {
-                regex: /\W(true|false|null|nil|if|then|else|for|while|do|class|implements|extends|function|end|void|return|in|of|new|this|try|catch|def|except)\W/gi,
+                regex: /\b(true|false|null|nil|if|then|else|for|while|do|class|implements|extends|function|end|void|return|in|of|new|this|try|catch|def|except)\b/gi,
                 type: 'k1'
             },
 
