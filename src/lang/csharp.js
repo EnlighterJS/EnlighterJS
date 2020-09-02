@@ -3,7 +3,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 // --
-// Copyright 2016-2018 Andi Dittrich <https://andidittrich.de>
+// Copyright 2016-2020 Andi Dittrich <https://andidittrich.de>
 // ----------------------------------------------------------------------
 
 // Generic Rules/Regex
@@ -55,7 +55,7 @@ export class csharp extends generic {
 
             // types
             {
-                regex: /\b(bool|byte|char|decimal|double|float|int|long|sbyte|short|uint|ulong|ushort|void)\b/g,
+                regex: /\b(bool|byte|char|decimal|double|float|int|long|sbyte|short|uint|ulong|ushort|void|string)\b/g,
                 type: 'k5'
             },
 
