@@ -27,6 +27,7 @@ export {ini} from './ini';
 export {java} from './java';
 export {javascript} from './javascript';
 export {json} from './json';
+export {jsx} from './jsx';
 export {kotlin} from './kotlin';
 export {latex} from './latex';
 export {less} from './less';
