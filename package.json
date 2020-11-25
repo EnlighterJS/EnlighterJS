@@ -1,7 +1,7 @@
 {
     "name": "enlighterjs",
     "description": "an open source syntax highlighter written in pure javascript",
-    "version": "3.4.0",
+    "version": "3.5.0",
     "homepage": "https://enlighterjs.org",
     "author": {
         "name": "Andi Dittrich",
@@ -44,15 +44,15 @@
         "xml"
     ],
     "devDependencies": {
-        "@babel/core": "^7.9.0",
+        "@babel/core": "^7.12.9",
         "@babel/plugin-external-helpers": "^7.8.3",
-        "@babel/plugin-transform-react-jsx": "^7.9.4",
+        "@babel/plugin-transform-react-jsx": "^7.12.7",
         "@babel/plugin-transform-runtime": "^7.9.0",
-        "@babel/preset-env": "^7.9.5",
-        "@babel/preset-react": "^7.9.4",
-        "@rollup/plugin-node-resolve": "^7.1.3",
+        "@babel/preset-env": "^7.12.7",
+        "@babel/preset-react": "^7.12.7",
+        "@rollup/plugin-node-resolve": "^10.0.0",
         "clean-css": "~4.2.3",
-        "eslint": "^6.8.0",
+        "eslint": "^7.14.0",
         "eslint-config-aenondynamics": "^0.2.0",
         "eslint-plugin-react": "^7.19.0",
         "express": "^4.16.2",
@@ -66,9 +66,9 @@
         "gulp-prettyerror": "^2.0.0",
         "gulp-replace": "^1.0.0",
         "gulp-uglify": "^3.0.0",
-        "rollup": "^2.6.1",
+        "rollup": "^2.33.3",
         "rollup-plugin-babel": "^4.4.0",
-        "uglify-js": "~3.9.1"
+        "uglify-js": "~3.12.0"
     },
     "dependencies": {
         "dom-magic": "^1.0.0"
