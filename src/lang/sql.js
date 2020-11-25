@@ -37,7 +37,7 @@ export class sql extends generic {
 
             // column name literals
             {
-                regex: /`\w+?`(?:\.`\w+?`)*/g,
+                regex: /`\S+?`(?:\.`\S+?`)*/g,
                 type: 'k9'
             },
 
