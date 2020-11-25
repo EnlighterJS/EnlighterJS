@@ -35,13 +35,13 @@ export default {
 
     // slash style comments: // hello world
     slashComments: {
-        regex: /(?:^|[^\\])\/\/.*$/gm,
+        regex: /(?:^|[^\\])(\/\/.*)$/gm,
         type: 'c0'
     },
 
     // pound comments: # hello world
     poundComments: {
-        regex: /(?:^|[^\\])#.*$/gm,
+        regex: /(?:^|[^\\])(#.*)$/gm,
         type: 'c0'
     },
 
