@@ -5,6 +5,8 @@
 ### Version 3.5.0 ###
 
 * Changed: `droide` theme color `#009999` to `#007f7f` for higher contrast (WCAG) - thanks to [aphelionz on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/117)
+* Changed: in case of a tokenizer error, the tokenizer will silently fail (output to console) instead of throwing an error - code will still be displayed but related tokens are missing
+* Bugfix: tokenizer loop limit was calculated in total instead of per-rule
 * Bugfix: keywords of `generic` language requires a word-boundary before+after instead of a non word character - thanks to [Irwanda04 on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/129)
 * Bugfix: allow any non-whitespace chars in sql column name literals
 * Bugfix: added missing `string` keyword to `c#` type list

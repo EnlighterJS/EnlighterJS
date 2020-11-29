@@ -13,6 +13,7 @@ import {getRawCodeFromElement} from '../engine/sourcecode-extractor';
 import * as _codegroupMapper from '../engine/codegroup-mapper';
 import * as _optionReader from '../engine/option-reader';
 import * as _elementManager from '../engine/element-manager';
+import * as _logger from '../lib/console';
 
 // static properties
 export const version = '[[VERSION]]';
@@ -72,8 +73,7 @@ export function enlight(elements, elementOptions={}){
 
     // Global Error Handling (FATAL ERRORS)
     }catch (err){
-        /* eslint no-console: 0 */
-        console.error('EnlighterJS Internal Error:', err);
+        _logger.error('EnlighterJS Internal Error:', err);
         return false;
     }
 }
