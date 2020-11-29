@@ -4,6 +4,13 @@
 
 ### Version 3.5.0 ###
 
+* Added: dedicated MariaDB/MySQL language support `mariadb`
+* Added: dedicated Oracle Database language support `oracledb` (no special rules yet)
+* Added: dedicated MSSQL language support `mssql` (no special rules yet)
+* Added: `constraints` to `sql`
+* Changed: splitted sql language into several types/dialects for further extension
+* Changed: removed pound style comments from generic `sql` support
+* Changed: removed keywords `bigint` and `unsigned` from generic `sql` support
 * Changed: `droide` theme color `#009999` to `#007f7f` for higher contrast (WCAG) - thanks to [aphelionz on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/117)
 * Changed: in case of a tokenizer error, the tokenizer will silently fail (output to console) instead of throwing an error - code will still be displayed but related tokens are missing
 * Bugfix: tokenizer loop limit was calculated in total instead of per-rule

@@ -19,8 +19,7 @@ export class sql extends generic {
 
         this.rules = [
 
-            // general comments
-            _language_common_rules.poundComments,
+            // multiline comments 
             _language_common_rules.blockComments,
             
             // -- style comments
@@ -35,6 +34,12 @@ export class sql extends generic {
             // values
             _language_common_rules.sqStrings,
 
+            // constraints
+            {
+                regex: /\b(NOT NULL|UNIQUE|PRIMARY KEY|FOREIGN KEY|CHECK|DEFAULT|INDEX)\b/gi,
+                type: 'k4'
+            },
+
             // column name literals
             {
                 regex: /`\S+?`(?:\.`\S+?`)*/g,
@@ -43,20 +48,8 @@ export class sql extends generic {
 
             // operators
             {
-                regex: /\b(all|and|any|between|exists|in|like|not|or|is null|is not null|unique|=|!=|<>|>|<|>=|<=|!<|!>)\b/gi,
+                regex: /\b(all|and|any|between|exists|in|like|not|or|is null|is not null|=|!=|<>|>|<|>=|<=|!<|!>)\b/gi,
                 type: 'k3'
-            },
-
-            // static types
-            {
-                regex: /\b(bigint)\b/g,
-                type: 'k5'
-            },
-
-            // qualifier/modifier
-            {
-                regex: /\b(unsigned)\b/g,
-                type: 'k8'
             },
 
             // common keyword set
