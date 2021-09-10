@@ -12,7 +12,7 @@ import {generic} from './generic';
 
 //Bird Script Language
 // Author: [Krishnavyshak R]
-// --
+// -- 
 export class birdscript extends generic {
 
     // language aliases
