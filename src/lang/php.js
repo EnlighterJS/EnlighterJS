@@ -81,13 +81,13 @@ export class php extends generic {
 
             // variables
             {
-                regex: /\$[^\s=;()]+/gim,
+                regex: /\$[^\s=;()'"]+/gim,
                 type: 'k7'
             },
 
             // global function calls
             {
-                regex: /\b([^\s(]+)\s*\(/gm,
+                regex: /\b(\w[^\s('"]+)\s*\(/gm,
                 type: 'm0'
             },
 

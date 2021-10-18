@@ -2,6 +2,10 @@
 
 **Re-Created from Scratch - The whole systems architecture has been changed**
 
+### Version 3.5.1 ###
+
+* Bugfix: `php` variable and function names followed by single/double quotes were interpreted as name - thanks to [oleg-dk on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/178)
+
 ### Version 3.5.0 ###
 
 * Added: dedicated MariaDB/MySQL language support `mariadb`
