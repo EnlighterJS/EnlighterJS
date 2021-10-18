@@ -52,10 +52,11 @@ export class yaml extends generic {
             },
 
             // block data (string)
+            /*
             {
                 regex: /\s+(?:>|\|)[\r|\n]+((?:\s+[^\r\n]+[\r|\n]+)+)/gi,
                 type: 's5'
-            },
+            },*/
 
             // quoted strings
             _language_common_rules.dqStrings,
