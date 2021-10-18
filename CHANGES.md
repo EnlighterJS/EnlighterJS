@@ -5,6 +5,7 @@
 ### Version 3.5.1 ###
 
 * Bugfix: `php` variable and function names followed by single/double quotes were interpreted as name - thanks to [oleg-dk on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/178)
+* Bugfix: `latex` command on first line not recognized - thanks to [MamounImadRajab on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/169)
 
 ### Version 3.5.0 ###
 

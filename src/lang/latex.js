@@ -31,7 +31,7 @@ export class latex extends generic {
 
             // commands
             {
-                regex: /[^\\](\\\w+)(?:[\W\s])/gm,
+                regex: /(?:^|[^\\])(\\\w+)(?:[\W\s])/gm,
                 type: 'k0'
             },
 
