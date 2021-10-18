@@ -50,9 +50,9 @@
         "@babel/plugin-transform-runtime": "^7.9.0",
         "@babel/preset-env": "^7.12.7",
         "@babel/preset-react": "^7.12.7",
-        "@rollup/plugin-node-resolve": "^10.0.0",
-        "clean-css": "~4.2.3",
-        "eslint": "^7.14.0",
+        "@rollup/plugin-node-resolve": "^13.0.5",
+        "clean-css": "~5.2.1",
+        "eslint": "^8.0.1",
         "eslint-config-aenondynamics": "^0.2.0",
         "eslint-plugin-react": "^7.19.0",
         "express": "^4.16.2",
@@ -62,13 +62,13 @@
         "gulp-clean-css": "^4.3.0",
         "gulp-concat": "^2.6.1",
         "gulp-header": "^2.0.9",
-        "gulp-less": "^4.0.1",
+        "gulp-less": "^5.0.0",
         "gulp-prettyerror": "^2.0.0",
         "gulp-replace": "^1.0.0",
         "gulp-uglify": "^3.0.0",
         "rollup": "^2.33.3",
         "rollup-plugin-babel": "^4.4.0",
-        "uglify-js": "~3.12.0"
+        "uglify-js": "~3.14.2"
     },
     "dependencies": {
         "dom-magic": "^1.0.0"
