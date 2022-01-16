@@ -125,8 +125,9 @@ export class javascript extends generic{
             _language_common_rules.blockComments,
 
             // regular expressions
+            // @TODO rewrite regex since it doesn't match complex rulesets
             {
-                regex: /\W(\/(?:[^/\\]|\\.)*\/\w*)/g,
+                regex: /\W(\/(?:[^/\\\n]|\\.)*\/\w*)/g,
                 type: 'e2'
             },
 
