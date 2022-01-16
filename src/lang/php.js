@@ -81,7 +81,7 @@ export class php extends generic {
 
             // variables
             {
-                regex: /\$[^\s=;()'"]+/gim,
+                regex: /\$[^\s=;()'">:]+/gim,
                 type: 'k7'
             },
 

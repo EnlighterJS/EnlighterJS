@@ -6,6 +6,7 @@
 
 * Bugfix: `yaml` integer numbers not highlighted
 * Bugfix: `php` variable and function names followed by single/double quotes were interpreted as name - thanks to [oleg-dk on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/178)
+* Bugfix: `php` method calls on variables were interpreted as variable name - thanks to [ oleg-dk on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/182)
 * Bugfix: `latex` command on first line not recognized - thanks to [MamounImadRajab on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/169)
 * Bugfix: `javascript` regular expressions are match over multiple lines - thanks to [mrdexters1 on Wordpress.org Forums](https://wordpress.org/support/topic/problem-with-the-division-symbol/#post-15257942)
 
