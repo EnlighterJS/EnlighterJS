@@ -63,7 +63,8 @@ export class yaml extends generic {
             _language_common_rules.sqStrings,
 
             // floats/integer numbers
-            _language_common_rules.floats
+            _language_common_rules.floats,
+            _language_common_rules.int
         ];
     }
 }
