@@ -81,7 +81,7 @@ export class php extends generic {
 
             // variables
             {
-                regex: /\$[^\s=;()'">:]+/gim,
+                regex: /\$[^\s=;()'">:-]+/gim,
                 type: 'k7'
             },
 
@@ -93,14 +93,14 @@ export class php extends generic {
 
             // method call on instances
             {
-                regex: /->([\w]+)/gim,
-                type: 'm1'
+                regex: /(->)([\w]+)/gim,
+                type: ['k3', 'm1']
             },
 
             // static calls
             {
-                regex: /::([\w]+)/gim,
-                type: 'm2'
+                regex: /(::)([\w]+)/gim,
+                type: ['k3', 'm2']
             },
 
             // octal
