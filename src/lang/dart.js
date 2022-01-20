@@ -100,8 +100,6 @@ export class dart extends generic {
                 type: 'k0'
             },
 
-
-
             // special inheritance
             {
                 regex: /\b(this|super)\b/g,
@@ -130,10 +128,10 @@ export class dart extends generic {
             _language_common_rules.docComments,
 
             // doc comments (starting with ///)
-            // {
-            //     regex: /(?:^|[^\\])(\/\/\/.*)$/gm,
-            //     type: 'c1'
-            // },
+            {
+                regex: /(?:^|[^\\])(\/\/\/.*)$/gm,
+                type: 'c1'
+            },
 
             // method calls
             _language_common_rules.mCalls,
