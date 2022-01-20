@@ -19,6 +19,7 @@ export {csharp} from './csharp';
 export {css} from './css';
 export {cython} from './cython';
 export {cordpro} from './cordpro';
+export {dart} from './dart';
 export {diff} from './diff';
 export {dockerfile} from './dockerfile';
 export {go} from './go';
