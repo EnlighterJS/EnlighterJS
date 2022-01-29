@@ -31,6 +31,18 @@ export class php extends generic {
             // null expression
             _language_common_rules.null,
 
+            // method call on instances (before keywords!)
+            {
+                regex: /(->)([\w]+)/gim,
+                type: ['k3', 'm1']
+            },
+
+            // static calls (before keywords!)
+            {
+                regex: /(::)([\w]+)/gim,
+                type: ['k3', 'm2']
+            },
+            
             // inheritance
             {
                 regex: /(self|parent|\$this)/gi,
@@ -91,18 +103,6 @@ export class php extends generic {
                 type: 'm0'
             },
 
-            // method call on instances
-            {
-                regex: /(->)([\w]+)/gim,
-                type: ['k3', 'm1']
-            },
-
-            // static calls
-            {
-                regex: /(::)([\w]+)/gim,
-                type: ['k3', 'm2']
-            },
-
             // octal
             _language_common_rules.octal,
 
@@ -114,6 +114,9 @@ export class php extends generic {
 
             // floats numbers
             _language_common_rules.floats,
+
+            // integer numbers
+            _language_common_rules.int,
 
             // brackets
             _language_common_rules.brackets
