@@ -2,8 +2,9 @@
 
 **Re-Created from Scratch - The whole systems architecture has been changed**
 
-### Version 3.5.1 ###
+### Version 3.6.0 ###
 
+* Added: basic support for windows `batch` / `bat` file syntax
 * Bugfix: `yaml` integer numbers not highlighted
 * Bugfix: `php` variable and function names followed by single/double quotes were interpreted as name - thanks to [oleg-dk on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/178)
 * Bugfix: `php` method names which equals a keyword were highlighted as keyword - thanks to [oleg-dk on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/181)

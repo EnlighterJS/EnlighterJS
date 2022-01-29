@@ -14,6 +14,7 @@ export {abap} from './abap';
 export {apache} from './apache';
 export {assembly} from './assembly';
 export {avrassembly} from './avr-assembly';
+export {batch} from './batch';
 export {cpp} from './cpp';
 export {csharp} from './csharp';
 export {css} from './css';
