@@ -3,7 +3,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 // --
-// Copyright 2016-2020 Andi Dittrich <https://andidittrich.de>
+// Copyright 2016-2022 Andi Dittrich <https://andidittrich.com>
 // ----------------------------------------------------------------------
 
 // --------------------------------------------------------------------------
@@ -15,7 +15,6 @@ const _path = require('path');
 const _gulp = require('gulp');
 const _express = require('express');
 const _log = require('fancy-log');
-
 const _gulp_less = require('gulp-less');
 const _gulp_replace = require('gulp-replace');
 const _prettyError = require('gulp-prettyerror');
@@ -24,7 +23,7 @@ const _gulp_cleancss = require('gulp-clean-css');
 const _header = require('gulp-header');
 const _uglify = require('gulp-uglify');
 const _rollup = require('rollup');
-const _rollup_babel = require('rollup-plugin-babel');
+const _rollup_babel = require('@rollup/plugin-babel');
 const _rollup_resolve = require('@rollup/plugin-node-resolve');
 
 // themes to include
@@ -39,7 +38,9 @@ _gulp.task('es6-transpile', async function(){
         input: './src/browser/EnlighterJS.js',
         plugins: [
             _rollup_resolve.nodeResolve(),
-            _rollup_babel()
+            _rollup_babel.babel({
+                babelHelpers: 'bundled'
+            })
         ]
     });
 

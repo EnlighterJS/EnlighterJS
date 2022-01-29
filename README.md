@@ -54,6 +54,7 @@ Features
 * **Apache HTTPD** (apache)
 * **Assembly** (assembly, asm)
 * **AVR Assembly** (avrassembly, avrasm)
+* **Windows Batch/Bat** (bat,batch,cmd)
 * **C/C++** (c,cpp, c++)
 * **C#** (csharp)
 * **CSS** (css)
