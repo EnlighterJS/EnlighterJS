@@ -76,7 +76,7 @@ Features
 * **LESS** (less)
 * **lighttpd** (lighttpd)
 * **LUA** (lua)
-* **MariadDB** (mariadb)
+* **MariaDB** (mariadb)
 * **Markdown** (gfm, md, markdown)
 * **Matlab/Octave** (octave, matlab)
 * **MSSQL** (mssql)
