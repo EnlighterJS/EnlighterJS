@@ -10,7 +10,7 @@
 import _language_common_rules from './rulesets/generic';
 import {generic} from './generic';
 
-// LUA http://www.lua.org/
+// Lua http://www.lua.org/
 // Author: [Andi Dittrich]
 // --
 export class lua extends generic {
