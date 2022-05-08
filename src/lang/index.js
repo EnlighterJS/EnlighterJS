@@ -43,6 +43,7 @@ export {nginx} from './nginx';
 export {nsis} from './nsis';
 export {oracledb} from './oracledb';
 export {php} from './php';
+export {postgresql} from './postgresql';
 export {powershell} from './powershell';
 export {prolog} from './prolog';
 export {purebasic} from './purebasic';

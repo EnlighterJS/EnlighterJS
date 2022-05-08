@@ -9,6 +9,7 @@
 * Added: dedicated MariaDB/MySQL language support `mariadb`
 * Added: dedicated Oracle Database language support `oracledb` (no special rules yet)
 * Added: dedicated MSSQL language support `mssql` (no special rules yet)
+* Added: dedicated PostgreSQL language support `postgresql` (no special rules yet)
 * Added: `constraints` to `sql`
 * Changed: splitted sql language into several types/dialects for further extension
 * Changed: removed pound style comments from generic `sql` support
