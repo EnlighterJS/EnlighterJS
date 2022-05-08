@@ -2,27 +2,26 @@
 
 **Re-Created from Scratch - The whole systems architecture has been changed**
 
-### Version 3.6.0 ###
-
-* Added: basic support for windows `batch` / `bat` file syntax
-* Bugfix: `yaml` integer numbers not highlighted
-* Bugfix: `php` variable and function names followed by single/double quotes were interpreted as name - thanks to [oleg-dk on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/178)
-* Bugfix: `php` method names which equals a keyword were highlighted as keyword - thanks to [oleg-dk on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/181)
-* Bugfix: `php` method calls on variables were interpreted as variable name - thanks to [oleg-dk on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/182)
-* Bugfix: `latex` command on first line not recognized - thanks to [MamounImadRajab on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/169)
-* Bugfix: `javascript` regular expressions are match over multiple lines - thanks to [mrdexters1 on Wordpress.org Forums](https://wordpress.org/support/topic/problem-with-the-division-symbol/#post-15257942)
-
 ### Version 3.5.0 ###
 
+* Added: basic support for windows `batch` / `bat` file syntax
+* Added: `dart` language support - thanks to [whiplashoo on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/185)
 * Added: dedicated MariaDB/MySQL language support `mariadb`
 * Added: dedicated Oracle Database language support `oracledb` (no special rules yet)
 * Added: dedicated MSSQL language support `mssql` (no special rules yet)
+* Added: dedicated PostgreSQL language support `postgresql` (no special rules yet)
 * Added: `constraints` to `sql`
 * Changed: splitted sql language into several types/dialects for further extension
 * Changed: removed pound style comments from generic `sql` support
 * Changed: removed keywords `bigint` and `unsigned` from generic `sql` support
 * Changed: `droide` theme color `#009999` to `#007f7f` for higher contrast (WCAG) - thanks to [aphelionz on GitHub](https://github.com/EnlighterJS/EnlighterJS/pull/117)
 * Changed: in case of a tokenizer error, the tokenizer will silently fail (output to console) instead of throwing an error - code will still be displayed but related tokens are missing
+* Bugfix: `yaml` integer numbers not highlighted
+* Bugfix: `php` variable and function names followed by single/double quotes were interpreted as name - thanks to [oleg-dk on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/178)
+* Bugfix: `php` method names which equals a keyword were highlighted as keyword - thanks to [oleg-dk on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/181)
+* Bugfix: `php` method calls on variables were interpreted as variable name - thanks to [oleg-dk on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/182)
+* Bugfix: `latex` command on first line not recognized - thanks to [MamounImadRajab on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/169)
+* Bugfix: `javascript` regular expressions are match over multiple lines - thanks to [mrdexters1 on Wordpress.org Forums](https://wordpress.org/support/topic/problem-with-the-division-symbol/#post-15257942)
 * Bugfix: tokenizer loop limit was calculated in total instead of per-rule
 * Bugfix: keywords of `generic` language requires a word-boundary before+after instead of a non word character - thanks to [Irwanda04 on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/129)
 * Bugfix: allow any non-whitespace chars in sql column name literals
