@@ -75,7 +75,7 @@ Features
 * **LATEX** (latex)
 * **LESS** (less)
 * **lighttpd** (lighttpd)
-* **LUA** (lua)
+* **Lua** (lua)
 * **MariaDB** (mariadb)
 * **Markdown** (gfm, md, markdown)
 * **Matlab/Octave** (octave, matlab)
