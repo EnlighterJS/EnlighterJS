@@ -30,12 +30,21 @@ export class shell extends generic {
                 type: 'k4'
             },
 
-            // comments
-            _language_common_rules.poundComments,
+            // pound comments: # hello world
+            {
+                regex: /(?:^|[^\\\S])(#.*)$/gm,
+                type: 'c0'
+            },
             
-            // strings, single escaped chars like \" can be used within bash scripts
+            // dq strings, single escaped chars like \" can be used within bash scripts
             {
                 regex: /[^\\]("(?:[^"\\]|\\.)*")/g,
+                type: 's0'
+            },
+
+            // strings, single escaped chars like \' can be used within bash scripts
+            {
+                regex: /[^\\]('(?:[^'\\]|\\.)*')/g,
                 type: 's0'
             },
 

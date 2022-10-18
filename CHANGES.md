@@ -2,6 +2,11 @@
 
 **Re-Created from Scratch - The whole systems architecture has been changed**
 
+### Version 3.5.1 ###
+
+* Bugfix: `bash` pound style comment regex also matched variable substituions and special cases - thanks to [maidentaiwan on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/200)
+* Bugfix: `bash` single quoted strings not highlighted
+
 ### Version 3.5.0 ###
 
 * Added: basic support for windows `batch` / `bat` file syntax
