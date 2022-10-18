@@ -19,6 +19,14 @@
     }
 }
 
+// code+raw wrapper container
+.STYLE_CODE_WRAPPER(@rules){
+    .enlighter-code{
+        @rules();
+    }
+}
+
+
 // block code container
 .STYLE_CODE_CONTAINER_BLOCK(@rules){
     div.enlighter{

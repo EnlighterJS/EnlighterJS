@@ -2,8 +2,13 @@
 
 **Re-Created from Scratch - The whole systems architecture has been changed**
 
-### Version 3.5.1 ###
+### Version 3.6.0 ###
 
+* Added: css tooltips to the toolbar
+* Added: copy-to-clipboard success/error message via tooltip
+* Changed: DOM structure has changed: each raw+highlighted code elements are wrapper into `enlighter-code` container
+* Changed: DOM structure has changed: removed `enlighter-codegroup-wrapper`
+* Changed: toolbar position is now persistent and not affected by horizontal/vertical scrolling
 * Bugfix: `bash` pound style comment regex also matched variable substituions and special cases - thanks to [maidentaiwan on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/200)
 * Bugfix: `bash` single quoted strings not highlighted
 

@@ -16,7 +16,6 @@
     font-family: @font_SourceCodePro;
     font-size: 12px;
     line-height: 1.35em;
-    overflow: hidden;
     white-space: pre-wrap;
     word-wrap: break-word;
     margin: 0px 0px 20px 0px;
@@ -61,6 +60,11 @@
         background-color: #f0f0f0;
         cursor: pointer;
         font-family: inherit;
+
+        // show toolbar on over
+        &:hover .enlighter-tooltip{
+            visibility: visible;
+        }
     });
 
     // buttons
@@ -83,6 +87,11 @@
 
 /* Utility
 ----------------------------------------------------------------------------------- */
+
+// enlighter code container (code+raw)
+.STYLE_CODE_WRAPPER({
+    overflow: hidden;
+});
 
 // hide original codeblock (pre container marked to highlight)
 .enlighter-origin{
@@ -127,6 +136,16 @@
     .enlighter-codegroup-switch{
 
     }
+
+    // hide all code containers by default
+    .STYLE_CODE_WRAPPER({
+        display: none;
+    });
+
+    // moved toolbar into code area
+    .STYLE_TOOLBAR({
+        top: 44px;
+    });
 });
 
 /* Highlighted Object (Block Style)
@@ -257,27 +276,14 @@
 ----------------------------------------------------------------------------------- */
 .enlighter-overflow-scroll{
 
-    // default layout - single codeblock
-    &.@{VIEW_STANDARD}{
-
-        // scrollbar on x axis
-        overflow-x: auto;
-        word-wrap: normal !important;
-    }
-
-    // tabbed layout - use inner container a scroll wrapper!
+    &.@{VIEW_STANDARD},
     &.@{VIEW_CODEGROUP}{
-
-        // scroll wrap
-        .enlighter-codegroup-wrapper{
+        .STYLE_CODE_WRAPPER({
             // scrollbar on x axis
             overflow-x: auto;
             word-wrap: normal !important;
-        }
-    }
+        });
 
-    &.@{VIEW_STANDARD},
-    &.@{VIEW_CODEGROUP}{
         // code container
         .STYLE_CODE_CONTAINER({
 
@@ -294,38 +300,28 @@
             white-space: pre !important;
         });
     }
-
-    &.enlighter-show-rawcode{
-
-    }
 }
 
 /* Enlighter collapse
 ----------------------------------------------------------------------------------- */
 .enlighter-collapse{
 
-    // default layout - single codeblock
-    &.@{VIEW_STANDARD}{
-
-        // scrollbar on y axis
-        overflow-y: auto;
-        max-height: 500px;
-    }
-
     // tabbed layout - use inner container a scroll wrapper!
+    &.@{VIEW_STANDARD},
     &.@{VIEW_CODEGROUP}{
 
-        // scroll wrap
-        .enlighter-codegroup-wrapper{
-            // scrollbar on y axis
+        // scrollbar on y axis
+        .STYLE_CODE_WRAPPER({
             overflow-y: auto;
             max-height: 500px;
-        }
+        });
     }
 
     // override in case the full sourcecode should be displayed
     &.enlighter-collapse-full.@{VIEW_STANDARD}{
-        max-height: none;
+        .STYLE_CODE_WRAPPER({
+            max-height: none;
+        });
     }
     &.enlighter-collapse-full.@{VIEW_CODEGROUP} .enlighter-codegroup-wrapper{
         max-height: none;

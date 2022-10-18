@@ -87,10 +87,10 @@ export function codegroup(dataset){
     // list of tabs
     tabs = dataset.map(d => {
         // create container
-        return <div style="display:none">
+        return <Container className="enlighter-code" style="display:none">
             <DomBlockRenderer tokens={d.tokens} options={d.params} />
             <RawCode>{d.code}</RawCode>
-        </div>;
+        </Container>;
     });
 
     // highlight first button
@@ -99,12 +99,9 @@ export function codegroup(dataset){
     // create wrapper
     wrapper =   <Container className={cssClasses}>
                     <CodegroupSwitch onChange={i => showtab(i)} dataset={dataset} />
-
-                    <Container name="codegroup-wrapper">
-                        <Toolbar name="top" layout={options.toolbarTop} toggleClass={toggleClass} getRawCode={getRawCode} />
-                        {tabs}
-                        <Toolbar name="bottom" layout={options.toolbarBottom} toggleClass={toggleClass} getRawCode={getRawCode} />
-                    </Container>
+                    <Toolbar name="top" layout={options.toolbarTop} toggleClass={toggleClass} getRawCode={getRawCode} />
+                    {tabs}
+                    <Toolbar name="bottom" layout={options.toolbarBottom} toggleClass={toggleClass} getRawCode={getRawCode} />
                 </Container>;
 
     // dbclick event ?

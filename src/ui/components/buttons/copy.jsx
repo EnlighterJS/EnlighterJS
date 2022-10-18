@@ -11,13 +11,31 @@ import * as React from 'dom-magic';
 
 import * as _clipboard from '../../../lib/clipboard';
 import {Button} from './button.jsx';
+import {Tooltip} from './tooltip.jsx';
+
+const text = {
+    'error': 'Error: unable to copy to clipboard',
+    'success': 'Code copied!',
+    'label': 'Copy to clipboard'
+}
 
 export function copy(props){
+
+    // tooltip element
+    const tootltipElement = <Tooltip text={text.label}/>
+
     // trigger clipboard copy
     function copyToClipboard(){
         // try to copy to clipboard
-        _clipboard.copy(props.getRawCode());
+        const success = _clipboard.copy(props.getRawCode());
+
+        tootltipElement.innerText = (success ? text.success : text.error);
+
+        // restore label after 2s 
+        setTimeout(function(){
+            tootltipElement.innerText = text.label
+        }, 2000);
     }
 
-    return <Button name="copy" tooltip="Copy to clipboard" onClick={copyToClipboard}></Button>
+    return <Button name="copy" tooltip={tootltipElement} onClick={copyToClipboard}></Button>
 }

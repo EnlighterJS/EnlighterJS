@@ -67,8 +67,10 @@ export function standard(dataset){
     // generate wrapper
     wrapper =   <Container className={cssClasses}>
                     <Toolbar name="top" layout={options.toolbarTop} toggleClass={toggleClass} getRawCode={getRawCode} />
-                    <DomBlockRenderer tokens={dataset[0].tokens} options={dataset[0].params} />
-                    <RawCode>{dataset[0].code}</RawCode>
+                    <Container className="enlighter-code">
+                        <DomBlockRenderer tokens={dataset[0].tokens} options={dataset[0].params} />
+                        <RawCode>{dataset[0].code}</RawCode>
+                    </Container>
                     <Toolbar name="bottom" layout={options.toolbarBottom} toggleClass={toggleClass} getRawCode={getRawCode} />
                 </Container>;
 

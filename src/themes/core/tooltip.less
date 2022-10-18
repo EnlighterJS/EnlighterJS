@@ -10,6 +10,26 @@
 @import "selectors.less";
 
 .STYLE_TOOLTIP({
-    z-index: 100;
+    visibility: hidden;
+    width: 140px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 10;
+    bottom: 30px;
+    transform: translateX(-42%);
 
+    &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+    }
 });

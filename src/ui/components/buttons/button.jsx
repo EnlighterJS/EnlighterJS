@@ -8,6 +8,7 @@
 
 // Internal "ReactDOM"
 import * as React from 'dom-magic';
+import {Tooltip} from './tooltip.jsx';
 
 export function Button(props){
 
@@ -23,8 +24,8 @@ export function Button(props){
     return <div 
             className={classes.join(' ')} 
             onClick={props.onClick}
-            title={props.tooltip}
         >
             {props.text||null}
+            { typeof props.tooltip == 'string' ? <Tooltip text={props.tooltip}/> : props.tooltip }
         </div>
 }
