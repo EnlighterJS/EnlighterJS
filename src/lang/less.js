@@ -16,6 +16,11 @@ import _common_css_rules from './rulesets/css';
 // --
 export class less extends css {
 
+    // language aliases
+    static alias(){
+        return [];
+    }
+
     setupLanguage(){
         // setup css
         super.setupLanguage();

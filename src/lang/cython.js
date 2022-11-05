@@ -13,6 +13,11 @@ import {python} from './python';
 // --
 export class cython extends python{
 
+    // language aliases
+    static alias(){
+        return [];
+    }
+
     setupLanguage(){
         // run python regex setup
         super.setupLanguage();

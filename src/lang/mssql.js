@@ -15,6 +15,11 @@ import {sql} from './sql';
 // --
 export class mssql extends sql {
 
+    // language aliases
+    static alias(){
+        return [];
+    }
+
     setupLanguage(){
         // setup css
         super.setupLanguage();

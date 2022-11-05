@@ -15,6 +15,11 @@ import {javascript} from './javascript';
 // --
 export class typescript extends javascript{
 
+    // language aliases
+    static alias(){
+        return [];
+    }
+
     setupLanguage(){
         // run python regex setup
         super.setupLanguage();

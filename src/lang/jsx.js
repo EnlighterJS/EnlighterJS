@@ -13,6 +13,11 @@ import {javascript} from './javascript';
 // --
 export class jsx extends javascript {
 
+    // language aliases
+    static alias(){
+        return [];
+    }
+
     setupLanguage(){
         // setup css
         super.setupLanguage();

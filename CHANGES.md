@@ -12,6 +12,7 @@
 * Changed: toolbar position is now persistent and not affected by horizontal/vertical scrolling
 * Bugfix: `bash` pound style comment regex also matched variable substituions and special cases - thanks to [maidentaiwan on GitHub](https://github.com/EnlighterJS/EnlighterJS/issues/200)
 * Bugfix: `bash` single quoted strings not highlighted
+* Bugfix: language alias `js` was processed as `typescript` due to inheritance issue (missing override)
 
 ### Version 3.5.0 ###
 
