@@ -26,6 +26,6 @@ export function Button(props){
             onClick={props.onClick}
         >
             {props.text||null}
-            { typeof props.tooltip == 'string' ? <Tooltip text={props.tooltip}/> : props.tooltip }
+            { (typeof props.tooltip == 'string' ? <Tooltip text={props.tooltip}/> : props.tooltip) || null }
         </div>
 }
