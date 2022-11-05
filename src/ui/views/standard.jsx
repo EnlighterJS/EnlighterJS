@@ -26,7 +26,8 @@ export function standard(dataset){
     const cssClasses = [
         'enlighter-default',
         'enlighter-v-standard',
-        'enlighter-t-' + dataset[0].params.theme
+        'enlighter-t-' + options.theme,
+        'enlighter-l-' + dataset[0].resolvedLanguage
     ];
 
     // hover enabled ?

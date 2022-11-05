@@ -22,7 +22,8 @@ export function inline(dataset){
     const cssClasses = [
         'enlighter-default',
         'enlighter-v-inline',
-        'enlighter-t-' + options.theme
+        'enlighter-t-' + options.theme,
+        'enlighter-l-' + dataset[0].resolvedLanguage
     ];
 
     // additional css classes set ?

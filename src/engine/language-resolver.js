@@ -62,10 +62,7 @@ export function getLanguage(lang){
 }
 
 // create new instance
-export function getInstance(name1, name2){
-    // use given language - including generic fallback
-    const languageIdentifier = getLanguage(name1) || getLanguage(name2) || 'generic';
-
+export function getInstance(languageIdentifier){
     // instance already exists ?
     if (!_instances[languageIdentifier]){
         // create language engine instance

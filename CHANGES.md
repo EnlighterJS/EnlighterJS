@@ -6,6 +6,7 @@
 
 * Added: css tooltips to the toolbar
 * Added: copy-to-clipboard success/error message via tooltip
+* Added: language identifier as css class to the outer wrapper `enlighter-l-<resolvedLanguage>`
 * Changed: DOM structure has changed: each raw+highlighted code elements are wrapper into `enlighter-code` container
 * Changed: DOM structure has changed: removed `enlighter-codegroup-wrapper`
 * Changed: toolbar position is now persistent and not affected by horizontal/vertical scrolling

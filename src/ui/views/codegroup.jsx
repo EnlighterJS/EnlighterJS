@@ -28,7 +28,6 @@ export function codegroup(dataset){
 
     // tabs, buttons
     let tabs = [];
-    //let buttons = [];
 
     // list of css classes to apply on the outer wrapper
     const cssClasses = [
@@ -80,6 +79,10 @@ export function codegroup(dataset){
         // show new element
         React.displayElement(tabs[index], true);
 
+        // remove old language class
+        React.removeClass(wrapper, 'enlighter-l-' + dataset[activeTabIndex].resolvedLanguage);
+        React.addClass(wrapper, 'enlighter-l-' + dataset[index].resolvedLanguage);
+
         // store index
         activeTabIndex = index;
     }
@@ -93,9 +96,6 @@ export function codegroup(dataset){
         </Container>;
     });
 
-    // highlight first button
-    showtab(0);
-
     // create wrapper
     wrapper =   <Container className={cssClasses}>
                     <CodegroupSwitch onChange={i => showtab(i)} dataset={dataset} />
@@ -104,6 +104,10 @@ export function codegroup(dataset){
                     <Toolbar name="bottom" layout={options.toolbarBottom} toggleClass={toggleClass} getRawCode={getRawCode} />
                 </Container>;
 
+
+    // highlight first button
+    showtab(0);
+    
     // dbclick event ?
     if (options.rawcodeDbclick){
         wrapper.on('dblclick', () => {

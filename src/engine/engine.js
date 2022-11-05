@@ -13,7 +13,7 @@ import {getOption} from '../engine/options';
 //import * as _languages from '../lang/index';
 
 // Languages aliases
-import {getInstance} from './language-resolver';
+import {getInstance, getLanguage} from './language-resolver';
 
 // Container of Views/Layouts
 import * as _views from '../ui/views/index';
@@ -41,19 +41,17 @@ export function render(dataset){
         }
 
         // use given language - including generic fallback
-        //const languageIdentifier = getLanguage(params.language) || getLanguage(getOption('language')) || 'generic';
+        const languageIdentifier = getLanguage(params.language) || getLanguage(getOption('language')) || 'generic';
 
         // create language engine instance
-        //const languageProcessor = new _languages[languageIdentifier];
-
-        // create language engine instance
-        const languageProcessor = getInstance(params.language, getOption('language'));
+        const languageProcessor = getInstance(languageIdentifier);
 
         // apply language processor
         return {
             tokens: languageProcessor.analyze(code),
             params: params,
-            code: code
+            code: code,
+            resolvedLanguage: languageIdentifier
         }
     });
 
