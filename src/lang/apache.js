@@ -20,7 +20,7 @@ export class apache extends generic {
 
     // language aliases
     static alias(){
-        return ['apacheconf', 'httpd'];
+        return ['apacheconf', 'httpd', 'htaccess'];
     }
 
     setupLanguage(){
