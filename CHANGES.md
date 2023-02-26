@@ -2,6 +2,10 @@
 
 **Re-Created from Scratch - The whole systems architecture has been changed**
 
+### Version 3.7.0 ###
+
+* Added: basic support for `makefile` syntax
+
 ### Version 3.6.0 ###
 
 * Added: css tooltips to the toolbar

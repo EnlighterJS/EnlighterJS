@@ -37,6 +37,7 @@ export {lighttpd} from './lighttpd';
 export {lua} from './lua';
 export {mariadb} from './mariadb';
 export {markdown} from './markdown';
+export {makefile} from './makefile';
 export {matlab} from './matlab';
 export {mssql} from './mssql';
 export {nginx} from './nginx';
