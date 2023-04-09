@@ -1,0 +1,69 @@
+import random
+
+# Game constants
+ROAD_WIDTH = 10
+ROAD_LENGTH = 20
+PLAYER_CHAR = "@"
+OPPONENT_CHAR = "#"
+ROAD_CHAR = "-"
+FINISH_LINE_CHAR = "F"
+PLAYER_START_POS = (ROAD_WIDTH // 2, ROAD_LENGTH - 1)
+OPPONENT_START_POS = (random.randint(0, ROAD_WIDTH - 1), 0)
+
+
+def draw_road(road_width, road_length):
+    """Draws the road with the player and opponent positions."""
+    for i in range(road_length):
+        road_row = ""
+        for j in range(road_width):
+            if (j, i) == player_pos:
+                road_row += PLAYER_CHAR
+            elif (j, i) == opponent_pos:
+                road_row += OPPONENT_CHAR
+            else:
+                road_row += ROAD_CHAR
+        print(road_row)
+    print(FINISH_LINE_CHAR * road_width)
+
+
+def update_game_state():
+    """Updates the game state by moving the player and opponent."""
+    global player_pos, opponent_pos
+    player_pos = (player_pos[0] + player_move, player_pos[1])
+    opponent_pos = (opponent_pos[0] + opponent_move, opponent_pos[1] + 1)
+
+
+# Initialize game state
+player_pos = PLAYER_START_POS
+opponent_pos = OPPONENT_START_POS
+player_move = 0
+opponent_move = 0
+
+# Game loop
+while True:
+    # Draw road
+    draw_road(ROAD_WIDTH, ROAD_LENGTH)
+
+    # Check if player has crossed finish line
+    if player_pos[1] == 0:
+        print("Congratulations! You won!")
+        break
+
+    # Get player input
+    player_move = 0
+    while player_move not in [-1, 0, 1]:
+        player_move = int(input("Enter your move (-1 for left, 0 for straight, 1 for right): "))
+
+    # Update game state
+    update_game_state()
+
+    # Update opponent move randomly
+    opponent_move = random.randint(-1, 1)
+
+    # Update game state
+    update_game_state()
+
+    # Check if opponent has crossed finish line
+    if opponent_pos[1] == ROAD_LENGTH - 1:
+        print("You lost! Better luck next time!")
+        break
