@@ -32,17 +32,17 @@ Features
 * 40 supported languages/formats
 * 12 high quality themes
 * Inline Syntax highlighting
-* Codegroups to display multiple code-blocks within a tab-pane
+* Codegroups to display multiple code blocks within a tab pane
 * Point out special lines of code
 * Ultra-small footprint: `45KB JS` (all languages) + `10KB CSS` (single theme; all themes 60KB)
-* Highlight all codeblocks on your page with a single command
+* Highlight all code blocks on your page with a single command
 
 #### TECHNICAL FEATURES ####
 
-* Ultrafast Tokenizer Engine based on priorized regular expressions
+* Ultrafast Tokenizer Engine based on prioritized regular expressions
 * Second-Stage-Tokenizer for optimized performance 
 * Full customizable themes written in [less](http://lesscss.org/)
-* Themes available as single css files to reduce footprint
+* Themes available as single CSS files to reduce footprint
 * Views based on [JSX](https://reactjs.org/docs/introducing-jsx.html)
 * Minimal, embedded DOM library
 * [gulp](https://gulpjs.com/) based build system
@@ -111,9 +111,9 @@ Features
 
 * **Enlighter** (enlighter, standard) - Enlighter`s default Theme
 * **Classic** (classic) - SyntaxHighlighter inspired
-* **Bootstrap** (bootstrap4) - Bootstrap 4 inpired themes, high contrast
+* **Bootstrap** (bootstrap4) - Bootstrap 4 inspired themes, high contrast
 * **Beyond** (beyond) - BeyondTechnology Theme
-* **Godzilla** (godzilla) - An inspired Theme
+* **Godzilla** (godzilla) - An MDN-inspired Theme
 * **Eclipse** (eclipse) - Eclipse inspired
 * **MooTwo** (mootwo) - Inspired by the MooTools Website
 * **Droide** (droide) - Modern, minimalistic
@@ -128,7 +128,7 @@ Quickstart
 1. Download the latest [EnlighterJS release](https://github.com/EnlighterJS/EnlighterJS/releases)
 2. Copy the files from the `dist/` directory to your public html location
 3. Include the CSS+JS files
-4. Tag the codeblocks on your page (e.g. `pre` tags with `data-enlighter-language` attribute)
+4. Tag the code blocks on your page (e.g. `pre` tags with `data-enlighter-language` attribute)
 5. Initialize highlighting
 
 ### Minimal Example ###
@@ -155,7 +155,7 @@ This is a minimalistic example how to highlight source code with EnlighterJS. Th
 
         <!-- Code to highlight!-->
         <pre data-enlighter-language="less">
-// buttons used in codegroups + toolbar
+// buttons used in code groups + toolbar
 .enlighter-btn{
     display: inline-block;
     margin: 0px 5px 0px 5px;
