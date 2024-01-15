@@ -5,9 +5,9 @@
 EnlighterJS3
 ====================================================================
 
-**EnlighterJS, an open source syntax highlighter written in pure javascript**
+**EnlighterJS, an open-source syntax highlighter written in pure javascript**
 
-Using it can be as simple as adding a single script and style to your website, choosing the elements you wish to highlight, and EnlighterJS takes care of the rest.
+Using it can be as simple as adding a single script and style to your website, and choosing the elements you wish to highlight, and EnlighterJS takes care of the rest.
 
 ![Appearance](assets/enlighterjs_bootstrap4.png)
 
@@ -32,9 +32,9 @@ Features
 * 40 supported languages/formats
 * 12 high quality themes
 * Inline Syntax highlighting
-* Codegroups to displays multiple code-blocks within a tab-pane
+* Codegroups to display multiple code-blocks within a tab-pane
 * Point out special lines of code
-* Ultra small footprint: `45KB JS` (all languages) + `10KB CSS` (single theme; all themes 60KB)
+* Ultra-small footprint: `45KB JS` (all languages) + `10KB CSS` (single theme; all themes 60KB)
 * Highlight all codeblocks on your page with a single command
 
 #### TECHNICAL FEATURES ####
@@ -113,7 +113,7 @@ Features
 * **Classic** (classic) - SyntaxHighlighter inspired
 * **Bootstrap** (bootstrap4) - Bootstrap 4 inpired themes, high contrast
 * **Beyond** (beyond) - BeyondTechnology Theme
-* **Godzilla** (godzilla) - A MDN inspired Theme
+* **Godzilla** (godzilla) - An inspired Theme
 * **Eclipse** (eclipse) - Eclipse inspired
 * **MooTwo** (mootwo) - Inspired by the MooTools Website
 * **Droide** (droide) - Modern, minimalistic
@@ -125,7 +125,7 @@ Features
 Quickstart
 ----------------------------------------------
 
-1. Download latest [EnlighterJS release](https://github.com/EnlighterJS/EnlighterJS/releases)
+1. Download the latest [EnlighterJS release](https://github.com/EnlighterJS/EnlighterJS/releases)
 2. Copy the files from the `dist/` directory to your public html location
 3. Include the CSS+JS files
 4. Tag the codeblocks on your page (e.g. `pre` tags with `data-enlighter-language` attribute)
@@ -133,7 +133,7 @@ Quickstart
 
 ### Minimal Example ###
 
-This is a minimalistic example how to highlight sourcecode with EnlighterJS. The working example (valid js+css paths) is available within the [example directory](examples/).
+This is a minimalistic example how to highlight source code with EnlighterJS. The working example (valid js+css paths) is available within the [example directory](examples/).
 
 ```html
 <!DOCTYPE html>
@@ -153,7 +153,7 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
             et dolore <code>window.addEvent('domready', async (a,b) => {});</code> magna aliquyam erat.
         </p>
 
-        <!-- Code to hghlight !-->
+        <!-- Code to highlight!-->
         <pre data-enlighter-language="less">
 // buttons used in codegroups + toolbar
 .enlighter-btn{
@@ -183,15 +183,15 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
 
     <script type="text/javascript" src="enlighterjs.min.js"></script>
     <script type="text/javascript">
-        // INIT CODE - simple page-wide initialization based on css selectors
+        // INIT CODE - simple page-wide initialization based on CSS selectors
         // - highlight all pre + code tags (CSS3 selectors)
-        // - use javascript as default language
-        // - use theme "enlighter" as default theme
+        // - use javascript as the default language
+        // - use theme "enlighter" as the default theme
         // - replace tabs with 2 spaces
         EnlighterJS.init('pre', 'code', {
-                language : 'javascript',
+                language: 'javascript',
                 theme: 'enlighter',
-                indent : 2
+                indent: 2
         });
     </script>
 </body>
@@ -201,16 +201,16 @@ This is a minimalistic example how to highlight sourcecode with EnlighterJS. The
 Contribution
 ------------
 
-EnlighterJS is OpenSource and managed on [GitHub](https://github.com/EnlighterJS/EnlighterJS) - if you like, you're welcome to contribute!
+EnlighterJS is open source and managed on [GitHub](https://github.com/EnlighterJS/EnlighterJS) - if you like, you're welcome to contribute!
 To simplify the release and quality control process, please follow these remarks:
 
 1. **One Enhancement** _==>_ **One Commit** (don't merge a bunch of changes in a single commit!)
-2. Only commit changes to the `src/` or `examples/` directory. Otherwise your request will be rejected
+2. Only commit changes to the `src/` or `examples/` directory. Otherwise, your request will be rejected
 3. Discuss larger project changes with the Maintainer **before implementing**
-4. Use GitHub for question, bugreports and discussions
+4. Use GitHub for questions, bug reports, and discussions
 
 License
 ----------------------------------------------
 
-EnlighterJS is OpenSource and licensed under the Terms of [Mozilla Public License 2.0](https://opensource.org/licenses/MPL-2.0). You're welcome to [contribute](docs/CONTRIBUTING.md)
+EnlighterJS is open source and licensed under the Terms of [Mozilla Public License 2.0](https://opensource.org/licenses/MPL-2.0). You're welcome to [contribute](docs/CONTRIBUTING.md)
 
